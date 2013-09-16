@@ -23,3 +23,5 @@
   </div>
   
 </div>
+
+<h3>Проект &quot;<?php echo Region::byId($sf_user->getAttribute('region_id'))->name; ?>&quot;</h3>
