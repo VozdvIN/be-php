@@ -333,23 +333,21 @@ class Utils
    */
   public static function byRegion($className, $region, $orderField = 'name')
   {
-    if ( ( ! ($region instanceof Region))
-         || ($region->id <= Region::DEFAULT_REGION) )
+    if ( ! ($region instanceof Region))
     {
-      return Doctrine::getTable($className)
-        ->createQuery('c')
-        ->select()->orderBy('c.'.$orderField)
-        ->execute();
+      return new Doctrine_Collection($className);
     }
-    else
-    {
-      return Doctrine::getTable($className)
-        ->createQuery('c')
+    
+    $query = Doctrine::getTable($className)->createQuery('c')
         ->select()
         ->where('c.region_id = ?', $region->id)
-        ->select()->orderBy('c.'.$orderField)
-        ->execute();
-    }  
+        ->orderBy('c.'.$orderField);
+    if ($region->id == Region::DEFAULT_REGION)
+    {
+      $query->orWhere('(c.region_id IS NULL)');
+    }
+    
+    return $query->execute();
   }
 
   /**

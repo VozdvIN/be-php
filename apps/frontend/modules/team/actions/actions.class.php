@@ -17,23 +17,18 @@ class teamActions extends MyActions
 
     $this->_currentRegion = Region::byIdSafe($this->session->getAttribute('region_id'));
     
+    $query = Doctrine::getTable('Team')
+        ->createQuery('t')->leftJoin('t.teamPlayers')->leftJoin('t.teamCandidates')
+        ->select()
+        ->orderBy('name')
+        ->where('region_id = ?', $this->_currentRegion->id);
     if ($this->_currentRegion->id == Region::DEFAULT_REGION)
     {
-      $this->_teams = Doctrine::getTable('Team')
-          ->createQuery('t')->leftJoin('t.teamPlayers')->leftJoin('t.teamCandidates')
-          ->select()->orderBy('name')
-          ->execute();
+      $query->orWhere('t.region_id IS NULL');
     }
-    else
-    {
-      $this->_teams = Doctrine::getTable('Team')
-          ->createQuery('t')->leftJoin('t.teamPlayers')->leftJoin('t.teamCandidates')
-          ->select()
-          ->where('region_id = ?', $this->_currentRegion->id)
-          ->orderBy('name')
-          ->execute();      
-    }  
     
+    $this->_teams = $query->execute();
+        
     $this->_isModerator = $this->sessionWebUser->can(Permission::TEAM_MODER, 0);
     $this->_fastTeamCreate = SystemSettings::getInstance()->fast_team_create;
     if ($this->_isModerator)

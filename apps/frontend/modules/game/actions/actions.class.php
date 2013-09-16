@@ -35,21 +35,17 @@ class gameActions extends MyActions
     $this->_sessionPlayIndex = array();
     $this->_sessionIsActorIndex = array();
 
+    $gamesQuery = Doctrine::getTable('Game')
+          ->createQuery('g')
+          ->select()
+          ->where('g.region_id = ?', $this->_currentRegion->id)
+          ->orderBy('g.start_datetime');
     if ($this->_currentRegion->id == Region::DEFAULT_REGION)
     {    
-      $games = Doctrine::getTable('Game')
-          ->createQuery('g')->leftJoin('g.teamStates')
-          ->select()->orderBy('g.name')
-          ->execute();
+      $gamesQuery->orWhere('g.region_id IS NULL');
     }
-    else
-    {
-      $games = Doctrine::getTable('Game')
-          ->createQuery('g')->leftJoin('g.teamStates')
-          ->select()->orderBy('g.name')
-          ->where('region_id = ?', $this->_currentRegion->id)
-          ->execute();      
-    }
+    
+    $games = $gamesQuery->execute();
     
     foreach ($games as $game)
     {

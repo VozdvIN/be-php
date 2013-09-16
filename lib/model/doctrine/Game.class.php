@@ -75,7 +75,7 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
 
   public static function byRegion($region)
   {
-    return Utils::byRegion('Game', $region);
+    return Utils::byRegion('Game', $region, 'start_datetime');
   }
   
   public function getRegionSafe()
