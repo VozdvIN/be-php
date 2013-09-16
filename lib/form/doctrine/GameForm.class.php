@@ -45,7 +45,7 @@ class GameForm extends BaseGameForm
         'description' => 'Описание:',
         'short_info' => 'Анонс:',
         'short_info_enabled' => 'Публиковать анонс:',
-        'region_id' => 'Регион:',
+        'region_id' => 'Игровой проект:',
         //Регламент
         'start_briefing_datetime' => 'Брифинг:',
         'start_datetime' => 'Начало игры:',
@@ -71,7 +71,7 @@ class GameForm extends BaseGameForm
         'description' => Article::BBCODE_HELP_LINK,
         'short_info' => Article::BBCODE_HELP_LINK.'|Краткий анонс игры, для публикации в общем списке.',
         'short_info_enabled' => 'Анонс будет опубликован в списке только если дано это разрешение.',
-        'region_id' => 'Регион проведения игры.|<span class="info">Не препятствует участию команд из других регионов.</span>',
+        'region_id' => 'Проект, организующий игру.|<span class="info">Не препятствует участию команд из других игровых проектов.</span>',
         //Регламент
         'start_briefing_datetime' => 'ГГГГ-ММ-ДД ЧЧ:ММ:СС.|<span class="warn">Указывать по серверному времени.</span>',
         'start_datetime' => 'ГГГГ-ММ-ДД ЧЧ:ММ:СС.|<span class="warn">Указывать по серверному времени.</span>',

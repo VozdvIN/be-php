@@ -1,11 +1,11 @@
 <?php
 render_breadcombs(array(
     link_to('Модерирование', 'moderation/show'),
-    'Проекты',
+    'Игровые проекты',
     ))
 ?>
 
-<h2>Все регионы</h2>
+<h2>Все игровые проекты</h2>
 
 <?php echo link_to('Создать новый проект', 'region/new'); ?>
 <h3></h3>
@@ -13,7 +13,7 @@ render_breadcombs(array(
   <?php foreach ($_regions as $region): ?>
   <li>
     <?php
-    echo decorate_span('danger', link_to('Удалить', 'region/delete?id='.$region->id, array('method' => 'delete', 'confirm' => 'Вы правда хотите удалить регион '.$region->name.' ?')));
+    echo decorate_span('danger', link_to('Удалить', 'region/delete?id='.$region->id, array('method' => 'delete', 'confirm' => 'Вы правда хотите удалить игровой проект '.$region->name.' ?')));
     echo ' '.decorate_span('warn', link_to('Править', 'region/edit?id='.$region->id));
     echo ' '.$region->name;
     ?>

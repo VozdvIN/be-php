@@ -11,8 +11,8 @@
 </p>
 <?php endif ?>
 <div>
-  <div><span class="warn">При подтверждении заявки игра будет создана в регионе команды-организатора.</span></div>
-  <div><span class="info">Позже руководитель игры может сменить регион.</span></div>
+  <div><span class="warn">При подтверждении заявки игра будет создана в игровом проекте команды-организатора.</span></div>
+  <div><span class="info">Позже руководитель игры может сменить игровой проект.</span></div>
 </div>
     
 <?php include_partial('form', array('form' => $form)) ?>

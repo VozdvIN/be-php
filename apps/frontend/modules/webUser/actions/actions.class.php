@@ -68,11 +68,11 @@ class webUserActions extends MyActions
       $this->errorRedirectUnless($object->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'изменять анкету'));
       $object = $form->save();
       
-      //Если сменился регион текущего пользователя, то надо его изменить в сессии.
+      //Если сменился игровой проект текущего пользователя, то надо его изменить в сессии.
       if ($object->id == $this->sessionWebUser->id)
       {
         $this->session->setAttribute('region_id', $object->region_id);
-        $this->session->setFlash('warning', 'Назначен текущий регион: '.$object->getRegionSafe()->name);
+        $this->session->setFlash('warning', 'Назначен текущий игровой проект: '.$object->getRegionSafe()->name);
       }
       $this->successRedirect('Анкета '.$object->login.' успешно сохранена.', 'webUser/show?id='.$object->id);
     }

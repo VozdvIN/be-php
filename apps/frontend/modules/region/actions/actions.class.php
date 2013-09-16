@@ -43,7 +43,7 @@ class regionActions extends myActions
     $this->forward404Unless($region = Doctrine_Core::getTable('Region')->find(array($request->getParameter('id'))), sprintf('Object region does not exist (%s).', $request->getParameter('id')));
     if ($region->id == Region::DEFAULT_REGION)
     {
-      $this->errorRedirect('Нельзя править регион, используемый по умолчанию.', 'region/index');
+      $this->errorRedirect('Нельзя править игровой проект, используемый по умолчанию.', 'region/index');
     }
     $this->form = new RegionForm($region);
   }
@@ -65,7 +65,7 @@ class regionActions extends myActions
     $this->forward404Unless($region = Doctrine_Core::getTable('Region')->find(array($request->getParameter('id'))), sprintf('Object region does not exist (%s).', $request->getParameter('id')));
     if ($region->id == Region::DEFAULT_REGION)
     {
-      $this->errorRedirect('Нельзя удалять регион, используемый по умолчанию.', 'region/index');
+      $this->errorRedirect('Нельзя удалять игровой проект, используемый по умолчанию.', 'region/index');
     }
     $region->delete();
     $this->redirect('region/index');
@@ -77,7 +77,7 @@ class regionActions extends myActions
     if ($form->isValid())
     {
       $region = $form->save();
-      $this->successRedirect('Регион успешно сохранен.', 'region/index');
+      $this->successRedirect('Игровой проект успешно сохранен.', 'region/index');
     }
   }
   
@@ -85,9 +85,9 @@ class regionActions extends myActions
   {
     if ($request->isMethod(sfRequest::POST))
     {
-      $this->forward404Unless($region = Region::byId($request->getParameter('id')), 'Регион не найден.');
+      $this->forward404Unless($region = Region::byId($request->getParameter('id')), 'Игровой проект не найден.');
       $this->session->setAttribute('region_id', $region->id);
-      $this->successRedirect('Установлен текущий регион - '.$region->name);
+      $this->successRedirect('Установлен текущий игровой проект - '.$region->name);
     }
     else
     {
@@ -108,7 +108,7 @@ class regionActions extends myActions
     $this->errorRedirectUnless(
         (($this->sessionWebUser instanceof WebUser)
          && ($this->sessionWebUser->can(Permission::ROOT, 0))),
-        Utils::cannotMessage('Неавторизованный пользователь', 'управлять регионами')
+        Utils::cannotMessage('Неавторизованный пользователь', 'управлять игровыми проектами')
     );    
   }
 }

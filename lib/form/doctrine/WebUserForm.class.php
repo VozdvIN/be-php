@@ -33,14 +33,14 @@ class WebUserForm extends BaseWebUserForm
         'login' => 'Имя:',
         'full_name' => 'Ф.И.(О.):',
         'email' => 'E-Mail:',
-        'region_id' => 'Регион:'
+        'region_id' => 'Проект:'
     ));
 
     $this->getWidgetSchema()->setHelps(array(
         'login' => 'Лучше короткий ник-нейм',
         'full_name' => 'Фамилия и имя, отчество по желанию.',
         'email' => 'Настоятельно рекомендуется действующий.',
-        'region_id' => 'Регион по умолчанию.|<span class="info">Не препятствует вступлению в команды других регионов.</span>|<span class="info">Не препятствует участию в играх других регионов.</span>'
+        'region_id' => 'Игровой проект по умолчанию.|<span class="info">Не препятствует вступлению в команды других игровых проектов.</span>|<span class="info">Не препятствует участию в играх других регионов.</span>'
     ));
   }
 

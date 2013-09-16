@@ -1,18 +1,18 @@
-# Регион
+# Игровой проект, название осталось исторчески
 Region:
   tableName: regions
   columns:
     id: { type: integer, notnull: true, primary: true, autoincrement: true }
     # Название
     name: { type: string(32), notnull: true, default: '(Любой)' } 
-    # Пользователи из данного региона
+    # Пользователи из данного проекта
     #webUsers: Doctrine_Collection<WebUser>
-    # Команды из данного региона
+    # Команды из данного проекта
     #teams: Doctrine_Collection<Team>
-    # Игры в данном регионе
+    # Игры в данном проекте
     #games: Doctrine_Collection<Game>
   indexes:
-    # Каждый регион уникален
+    # Каждый проект уникален
     ui_state_value:
       type: unique
       fields:

@@ -21,7 +21,7 @@ $retUrlRaw = Utils::encodeSafeUrl('game/info?id='.$_game->id)
 <?php
 $width = get_text_block_size_ex('Планируется заданий:');
 render_named_line($width, 'Организаторы:', ($_game->team_id !== null) ? $_game->Team->name : $_game->getTeamBackupName());
-render_named_line($width, 'Регион:', $_game->getRegionSafe()->name);
+render_named_line($width, 'Игровой проект:', $_game->getRegionSafe()->name);
 ?>
 <h4>Регламент</h4>
 <div class="comment info">Время соответствует серверному</div>

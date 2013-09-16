@@ -324,11 +324,11 @@ class Utils
   }
 
   /**
-   * Возвращает все экземпляры класса, которые относятся к указанному региону.
-   * Если регион не указан, то возвращает все экземпляры.
+   * Возвращает все экземпляры класса, которые относятся к указанному игровому проекту.
+   * Если игровой проект не указан, то возвращает все экземпляры.
    *
    * @param  string               $className    Имя класса
-   * @param  mixed                $region       Регион или null
+   * @param  mixed                $region       Игровой проект или null
    * @return Doctrine_Collection
    */
   public static function byRegion($className, $region, $orderField = 'name')

@@ -46,7 +46,7 @@
   <?php endforeach; ?>
 </ul>
 <?php else: ?>
-<div class="info">В этом регионе нет команд.</div>
+<div class="info">В этом игровом проекте нет команд.</div>
 <?php endif; ?>
 
 <?php if ($_teamCreateRequests->count() > 0): ?>

@@ -15,7 +15,7 @@ Game:
     team_id: { type: integer }
     # Резервное поле для хранения имени команды-организатора на момент начала игры, используется в архивных целях.
     team_name_backup: { type: string(255) }
-    # Регион игры
+    # Игровой проект (название region осталось исторически)
     region_id: { type: integer }
     # Дата стартового брифинга
     start_briefing_datetime: { type: datetime, notnull: true }

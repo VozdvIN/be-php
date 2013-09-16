@@ -2,7 +2,7 @@
 /* Входные параметры:
  * - Game $game - игра
  * - boolean $_isAuth - авторизован ли пользователь.
- * - boolean $_showRegions - показывать или нет регионы
+ * - boolean $_showRegions - показывать или нет игровые проекты
  */
   $name = $_isAuth ? link_to($game->name, 'game/show?id='.$game->id) : $game->name;
   $formatedName = '<h3>'.$name.'</h3>';

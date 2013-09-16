@@ -7,7 +7,7 @@ Team:
     name: { type: string(32), notnull: true }
     # Полное название
     full_name: string(255)
-    # Регион
+    # Игровой проект
     region_id: { type: integer }
     # Регистрационные записи игроков
     #teamPlayers: Doctrine_Collection<TeamPlayer>

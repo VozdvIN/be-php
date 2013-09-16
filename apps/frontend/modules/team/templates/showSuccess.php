@@ -23,7 +23,7 @@ render_named_line_if($_sessionIsModerator,
 render_named_line   ($width, 'Название:', $_team->name);
 render_named_line_if($_team->full_name !== '',
                      $width, 'Полное название:', $_team->full_name);
-render_named_line   ($width, 'Регион:', $_team->getRegionSafe()->name);
+render_named_line   ($width, 'Игровой проект:', $_team->getRegionSafe()->name);
 ?>
 
 <?php if ($_sessionIsPlayer || $_sessionIsModerator): ?>

@@ -4,7 +4,7 @@
 
 <?php if ($_isAdmin): ?>
 <p>
-<?php echo decorate_span('safeAction', link_to('Управление регионами', 'region/index'))?>
+<?php echo decorate_span('safeAction', link_to('Управление игровыми проектами', 'region/index'))?>
 </p>
 <?php 
   render_h3_inline_begin('Системные настройки');

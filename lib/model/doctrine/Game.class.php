@@ -316,7 +316,7 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
    * Возвращает список игр с активными анонсами (максимальный интервал анонса указывается).
    * 
    * @param   integer   $maxDaysBeforeGame  Число дней до игры, когда открывается анонс.
-   * @param   Region    $region             Регион, в котором отбирать игры.
+   * @param   Region    $region             Игровой проект, в котором отбирать игры.
    */
   public static function getGamesForAnnounce($maxDaysBeforeGame, Region $region)
   {
