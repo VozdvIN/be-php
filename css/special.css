@@ -27,9 +27,7 @@ div.comment, p.comment { font-style: italic; font-size: small }
 так как они рассчитываются при создании страницы.
 */
 div.namedLineBox {
-  padding-top: 2px;
-  padding-bottom: 2px;
-  border-bottom: 1px Solid MediumBlue;
+  padding: 2px 0 2px 0;
   text-align: left;
 }
 div.namedLineName, div.namedLineValue
@@ -46,16 +44,16 @@ div.breadcombs {
   padding-bottom: 2px;
   border-top: none;
   border-right: none;
-  border-bottom-width: 1px;
   border-left-width: 3px;
+  border-bottom: none;
 }
 div.breadcomb {
   display: inline-block;
   margin-left: 3px; 
   padding: 0 3px 1px 0;
   border: Solid RoyalBlue;
-  border-top-width: 1px;
   border-right-width: 1px;
+  border-top: none;
   border-bottom: none;
   border-left: none;
 }
@@ -105,7 +103,7 @@ div.columnName  {
 div.columnValue { /* reserved */ }
 
 /* Главное меню */
-div.menu { background-color: SteelBlue; margin-left: auto; margin-right: auto; text-align: center }
+div.menu { background-color: SteelBlue; text-align: left }
 div.menu ul { padding: 3px 0 6px 0.75ex; list-style: none; vertical-align: middle }
 div.menu ul li { font-weight: bold; display: inline-block; vertical-align: middle; padding-left: 6px;}
 div.menu ul li a,
