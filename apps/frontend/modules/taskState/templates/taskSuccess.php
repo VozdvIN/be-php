@@ -1,11 +1,10 @@
-<div>
-  <span class="safeAction"><?php echo link_to('Обновить', 'taskState/task?id='.$_taskState->id); ?></span>
-</div>
-
 <?php $teamState = $_taskState->TeamState; ?>
 
-<h2><?php echo $teamState->Game->name ?></h2>
-<h3><?php echo $teamState->Team->name ?></h3>
+<div style="font-weight: bold"><?php echo $teamState->Team->name ?></div>
+<div><?php echo $teamState->Game->name ?></div>
+<div class="hr">
+  <span class="safeAction"><?php echo link_to('Обновить', 'teamState/task?id='.$teamState->id) ?></span>
+</div>
 
 <?php if ($_taskState->status == TaskState::TASK_GIVEN): ?>
 <p>

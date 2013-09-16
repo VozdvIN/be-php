@@ -3,8 +3,8 @@
  * $teamState - состояние команды
  */
 ?>
-<div>
+<div style="font-weight: bold"><?php echo $teamState->Team->name ?></div>
+<div><?php echo $teamState->Game->name ?></div>
+<div class="hr">
   <span class="safeAction"><?php echo link_to('Обновить', 'teamState/task?id='.$teamState->id) ?></span>
 </div>
-<h2><?php echo $teamState->Game->name ?></h2>
-<h3><?php echo $teamState->Team->name ?></h3>

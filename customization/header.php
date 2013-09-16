@@ -17,7 +17,7 @@
 
 </div> <!-- end:hidden -->
 
-<div style="min-height: 48px;">
+<div style="min-height: 58px;">
   <div style="float: left; padding-right: 8px; padding-bottom: 0.4em;">
     <a href="/home/index" class="banner"><img src="/customization/images/logo.png" alt="<?php echo SystemSettings::getInstance()->site_name ?>" /></a>
   </div>
