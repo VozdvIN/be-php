@@ -1,5 +1,5 @@
 
-<h2>Выбор текущего региона</h2>
+<h2>Выбор проекта</h2>
 
 <span class="safeAction"><?php echo link_to('Вернуться', $_retUrlDecoded); ?></span>
 <div class="hr"></div>
@@ -7,7 +7,7 @@
 <ul>
   <?php if ($_selfRegionId != Region::DEFAULT_REGION): ?>
   <li>
-    <span class="info"><?php echo link_to('Свой регион (из анкеты)', 'region/setCurrent?id='.$_selfRegionId.'&returl='.$_retUrlRaw, array('method' => 'post')); ?></span>
+    <span class="info"><?php echo link_to('Свой проект (из анкеты)', 'region/setCurrent?id='.$_selfRegionId.'&returl='.$_retUrlRaw, array('method' => 'post')); ?></span>
   </li>
   <?php endif ?>
   <?php foreach($_regions as $region): ?>
@@ -28,5 +28,5 @@
 </ul>
 
 <p>
-  <span class="info">Если нужного Вам региона нет в списке,</span> <?php echo mail_to(SystemSettings::getInstance()->contact_email_addr, 'напишите администраторам') ?>.
+  <span class="info">Если Вы хотите создать новый проект,</span> <?php echo mail_to(SystemSettings::getInstance()->contact_email_addr, 'напишите администраторам') ?>.
 </p>

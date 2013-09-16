@@ -1,5 +1,5 @@
 <div>
-  <div style="float: right; text-align: right; vertical-align: top; min-height: 1.5em">
+  <div style="text-align: right; min-height: 1.5em;">
     <?php
     if ($sf_user->isAuthenticated())
     {

@@ -6,9 +6,7 @@
  */
 ?>
 <div class="hr">
-  <h1><img src="/customization/images/favicon.png" alt="[BE]" />&nbsp;<?php echo SystemSettings::getInstance()->site_name ?></h1>
-  <h2>Бесплатный движок для интерактивных игр</h2>
-  <h4>типа Дозор (Dozor, Dzzzr), Схватка (Encounter), Квест (Quest) и похожих</h4>
+  <h1><?php echo SystemSettings::getInstance()->site_name ?></h1>
 </div>
 <div class="hr">
   <?php

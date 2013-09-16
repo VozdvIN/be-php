@@ -1,13 +1,13 @@
 <?php
 render_breadcombs(array(
     link_to('Модерирование', 'moderation/show'),
-    'Регионы',
+    'Проекты',
     ))
 ?>
 
 <h2>Все регионы</h2>
 
-<?php echo link_to('Создать новый регион', 'region/new'); ?>
+<?php echo link_to('Создать новый проект', 'region/new'); ?>
 <h3></h3>
 <ul>
   <?php foreach ($_regions as $region): ?>

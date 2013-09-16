@@ -11,24 +11,29 @@
 ?>
 
 <div class="hidden">
-  <!-- Код счетчиков размещать здесь -->
-</div>
 
-<div>
-  <!-- Коды информеров и прочих баннеров -->
-</div>
+  <!-- Yandex.Metrika counter -->
+  <!-- /Yandex.Metrika counter -->
 
-<div style="min-height: 60px">
-  <div style="float: left; margin: 0.2em 1ex 3px 0">
-    <a href="/home/index" class="banner"><img src="/customization/images/logo.png" alt="[BE]" /></a>
+</div> <!-- end:hidden -->
+
+<div style="min-height: 48px;">
+  <div style="float: left; padding-right: 8px; padding-bottom: 0.4em;">
+    <a href="/home/index" class="banner"><img src="/customization/images/logo.png" alt="<?php echo SystemSettings::getInstance()->site_name ?>" /></a>
   </div>
   <div>
     <span style="font-weight: bold"><?php echo SystemSettings::getInstance()->site_name ?></span>
-  </div>
+  </div>  
   <div>
-    <span style="font-size: smaller; font-weight: bold"><?php echo link_to('Бесплатный движок', 'http://code.google.com/p/be-php') ?> для интерактивных игр</span>
-  </div>
-  <div>
-    <span style="font-size: smaller">типа Дозор (Dozor), Схватка (Encounter), Квест (Quest) и похожих</span>
+    <?php
+      if ($headerArticle = Article::byName('Шаблонные-Шапка'))
+      {
+        echo Utils::decodeBB($headerArticle->text);
+      }
+      else
+      {
+        echo '(Заполните статью \'Шаблонные-Шапка\')';
+      }
+    ?>
   </div>
 </div>

@@ -11,7 +11,7 @@
 div.hidden { display: none }
 
 /* Картинка-ссылка, вокруг которой не нужна разметка ссылки */
-a.banner, a.banner:link, a.banner:visited, a.banner:hover, a.banner:active { 
+a.banner, a:link.banner, a:visited.banner, a:hover.banner, a:active.banner { 
   border: none; 
   margin: 0 0 0 0; 
   padding: 0 0 0 0; 
@@ -29,7 +29,7 @@ div.comment, p.comment { font-style: italic; font-size: small }
 div.namedLineBox {
   padding-top: 2px;
   padding-bottom: 2px;
-  border-bottom: 1px Solid DarkCyan;
+  border-bottom: 1px Solid MediumBlue;
   text-align: left;
 }
 div.namedLineName, div.namedLineValue
@@ -38,11 +38,11 @@ div.namedLineName, div.namedLineValue
   vertical-align: top;
 }
 div.namedLineName  { text-align: right; color: LightSkyBlue }
-div.namedLineValue { padding-left: 0.5ex; text-align: left }
+div.namedLineValue { padding-left: 0.5ex; text-align: left; }
 
 /* Форматирование "хлебных крошек" */
 div.breadcombs {
-  border: Solid DodgerBlue;
+  border: Solid RoyalBlue;
   padding-bottom: 2px;
   border-top: none;
   border-right: none;
@@ -53,7 +53,7 @@ div.breadcomb {
   display: inline-block;
   margin-left: 3px; 
   padding: 0 3px 1px 0;
-  border: Solid DodgerBlue;
+  border: Solid RoyalBlue;
   border-top-width: 1px;
   border-right-width: 1px;
   border-bottom: none;
@@ -64,7 +64,7 @@ div.breadcomb {
 div.siteMap {
   margin-top: 0.5em;
   padding: 2px 0 0 0.5ex;
-  border: Solid DodgerBlue;
+  border: Solid RoyalBlue;
   border-top-width: 1px;
   border-right: none;
   border-bottom: none;
@@ -77,7 +77,7 @@ div.siteMap ul li {
   display: inline-block;
   margin-left: 0px; /* дополнительный отступ получается из-за отображения браузерами пробела на масте символа переноса строки в исходном HTML */
   padding: 0 3px 3px 0;
-  border: Solid DodgerBlue;
+  border: Solid RoyalBlue;
   border-top: none;
   border-right-width: 1px;
   border-bottom-width: 1px;
@@ -85,17 +85,17 @@ div.siteMap ul li {
 }
 
 /* Горизонтальная линия над блоком */
-div.hr { border-top: Solid 1px DodgerBlue; margin: 6px 0 0 0 }
+div.hr { border-top: Solid 1px RoyalBlue; margin: 6px 0 0 0 }
 
 /* Заголовок с возможностью дописывания */
-div.h3inline { border-top: Solid 1px DodgerBlue; margin: 6px 0 0 0 }
+div.h3inline { border-top: Solid 1px RoyalBlue; margin: 6px 0 0 0 }
 h3.inline { display: inline; margin: 0 0 0 0; border: none}
 
 /* Cтолбцы данных */
 div.columnName, div.columnValue {
   display: inline-block;
   margin-top: 1px;
-  border-bottom: Solid 1px DarkCyan;
+  border-bottom: Solid 1px MediumBlue;
   padding-bottom: 2px
 }
 div.columnName  {
@@ -105,65 +105,60 @@ div.columnName  {
 div.columnValue { /* reserved */ }
 
 /* Главное меню */
-div.menu { background-color: DarkGreen; border: Solid 1px Lime }
+div.menu { background-color: SteelBlue; margin-left: auto; margin-right: auto; text-align: center }
 div.menu ul { padding: 3px 0 6px 0.75ex; list-style: none; vertical-align: middle }
-div.menu ul li {
-  margin-left: 0; /* дополнительный отступ получается из-за отображения браузерами пробела на масте символа переноса строки в исходном HTML */
-  font-weight: bold;
-  display: inline;
-  vertical-align: middle
-}
+div.menu ul li { font-weight: bold; display: inline-block; vertical-align: middle; padding-left: 6px;}
 div.menu ul li a,
-div.menu ul li a:visited { color: GreenYellow; text-decoration: none; border-bottom: Solid GreenYellow 1px }
+div.menu ul li a:visited { color: GhostWhite; text-decoration: none; border-bottom: Solid GhostWhite 1px }
 div.menu ul li a:hover,
-div.menu ul li a:active  { color: White; background-color: Green; border-bottom: none }
+div.menu ul li a:active  { color: White; background-color: DeepSkyBlue; border-bottom: none }
 
 /* Табличное оформление */
 th.bottomWeakBorder,
-td.bottomWeakBorder { vertical-align: top; border-bottom: Solid 1px Blue }
+td.bottomWeakBorder { vertical-align: top; border-bottom: Solid 1px Navy }
 
 /* Страничный интерфейс на таблицах, устаревает */
 table.tabControl { width: 100%; border: none; margin-top: 0.25em }
 table.tabControl th.tabTitle {
   border: none;
-  border-bottom: Solid 1px DodgerBlue;
+  border-bottom: Solid 1px RoyalBlue;
   padding-bottom: 2px; }
 table.tabControl th.tabTitleActive {
   background-color: #091936;
-  border: Solid 1px DodgerBlue;
+  border: Solid 1px RoyalBlue;
   border-top-width: 2px;
   border-bottom: none }
 table.tabControl td.tabSheet {
   padding: 4px 4px 4px 4px;
   background: Black url(/images/bg_main.png) 0 0 repeat-x;
-  border: Solid 1px DodgerBlue; border-top: none
+  border: Solid 1px RoyalBlue; border-top: none
 }
 
 /* Страничный интерфейс, новый */
 div.tabHeaderBox { display: inline-block; width: 25%; }
 div.tabHeader {
   border: none;
-  border-bottom: Solid 1px DodgerBlue;
+  border-bottom: Solid 1px RoyalBlue;
   text-align: center;
   padding-bottom: 3px;
 } 
 div.tabHeader a:hover {
   display: inline-block;
   width: 99%;
-  border: Solid 1px DodgerBlue;
+  border: Solid 1px RoyalBlue;
   border-top-width: 3px;
   border-bottom: none;
 } 
 div.tabHeaderActive {
   background-color: #091936;
-  border: Solid 1px DodgerBlue;
+  border: Solid 1px RoyalBlue;
   border-top-width: 3px;
   text-align: center;
   padding-bottom: 3px;
 } 
 div.tabSheet {
   background: Black url(/images/bg_main.png) 0 0 repeat-x;
-  border: Solid 1px DodgerBlue;
+  border: Solid 1px RoyalBlue;
   border-top: none;
   padding: 3px 1ex 0.5em 1ex; 
 }

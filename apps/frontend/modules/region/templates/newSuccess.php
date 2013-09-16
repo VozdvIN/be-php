@@ -1,7 +1,7 @@
 <?php
 render_breadcombs(array(
     link_to('Модерирование', 'moderation/show'),
-    link_to('Регионы', 'region/index')
+    link_to('Проекты', 'region/index')
     ))
 ?>
 

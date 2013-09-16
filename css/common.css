@@ -9,29 +9,27 @@
 html { font-size: 1em; }
 
 body {
-  background: #091936 url(/images/bg_border.png) 0 0 repeat-x;
+  /* background: #091936 url(/images/bg_border.png) 0 0 repeat-x; */
+  background-color: Black;
   padding: 0 1ex 0 1ex;
   margin-left: auto;
   margin-right: auto;
-  color: LightGrey;
+  color: LightCyan;
   font-family: Verdana, Helvetica, Sans-Serif;
   text-align: justify;
-/*  width: 765px; font-size: 100% /**/
-/*  width: 320px; font-size: 70%; /**/
-/*  width: 240px; font-size: 60%; /**/
-/*  width: 176px; font-size: 50%; /**/
+  min-width: 780px;
 }
 
 h1, h2, h3, h4, h5 {
-  margin: 6px 0 0 0;
+  margin: 3px 0 0 0;
   text-align: Left;
   font-family: Arial, Helvetica, Sans-serif;
   font-size: 100%;
 }
 h1 { color: White;         font-size: 150%; padding-left: 20% }
-h2 { color: AliceBlue;     font-size: 130%; padding-left: 15% }
-h3 { color: PaleTurquoise; font-size: 115%; padding-left: 10%; border-top: Solid 1px DodgerBlue }
-h4 { color: Turquoise;     font-size: 105%; padding-left: 5% }
+h2 { color: AliceBlue;     font-size: 135%; padding-left: 15% }
+h3 { color: PaleTurquoise; font-size: 120%; padding-left: 10%; border-top: Solid 1px RoyalBlue; margin-top: 6px;}
+h4 { color: Turquoise;     font-size: 110%; padding-left: 5% }
 h5 { color: DarkTurquoise;                  padding-left: 3% }
 
 ul, ol { padding: 0 0 0 0; margin: 0 0 0 0 }
@@ -50,19 +48,19 @@ a:active  { border-bottom: none }
 
 table {
   border: none;
-  border-left: Solid 1px DodgerBlue;
-  border-top: Solid 1px DodgerBlue;
+  border-left: Solid 1px RoyalBlue;
+  border-top: Solid 1px RoyalBlue;
   vertical-align: top;
   empty-cells: show;
 }
 td, th {
   border: none;
-  border-bottom: Solid 1px DodgerBlue;
-  border-right: Solid 1px DodgerBlue;
+  border-bottom: Solid 1px RoyalBlue;
+  border-right: Solid 1px RoyalBlue;
   padding: 0 1px 2px 1px;
   font-weight: normal
 }
-th { color: LightGrey; font-weight: bold }
+th { color: LightCyan; font-weight: bold }
 td { text-align: left }
 tbody th { text-align: right }
 thead th, tfoot td { vertical-align: bottom; text-align: center }

@@ -7,7 +7,6 @@
     <?php include_partial('global/mainMenu'); ?>
     <?php include_partial('global/flashes'); ?>
     <?php echo $sf_content; ?>
-    <div class="hr"></div>
     <?php include_partial('global/footer'); ?>
   </body>
 

@@ -4,10 +4,6 @@
 
     <div class="rightPadded">
       <h3>Анонсы</h3>
-      <h4><?php echo ($_currentRegion->id == Region::DEFAULT_REGION) ? 'Все' : $_currentRegion->name ?></h4>
-      <p>
-        <?php include_partial('region/setRegion', array('retUrl' => 'home/index')); ?>
-      </p>
       <?php if ($_games->count() > 0): ?>
       <?php
         foreach ($_games as $game)
@@ -44,7 +40,7 @@
     <div class="leftPadded">
       
       <?php   if ($_canEditNews && $_localNews): ?>
-      <div style="text-align: right">
+      <div>
         <?php   render_h3_inline_begin("Новости") ?>
         <span class="safeAction"><?php echo link_to('Редактировать', 'article/edit?id='.$_localNews->id); ?></span>
         <?php   render_h3_inline_end() ?>
@@ -52,19 +48,13 @@
       <?php   else: ?>
       <h3>Новости</h3>
       <?php   endif ?>
-
-      <h4><?php echo ($_currentRegion->id == Region::DEFAULT_REGION) ? 'Общие' : $_currentRegion->name ?></h4>
-      
-      <p>
-        <?php include_partial('region/setRegion', array('retUrl' => 'home/index')); ?>
-      </p>
       
       <?php if ($_localNews): ?>
       <div>
         <?php echo Utils::decodeBB($_localNews->text) ?>
       </div>
       <?php else: ?>
-      <?php echo decorate_span('warn', 'Для этого региона не найден новостной канал.') ?>
+      <?php echo decorate_span('warn', 'Создайте для этого проекта новостной канал - статью "Новости"-'.$_currentRegion->name) ?>
       <?php endif ?>
       
     </div>

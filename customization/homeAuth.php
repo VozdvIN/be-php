@@ -8,8 +8,4 @@
  * показано ниже этого. 
  */
 ?>
-<div>
-  <p>
-    Добро пожаловать, <?php echo $sf_user->getAttribute('login') ?>!
-  </p>
-</div>
+<div></div>

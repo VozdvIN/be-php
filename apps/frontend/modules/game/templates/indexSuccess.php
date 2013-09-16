@@ -7,7 +7,7 @@ $this->_retUrlRaw = Utils::encodeSafeUrl(url_for('game/index'));
 
 <h2>Игры</h2>
 
-<div>
+<div style="margin-bottom: 1em">
   <?php if ($_sessionIsGameModerator): ?>
   <div><?php echo link_to('Создать новую игру', 'game/new') ?></div>
   <?php else: ?>
@@ -16,12 +16,9 @@ $this->_retUrlRaw = Utils::encodeSafeUrl(url_for('game/index'));
 </div>
 
 <?php if ($_currentRegion->id == Region::DEFAULT_REGION): ?>
-<h3>Все</h3>
 <?php else: ?>
-<h3>В регионе <?php echo $_currentRegion->name ?></h3>
+<h3>Игры проекта &quot;<?php echo $_currentRegion->name ?>&quot;</h3>
 <?php endif ?>
-
-<?php include_partial('region/setRegion', array('retUrl' => 'game/index'))?>
 
 <?php
 if ( !
@@ -31,7 +28,7 @@ if ( !
      )
    )
 {
-  echo decorate_div('info', 'В этом регионе нет игр.');  
+  echo decorate_div('info', 'Игр пока нет.');  
 }
 ?>
 
@@ -119,9 +116,9 @@ if ( !
 
 <?php if ($_gameCreateRequests->count() > 0): ?>
 <?php   if ($_sessionIsGameModerator): ?>
-<h3>Заявки на создание (все регионы)</h3>
+<h3>Заявки</h3>
 <?php   else: ?>
-<h3>Заявки на создание (ваши)</h3>
+<h3>Ваши заявки</h3>
 <?php   endif ?>
 <ul>
   <?php foreach ($_gameCreateRequests as $gameCreateRequest): ?>

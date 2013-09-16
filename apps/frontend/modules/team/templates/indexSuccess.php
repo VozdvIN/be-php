@@ -2,7 +2,7 @@
 
 <h2>Команды</h2>
 
-<div>
+<div style="margin-bottom: 1em">
   <?php if ($_isModerator): ?>
   <div><?php echo link_to('Создать новую команду', 'team/new') ?></div>
   <?php elseif ($_fastTeamCreate): ?>
@@ -13,12 +13,9 @@
 </div>
 
 <?php if ($_currentRegion->id == Region::DEFAULT_REGION): ?>
-<h3>Все</h3>
 <?php else: ?>
-<h3>Из региона <?php echo $_currentRegion->name ?></h3>
+<h3>Команды проекта &quot;<?php echo $_currentRegion->name ?>&quot;</h3>
 <?php endif ?>
-
-<?php include_partial('region/setRegion', array('retUrl' => 'team/index'))?>
 
 <?php if ($_teams->count() > 0): ?>
 <ul>
@@ -54,9 +51,9 @@
 
 <?php if ($_teamCreateRequests->count() > 0): ?>
 <?php   if ($_isModerator): ?>
-<h3>Заявки на создание (все регионы)</h3>
+<h3>Заявки</h3>
 <?php   else: ?>
-<h3>Заявки на создание (ваши)</h3>
+<h3>Ваши заявки</h3>
 <?php   endif ?>
 <ul>
   <?php foreach ($_teamCreateRequests as $teamCreateRequest): ?>
