@@ -6,8 +6,18 @@
   </div><div style="width:40%; display:inline-block;">
 	&nbsp;
   </div><div style="width:30%; display:inline-block; font-style: italic; font-size: smaller">
-    <div>Автор проекта: <a href="http://vk.com/vozdvin">Илья Воздвиженский</a>, Copyright 2012</div>
-    <div>Powered by <a href="http://be.vozdvin.ru">Beaver's Engine v0.15.18</a></div>
+    <div>
+      <?php
+        if ($footerArticle = Article::byName('Шаблонные-Подвал'))
+        {
+          echo Utils::decodeBB($footerArticle->text);
+        }
+        else
+        {
+          echo '(Заполните статью \'Шаблонные-Подвал\')';
+        }
+      ?>    
+    </div>
   </div>
 </div>
 
