@@ -4,7 +4,7 @@ Game:
   columns:
     id: { type: integer, primary: true, notnull: true, autoincrement: true }
     # Название
-    name: { type: string(16), notnull: true }
+    name: { type: string(255), notnull: true }
     # Краткое описание
     short_info: { type: string(2048), notnull: true }
     # Разрешение на публикацию анонса

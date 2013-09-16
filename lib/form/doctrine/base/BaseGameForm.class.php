@@ -44,7 +44,7 @@ abstract class BaseGameForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                       => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'name'                     => new sfValidatorString(array('max_length' => 16)),
+      'name'                     => new sfValidatorString(array('max_length' => 255)),
       'short_info'               => new sfValidatorString(array('max_length' => 2048)),
       'short_info_enabled'       => new sfValidatorBoolean(array('required' => false)),
       'description'              => new sfValidatorString(),

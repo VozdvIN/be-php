@@ -112,10 +112,10 @@ abstract class BaseGame extends sfDoctrineRecord
              'primary' => true,
              'autoincrement' => true,
              ));
-        $this->hasColumn('name', 'string', 16, array(
+        $this->hasColumn('name', 'string', 255, array(
              'type' => 'string',
              'notnull' => true,
-             'length' => 16,
+             'length' => 255,
              ));
         $this->hasColumn('short_info', 'string', 2048, array(
              'type' => 'string',
