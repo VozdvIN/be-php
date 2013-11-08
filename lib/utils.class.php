@@ -207,6 +207,8 @@ class Utils
   const PASSWORD_SALT = 'cHaNgEtHiS';
   const ACTIVATION_KEY_LENGTH = 16;
 
+  const LOAD_TEST_MODE = false; // True - включить режим нагрузочного тестирования
+
   /**
    * Возвращает хэш пароля с учетом "соления".
    *

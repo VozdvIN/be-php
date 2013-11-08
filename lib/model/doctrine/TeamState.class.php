@@ -500,7 +500,24 @@ class TeamState extends BaseTeamState implements IStored, IAuth
           if ($currentTaskStatus->status >= TaskState::TASK_DONE)
           {
             // Задание завершено с каким-либо результатом.
-            $res = $this->closeTask($actor);
+            if (Utils::LOAD_TEST_MODE)
+            {
+              // В отладочном режиме закрытие задания происходит со случайной задержкой,
+              // чтобы создать разброс в моментах старта заданий, начиная со второго.
+              // В данном случае задание закрывается с вероятностью 1/4.
+              if (rand(0, 3) == 1)
+              {
+                $res = $this->closeTask($actor);
+              }
+              else
+              {
+                $res = true;
+              }
+            }
+            else
+            {
+              $res = $this->closeTask($actor);
+            }
           }
           else
           {
