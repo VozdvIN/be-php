@@ -7,9 +7,6 @@
 	&nbsp;
   </div><div style="width:30%; display:inline-block; font-style: italic; font-size: smaller">
     <div>
-    <div>
-        Основано на <a href="http://beavengine.ru" target="_blank">Beaver's Engine</a>.
-    </div>
       <?php
         if ($footerArticle = Article::byName('Шаблонные-Подвал'))
         {
