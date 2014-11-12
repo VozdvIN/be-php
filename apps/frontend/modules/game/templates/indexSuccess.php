@@ -15,11 +15,6 @@ $this->_retUrlRaw = Utils::encodeSafeUrl(url_for('game/index'));
   <?php endif; ?>
 </div>
 
-<?php if ($_currentRegion->id == Region::DEFAULT_REGION): ?>
-<?php else: ?>
-<h3>Игры проекта &quot;<?php echo $_currentRegion->name ?>&quot;</h3>
-<?php endif ?>
-
 <?php
 if ( !
      (   ($_plannedGames->count() > 0)

@@ -8,7 +8,6 @@
 </p>
 <?php endif ?>
 
-<h3>Все</h3>
 <?php if ($_articles->count() > 0): ?>
 <ul>
 <?php   foreach ($_articles as $article): ?>
@@ -16,7 +15,7 @@
     <?php
     echo link_to($article->name, 'article/show?id='.$article->id);
     echo ($article->web_user_id == $_sessionWebUserId)
-        ? decorate_span('info', ' -&nbsp;ваша&nbsp;статья')
+        ? decorate_span('info', '&nbsp;-&nbsp;вы&nbsp;автор')
         : '';   
     if ($article->path !== "")
     {

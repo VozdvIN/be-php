@@ -12,11 +12,6 @@
   <?php endif; ?>
 </div>
 
-<?php if ($_currentRegion->id == Region::DEFAULT_REGION): ?>
-<?php else: ?>
-<h3>Команды проекта &quot;<?php echo $_currentRegion->name ?>&quot;</h3>
-<?php endif ?>
-
 <?php if ($_teams->count() > 0): ?>
 <ul>
   <?php $sessionWebUser = $sf_user->getSessionWebUser()->getRawValue() ?>

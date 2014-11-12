@@ -2,7 +2,7 @@
 $retUrlRaw = Utils::encodeSafeUrl('webUser/show?id='.$_webUser->id);
 
 render_breadcombs(array(
-    link_to('Люди', 'webUser/index'),
+    link_to('Участники', 'webUser/index'),
     $_webUser->login
 ));
 ?>

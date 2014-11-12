@@ -1,11 +1,6 @@
-<?php render_breadcombs(array('Люди')); ?>
+<?php render_breadcombs(array('Участники')); ?>
 
 <h2>Участники</h2>
-
-<?php if ($_currentRegion->id == Region::DEFAULT_REGION): ?>
-<?php else: ?>
-<h3>Участники проекта &quot;<?php echo $_currentRegion->name ?>&quot;</h3>
-<?php endif ?>
 
 <ul>
   <?php foreach ($_webUsers as $webUser): ?>
