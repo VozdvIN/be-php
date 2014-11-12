@@ -4,17 +4,17 @@
 <?php
   //Служебные поля
   $width = get_text_block_size_ex('Сообщение модератору:');
-  render_form_field_using_div($form['_csrf_token'], $width);
-  render_form_field_using_div($form['id'], $width);
-  render_form_field_using_div($form['team_id'], $width);
+  render_form_field($form['_csrf_token'], $width);
+  render_form_field($form['id'], $width);
+  render_form_field($form['team_id'], $width);
   //Подсказка
   render_named_line($width, 'Организаторы:', Team::byId($form['team_id']->getValue()));
   //Видимые поля
-  render_form_field_using_div($form['name'], $width);
-  render_form_field_using_div($form['description'], $width);
+  render_form_field($form['name'], $width);
+  render_form_field($form['description'], $width);
 
   //Код отправки
-  render_form_commit_using_div(
+  render_form_commit(
       $form,
       'Подать заявку',
       decorate_span(

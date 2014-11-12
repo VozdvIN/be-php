@@ -6,6 +6,6 @@
 <?php include_stylesheets() ?>
 <?php include_javascripts() ?>
 <script type="text/javascript">
-  <?php render_timer_script(); ?>
+    <?php render_timer_script(); ?>
 </script>
 </head>

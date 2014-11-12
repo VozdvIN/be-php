@@ -5,38 +5,38 @@
   <?php
   //Служебные поля
   $width = get_text_block_size_ex('Когда кем-то выполняется:');
-  render_form_field_using_div($form['_csrf_token'], $width);
-  render_form_field_using_div($form['id'], $width);
-  render_form_field_using_div($form['game_id'], $width);
+  render_form_field($form['_csrf_token'], $width);
+  render_form_field($form['id'], $width);
+  render_form_field($form['game_id'], $width);
   ?>
   <h4>Основные</h4>
   <?php
-  render_form_field_using_div($form['name'], $width);
-  render_form_field_using_div($form['public_name'], $width);
-  render_form_field_using_div($form['time_per_task_local'], $width);
-  render_form_field_using_div($form['try_count_local'], $width);
-  render_form_field_using_div($form['min_answers_to_success'], $width);
+  render_form_field($form['name'], $width);
+  render_form_field($form['public_name'], $width);
+  render_form_field($form['time_per_task_local'], $width);
+  render_form_field($form['try_count_local'], $width);
+  render_form_field($form['min_answers_to_success'], $width);
   ?>
   <h4>Управление</h4>
   <?php
-  render_form_field_using_div($form['max_teams'], $width);
-  render_form_field_using_div($form['manual_start'], $width);
-  render_form_field_using_div($form['locked'], $width);
+  render_form_field($form['max_teams'], $width);
+  render_form_field($form['manual_start'], $width);
+  render_form_field($form['locked'], $width);
   ?>
   <h4>Приоритеты опорные</h4>
   <?php
-  render_form_field_using_div($form['priority_free'], $width);
-  render_form_field_using_div($form['priority_busy'], $width);
+  render_form_field($form['priority_free'], $width);
+  render_form_field($form['priority_busy'], $width);
   ?>
   <h4>Приоритеты дополнительные</h4>
   <?php
-  render_form_field_using_div($form['priority_filled'], $width);
-  render_form_field_using_div($form['priority_per_team'], $width);
+  render_form_field($form['priority_filled'], $width);
+  render_form_field($form['priority_per_team'], $width);
   ?>
   
   <?php
   //Код отправки
-  render_form_commit_using_div(
+  render_form_commit(
       $form,
       'Сохранить',
       decorate_span(

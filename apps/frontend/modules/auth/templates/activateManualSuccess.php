@@ -10,7 +10,7 @@
 </p>
 
 <?php echo $form->renderFormTag(url_for('auth/activateManual')); ?>
-<?php echo render_form_using_div($form, 'Активировать',  ''); ?>
+<?php echo render_form($form, 'Активировать',  ''); ?>
 <?php echo '</form>'; ?>
 
 <p>

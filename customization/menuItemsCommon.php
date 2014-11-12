@@ -1,1 +1,0 @@
-<li><?php echo link_to_article_name('Инструкции') ?></li>

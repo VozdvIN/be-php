@@ -4,21 +4,21 @@
 <?php
   //Служебные поля
   $width = get_text_block_size_ex('Разрешить выбор вручную:');
-  render_form_field_using_div($form['_csrf_token'], $width);
-  render_form_field_using_div($form['id'], $width);
-  render_form_field_using_div($form['task_id'], $width);
+  render_form_field($form['_csrf_token'], $width);
+  render_form_field($form['id'], $width);
+  render_form_field($form['task_id'], $width);
   //Подсказка
   render_named_line($width, 'С задания:', $task->name);
   //Видимые поля
-  render_form_field_using_div($form['target_task_id'], $width);
-  render_form_field_using_div($form['allow_on_success'], $width);
-  render_form_field_using_div($form['allow_on_fail'], $width);
-  render_form_field_using_div($form['manual_selection'], $width);
+  render_form_field($form['target_task_id'], $width);
+  render_form_field($form['allow_on_success'], $width);
+  render_form_field($form['allow_on_fail'], $width);
+  render_form_field($form['manual_selection'], $width);
   ?>
   
   <?php
   //Код отправки
-  render_form_commit_using_div(
+  render_form_commit(
       $form,
       'Сохранить',
       decorate_span(

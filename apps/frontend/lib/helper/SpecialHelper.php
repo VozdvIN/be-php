@@ -162,8 +162,7 @@ function decorate_div($class, $innerHtml)
 }
 
 /**
- * Генерирует в поток вывода HTML-код одной строки с заголовком и несколькими значениями,
- * но только в том случае, если выполнено условие.
+ * Генерирует в поток вывода HTML-код одной строки с заголовком и несколькими значениями.
  * 
  * @param   string  $nameWidth  ширина колонки названия свойства (в единицах ex)
  * @param   string  $name       заголовок строки
@@ -264,7 +263,7 @@ function render_h3_inline_end()
  *
  * @return  string
  */
-function render_form_field_using_div(sfFormField $field, $width)
+function render_form_field(sfFormField $field, $width)
 {
   if ( ! $field->isHidden())
   {
@@ -295,7 +294,7 @@ function render_form_field_using_div(sfFormField $field, $width)
  * @param   string    $backHtml     html-код обратного перехода при отказе от отправки.
  * @param   integer   $width        ширина колонки с меткой поля, в ex
  */
-function render_form_commit_using_div(sfForm $form, $commitLabel, $backHtml, $width)
+function render_form_commit(sfForm $form, $commitLabel, $backHtml, $width)
 {
   //Если это не Doctrine-форма, то с нее объект не получить
   if ( ! ($form instanceof sfFormDoctrine))
@@ -319,16 +318,16 @@ function render_form_commit_using_div(sfForm $form, $commitLabel, $backHtml, $wi
  * @param   string    $commitLabel  название кнопки отправки формы
  * @param   string    $backHtml     html-код обратного перехода при отказе от отправки.
  */
-function render_form_using_div(sfForm $form, $commitLabel, $backHtml)
+function render_form(sfForm $form, $commitLabel, $backHtml)
 {
   //Определим длину заголовков полей
   $width = get_text_block_size_ex(get_max_strlen($form->getWidgetSchema()->getLabels()));
   //Генерируем тело формы
   foreach($form as $field)
   {
-    render_form_field_using_div($field, $width);
+    render_form_field($field, $width);
   }
-  render_form_commit_using_div($form, $commitLabel, $backHtml, $width);
+  render_form_commit($form, $commitLabel, $backHtml, $width);
 }
 
 /**

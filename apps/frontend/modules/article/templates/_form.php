@@ -3,14 +3,14 @@
 <form action="<?php echo url_for('article/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
   <?php
   $width = get_text_block_size_ex('Название:');
-  render_form_field_using_div($form['_csrf_token'], $width);
-  render_form_field_using_div($form['id'], $width);
+  render_form_field($form['_csrf_token'], $width);
+  render_form_field($form['id'], $width);
   
-  render_form_field_using_div($form['name'], $width);
-  render_form_field_using_div($form['path'], $width);
-  render_form_field_using_div($form['text'], $width);
+  render_form_field($form['name'], $width);
+  render_form_field($form['path'], $width);
+  render_form_field($form['text'], $width);
   
-  render_form_commit_using_div(
+  render_form_commit(
       $form,
       'Сохранить',
       decorate_span(
