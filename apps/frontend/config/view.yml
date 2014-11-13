@@ -6,7 +6,7 @@ default:
     content-type: text/html; charset=utf-8
 
   metas:
-    title:        Beaver's Engine
+    title:        <?php echo SystemSettings::getInstance()->site_name ?>
     description:  Beaver's Engine for interactive online games
     language:     en
     robots:       index, follow

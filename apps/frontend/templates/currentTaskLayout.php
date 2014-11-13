@@ -4,7 +4,7 @@
     <?php include_http_metas() ?>
     <?php include_metas() ?>
     <?php include_title() ?>
-    <link rel="shortcut icon" href="/customization/images/favicon.png" />
+    <link rel="shortcut icon" href="/images/favicon.png" />
     <?php include_stylesheets() ?>
     <?php include_javascripts() ?>
     <script type="text/javascript">
@@ -16,7 +16,7 @@
     </script>
     <?php endif; ?>
   </head>
-  <body style="width:auto" onload="startTime()">
+  <body onload="startTime()">
     <?php include_partial('global/flashes'); ?>
     <?php echo $sf_content; ?>
     <div class="hr">

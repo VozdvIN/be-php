@@ -3,10 +3,6 @@
     Author     : vozdvin
 */
 
-/*
-   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
-*/
-
 /* Неотображаемые фрагметы, например коды счетчиков */
 div.hidden { display: none }
 
@@ -55,30 +51,6 @@ div.breadcomb {
   border-right-width: 1px;
   border-top: none;
   border-bottom: none;
-  border-left: none;
-}
-
-/* Карта сайта и ссылки на ней */
-div.siteMap {
-  margin-top: 0.5em;
-  padding: 2px 0 0 0.5ex;
-  border: Solid RoyalBlue;
-  border-top-width: 1px;
-  border-right: none;
-  border-bottom: none;
-  border-left-width: 3px;
-  font-size: smaller;
-  font-style: italic;
-}
-div.siteMap ul { list-style: none; padding: 0 0 0 0; margin: 0 0 0 0 }
-div.siteMap ul li {
-  display: inline-block;
-  margin-left: 0px; /* дополнительный отступ получается из-за отображения браузерами пробела на масте символа переноса строки в исходном HTML */
-  padding: 0 3px 3px 0;
-  border: Solid RoyalBlue;
-  border-top: none;
-  border-right-width: 1px;
-  border-bottom-width: 1px;
   border-left: none;
 }
 

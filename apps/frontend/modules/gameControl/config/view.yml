@@ -9,4 +9,3 @@ all:
   metas:
     title: "Управление игрой"
   has_layout: true
-  layout:     fullWideLayout  

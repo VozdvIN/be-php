@@ -3,7 +3,6 @@ Disallow: /apps/
 Disallow: /cache/
 Disallow: /config/
 Disallow: /css/
-Disallow: /customization/
 Disallow: /data/
 Disallow: /images/
 Disallow: /js/
