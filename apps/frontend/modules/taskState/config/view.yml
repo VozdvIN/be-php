@@ -2,7 +2,7 @@ taskSuccess:
   metas:
     title: "Текущее задание"
   has_layout: true  
-  layout:     currentTaskLayout
+  layout:     minimalLayout
   
 
 all:

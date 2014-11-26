@@ -9,26 +9,17 @@
 		<script type="text/javascript">
 			<?php render_timer_script(); ?>
 		</script>
-	</head>
+		<?php if (Utils::LOAD_TEST_MODE): ?>
+		<script type="text/javascript">
+			setTimeout(function() { window.location.reload(true); }, Math.round(30000 + 60000 * Math.random()));
+		</script>
+		<?php endif; ?>
+	</head>	
 	<body onload="startTime()">
-		<header><!--
-		 --><?php include_partial('global/header'); ?><!--
-	 --></header>
-		
-		<section>
-			<?php include_partial('global/mainMenu'); ?>
-		</section>
-		
-		<section>
-			<?php include_partial('global/flashes'); ?>
-		</section>
-		
-		<section>
-			<?php echo $sf_content; ?>
-		</section>
-		
-		<footer class="pad-top border-top"><!--
-		 --><?php include_partial('global/footer'); ?><!--
-	 --></footer>
+		<?php include_partial('global/flashes'); ?>
+		<?php echo $sf_content; ?>
+		<div class="hr">
+			<?php echo link_to('Главная', 'home/index').' '.link_to('Выйти', 'auth/logout'); ?>
+		</div>
 	</body>
 </html>

@@ -1,0 +1,363 @@
+/* Designed for "DOCTYPE HTML" */
+/* HEADER & FOOTER do not work in IE8 and older */
+
+html, body, div, p, pre,
+h1, h2, h3, h4, h5, h6,
+ul, ol, li,
+table, thead, tbody, tfoot, td, tr, th,
+form, fieldset,
+img, blockquote, iframe,
+nav, header, footer, section, article, aside
+{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    border: none;
+    border-spacing: 0 0;
+    vertical-align: top;
+    font-size: 0;
+    font-family: Verdana, sans-serif; /* FONT: Font family */
+    box-sizing: border-box;
+    white-space: normal;
+}
+
+body
+{
+    margin-top: 6px;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 320px;
+    min-height: 200px;
+    max-width: 980px;
+    padding-left: 6px;
+    padding-right: 6px;
+    text-align: justify;
+}
+
+span, p, article,
+h1, h2, h3, h4, h5, h6,
+ol, ul, li,
+th, td
+{
+    font-size: 14px; /* FONT: Font size */
+    text-align: Left;
+    color: BLACK; /* COLOR: Main text */
+}
+
+a, em, strong
+{
+    font-size: inherit;
+    text-align: inherit;
+}
+
+a
+{ 
+    text-indent: inherit;
+    color: BLUE;
+}
+
+    a:link
+    {
+        text-decoration: none;
+    }
+	
+    a:visited
+    {
+        text-decoration: none;
+    }
+	
+    a:hover
+    {
+        text-decoration: none;
+    }
+	
+    a:active
+    {
+        text-decoration: none;
+    }
+
+/* === Paragraphs === */
+
+p, article
+{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 4px;
+    text-indent: 0;
+    text-align: inherit;
+}
+
+p.para
+{
+    text-indent: 4ex;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    line-height: 150%;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+h1 { font-size: 20px; margin-left: 5ex; padding-left: 10%; } /* SIZE: Font size */
+h2 { font-size: 19px; margin-left: 5ex; padding-left: 8%; } /* SIZE: Font size */
+h3 { font-size: 18px; margin-left: 5ex; padding-left: 6%; } /* SIZE: Font size */
+h4 { font-size: 17px; margin-left: 5ex; padding-left: 4%; } /* SIZE: Font size */
+h5 { font-size: 16px; margin-left: 5ex; padding-left: 2%; } /* SIZE: Font size */
+h6 { font-size: 15px; margin-left: 5ex; padding-left: 0; } /* SIZE: Font size */
+
+/* === Lists === */
+
+ul, ol
+{
+    padding-left: 5ex;
+}
+
+li
+{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 4px;
+    text-align: justify;
+}
+
+/* === Tables === */
+
+table, tr, th, td
+{
+    border-color: SKYBLUE; /* COLOR: Table grid lines */
+    border-width: 1px;
+    border-style: none;
+}
+
+table
+{
+    border-style: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 4px;
+}
+
+tr
+{
+    border-style: none none solid none;
+}
+
+tr:first-child
+{
+    border-style: solid none solid none;
+}
+
+th, td
+{ 
+    padding: 3px 3px 3px 3px;
+    border-style: inherit;
+    border-right-style: solid;
+}
+
+    th:first-child, td:first-child
+    {
+        border-style: inherit;
+        border-right-style: solid;
+        border-left-style: solid;
+    }
+
+th
+{
+    text-align: center;
+}
+
+table.no-border, table.no-border tr, table.no-border th, table.no-border td
+{
+    border-style: none;
+}
+
+/* === Formatting === */
+
+.full-width
+{
+    width: 100%
+}
+
+.strong
+{
+    font-weight: bold;
+}
+
+.pad-bottom
+{
+    padding-bottom: 6px;
+}
+
+.pad-top
+{
+    padding-top: 6px;
+}
+
+.pad-box
+{
+    display: inline-block;
+    padding: 3px 6px 3px 6px
+}
+
+.box
+{
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-style: solid;
+    border-left-width: 1px;	
+}
+
+.border-top
+{
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: SKYBLUE; /* COLOR: Table grid lines */
+}
+
+.border-bottom
+{
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: SKYBLUE; /* COLOR: Table grid lines */
+}
+
+/* === Highlights === */
+
+.info
+{
+    color: green; /* COLOR: Information */
+} 
+
+.warn
+{
+    color: darkorange; /* COLOR: Warning */
+} 
+
+.danger
+{
+    color: red; /* COLOR: Danger */
+} 
+
+p.info, p.warn, p.danger
+{
+    border-left-style: solid;
+    border-left-width: 2px;
+    padding-left: 2px;
+}
+
+.info-bg
+{
+    background-color: #CCFFCC; /* COLOR: Information background */
+} 
+
+.warn-bg
+{
+    background-color: #FFFFCC; /* COLOR: Information background */
+} 
+
+.danger-bg
+{
+    background-color: #FFCCCC; /* COLOR: Information background */
+} 
+
+/* === UI === */
+
+/* --- Header --- */
+
+header
+{
+    width: 100%;
+}
+
+    header div
+    {
+        display: inline-block;
+        vertical-align: bottom;
+    }
+
+    header div.logo
+    {
+        width: 10%;
+        text-align: left;
+    }
+
+    header div.title
+    {
+        width: 70%;
+        text-align: center;
+    }
+
+    header div.login
+    {
+        width: 20%;
+        text-align: right;
+    }
+
+/* --- Footer --- */
+
+footer
+{
+    width: 100%;
+    font-size: smaller;
+}
+	
+    footer div
+    {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    footer div.banners
+    {
+        width: 50%;
+        text-align: left;
+    }
+
+    footer div.credits
+    {
+        width: 50%;
+        text-align: right;
+    }
+
+/* --- Menu --- */
+
+nav.menu ul
+{
+    display: block;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    list-style: none;
+    background-color: PALETURQUOISE; /* COLOR: Menu background */
+}
+
+    nav.menu ul li
+    {
+        display: inline-block;
+        margin: 0 0 0 0;
+        padding: 0 0 0 0;
+        border-top: solid 2px PALETURQUOISE; /* COLOR: Menu background */
+        background-color: inherit;
+    }
+	
+        nav.menu ul li a
+        {
+            display: block;
+            padding: 3px 9px 6px 9px;
+        }
+		
+            nav.menu ul li a:hover
+            {
+                background-color: TURQUOISE; /* COLOR: Menu item hover background */
+            }
+			
+                nav.menu ul li a.active, nav.menu ul li a.active:hover
+                {
+                    border-top-color: PALETURQUOISE; /* COLOR: Menu item active border top */
+                    color: inherit;
+                    background-color: WHITE; /* COLOR: Menu item active background */
+                    text-decoration: none;
+                }
