@@ -33,7 +33,7 @@ body
     text-align: justify;
 }
 
-span, p, article,
+span, p, article, form,
 h1, h2, h3, h4, h5, h6,
 ol, ul, li,
 th, td
@@ -169,6 +169,7 @@ th
 table.no-border, table.no-border tr, table.no-border th, table.no-border td
 {
     border-style: none;
+    border-width: 0px;
 }
 
 /* === Formatting === */

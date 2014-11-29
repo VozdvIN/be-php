@@ -158,7 +158,9 @@ function decorate_span($class, $innerHtml)
  */
 function decorate_div($class, $innerHtml)
 {
-  return '<div class="'.$class.'">'.$innerHtml.'</div>';
+	return ($class !== '')
+		? '<div class="'.$class.'">'.$innerHtml.'</div>'
+		: '<div>'.$innerHtml.'</div>';
 }
 
 /**
@@ -259,31 +261,45 @@ function render_h3_inline_end()
  * Генерирует код одного поля формы с разметкой, аналогичной списку свойств.
  *
  * @param   sfFormField   $field  поле для отображения
- * @param   integer       $width  ширина колонки с меткой поля, в ex
  *
  * @return  string
  */
-function render_form_field(sfFormField $field, $width)
+function render_form_field(sfFormField $field)
 {
-  if ( ! $field->isHidden())
-  {
-    $htmlValues = array();
-    array_push($htmlValues, $field->render());
-    if ($field->hasError())
-    {
-      array_push($htmlValues, decorate_span('danger', $field->getError()));
-    }
-    $helps = explode('|', $field->getParent()->getWidget()->getHelp($field->getName()));
-    foreach ($helps as $help)
-    {
-      array_push($htmlValues, $help);
-    }
-    render_named_line($width, $field->renderLabel(), $htmlValues);
-  }
-  else
-  {
-    echo '<div>'.$field->render().'</div>'."\n";
-  }
+	if ( ! $field->isHidden())
+	{
+		echo '<tr>';
+		
+		// Метка поля
+		echo '<td>';
+		echo $field->renderLabel();
+		echo '</td>';
+		
+		// Само поле
+		echo '<td>';
+		echo $field->render();
+		echo '</td>';
+		
+		// Комментарии к полю (и ошибки)
+		echo '<td>';		
+		if ($field->hasError())
+		{
+			echo decorate_div('danger', $field->getError());
+		}
+		
+		$helps = explode('|', $field->getParent()->getWidget()->getHelp($field->getName()));
+		foreach ($helps as $help)
+		{
+			echo decorate_div('', $help);
+		}
+		echo '</td>';
+		
+		echo '</tr>';
+	}
+	else
+	{
+		echo $field->render();
+	}
 }
 
 /**
@@ -291,24 +307,24 @@ function render_form_field(sfFormField $field, $width)
  *
  * @param   sfForm    $form         форма для отображения
  * @param   string    $commitLabel  название кнопки отправки формы
- * @param   string    $backHtml     html-код обратного перехода при отказе от отправки.
- * @param   integer   $width        ширина колонки с меткой поля, в ex
  */
-function render_form_commit(sfForm $form, $commitLabel, $backHtml, $width)
+function render_form_commit(sfForm $form, $commitLabel)
 {
-  //Если это не Doctrine-форма, то с нее объект не получить
-  if ( ! ($form instanceof sfFormDoctrine))
-  {
-    render_named_line($width, '<input type="submit" value="'.$commitLabel.'" />', array(($backHtml !== '') ? '' : $backHtml));
-    return;
-  }
-  //Генерируем способ отправки
-  if ( ! $form->getObject()->isNew())
-  {
-    echo '<input type="hidden" name="sf_method" value="put" />';
-  }
-  //Генерируем подвал формы
-  render_named_line($width, '<input type="submit" value="'.$commitLabel.'" />', array(($form->getObject()->isNew()) ? '' : $backHtml));
+	echo '<tr>';
+	echo '<td colspan="3">';
+	
+	// Способ отправки
+	if ( ($form instanceof sfDoctrineForm) && ( ! $form->getObject()->isNew()))
+	{
+		echo '<input type="hidden" name="sf_method" value="put" />';
+	}
+	// Защитный токен
+	$form['_csrf_token']->render();
+	
+	// Кнопка отправки
+	echo '<input type="submit" value="'.$commitLabel.'" />';
+	echo '</td>';
+	echo '</tr>';
 }
 
 /**
@@ -320,14 +336,21 @@ function render_form_commit(sfForm $form, $commitLabel, $backHtml, $width)
  */
 function render_form(sfForm $form, $commitLabel, $backHtml)
 {
-  //Определим длину заголовков полей
-  $width = get_text_block_size_ex(get_max_strlen($form->getWidgetSchema()->getLabels()));
-  //Генерируем тело формы
-  foreach($form as $field)
-  {
-    render_form_field($field, $width);
-  }
-  render_form_commit($form, $commitLabel, $backHtml, $width);
+	// Тэг открытия формы уже находится в выводе, поэтому сейчас создаем только разметку полей
+	echo '<table class="no-border">';
+	
+	echo '<tbody>';
+	foreach($form as $field)
+	{
+		render_form_field($field);
+	}
+	echo '</tbody>';
+	
+	echo '<tfoot>';
+	render_form_commit($form, $commitLabel, $backHtml);
+	echo '</tfoot>';
+	
+	echo '<table>';
 }
 
 /**

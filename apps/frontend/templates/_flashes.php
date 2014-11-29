@@ -4,17 +4,17 @@ $warning = $sf_user->getFlash('warning');
 $error = $sf_user->getFlash('error');
 ?>
 <?php if (isset($notice)): ?>
-<div class="flashNotice">
+<p class="info info-bg">
 	<?php echo $notice ?>
-</div>
+</p>
 <?php endif; ?>
 <?php if (isset($warning)): ?>
-<div class="flashWarning">
+<p class="warn warn-bg">
 	<?php echo $warning ?>
-</div>
+</p>
 <?php endif; ?>
 <?php if (isset($error)): ?>
-<div class="flashError">
+<p class="danger danger-bg">
 	<?php echo $error ?>
-</div>
+</p>
 <?php endif; ?>
