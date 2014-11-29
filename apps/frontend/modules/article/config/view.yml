@@ -1,3 +1,4 @@
 all:
   metas:
     title: "Статьи"
+  has_layout: true

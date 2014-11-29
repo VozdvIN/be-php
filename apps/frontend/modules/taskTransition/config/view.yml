@@ -1,3 +1,4 @@
 all:
   metas:
     title: "Фильтры переходов"
+  has_layout: true

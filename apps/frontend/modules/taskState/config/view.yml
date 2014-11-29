@@ -4,7 +4,7 @@ taskSuccess:
   has_layout: true  
   layout:     minimalLayout
   
-
 all:
   metas:
-    title: "Текущее задание"
+    title: "Пауза"
+  has_layout: true

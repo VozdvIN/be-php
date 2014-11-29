@@ -1,3 +1,4 @@
 all:
   metas:
     title: "Команды"
+  has_layout: true

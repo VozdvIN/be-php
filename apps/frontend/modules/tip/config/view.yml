@@ -1,3 +1,4 @@
 all:
   metas:
     title: "Подсказки"
+  has_layout: true

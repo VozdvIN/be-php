@@ -1,3 +1,4 @@
 all:
   metas:
-    title: "Люди"
+    title: "Участники"
+  has_layout: true

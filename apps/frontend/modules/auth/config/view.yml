@@ -1,9 +1,4 @@
-changePasswordSuccess:
-  has_layout: true
-  layout: layout
-
 all:
   metas:
     title: "Учетные записи"
-
   has_layout: true

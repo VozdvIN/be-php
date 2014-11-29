@@ -1,6 +1,6 @@
 <?php
 render_breadcombs(array(
-    link_to('Люди', 'webUser/index'),
+    link_to('Участники', 'webUser/index'),
     link_to($form->getObject()->WebUser->login, 'webUser/show?id='.$form->getObject()->web_user_id),
 ));
 ?>

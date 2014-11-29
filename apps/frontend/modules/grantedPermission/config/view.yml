@@ -1,3 +1,4 @@
 all:
   metas:
     title: "Выданные разрешения"
+  has_layout: true

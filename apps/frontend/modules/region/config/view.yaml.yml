@@ -1,3 +1,4 @@
 all:
   metas:
     title: "Игровые проекты"
+  has_layout: true

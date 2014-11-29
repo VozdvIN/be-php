@@ -1,10 +1,6 @@
 autoUpdateSuccess:
   has_layout: false
 
-reportSuccess:
-  metas:
-    title: "Результаты игры"
-
 all:
   metas:
     title: "Управление игрой"

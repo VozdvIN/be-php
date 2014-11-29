@@ -1,5 +1,4 @@
 all:
   metas:
     title: <?php echo SystemSettings::getInstance()->site_name."\n" ?>
-  has_layout: true  
-  stylesheets:    [common.css, highlights.css, special.css, home.css]
+  has_layout: true

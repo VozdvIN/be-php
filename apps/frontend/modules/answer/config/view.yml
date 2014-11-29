@@ -1,3 +1,4 @@
 all:
   metas:
     title: "Ответы"
+  has_layout: true
