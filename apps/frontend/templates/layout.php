@@ -11,7 +11,7 @@
 		</script>
 	</head>
 	<body onload="startTime()">
-		<header><!--
+		<header class="pad-bottom"><!--
 		 --><?php include_partial('global/header'); ?><!--
 	 --></header>
 		

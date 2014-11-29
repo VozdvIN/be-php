@@ -29,7 +29,7 @@
 </p>
 
 <div class="pad-top">
-	<?php include_partial('global/simpleForm', array('form' => $form, 'url' => 'auth/register', 'commitLabel' => 'Зарегистрироваться')); ?>
+	<?php include_partial('global/formSimple', array('form' => $form, 'url' => 'auth/register', 'commitLabel' => 'Зарегистрироваться')); ?>
 </div>
 
 <div class="pad-top"></div>

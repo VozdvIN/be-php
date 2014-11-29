@@ -7,5 +7,5 @@
   ))
 ?>
 
-<h2>Правка анкеты  <?php echo $form->getObject()->login ?></h2>
-<?php include_partial('form', array('form' => $form)) ?>
+<h2>Редактирование анкеты &quot;<?php echo $form->getObject()->login ?>&quot;</h2>
+<?php include_partial('global/formCrud', array('form' => $form, 'module' => 'webUser')); ?>

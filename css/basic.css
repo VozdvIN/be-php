@@ -27,7 +27,6 @@ body
     margin-right: auto;
     min-width: 320px;
     min-height: 200px;
-    max-width: 980px;
     padding-left: 6px;
     padding-right: 6px;
     text-align: justify;
@@ -57,12 +56,12 @@ a
 
     a:link
     {
-        text-decoration: none;
+        /* reserved */
     }
 	
     a:visited
     {
-        text-decoration: none;
+        /* reserved */
     }
 	
     a:hover
@@ -79,16 +78,11 @@ a
 
 p, article
 {
-    padding-top: 3px;
-    padding-bottom: 3px;
+/*    padding-top: 3px;*/
+/*    padding-bottom: 3px;*/
     padding-left: 4px;
     text-indent: 0;
     text-align: inherit;
-}
-
-p.para
-{
-    text-indent: 4ex;
 }
 
 h1, h2, h3, h4, h5, h6
@@ -149,9 +143,10 @@ tr:first-child
 
 th, td
 { 
-    padding: 3px 3px 3px 3px;
+    padding: 3px 6px 3px 6px;
     border-style: inherit;
     border-right-style: solid;
+    vertical-align: middle;
 }
 
     th:first-child, td:first-child
@@ -166,6 +161,11 @@ th
     text-align: center;
 }
 
+tbody th
+{
+    text-align: right;
+}
+
 table.no-border, table.no-border tr, table.no-border th, table.no-border td
 {
     border-style: none;
@@ -173,6 +173,11 @@ table.no-border, table.no-border tr, table.no-border th, table.no-border td
 }
 
 /* === Formatting === */
+
+.indent
+{
+    text-indent: 4ex;
+}
 
 .full-width
 {
