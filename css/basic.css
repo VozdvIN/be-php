@@ -15,7 +15,7 @@ nav, header, footer, section, article, aside
     border-spacing: 0 0;
     vertical-align: top;
     font-size: 0;
-    font-family: Verdana, sans-serif; /* FONT: Font family */
+    font-family: verdana, helvetica, sans-serif; /* FONT: Font family */
     box-sizing: border-box;
     white-space: normal;
 }
@@ -30,6 +30,7 @@ body
     padding-left: 6px;
     padding-right: 6px;
     text-align: justify;
+    background-color: black;
 }
 
 span, p, article, form,
@@ -37,9 +38,9 @@ h1, h2, h3, h4, h5, h6,
 ol, ul, li,
 th, td
 {
-    font-size: 14px; /* FONT: Font size */
-    text-align: Left;
-    color: BLACK; /* COLOR: Main text */
+    font-size: 14px;
+    text-align: left;
+    color: lightcyan;
 }
 
 a, em, strong
@@ -51,7 +52,7 @@ a, em, strong
 a
 { 
     text-indent: inherit;
-    color: BLUE;
+    color: bisque;
 }
 
     a:link
@@ -78,8 +79,6 @@ a
 
 p, article
 {
-/*    padding-top: 3px;*/
-/*    padding-bottom: 3px;*/
     padding-left: 4px;
     text-indent: 0;
     text-align: inherit;
@@ -92,12 +91,12 @@ h1, h2, h3, h4, h5, h6
     padding-bottom: 0;
 }
 
-h1 { font-size: 20px; margin-left: 5ex; padding-left: 10%; } /* SIZE: Font size */
-h2 { font-size: 19px; margin-left: 5ex; padding-left: 8%; } /* SIZE: Font size */
-h3 { font-size: 18px; margin-left: 5ex; padding-left: 6%; } /* SIZE: Font size */
-h4 { font-size: 17px; margin-left: 5ex; padding-left: 4%; } /* SIZE: Font size */
-h5 { font-size: 16px; margin-left: 5ex; padding-left: 2%; } /* SIZE: Font size */
-h6 { font-size: 15px; margin-left: 5ex; padding-left: 0; } /* SIZE: Font size */
+h1 { color: white; font-size: 20px; margin-left: 5ex; padding-left: 10%; }
+h2 { color: aliceblue; font-size: 19px; margin-left: 5ex; padding-left: 8%; }
+h3 { color: paleturquoise; font-size: 18px; margin-left: 5ex; padding-left: 6%; }
+h4 { color: turquoise; font-size: 17px; margin-left: 5ex; padding-left: 4%; }
+h5 { color: darkturquoise; font-size: 16px; margin-left: 5ex; padding-left: 2%; }
+h6 { color: inherit; font-size: 15px; margin-left: 5ex; padding-left: 0; }
 
 /* === Lists === */
 
@@ -118,7 +117,7 @@ li
 
 table, tr, th, td
 {
-    border-color: SKYBLUE; /* COLOR: Table grid lines */
+    border-color: royalblue;
     border-width: 1px;
     border-style: none;
 }
@@ -221,31 +220,31 @@ table.no-border, table.no-border tr, table.no-border th, table.no-border td
 {
     border-top-style: solid;
     border-top-width: 1px;
-    border-top-color: SKYBLUE; /* COLOR: Table grid lines */
+    border-top-color: royalblue;
 }
 
 .border-bottom
 {
     border-bottom-style: solid;
     border-bottom-width: 1px;
-    border-bottom-color: SKYBLUE; /* COLOR: Table grid lines */
+    border-bottom-color: royalblue;
 }
 
 /* === Highlights === */
 
 .info
 {
-    color: green; /* COLOR: Information */
+    color: greenyellow;
 } 
 
 .warn
 {
-    color: darkorange; /* COLOR: Warning */
+    color: yellow;
 } 
 
 .danger
 {
-    color: red; /* COLOR: Danger */
+    color: red;
 } 
 
 p.info, p.warn, p.danger
@@ -257,17 +256,17 @@ p.info, p.warn, p.danger
 
 .info-bg
 {
-    background-color: #CCFFCC; /* COLOR: Information background */
+    background-color: green;
 } 
 
 .warn-bg
 {
-    background-color: #FFFFCC; /* COLOR: Information background */
+    background-color: saddlebrown;
 } 
 
 .danger-bg
 {
-    background-color: #FFCCCC; /* COLOR: Information background */
+    background-color: darkred;
 } 
 
 /* === UI === */
@@ -337,7 +336,7 @@ nav.menu ul
     margin: 0 0 0 0;
     padding: 0 0 0 0;
     list-style: none;
-    background-color: PALETURQUOISE; /* COLOR: Menu background */
+    background-color: steelblue;
 }
 
     nav.menu ul li
@@ -345,7 +344,7 @@ nav.menu ul
         display: inline-block;
         margin: 0 0 0 0;
         padding: 0 0 0 0;
-        border-top: solid 2px PALETURQUOISE; /* COLOR: Menu background */
+        border-top: solid 2px steelblue;
         background-color: inherit;
     }
 	
@@ -357,13 +356,13 @@ nav.menu ul
 		
             nav.menu ul li a:hover
             {
-                background-color: TURQUOISE; /* COLOR: Menu item hover background */
+                background-color: black;
             }
 			
                 nav.menu ul li a.active, nav.menu ul li a.active:hover
                 {
-                    border-top-color: PALETURQUOISE; /* COLOR: Menu item active border top */
+                    border-top-color: steelblue;
                     color: inherit;
-                    background-color: WHITE; /* COLOR: Menu item active background */
+                    background-color: black;
                     text-decoration: none;
                 }
