@@ -356,13 +356,11 @@ nav.menu ul
 		
             nav.menu ul li a:hover
             {
-                background-color: black;
+                background-color: deepskyblue;
             }
 			
                 nav.menu ul li a.active, nav.menu ul li a.active:hover
                 {
-                    border-top-color: steelblue;
                     color: inherit;
-                    background-color: black;
                     text-decoration: none;
                 }
