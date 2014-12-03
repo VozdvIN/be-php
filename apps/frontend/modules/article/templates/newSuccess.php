@@ -2,4 +2,4 @@
 
 <h2>Публикация статьи</h2>
 
-<?php include_partial('form', array('form' => $form)) ?>
+<?php include_partial('global/formCrud', array('form' => $form, 'mudule' => 'article')) ?>

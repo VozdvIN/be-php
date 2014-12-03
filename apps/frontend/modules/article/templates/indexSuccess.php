@@ -1,36 +1,41 @@
 <?php render_breadcombs(array('Статьи')) ?>
 
-<h2>Cтатьи</h2>
+<h2>Команды</h2>
 
 <?php if ($sf_user->isAuthenticated()): ?>
 <p>
-  <?php echo link_to('Написать статью', 'article/new') ?>
+	<span class="info info-bg pad-box box"><?php echo link_to('Написать статью', 'article/new') ?></span>
 </p>
 <?php endif ?>
 
-<?php if ($_articles->count() > 0): ?>
-<ul>
-<?php   foreach ($_articles as $article): ?>
-  <li>
-    <?php
-    echo link_to($article->name, 'article/show?id='.$article->id);
-    echo ($article->web_user_id == $_sessionWebUserId)
-        ? decorate_span('info', '&nbsp;-&nbsp;вы&nbsp;автор')
-        : '';   
-    if ($article->path !== "")
-    {
-      echo ', (';
-      $links = get_path_to_article($article->getRawValue());
-      foreach ($links as $link)
-      {
-        echo '\\'.$link;
-      }
-      echo ')';
-    }
-    ?>
-  </li>
-<?php   endforeach; ?>
-</ul>
+<?php if ($_articles->count() == 0): ?>
+<p class="info">
+	Пока что не написано ни одной статьи.
+</p>
 <?php else: ?>
-Пока что не написано ни одной статьи.
+<table class="no-border">
+	<tbody>
+		<?php foreach ($_articles as $article): ?>
+		<tr>
+			<td><?php echo link_to($article->name, 'article/show?id='.$article->id); ?></td>
+			<td><?php echo ($article->web_user_id == $_sessionWebUserId) ? 'Ваша статья' : '&nbsp;'?></td>
+			<td>
+				<?php
+				if ($article->path !== "")
+				{
+					foreach (get_path_to_article($article->getRawValue()) as $link)
+					{
+						echo '\\'.$link;
+					}
+				}
+				else
+				{
+					echo '&nbsp;';
+				};
+				?>
+			</td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+</table>
 <?php endif; ?>

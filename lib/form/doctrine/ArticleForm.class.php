@@ -12,14 +12,18 @@ class ArticleForm extends BaseArticleForm
 {
   public function configure()
   {
-    unset($this['name']);
+	unset($this['name']);
     $this->setWidget('name', new sfWidgetFormInputText());
     $this->setValidator('name', new sfValidatorString(array('max_length' => 256, 'required' => true)));
     
     unset($this['path']);
     $this->setWidget('path', new sfWidgetFormInputText());
     $this->setValidator('path', new sfValidatorString(array('max_length' => 1024, 'required' => false)));
-    
+
+	unset($this['text']);
+    $this->setWidget('text', new sfWidgetFormTextarea());
+    $this->setValidator('text', new sfValidatorString(array('required' => true)));
+	
     unset($this['created_at']);
     unset($this['web_user_id']);
     
