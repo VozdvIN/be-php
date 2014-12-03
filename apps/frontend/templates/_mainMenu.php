@@ -7,7 +7,8 @@ $showModeration = $sessionWebUser && $sessionWebUser->hasSomeToModerate();
 	<ul>
 		<?php if ($sf_user->isAuthenticated()): ?>
 
-		<li><?php echo link_to('Команды', 'team/index') ?></li><!--
+		<li><?php echo link_to('Главная', '/home/index') ?></li><!--
+	 --><li><?php echo link_to('Команды', 'team/index') ?></li><!--
 	 --><li><?php echo link_to('Игры', 'game/index') ?></li><!--
 	 --><li><?php echo link_to('Участники', 'webUser/index') ?></li><!--
 		<?php	if ($showModeration): ?>

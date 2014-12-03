@@ -15,9 +15,10 @@ nav, header, footer, section, article, aside
     border-spacing: 0 0;
     vertical-align: top;
     font-size: 0;
-    font-family: verdana, helvetica, sans-serif; /* FONT: Font family */
+    font-family: verdana, helvetica, sans-serif;
     box-sizing: border-box;
     white-space: normal;
+    text-align: justify;
 }
 
 body
@@ -29,7 +30,6 @@ body
     min-height: 200px;
     padding-left: 6px;
     padding-right: 6px;
-    text-align: justify;
     background-color: black;
 }
 
@@ -81,7 +81,6 @@ p, article
 {
     padding-left: 4px;
     text-indent: 0;
-    text-align: inherit;
 }
 
 h1, h2, h3, h4, h5, h6
@@ -91,12 +90,12 @@ h1, h2, h3, h4, h5, h6
     padding-bottom: 0;
 }
 
-h1 { color: white; font-size: 20px; margin-left: 5ex; padding-left: 10%; }
-h2 { color: aliceblue; font-size: 19px; margin-left: 5ex; padding-left: 8%; }
-h3 { color: paleturquoise; font-size: 18px; margin-left: 5ex; padding-left: 6%; }
-h4 { color: turquoise; font-size: 17px; margin-left: 5ex; padding-left: 4%; }
-h5 { color: darkturquoise; font-size: 16px; margin-left: 5ex; padding-left: 2%; }
-h6 { color: inherit; font-size: 15px; margin-left: 5ex; padding-left: 0; }
+h1 { color: white; font-size: 20px; padding-left: 10%; }
+h2 { color: aliceblue; font-size: 19px; padding-left: 8%; }
+h3 { color: paleturquoise; font-size: 18px; padding-left: 6%; }
+h4 { color: turquoise; font-size: 17px; padding-left: 4%; }
+h5 { color: darkturquoise; font-size: 16px; padding-left: 2%; }
+h6 { color: inherit; font-size: 15px; padding-left: 0; }
 
 /* === Lists === */
 
@@ -270,63 +269,6 @@ p.info, p.warn, p.danger
 } 
 
 /* === UI === */
-
-/* --- Header --- */
-
-header
-{
-    width: 100%;
-}
-
-    header div
-    {
-        display: inline-block;
-        vertical-align: bottom;
-    }
-
-    header div.logo
-    {
-        width: 10%;
-        text-align: left;
-    }
-
-    header div.title
-    {
-        width: 70%;
-        text-align: center;
-    }
-
-    header div.login
-    {
-        width: 20%;
-        text-align: right;
-    }
-
-/* --- Footer --- */
-
-footer
-{
-    width: 100%;
-    font-size: smaller;
-}
-	
-    footer div
-    {
-        display: inline-block;
-        vertical-align: top;
-    }
-
-    footer div.banners
-    {
-        width: 50%;
-        text-align: left;
-    }
-
-    footer div.credits
-    {
-        width: 50%;
-        text-align: right;
-    }
 
 /* --- Menu --- */
 
