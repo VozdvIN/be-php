@@ -15,9 +15,7 @@
  --><div style="display: inline-block; width: 54%">
 	<div style="text-align: center;">
 		<div style="display: inline-block;">
-			<p>
-				<h1 style="text-align: center; padding: 0 0 0 0;"><?php echo SystemSettings::getInstance()->site_name ?></h1>
-			</p>
+			<h1 style="text-align: center; padding: 0 0 0 0;"><?php echo SystemSettings::getInstance()->site_name ?></h1>
 			<article>
 				<?php echo ($headerArticle = Article::byName('Шаблонные-Шапка')) ? Utils::decodeBB($headerArticle->text) : '(Заполните статью \'Шаблонные-Шапка\')'; ?>
 			</article>
