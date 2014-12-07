@@ -1,10 +1,5 @@
 <?php
-$retUrlRaw = Utils::encodeSafeUrl('webUser/show?id='.$_webUser->id);
-
-render_breadcombs(array(
-    link_to('Участники', 'webUser/index'),
-    $_webUser->login
-));
+	$retUrlRaw = Utils::encodeSafeUrl('webUser/show?id='.$_webUser->id);
 ?>
 
 <h2>Анкета &quot;<?php echo $_webUser->login ?>&quot;</h2>

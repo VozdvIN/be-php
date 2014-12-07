@@ -1,10 +1,5 @@
 <?php
-$retUrlRaw = Utils::encodeSafeUrl(url_for('team/show?id='.$_team->id));
-
-render_breadcombs(array(
-	link_to('Команды', 'team/index'),
-	$_team->name
-));
+	$retUrlRaw = Utils::encodeSafeUrl(url_for('team/show?id='.$_team->id));
 ?>
 
 <h2>Команда &quot;<?php echo $_team->name ?>&quot;</h2>

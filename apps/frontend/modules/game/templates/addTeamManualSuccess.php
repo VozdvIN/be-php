@@ -1,10 +1,3 @@
-<?php
-render_breadcombs(array(
-    link_to('Игры', 'game/index'),
-    link_to($game->name, Utils::decodeSafeUrl($retUrl))
-))
-?>
-
 <h2>Регистрация команды на игру <?php echo $game->name ?></h2>
 
 <p>

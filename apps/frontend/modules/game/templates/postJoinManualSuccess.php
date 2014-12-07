@@ -1,10 +1,3 @@
-<?php
-  render_breadcombs(array(
-      link_to('Игры', 'game/index'),
-      link_to($game->name, 'game/show?id='.$game->id)
-  ))
-?>
-
 <h2>Подача командной заявки на игру <?php echo $game->name ?></h2>
 
 <p>

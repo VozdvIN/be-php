@@ -1,11 +1,3 @@
-<?php
-    render_breadcombs(array(
-        link_to('Участники', 'webUser/index'),
-        link_to($sf_user->getAttribute('login'),
-              'webUser/show?id='.$sf_user->getAttribute('id'))
-    ))
-?>
-
 <h2>Смена пароля <?php echo $sf_user->getAttribute('login') ?></h2>
 
 <?php

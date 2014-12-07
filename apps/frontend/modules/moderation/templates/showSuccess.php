@@ -1,5 +1,3 @@
-<?php render_breadcombs(array('Модерирование')) ?>
-
 <h2>Модерирование</h2>
 
 <?php if ($_isAdmin): ?>

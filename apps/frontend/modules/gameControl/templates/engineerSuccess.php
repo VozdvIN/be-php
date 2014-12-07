@@ -1,16 +1,10 @@
 <?php
-render_breadcombs(array(
-    link_to('Игры', 'game/index'),
-    link_to($_game->name, 'game/show?id='.$_game->id),
-    'Управление'
-));
-
-$retUrlRaw = Utils::encodeSafeUrl(url_for('gameControl/engineer?id='.$_game->id));
-include_partial('header', array(
-    '_game' => $_game,
-    '_isManager' => $_isManager,
-    '_retUrlRaw' => $retUrlRaw,
-    '_activeTab' => 'engineer'));
+	$retUrlRaw = Utils::encodeSafeUrl(url_for('gameControl/engineer?id='.$_game->id));
+	include_partial('header', array(
+		'_game' => $_game,
+		'_isManager' => $_isManager,
+		'_retUrlRaw' => $retUrlRaw,
+		'_activeTab' => 'engineer'));
 ?>
 
 <div class="tabSheet">

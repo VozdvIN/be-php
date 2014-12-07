@@ -1,6 +1,4 @@
 <?php
-	render_breadcombs(array(link_to('Команды', 'team/index')));
-	
 	$settings = SystemSettings::getInstance();
 ?>
 

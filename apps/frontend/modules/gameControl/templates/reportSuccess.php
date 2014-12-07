@@ -1,11 +1,5 @@
-<?php
-render_breadcombs(array(
-    link_to('Игры', 'game/index'),
-    link_to($_game->name, 'game/show?id='.$_game->id)
-))
-?>
-
 <h2>Результаты игры <?php echo $_game->name ?></h2>
+
 <?php if ($_game->status < GAME::GAME_ARCHIVED): ?>
 <p>
   <span class="safeAction"><?php echo link_to('Обновить', 'gameControl/report?id='.$_game->id) ?></span>

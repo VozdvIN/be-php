@@ -1,5 +1,3 @@
-<?php render_breadcombs(array(link_to('Статьи', 'article/index'))) ?>
-
 <h2>404 ...Not found</h2>
 <h3>Статья "<?php echo $_articleName ?>"</h3>
 <p>

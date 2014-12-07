@@ -1,19 +1,3 @@
-<?php
-	$path = get_path_to_article($_article->getRawValue());
-	if ( ! $path)
-	{
-		render_breadcombs(array(link_to('Статьи', 'article/index'), $_article->name));
-	}
-	else
-	{
-		$links = array();
-		$links = array_merge($links, array(link_to('Статьи', 'article/index')));
-		$links = array_merge($links, $path);
-		$links = array_merge($links, array($_article->name));
-		render_breadcombs($links);
-	}  
-?>
-
 <h3><?php echo $_article->name ?></h3>
 <div style="text-align: right;">
 	<div style="display: inline-block;">

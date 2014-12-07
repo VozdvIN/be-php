@@ -1,10 +1,3 @@
-<?php
-render_breadcombs(array(
-	link_to('Команды', 'team/index'),
-	link_to($team->name, 'team/show?id='.$team->id)
-))
-?>
-
 <h2>Регистрация игрока в команду &quot;<?php echo $team->name; ?>&quot;</h2>
 
 <p class="info">

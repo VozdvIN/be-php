@@ -1,5 +1,3 @@
-<?php render_breadcombs(array('Участники')); ?>
-
 <h2>Участники</h2>
 
 <table class="no-border">

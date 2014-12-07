@@ -212,27 +212,6 @@ function render_named_line_if($condition, $nameWidth, $name, $values)
 }
 
 /**
- * Генерирует в поток вывода HTML-код "хлебных крошек" по списку указанных ссылок.
- *
- * @param   array   $links  Список HTML-кодов ссылок
- *
- * @return  string
- */
-function render_breadcombs($links = null)
-{
-  echo '<div class="breadcombs">';
-  echo '<div class="breadcomb">'.link_to('Главная', 'home/index').'</div>';
-  if (is_array($links))
-  {
-    foreach ($links as $link)
-    {
-      echo '<div class="breadcomb">'.$link.'</div>';
-    }
-  }
-  echo '</div>';
-}
-
-/**
  * Генерирует в поток вывода HTML-код начала заколовка h3 с встроенными ссылками.
  *
  * @param   string   $headerText  текст заголовка

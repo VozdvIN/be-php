@@ -1,10 +1,5 @@
 <?php
-render_breadcombs(array(
-    link_to('Игры', 'game/index'),
-    link_to($_game->name, 'game/show?id='.$_game->id),
-    'Афиша'
-));
-$retUrlRaw = Utils::encodeSafeUrl('game/info?id='.$_game->id)
+	$retUrlRaw = Utils::encodeSafeUrl('game/info?id='.$_game->id)
 ?>
 
 <h1><?php echo $_game->name ?></h1>

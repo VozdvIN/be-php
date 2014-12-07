@@ -1,10 +1,3 @@
-<?php
-render_breadcombs(array(
-    link_to('Игры', 'game/index'),
-    link_to($_teamState->Game->name, 'game/show?id='.$_teamState->game_id),
-    link_to('Управление', 'gameControl/pilot?id='.$_teamState->game_id)
-))
-?>
 <h2>Назначение следующего задания команде <?php echo $_teamState->Team->name ?></h2>
 
 <?php if ($_teamState->getCurrentTaskState()): ?>

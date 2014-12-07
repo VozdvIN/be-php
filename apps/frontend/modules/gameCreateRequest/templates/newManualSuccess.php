@@ -1,9 +1,3 @@
-<?php
-  render_breadcombs(array(
-      link_to('Игры', 'game/index')
-  ))
-?>
-
 <h2>Подача заявки на создание игры</h2>
 
 <p>

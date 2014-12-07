@@ -1,5 +1,3 @@
-<?php render_breadcombs(array('Статьи')) ?>
-
 <h2>Команды</h2>
 
 <?php if ($sf_user->isAuthenticated()): ?>

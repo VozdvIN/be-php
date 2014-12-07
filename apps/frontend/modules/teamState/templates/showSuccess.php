@@ -1,12 +1,3 @@
-<?php
-render_breadcombs(array(
-    link_to('Игры', 'game/index'),
-    link_to($_teamState->Game->name, 'game/show?id='.$_teamState->game_id),
-    link_to('Регистрация', 'game/show?id='.$_teamState->game_id.'&tab=teams'),
-    $_teamState->Team->name
-));
-?>
-
 <h2>Настройки команды <?php echo $_teamState->Team->name ?> на игру <?php echo $_teamState->Game->name ?></h2>
 
 <?php

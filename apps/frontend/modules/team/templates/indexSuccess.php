@@ -1,5 +1,3 @@
-<?php render_breadcombs(array('Команды')); ?>
-
 <h2>Команды</h2>
 
 <p>

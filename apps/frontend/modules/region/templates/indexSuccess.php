@@ -1,10 +1,3 @@
-<?php
-render_breadcombs(array(
-    link_to('Модерирование', 'moderation/show'),
-    'Игровые проекты',
-    ))
-?>
-
 <h2>Все игровые проекты</h2>
 
 <?php echo link_to('Создать новый проект', 'region/new'); ?>

@@ -1,12 +1,5 @@
 <?php
-render_breadcombs(array(
-    link_to('Игры', 'game/index'),
-    link_to($_task->Game->name, 'game/show?id='.$_task->game_id),
-    link_to('Задания', 'game/show?id='.$_task->game_id.'&tab=tasks'),
-    $_task->name,
-));
-
-$retUrlRaw = Utils::encodeSafeUrl(url_for('task/show?id='.$_task->id));
+	$retUrlRaw = Utils::encodeSafeUrl(url_for('task/show?id='.$_task->id));
 ?>
 
 <h2>Задание <?php echo $_task->name ?> игры <?php echo $_task->Game->name ?></h2>
