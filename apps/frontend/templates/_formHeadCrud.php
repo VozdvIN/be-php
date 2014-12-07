@@ -1,7 +1,7 @@
 <?php
 /* Входные аргументы:
- * sfForm	$form			форма для отображения
- * string	$module			часть адреса модуля обработчика формы
+ * sfForm  $form    форма для отображения
+ * string  $module  часть адреса модуля обработчика формы
  */
 ?>
 
@@ -11,7 +11,7 @@
 >
 
 <table class="no-border">
-	<thead style="display: hidden">
+	<thead style="display: none">
 		<tr>
 			<td>
 				<?php foreach($form as $field) { echo $field->isHidden() ? $field->render() : ''; } ?>

@@ -1,15 +1,11 @@
 <?php
 /* Входные аргументы:
- * sfForm	$field	поле для отображения
+ * sfForm  $field  поле для отображения
  */
 ?>
 <tr>
-	<td>
-		<?php echo $field->renderLabel(); ?>
-	</td>
-	<td>
-		<?php echo $field->render(); ?>
-	</td>
+	<th> <?php echo $field->renderLabel(); ?> </th>
+	<td> <?php echo $field->render(); ?> </td>
 	<td>
 		<?php if ($field->hasError()):?>
 		<p class="danger">

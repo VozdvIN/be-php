@@ -1,13 +1,14 @@
 <?php
 /* Входные аргументы:
- * string	$commitLabel	название кнопки отправки формы
+ * string  $commitLabel  название кнопки отправки формы
  */
 ?>
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan="3">
-				<input type="submit" value="<?php echo $commitLabel; ?>" />
+			<th>&nbsp;</th>
+			<td colspan="2">
+				<input type="submit" value="<?php echo $commitLabel?>" />
 			</td>
 		</tr>
 	</tfoot>

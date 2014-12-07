@@ -164,6 +164,21 @@ tbody th
     text-align: right;
 }
 
+thead tr:first-child
+{
+    background-color: #001c33;
+}
+
+tr:nth-child(even)
+{
+    background-color: #001c33;
+}
+
+tr:nth-child(odd)
+{
+    background-color: #002a4c;
+}
+
 table.no-border, table.no-border tr, table.no-border th, table.no-border td
 {
     border-style: none;
@@ -268,9 +283,16 @@ p.info, p.warn, p.danger
     background-color: darkred;
 } 
 
-/* === UI === */
+/* === Form === */
 
-/* --- Menu --- */
+tbody input, tbody select
+{
+    border: solid 1px royalblue;
+    background-color: black;
+    color: inherit;
+}
+
+/* === Menu === */
 
 nav.menu ul
 {
