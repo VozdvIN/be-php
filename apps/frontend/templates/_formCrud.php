@@ -4,6 +4,16 @@
  * string	$module			часть адреса модуля обработчика формы
  */
 
+if ( ! $form)
+{
+	throw new Exception('Templates::Global::_formCrud: $form must be set.');
+}
+
+if ( ! $module)
+{
+	throw new Exception('Templates::Global::_formCrud: $module must be set.');
+}
+
 $isNew = $form->getObject()->isNew();
 ?>
 

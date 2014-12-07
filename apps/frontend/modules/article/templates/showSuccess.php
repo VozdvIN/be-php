@@ -13,7 +13,6 @@
 		render_breadcombs($links);
 	}  
 ?>
-
  
 <h3><?php echo $_article->name ?></h3>
 <div style="text-align: right;">
