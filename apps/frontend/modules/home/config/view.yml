@@ -1,4 +1,4 @@
 all:
   metas:
-    title: <?php echo SystemSettings::getInstance()->site_name."\n" ?>
+    title: <?php echo SiteSettings::SITE_NAME."\n" ?>
   has_layout: true

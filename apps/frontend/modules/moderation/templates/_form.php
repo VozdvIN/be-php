@@ -10,8 +10,6 @@
   ?>
   <h4>Реквизиты сайта</h4>
   <?php
-  render_form_field($form['site_name'], $width);
-  render_form_field($form['site_domain'], $width);
   render_form_field($form['contact_email_addr'], $width);
   ?>
   <h4>Модерация</h4>
@@ -21,15 +19,6 @@
   render_form_field($form['email_game_create'], $width);
   render_form_field($form['fast_team_create'], $width);
   render_form_field($form['fast_user_register'], $width);
-  ?>
-  <h4>Отправка уведомлений</h4>
-  <?php
-  render_form_field($form['notify_email_addr'], $width);
-  render_form_field($form['smtp_host'], $width);
-  render_form_field($form['smtp_port'], $width);
-  render_form_field($form['smtp_security'], $width);
-  render_form_field($form['smtp_login'], $width);
-  render_form_field($form['smtp_password'], $width);
   ?>
   
   <?php

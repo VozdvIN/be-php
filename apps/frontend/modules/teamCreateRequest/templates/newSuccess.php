@@ -1,12 +1,16 @@
-<?php render_breadcombs(array(link_to('Команды', 'team/index'))) ?>
+<?php
+	render_breadcombs(array(link_to('Команды', 'team/index')));
+	
+	$settings = SystemSettings::getInstance();
+?>
 
 <h2>Подача заявки на создание команды</h2>
 
-<?php if (SystemSettings::getInstance()->fast_team_create): ?>
+<?php if ($settings->fast_team_create): ?>
 <p class="info">
 	Разрешено создание команд без модерирования: после подачи заявки подтвердите ее самостоятельно на странице со списком команд.
 </p>
-<?php elseif (SystemSettings::getInstance()->email_team_create): ?>
+<?php elseif ($settings->email_team_create): ?>
 <p>
 	После подачи заявки подтвердите ее через ссылку из письма, которое будет Вам отправлено.
 </p>

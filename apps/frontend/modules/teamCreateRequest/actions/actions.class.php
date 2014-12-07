@@ -75,8 +75,8 @@ class teamCreateRequestActions extends MyActions
 						'Создание команды '.$object->name,
 						'Вы запросили создание команды "'.$object->name.'".'."\n"
 						.'Для подтверждения создания команды перейдите по ссылке:'."\n"
-						.'http://'.$settings->site_domain.'/auth/createTeam?id='.$object->id.'&key='.$object->tag."\n"
-						.'Отменить заявку можно здесь: http://'.$settings->site_domain.'/team/index',
+						.'http://'.SiteSettings::SITE_DOMAIN.'/auth/createTeam?id='.$object->id.'&key='.$object->tag."\n"
+						.'Отменить заявку можно здесь: http://'.SiteSettings::SITE_DOMAIN.'/team/index',
 						$object->WebUser->email
 					);        
 
@@ -143,7 +143,7 @@ class teamCreateRequestActions extends MyActions
 		Utils::sendNotifyUser(
 			'Команда создана - '.$team->name,
 			'Ваша заявка на создание команды "'.$team->name.'" утверждена, команда создана.'."\n"
-			.'Страница команды: http://'.SystemSettings::getInstance()->site_domain.'/team/show?id='.$team->id,
+			.'Страница команды: http://'.SiteSettings::SITE_DOMAIN.'/team/show?id='.$team->id,
 			$webUser
 		);
 
@@ -161,7 +161,7 @@ class teamCreateRequestActions extends MyActions
 			.'- название: '.$teamCreateRequest->name."\n"
 			.'- автор заявки: '.$teamCreateRequest->WebUser->login.(($teamCreateRequest->WebUser->email !== '') ? ' ('.$teamCreateRequest->WebUser->email.')' : '')."\n"
 			.'- сообщение: '.$teamCreateRequest->description."\n"
-			.'Утвердить или отклонить: http://'.SystemSettings::getInstance()->site_domain.'/team/index'
+			.'Утвердить или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/team/index'
 		);      
 	}
   

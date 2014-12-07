@@ -149,7 +149,7 @@ class teamActions extends MyActions
 		Utils::sendNotifyGroup(
 			'Заявка в '.$this->team->name.' от '.$this->candidate->login,
 			'В состав вашей команды "'.$this->team->name.'" попросился '.$this->candidate->login.".\n"
-			.'Принять или отклонить: http://'.SystemSettings::getInstance()->site_domain.'/team/show?id='.$this->team->id,
+			.'Принять или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/team/show?id='.$this->team->id,
 			$this->team->getLeadersRaw()
 		);
 
@@ -193,7 +193,7 @@ class teamActions extends MyActions
 			($willBeLeader
 				? ('Вы назначены капитаном команды "'.$this->team->name."\".\n")
 				: ('Вы приняты рядовым в команду "'.$this->team->name."\".\n"))
-			.'Страница команды: http://'.SystemSettings::getInstance()->site_domain.'/team/show?id='.$this->team->id,
+			.'Страница команды: http://'.SiteSettings::SITE_DOMAIN.'/team/show?id='.$this->team->id,
 			$this->candidate
 		);
 
@@ -215,7 +215,7 @@ class teamActions extends MyActions
 		Utils::sendNotifyUser(
 			'Вы в команде '.$this->team->name,
 			'Вы назначены капитаном команды "'.$this->team->name."\"\n"
-			.'Страница команды: http://'.SystemSettings::getInstance()->site_domain.'/team/show?id='.$this->team->id,
+			.'Страница команды: http://'.SiteSettings::SITE_DOMAIN.'/team/show?id='.$this->team->id,
 			$this->candidate
 		);
 

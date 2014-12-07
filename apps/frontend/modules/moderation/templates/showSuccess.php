@@ -11,15 +11,13 @@
   echo ' '.decorate_span('safeAction', link_to('Редактировать', 'moderation/edit'));
   render_h3_inline_end();
 ?>
-<?php endif ?>
 
-<?php if ($_isAdmin): ?>
 <h4>Реквизиты сайта</h4>
 <?php
 $width = get_text_block_size_ex('Создание команд по почте:');
-render_named_line($width, 'Название сайта:', $_settings->site_name);
-render_named_line($width, 'Домен сайта:', $_settings->site_domain);
-render_named_line($width, 'Адрес администраторов:', $_settings->contact_email_addr);
+render_named_line($width, 'Название сайта:', SiteSettings::SITE_NAME);
+render_named_line($width, 'Домен сайта:', SiteSettings::SITE_DOMAIN);
+render_named_line($width, 'Адрес администраторов:', SiteSettings::ADMIN_EMAIL_ADDR);
 ?>
 <h4>Модерация</h4>
 <?php
@@ -31,21 +29,15 @@ render_named_line($width, 'Быстрая регистрация:', $_settings->
 ?>
 <h4>Отправка уведомлений</h4>
 <?php
-render_named_line($width, 'Обратный адрес:', $_settings->notify_email_addr);
-render_named_line($width, 'SMTP-сервер:', $_settings->smtp_host);
-render_named_line($width, 'Порт:', $_settings->smtp_port);
-if (($_settings->smtp_security !== null) && ($_settings->smtp_security !== ''))
-{
-render_named_line($width, 'Шифрование:', $_settings->smtp_security);
-}
-if (($_settings->smtp_login !== null) && ($_settings->smtp_login !== ''))
-{
-  render_named_line($width, 'Аккаунт:', $_settings->smtp_login);
-  render_named_line($width, 'Пароль:', $_settings->smtp_password);
-}
+render_named_line($width, 'Обратный адрес:', SiteSettings::NOTIFY_EMAIL_ADDR);
+render_named_line($width, 'SMTP-сервер:', SiteSettings::NOTIFY_SMTP_HOST);
+render_named_line($width, 'Порт:', SiteSettings::NOTIFY_SMTP_PORT);
+render_named_line($width, 'Шифрование:', SiteSettings::NOTIFY_SMTP_SECURITY);
+render_named_line($width, 'Аккаунт:', SiteSettings::NOTIFY_SMTP_LOGIN);
+render_named_line($width, 'Пароль:', SiteSettings::NOTIFY_SMTP_PASSWORD);
 ?>
 <p>
-  <?php echo decorate_span('safeAction', link_to('Отправить тестовое уведомление на '.$_settings->contact_email_addr, 'moderation/SMTPTest')) ?>
+  <?php echo decorate_span('safeAction', link_to('Отправить тестовое уведомление на '.SiteSettings::ADMIN_EMAIL_ADDR, 'moderation/SMTPTest')) ?>
 </p>
 <?php endif ?>
 

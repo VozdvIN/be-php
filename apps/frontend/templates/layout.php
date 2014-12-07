@@ -27,7 +27,7 @@
 			<?php echo $sf_content; ?>
 		</section>
 		
-		<footer class="pad-top border-top"><!--
+		<footer class="pad-top"><!--
 		 --><?php include_partial('global/footer'); ?><!--
 	 --></footer>
 	</body>

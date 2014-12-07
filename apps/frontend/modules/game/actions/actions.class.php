@@ -238,35 +238,36 @@ class gameActions extends MyActions
     $this->errorRedirectIf($this->teamList->count() <= 0, 'Нет команд, которые вы можете зарегистрировать.');
   }
 
-  public function executePostJoin(sfWebRequest $request)
-  {
-    $this->decodeArgs($request);
-    if (is_string($res = $this->game->postJoin($this->team, $this->sessionWebUser)))
-    {
-      $this->errorRedirect('Не удалось подать заявку команды '.$this->team->name.' на игру '.$this->game->name.': '.$res);
-    }
-    else
-    {
-      if ($this->game->team_id > 0)
-      {
-        Utils::sendNotifyGroup(
-            'Заявка '.$this->team->name.' на игру '.$this->game->name,
-            'Команда "'.$this->team->name.'" подала заявку на вашу игру "'.$this->game->name.'".'."\n"
-            .'Утвердить или отклонить: http://'.SystemSettings::getInstance()->site_domain.'/game/show?id='.$this->game->id.'&tab=teams',
-            $this->game->Team->getLeadersRaw()
-        );
-      }
-      else
-      {
-        Utils::sendNotifyAdmin(
-            'Заявка '.$this->team->name.' на игру '.$this->game->name,
-            'Команда "'.$this->team->name.'" подала заявку на игру "'.$this->game->name.'", которой не назначена команда-организатор.'."\n"
-            .'Утвердить или отклонить: http://'.SystemSettings::getInstance()->site_domain.'/game/show?id='.$this->game->id.'&tab=teams'
-        );
-      }
-      $this->successRedirect('Заявка команды '.$this->team->name.' на игру '.$this->game->name.' принята.');
-    }
-  }
+	public function executePostJoin(sfWebRequest $request)
+	{
+		$this->decodeArgs($request);
+		if (is_string($res = $this->game->postJoin($this->team, $this->sessionWebUser)))
+		{
+			$this->errorRedirect('Не удалось подать заявку команды '.$this->team->name.' на игру '.$this->game->name.': '.$res);
+		}
+		else
+		{
+			if ($this->game->team_id > 0)
+			{
+				Utils::sendNotifyGroup(
+					'Заявка '.$this->team->name.' на игру '.$this->game->name,
+					'Команда "'.$this->team->name.'" подала заявку на вашу игру "'.$this->game->name.'".'."\n"
+					.'Утвердить или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/game/show?id='.$this->game->id.'&tab=teams',
+					$this->game->Team->getLeadersRaw()
+				);
+			}
+			else
+			{
+				Utils::sendNotifyAdmin(
+					'Заявка '.$this->team->name.' на игру '.$this->game->name,
+					'Команда "'.$this->team->name.'" подала заявку на игру "'.$this->game->name.'", которой не назначена команда-организатор.'."\n"
+					.'Утвердить или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/game/show?id='.$this->game->id.'&tab=teams'
+				);
+			}
+
+			$this->successRedirect('Заявка команды '.$this->team->name.' на игру '.$this->game->name.' принята.');
+		}
+	}
 
   public function executeCancelJoin(sfWebRequest $request)
   {
@@ -287,25 +288,26 @@ class gameActions extends MyActions
     }
   }
 
-  public function executeAddTeam(sfWebRequest $request)
-  {
-    $this->decodeArgs($request);
-    if (is_string($res = $this->game->registerTeam($this->team, $this->sessionWebUser)))
-    {
-      $this->errorRedirect('Не удалось зарегистрировать команду '.$this->team->name.' на игру '.$this->game->name.': '.$res);
-    }
-    else
-    {
-      Utils::sendNotifyGroup(
-          'Регистрация '.$this->team->name.' на игру '.$this->game->name,
-          'Ваша команда "'.$this->team->name.'" принята к участию в игре "'.$this->game->name.'"'."\n"
-          .'Афиша игры: http://'.SystemSettings::getInstance()->site_domain.'/game/info?id='.$this->game->id,
-          $this->team->getLeadersRaw()
-      );      
-    
-      $this->successRedirect('Команда '.$this->team->name.' зарегистрирована на игру '.$this->game->name.'.');
-    }
-  }
+	public function executeAddTeam(sfWebRequest $request)
+	{
+		$this->decodeArgs($request);
+		
+		if (is_string($res = $this->game->registerTeam($this->team, $this->sessionWebUser)))
+		{
+			$this->errorRedirect('Не удалось зарегистрировать команду '.$this->team->name.' на игру '.$this->game->name.': '.$res);
+		}
+		else
+		{
+			Utils::sendNotifyGroup(
+				'Регистрация '.$this->team->name.' на игру '.$this->game->name,
+				'Ваша команда "'.$this->team->name.'" принята к участию в игре "'.$this->game->name.'"'."\n"
+				.'Афиша игры: http://'.SiteSettings::SITE_DOMAIN.'/game/info?id='.$this->game->id,
+				$this->team->getLeadersRaw()
+			);      
+
+			$this->successRedirect('Команда '.$this->team->name.' зарегистрирована на игру '.$this->game->name.'.');
+		}
+	}
 
   public function executeRemoveTeam(sfWebRequest $request)
   {

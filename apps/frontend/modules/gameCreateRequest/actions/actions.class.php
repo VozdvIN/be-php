@@ -63,58 +63,58 @@ class gameCreateRequestActions extends MyActions
     $this->successRedirect('Заявка на создание игры успешно отменена.', 'game/index');
   }
   
-  protected function processForm(sfWebRequest $request, sfForm $form)
-  {
-    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
-    if ($form->isValid())
-    {
-      $object = $form->updateObject();
-      if ((Utils::byField('Game', 'name', $object->name) === false)
-          && (Utils::byField('GameCreateRequest', 'name', $object->name) === false))
-      {
-        $this->errorRedirectUnless(
-            $this->canCrateNewRequest($object->team_id),
-            'От имени одной команды нельзя подавать более '.GameCreateRequest::MAX_REQUESTS_PER_TEAM.' заявок на создание игры.'
-        );
-        
-        $object->tag = Utils::generateActivationkey();
-        $object = $form->save();
-        
-        $settings = SystemSettings::getInstance();
-        if ($settings->email_game_create)
-        {
-          $notifyResult = Utils::sendNotifyGroup(
-              'Создание игры '.$object->name,
-              'Ваша команда "'.$object->Team->name.'" запросила создание игры "'.$object->name.'"'."\n"
-              .'Для подтверждения создания игры перейдите по ссылке:'."\n"
-              .'http://'.$settings->site_domain.'/auth/createGame?id='.$object->id.'&key='.$object->tag."\n"
-              .'Отменить заявку можно здесь: http://'.$settings->site_domain.'/game/index',
-              $object->Team->getLeadersRaw()
-          );
-          
-          if ($notifyResult)
-          {
-            $this->newGameCreateRequestNotify($object);
-            $this->successRedirect('Заявка на создание игры '.$object->name.' принята. Вам отправлено письмо для ее подтверждения.', 'game/index');
-          }
-          else
-          {
-            // Писать админам смысла нет.
-            $this->warningRedirect('Заявка на создание игры '.$object->name.' принята, но не удалось отправить письмо для ее подтверждения. Обратитесь к администрации сайта.', 'game/index');
-          }        
-        }
-        else
-        {
-          $this->newGameCreateRequestNotify($object);
-          $this->successRedirect('Заявка на создание игры '.$object->name.' принята. Ожидайте, пока она пройдет модерацию.', 'game/index');
-        }
-      }
-      else
-      {
-        $this->errorMessage('Не удалось подять заявку: игра или заявка с таким названием уже существует.');
-      }
-    }
-  }
+	protected function processForm(sfWebRequest $request, sfForm $form)
+	{
+		$form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+		if ($form->isValid())
+		{
+			$object = $form->updateObject();
+			if ((Utils::byField('Game', 'name', $object->name) === false)
+				&& (Utils::byField('GameCreateRequest', 'name', $object->name) === false))
+			{
+				$this->errorRedirectUnless(
+					$this->canCrateNewRequest($object->team_id),
+					'От имени одной команды нельзя подавать более '.GameCreateRequest::MAX_REQUESTS_PER_TEAM.' заявок на создание игры.'
+				);
+
+				$object->tag = Utils::generateActivationkey();
+				$object = $form->save();
+
+				$settings = SystemSettings::getInstance();
+				if ($settings->email_game_create)
+				{
+					$notifyResult = Utils::sendNotifyGroup(
+						'Создание игры '.$object->name,
+						'Ваша команда "'.$object->Team->name.'" запросила создание игры "'.$object->name.'"'."\n"
+						.'Для подтверждения создания игры перейдите по ссылке:'."\n"
+						.'http://'.SiteSettings::SITE_DOMAIN.'/auth/createGame?id='.$object->id.'&key='.$object->tag."\n"
+						.'Отменить заявку можно здесь: http://'.SiteSettings::SITE_DOMAIN.'/game/index',
+						$object->Team->getLeadersRaw()
+					);
+
+					if ($notifyResult)
+					{
+						$this->newGameCreateRequestNotify($object);
+						$this->successRedirect('Заявка на создание игры '.$object->name.' принята. Вам отправлено письмо для ее подтверждения.', 'game/index');
+					}
+					else
+					{
+						// Писать админам смысла нет.
+						$this->warningRedirect('Заявка на создание игры '.$object->name.' принята, но не удалось отправить письмо для ее подтверждения. Обратитесь к администрации сайта.', 'game/index');
+					}
+				}
+				else
+				{
+					$this->newGameCreateRequestNotify($object);
+					$this->successRedirect('Заявка на создание игры '.$object->name.' принята. Ожидайте, пока она пройдет модерацию.', 'game/index');
+				}
+			}
+			else
+			{
+				$this->errorMessage('Не удалось подять заявку: игра или заявка с таким названием уже существует.');
+			}
+		}
+	}
   
   public function executeNewManual(sfWebRequest $request)
   {
@@ -129,50 +129,50 @@ class gameCreateRequestActions extends MyActions
     $this->errorRedirectIf($this->_teams->count() <= 0, 'Нет команд, от лица которых вы можете подать заявку на создание игры.');
   }
   
-  public function executeAcceptManual(sfWebRequest $request)
-  {
-    $request->checkCSRFProtection();
-    $this->errorRedirectUnless(
-        $gameCreateRequest = GameCreateRequest::byId($request->getParameter('id')),
-        'Заявка на создание игры не найдена',
-        'game/index'
-    );
-    
-    $this->errorRedirectUnless(
-        $this->sessionWebUser->can(Permission::GAME_MODER, 0),
-        'Создать игру по заявке может только модератор игр.',
-        'game/index'
-    );
+	public function executeAcceptManual(sfWebRequest $request)
+	{
+		$request->checkCSRFProtection();
+		$this->errorRedirectUnless(
+			$gameCreateRequest = GameCreateRequest::byId($request->getParameter('id')),
+			'Заявка на создание игры не найдена',
+			'game/index'
+		);
 
-    $this->errorRedirectUnless(
-        Utils::byField('Game', 'name', $gameCreateRequest->name) === false,
-        'Не удалось создать игру: игра '.$gameCreateRequest->name.' уже существует.',
-        'team/index'
-    );
-    
-    $team = $gameCreateRequest->Team;
-    $game = GameCreateRequest::doCreate($gameCreateRequest);
-    Utils::sendNotifyGroup(
-        'Игра создана - '.$game->name,
-        'Заявка вашей команды "'.$team->name.'" на создание игры "'.$game->name.'" утверждена, игра создана.'."\n"
-        .'Страница игры: http://'.SystemSettings::getInstance()->site_domain.'/game/show?id='.$game->id.'&tab=props',
-        $team->getLeadersRaw()
-    );
-    
-    $this->successRedirect('Игра '.$game->name.' успешно создана.', 'game/index');
-  }
+		$this->errorRedirectUnless(
+			$this->sessionWebUser->can(Permission::GAME_MODER, 0),
+			'Создать игру по заявке может только модератор игр.',
+			'game/index'
+		);
 
-  protected function newGameCreateRequestNotify(GameCreateRequest $gameCreateRequest)
-  {
-    Utils::sendNotifyAdmin(
-        'Новая игра - '.$gameCreateRequest->name,
-        'Подана заявка на создание игры:'."\n"
-        .'- название: '.$gameCreateRequest->name."\n"
-        .'- команда-организатор: '.$gameCreateRequest->Team->name."\n"
-        .'- сообщение: '.$gameCreateRequest->description."\n"
-        .'Утвердить или отклонить: http://'.SystemSettings::getInstance()->site_domain.'/game/index'
-    );    
-  }
+		$this->errorRedirectUnless(
+			Utils::byField('Game', 'name', $gameCreateRequest->name) === false,
+			'Не удалось создать игру: игра '.$gameCreateRequest->name.' уже существует.',
+			'team/index'
+		);
+
+		$team = $gameCreateRequest->Team;
+		$game = GameCreateRequest::doCreate($gameCreateRequest);
+		Utils::sendNotifyGroup(
+			'Игра создана - '.$game->name,
+			'Заявка вашей команды "'.$team->name.'" на создание игры "'.$game->name.'" утверждена, игра создана.'."\n"
+			.'Страница игры: http://'.SiteSettings::SITE_DOMAIN.'/game/show?id='.$game->id.'&tab=props',
+			$team->getLeadersRaw()
+		);
+
+		$this->successRedirect('Игра '.$game->name.' успешно создана.', 'game/index');
+	}
+
+	protected function newGameCreateRequestNotify(GameCreateRequest $gameCreateRequest)
+	{
+		Utils::sendNotifyAdmin(
+			'Новая игра - '.$gameCreateRequest->name,
+			'Подана заявка на создание игры:'."\n"
+			.'- название: '.$gameCreateRequest->name."\n"
+			.'- команда-организатор: '.$gameCreateRequest->Team->name."\n"
+			.'- сообщение: '.$gameCreateRequest->description."\n"
+			.'Утвердить или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/game/index'
+		);
+	}
   
   protected function canCrateNewRequest($teamId)
   {

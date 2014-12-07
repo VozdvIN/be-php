@@ -12,20 +12,21 @@
  */
 class SystemSettings extends BaseSystemSettings
 {
-  public static function getInstance()
-  {
-    $res = Doctrine::getTable('SystemSettings')->find(0);
-    if ($res)
-    {
-      return $res;
-    }
-    else
-    {
-      //Похоже настройки еще не выполнялись.
-      $settings = new SystemSettings();
-      $settings->id = 0;
-      $settings->save(); //Значения будут назначены самой БД из значений по умолчанию.
-      return $settings;
-    }
-  }  
+	public static function getInstance()
+	{
+		$res = Doctrine::getTable('SystemSettings')->find(0);
+		
+		if ($res)
+		{
+			return $res;
+		}
+		else
+		{
+			//Похоже настройки еще не выполнялись.
+			$settings = new SystemSettings();
+			$settings->id = 0;
+			$settings->save(); //Значения будут назначены самой БД из значений по умолчанию.
+			return $settings;
+		}
+	}  
 }
