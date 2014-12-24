@@ -88,18 +88,46 @@ class gameActions extends MyActions
 	public function executeShow(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		if ($this->_game->canBeObserved($this->sessionWebUser))
+		if ( ! $this->_game->canBeObserved($this->sessionWebUser))
 		{
-			$this->_tab = $request->getParameter('tab', 'props');
-			$this->_sessionCanManage = $this->_game->isManager($this->sessionWebUser);
-			$this->_sessionIsModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
+			$this->forward('game', 'info');
+		}
+		else
+		{
+			$this->_tab = $request->getParameter('tab', 'props');			
 			if      ($this->_tab == 'props')
 			{
-				//
+				$this->forward('game', 'props');
 			}
 			else if ($this->_tab == 'teams')
 			{
-				$this->_teamStates = Doctrine::getTable('TeamState')
+				$this->forward('game', 'teams');
+			}
+			else if ($this->_tab == 'tasks')
+			{
+				$this->forward('game', 'tasks');
+			}
+		}
+	}
+
+	public function executeProps($request)
+	{
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->_sessionCanManage = $this->_game->isManager($this->sessionWebUser);
+		$this->_sessionIsModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
+		
+		//TODO: Разделить на отдельные представления
+		$this->_tab = 'props';
+		$this->setTemplate('show');
+	}
+
+	public function executeTeams($request)
+	{
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->_sessionCanManage = $this->_game->isManager($this->sessionWebUser);
+		$this->_sessionIsModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
+
+		$this->_teamStates = Doctrine::getTable('TeamState')
 					->createQuery('ts')->innerJoin('ts.Team')
 					->select()->where('game_id = ?', $this->_game->id)
 					->orderBy('ts.Team.name')->execute();
@@ -107,19 +135,26 @@ class gameActions extends MyActions
 					->createQuery('gc')->innerJoin('gc.Team')
 					->select()->where('game_id = ?', $this->_game->id)
 					->orderBy('gc.Team.name')->execute();
-			}
-			else if ($this->_tab == 'tasks')
-			{
-				$this->_tasks = Doctrine::getTable('Task')
-					->createQuery('t')->leftJoin('t.taskConstraints')->leftJoin('t.taskTransitions')
-					->select()->where('game_id = ?', $this->_game->id)
-					->orderBy('t.name')->execute();
-			}
-		}
-		else
-		{
-			$this->forward('game', 'info');
-		}
+		
+		//TODO: Разделить на отдельные представления
+		$this->_tab = 'teams';
+		$this->setTemplate('show');
+	}
+
+	public function executeTasks($request)
+	{
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->_sessionCanManage = $this->_game->isManager($this->sessionWebUser);
+		$this->_sessionIsModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
+
+		$this->_tasks = Doctrine::getTable('Task')
+			->createQuery('t')->leftJoin('t.taskConstraints')->leftJoin('t.taskTransitions')
+			->select()->where('game_id = ?', $this->_game->id)
+			->orderBy('t.name')->execute();
+		
+		//TODO: Разделить на отдельные представления
+		$this->_tab = 'tasks';
+		$this->setTemplate('show');
 	}
 
 	public function executeNew(sfWebRequest $request)
