@@ -156,13 +156,13 @@
 			<td><?php echo link_to($game->name, 'game/show?id='.$game->id, array('target' => 'new')); ?></td>
 			<td>
 				<?php
-				if ($teamState->Game->status == Game::GAME_STEADY
-					|| $teamState->Game->status == Game::GAME_ACTIVE
-					|| $teamState->Game->status == Game::GAME_FINISHED)
+				if ($game->status == Game::GAME_STEADY
+					|| $game->status == Game::GAME_ACTIVE
+					|| $game->status == Game::GAME_FINISHED)
 				{
 					echo link_to('Управление', 'gameControl/pilot?id='.$game->id, array('target' => 'new'));
 				}
-				elseif ($teamState->Game->status == Game::GAME_ARCHIVED)
+				elseif ($game->status == Game::GAME_ARCHIVED)
 				{
 					echo link_to('Итоги', 'gameControl/report?id='.$game->id, array('target' => 'new'));
 				}
