@@ -23,13 +23,13 @@ class GrantedPermissionForm extends BaseGrantedPermissionForm
 
     //Русифицируем:
     $this->getWidgetSchema()->setLabels(array(
-        'permission_id' => 'Действие:',
+        'permission_id' => '* Действие:',
         'filter_id' => 'Фильтр:',
         'deny' => 'Запретить:'
     ));
     $this->getWidgetSchema()->setHelps(array(
         'permission_id' => '',
-        'filter_id' => 'Id объекта, на который будет право (0 - на все)',
+        'filter_id' => 'Id объекта, на который будет право. Если указан 0, то право или запрет распространяется на всё.',
         'deny' => ''
     ));
   }

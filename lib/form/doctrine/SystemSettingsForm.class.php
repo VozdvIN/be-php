@@ -21,7 +21,7 @@ class SystemSettingsForm extends BaseSystemSettingsForm
       'email_game_create'  => new sfValidatorBoolean(array('required' => false)),
     ));
     $this->getWidgetSchema()->setLabels(array(
-      'games_announce_interval' => 'Интервал анонса игр:',
+      'games_announce_interval' => '* Интервал анонса игр:',
       'email_team_create'  => 'Cоздание команд по почте:',
       'email_game_create'  => 'Cоздание игр по почте:',
       'fast_team_create'   => 'Быстрое создание команд:',
@@ -31,8 +31,8 @@ class SystemSettingsForm extends BaseSystemSettingsForm
       'games_announce_interval' => 'дней.|Анонсы игр будут публиковаться не ранее, чем за указанное число дней до игры.',
       'email_team_create'  => 'переходом по ссылке из письма.',
       'email_game_create'  => 'переходом по ссылке из письма.',
-      'fast_team_create'   => 'самостоятельным утверждением заявки без подтверждения по почте.|<span class="warn">Использовать c осторожноcтью!</span>',
-      'fast_user_register' => 'пользователей без подтверждения по почте.|<span class="warn">Использовать c осторожноcтью во избежание авторегистраций!</span>',
+      'fast_team_create'   => 'самостоятельным утверждением заявки без подтверждения по почте.|Использовать c осторожноcтью!',
+      'fast_user_register' => 'пользователей без подтверждения по почте.|Использовать c большой осторожноcтью во избежание авторегистраций!',
     ));
   }
 }

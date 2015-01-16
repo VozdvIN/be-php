@@ -28,15 +28,15 @@ class ArticleForm extends BaseArticleForm
     unset($this['web_user_id']);
     
     $this->getWidgetSchema()->setLabels(array(
-        'name' => 'Название:',
+        'name' => '* Название:',
         'path' => 'Путь:',
-        'text' => 'Текст:'
+        'text' => '* Текст:'
     ));
 
     $this->getWidgetSchema()->setHelps(array(
-        'name' => 'Краткость - сестра таланта! <span class="warn">Желательно без пробелов</span>.',
-        'path' => 'Названия статей в порядке углубления в иерархию, <span class="warn">разделенные знаком "\"</span>.',
-        'text' => Article::BBCODE_HELP_LINK
+        'name' => 'Краткость - сестра таланта.|Желательно без пробелов.',
+        'path' => 'Названия статей в порядке углубления в иерархию, разделенные знаком "\".',
+        'text' => ''
     ));
     
   }

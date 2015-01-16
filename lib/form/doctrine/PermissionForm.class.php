@@ -15,8 +15,8 @@ class PermissionForm extends BasePermissionForm
   {
     //Русифицируем:
     $this->getWidgetSchema()->setLabels(array(
-        'id' => 'Код',
-        'name' => 'Название',
+        'id' => '* Код',
+        'name' => '* Название',
         'description' => 'Описание'
     ));
   }

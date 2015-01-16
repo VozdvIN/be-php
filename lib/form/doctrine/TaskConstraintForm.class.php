@@ -39,12 +39,12 @@ class TaskConstraintForm extends BaseTaskConstraintForm
 
     //Русифицируем:
     $this->getWidgetSchema()->setLabels(array(
-        'target_task_id' => 'На задание:',
-        'priority_shift' => 'Приоритет:'
+        'target_task_id' => '* На задание:',
+        'priority_shift' => '* Приоритет:'
     ));
     $this->getWidgetSchema()->setHelps(array(
         'target_task_id' => '',
-        'priority_shift' => '<> 0.|Суммируется с текущим собственным приоритетом задания.'
+        'priority_shift' => 'Суммируется с текущим собственным приоритетом задания.'
     ));
   }
 
