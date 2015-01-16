@@ -9,7 +9,7 @@
           'warnAction',
           link_to(
               'Отмена',
-              'game/show?id='.$form->getObject()->game_id.'&tab=teams',
+              'game/teams?id='.$form->getObject()->game_id,
               array('confirm' => 'Вернуться без сохранения?')))
   );
   ?>

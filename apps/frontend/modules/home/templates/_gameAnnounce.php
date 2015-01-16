@@ -6,10 +6,8 @@
  */
 ?>
 <div>
-	<h3><?php echo $_isAuth ? link_to($game->name, 'game/show?id='.$game->id) : $game->name; ?></h3>
-	<?php if ($_showRegions): ?>
+	<h3><?php echo $_isAuth ? link_to($game->name, 'game/info?id='.$game->id) : $game->name; ?></h3>
 	<h4><?php echo $game->getRegionSafe()->name; ?></h4>
-	<?php endif; ?>
 	<article>
 		<?php echo Utils::decodeBB($game->short_info) ?>
 	</article>

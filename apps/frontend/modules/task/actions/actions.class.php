@@ -72,7 +72,7 @@ class taskActions extends MyActions
     $this->errorRedirectUnless($this->task->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'удалять задания для игры'));
     $game_id = $this->task->game_id;
     $this->task->delete();
-    $this->successRedirect('Задание успешно удалено.', 'game/show?id='.$game_id.'&tab=tasks');
+    $this->successRedirect('Задание успешно удалено.', 'game/tasks?id='.$game_id);
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)

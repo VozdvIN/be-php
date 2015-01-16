@@ -50,7 +50,7 @@
           'warnAction',
           link_to(
               'Отмена',
-              'game/show?id='.$form->getObject()->getId(),
+              'game/promo?id='.$form->getObject()->getId(),
               array('confirm' => 'Вернуться без сохранения?'))),
       $width);
   ?>

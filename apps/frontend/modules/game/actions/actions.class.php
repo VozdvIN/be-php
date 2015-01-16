@@ -18,13 +18,13 @@ class gameActions extends MyActions
 		$this->_currentRegion = Region::byIdSafe($this->session->getAttribute('region_id'));    
 
 		$this->_retUrlRaw = Utils::encodeSafeUrl('game/index');
-		$this->_sessionIsGameModerator = Game::isModerator($this->sessionWebUser);
+		$this->_isGameModerator = Game::isModerator($this->sessionWebUser);
 
 		$this->_plannedGames = new Doctrine_Collection('Game');
 		$this->_activeGames = new Doctrine_Collection('Game');
 		$this->_archivedGames = new Doctrine_Collection('Game');
-		$this->_sessionPlayIndex = array();
-		$this->_sessionIsActorIndex = array();
+		$this->_playIndex = array();
+		$this->_isActorIndex = array();
 
 		$gamesQuery = Doctrine::getTable('Game')
 			->createQuery('g')
@@ -32,7 +32,7 @@ class gameActions extends MyActions
 			->where('g.region_id = ?', $this->_currentRegion->id)
 			->orderBy('g.start_datetime');
 		if ($this->_currentRegion->id == Region::DEFAULT_REGION)
-		{    
+		{
 			$gamesQuery->orWhere('g.region_id IS NULL');
 		}
 
@@ -59,15 +59,18 @@ class gameActions extends MyActions
 					$this->_plannedGames->add($game);
 					break;
 			}
-			$this->_sessionPlayIndex[$game->id] = $game->isPlayerRegistered($this->sessionWebUser);
-			$this->_sessionIsActorIndex[$game->id] = $game->isActor($this->sessionWebUser);
+			$this->_playIndex[$game->id] = $game->isPlayerRegistered($this->sessionWebUser);
+			$this->_isActorIndex[$game->id] =
+				$game->isActor($this->sessionWebUser)
+				|| $game->isManager($this->sessionWebUser)
+				|| $this->_isGameModerator;
 		}
 
 		$gameCreateRequests = Doctrine::getTable('GameCreateRequest')
 			->createQuery('gcr')
 			->select()->orderBy('gcr.name')
 			->execute();
-		if ($this->_sessionIsGameModerator)
+		if ($this->_isGameModerator)
 		{
 			$this->_gameCreateRequests = $gameCreateRequests;
 		}
@@ -84,77 +87,79 @@ class gameActions extends MyActions
 		}
 
 	}
-
-	public function executeShow(sfWebRequest $request)
+	
+	public function executePromo(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
 		if ( ! $this->_game->canBeObserved($this->sessionWebUser))
 		{
 			$this->forward('game', 'info');
 		}
-		else
-		{
-			$this->_tab = $request->getParameter('tab', 'props');			
-			if      ($this->_tab == 'props')
-			{
-				$this->forward('game', 'props');
-			}
-			else if ($this->_tab == 'teams')
-			{
-				$this->forward('game', 'teams');
-			}
-			else if ($this->_tab == 'tasks')
-			{
-				$this->forward('game', 'tasks');
-			}
-		}
+		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
+		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
 	}
-
-	public function executeProps($request)
+	
+	public function executePromoEdit(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->errorRedirectUnless($this->game->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру'));
+		$this->form = new GameFormPromo($this->game);
+	}
+	
+	public function executePromoUpdate(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
+		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->form = new GameFormPromo($this->game);
+		$this->processForm($request, $this->form, 'game/promo?id='.$this->game->id);
+		$this->setTemplate('promoEdit');
+	}
+		
+	public function executeSettings($request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		$this->_sessionCanManage = $this->_game->isManager($this->sessionWebUser);
-		$this->_sessionIsModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
-		
-		//TODO: Разделить на отдельные представления
-		$this->_tab = 'props';
-		$this->setTemplate('show');
+		if ( ! $this->_game->canBeObserved($this->sessionWebUser))
+		{
+			$this->forward('game', 'info');
+		}
+		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
+		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
 	}
 
 	public function executeTeams($request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		$this->_sessionCanManage = $this->_game->isManager($this->sessionWebUser);
-		$this->_sessionIsModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
+		if ( ! $this->_game->canBeObserved($this->sessionWebUser))
+		{
+			$this->forward('game', 'info');
+		}
+		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
+		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
 
 		$this->_teamStates = Doctrine::getTable('TeamState')
-					->createQuery('ts')->innerJoin('ts.Team')
-					->select()->where('game_id = ?', $this->_game->id)
-					->orderBy('ts.Team.name')->execute();
-				$this->_gameCandidates = Doctrine::getTable('GameCandidate')
-					->createQuery('gc')->innerJoin('gc.Team')
-					->select()->where('game_id = ?', $this->_game->id)
-					->orderBy('gc.Team.name')->execute();
-		
-		//TODO: Разделить на отдельные представления
-		$this->_tab = 'teams';
-		$this->setTemplate('show');
+			->createQuery('ts')->innerJoin('ts.Team')
+			->select()->where('game_id = ?', $this->_game->id)
+			->orderBy('ts.Team.name')->execute();
+		$this->_gameCandidates = Doctrine::getTable('GameCandidate')
+			->createQuery('gc')->innerJoin('gc.Team')
+			->select()->where('game_id = ?', $this->_game->id)
+			->orderBy('gc.Team.name')->execute();
 	}
 
 	public function executeTasks($request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		$this->_sessionCanManage = $this->_game->isManager($this->sessionWebUser);
-		$this->_sessionIsModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
+		if ( ! $this->_game->canBeObserved($this->sessionWebUser))
+		{
+			$this->forward('game', 'info');
+		}
+		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
+		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
 
 		$this->_tasks = Doctrine::getTable('Task')
 			->createQuery('t')->leftJoin('t.taskConstraints')->leftJoin('t.taskTransitions')
 			->select()->where('game_id = ?', $this->_game->id)
 			->orderBy('t.name')->execute();
-		
-		//TODO: Разделить на отдельные представления
-		$this->_tab = 'tasks';
-		$this->setTemplate('show');
 	}
 
 	public function executeNew(sfWebRequest $request)
@@ -172,22 +177,6 @@ class gameActions extends MyActions
 		$this->setTemplate('new');
 	}
 
-	public function executeEdit(sfWebRequest $request)
-	{
-		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		$this->errorRedirectUnless($this->game->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру'));
-		$this->form = new GameForm($this->game);
-	}
-
-	public function executeUpdate(sfWebRequest $request)
-	{
-		$this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
-		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		$this->form = new GameForm($this->game);
-		$this->processForm($request, $this->form);
-		$this->setTemplate('edit');
-	}
-
 	public function executeDelete(sfWebRequest $request)
 	{
 		$this->forward404Unless($request->isMethod(sfRequest::DELETE));
@@ -198,7 +187,25 @@ class gameActions extends MyActions
 		$this->successRedirect('Игра успешно удалена.', 'game/index');
 	}
 
-	protected function processForm(sfWebRequest $request, sfForm $form)
+	//TODO: Deprecated
+	public function executeEdit(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->errorRedirectUnless($this->game->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру'));
+		$this->form = new GameForm($this->game);
+	}
+
+	//TODO: Deprecated
+	public function executeUpdate(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
+		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->form = new GameForm($this->game);
+		$this->processForm($request, $this->form);
+		$this->setTemplate('edit');
+	}
+
+	protected function processForm(sfWebRequest $request, sfForm $form, /*string*/ $successRetUrl)
 	{
 		$form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
 
@@ -220,7 +227,7 @@ class gameActions extends MyActions
 			{
 				$object->initDefaults();
 				$object->save();
-				$this->successRedirect('Игра '.$object->name.' успешно сохранена.', 'game/show?id='.$object->id);
+				$this->successRedirect('Игра '.$object->name.' успешно сохранена.', $successRetUrl);
 			}
 		}
 		else
@@ -278,7 +285,7 @@ class gameActions extends MyActions
 				Utils::sendNotifyGroup(
 					'Заявка '.$this->team->name.' на игру '.$this->game->name,
 					'Команда "'.$this->team->name.'" подала заявку на вашу игру "'.$this->game->name.'".'."\n"
-					.'Утвердить или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/game/show?id='.$this->game->id.'&tab=teams',
+					.'Утвердить или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/game/teams?id='.$this->game->id,
 					$this->game->Team->getLeadersRaw()
 				);
 			}
@@ -287,7 +294,7 @@ class gameActions extends MyActions
 				Utils::sendNotifyAdmin(
 					'Заявка '.$this->team->name.' на игру '.$this->game->name,
 					'Команда "'.$this->team->name.'" подала заявку на игру "'.$this->game->name.'", которой не назначена команда-организатор.'."\n"
-					.'Утвердить или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/game/show?id='.$this->game->id.'&tab=teams'
+					.'Утвердить или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/game/teams?id='.$this->game->id
 				);
 			}
 

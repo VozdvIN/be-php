@@ -80,7 +80,7 @@ render_named_line($width, 'Пароль:', SiteSettings::NOTIFY_SMTP_PASSWORD);
 <h3>Игры</h3>
 <ul>
   <?php   foreach ($_gamesUnderModeration as $game): ?>
-  <li><?php echo link_to($game->name, 'game/show?id='.$game->id) ?></li>
+  <li><?php echo link_to($game->name, 'game/promo?id='.$game->id) ?></li>
   <?php   endforeach ?>
 </ul>
 <?php   endif ?>

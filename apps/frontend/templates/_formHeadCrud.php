@@ -1,12 +1,28 @@
 <?php
 /* Входные аргументы:
- * sfForm  $form    форма для отображения
- * string  $module  часть адреса модуля обработчика формы
+ * sfForm	$form			форма для отображения
+ * string	$module			имя модуля обработчика формы
+ * string	$createAction	имя метода для обработки создания экземпляра
+ * string	$updateAction	имя метода для обработки изменения экземпляра
  */
+
+if ( ( ! isset($createAction)) || ($createAction == ''))
+{
+	$createAction = 'create';
+}
+
+if ( ( ! isset($updateAction)) || ($updateAction == ''))
+{
+	$updateAction = 'update';
+}
 ?>
 
+<p class="info">
+	Поля, отмеченные звездочками, обязательны для заполнения.
+</p>
+
 <form
-	action="<?php echo url_for($module.'/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>"
+	action="<?php echo url_for($module.'/'.($form->getObject()->isNew() ? $createAction : $updateAction).(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>"
 	method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>
 >
 

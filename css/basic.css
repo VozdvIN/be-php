@@ -248,7 +248,7 @@ table.no-border, table.no-border tr, table.no-border th, table.no-border td
 
 .info
 {
-    color: greenyellow;
+    color: lime;
 } 
 
 .warn
@@ -285,11 +285,25 @@ p.info, p.warn, p.danger
 
 /* === Form === */
 
-tbody input, tbody select
+input[type="text"], input[type="checkbox"], select, textarea
 {
     border: solid 1px royalblue;
     background-color: black;
     color: inherit;
+    font-family: verdana, helvetica, sans-serif;
+    font-size: 14px;
+}
+
+textarea
+{
+    font-family: monospace;
+    font-size: 16px;
+}
+
+input[type="submit"]
+{
+    font-family: verdana, helvetica, sans-serif;
+    font-size: 14px;
 }
 
 /* === Menu === */

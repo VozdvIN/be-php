@@ -122,7 +122,7 @@
 	<tbody>
 		<?php foreach ($_teamStates as $teamState): ?>
 		<tr>
-			<td><?php echo link_to($teamState->Game->name, 'game/show?id='.$teamState->game_id, array('target' => 'new')); ?></td>
+			<td><?php echo link_to($teamState->Game->name, 'game/info?id='.$teamState->game_id, array('target' => 'new')); ?></td>
 			<td>
 				<?php
 				if ($teamState->Game->status == Game::GAME_STEADY
@@ -153,7 +153,7 @@
 	<tbody>
 		<?php foreach ($_games as $game): ?>
 		<tr>
-			<td><?php echo link_to($game->name, 'game/show?id='.$game->id, array('target' => 'new')); ?></td>
+			<td><?php echo link_to($game->name, 'game/promo?id='.$game->id, array('target' => 'new')); ?></td>
 			<td>
 				<?php
 				if ($game->status == Game::GAME_STEADY

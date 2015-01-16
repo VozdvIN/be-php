@@ -345,7 +345,7 @@ class authActions extends MyActions
 			Utils::sendNotifyGroup(
 				'Игра создана - '.$game->name,
 				'Заявка вашей команды "'.$team->name.'" на создание игры "'.$game->name.'" утверждена, игра создана.'."\n"
-				.'Страница игры: http://'.SiteSettings::SITE_DOMAIN.'/game/show?id='.$game->id,
+				.'Страница игры: http://'.SiteSettings::SITE_DOMAIN.'/game/promo?id='.$game->id,
 				$team->getLeadersRaw()
 			);
 

@@ -47,7 +47,7 @@ class teamStateActions extends myActions
       $object = $form->updateObject();
       $this->errorRedirectUnless($object->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'изменять настройки команды'));
       $object->save();
-      $this->successRedirect('Настройки команды '.$object->Team->name.' успешно сохранены.', 'game/show?id='.$object->game_id.'&tab=teams');
+      $this->successRedirect('Настройки команды '.$object->Team->name.' успешно сохранены.', 'game/teams?id='.$object->game_id);
     }
     else
     {

@@ -29,7 +29,7 @@
 				<?php
 				foreach ($_games as $game)
 				{
-					include_partial('gameAnnounce', array('game' => $game, '_isAuth' => $_userAuthenticated, '_showRegions' => ($_currentRegion->id == Region::DEFAULT_REGION)));
+					include_partial('gameAnnounce', array('game' => $game, '_isAuth' => $_userAuthenticated));
 				}
 				?>
 				<?php else: ?>
