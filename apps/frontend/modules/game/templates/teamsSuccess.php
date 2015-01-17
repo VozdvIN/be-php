@@ -6,7 +6,80 @@
 			'_activeItem' => 'Регистрация',
 			'_isModerator' => $_isModerator
 		)
-	)
+	);
+	
+	$retUrlRaw = Utils::encodeSafeUrl(url_for('game/teams?id='.$_game->id));
 ?>
 
-<h2>Регистрация</h2>
+<h3>Регистрация</h3>
+
+<?php if ($_isModerator): ?>
+<p class="pad-top">
+	<span class="info info-bg pad-box box">
+		<?php echo link_to('Зарегистрировать команду', 'game/addTeamManual?id='.$_game->id.'&returl='.$retUrlRaw, array('method' => 'post')); ?>
+	</span>
+</p>
+<?php endif; ?>
+
+<?php if ($_teamStates->count() <= 0): ?>
+<p class="info">
+	Нет участвующих команд.
+</p>
+<?php else: ?>
+<table class="no-border">
+	<thead>
+		<tr>
+			<th>Команда</th>
+			<th>Стартует</th>
+			<th>Автоматизация</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach($_teamStates as $teamState): ?>
+		<tr>
+			<td><?php echo link_to($teamState->Team->name, 'team/show?id='.$teamState->team_id, array ('target' => '_blank')); ?></td>
+			<td><?php echo ($teamState->start_delay == 0) ? 'сразу' : 'через '.Timing::intervalToStr($teamState->start_delay*60) ?></td>
+			<td>
+				<?php if ($teamState->ai_enabled == 0): ?>
+					<span class="warn warn-bg">отключена</span>
+				<?php else: ?>
+					<span>включена</span>
+				<?php endif; ?>
+			</td>
+			<td>
+				<span class="info info-bg pad-box box"><?php echo link_to('Настройки', 'teamState/show?id='.$teamState->id) ?></span>
+				<?php if ($_canManage || $_isModerator): ?>
+					<span class="warn warn-bg pad-box box"><?php echo link_to('Снять с игры', 'game/removeTeam?id='.$_game->id.'&teamId='.$teamState->team_id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Вы точно хотите снять команду '.$teamState->Team->name.' с игры '.$_game->name.'?')) ?></span>
+				<?php endif; ?>
+			</td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+</table>
+<?php endif; ?>
+
+<?php if ($_gameCandidates->count() > 0): ?>
+<h3>Заявки на участие</h3>
+<table class="no-border">
+	<tbody>
+		<?php foreach($_gameCandidates as $candidate): ?>
+		<tr>
+			<td><?php echo link_to($candidate->Team->name, 'team/show?id='.$candidate->team_id, array('target' => '_blank')) ?></td>
+			<td>
+				<?php if ($_canManage || $_isModerator): ?>
+					<span class="warn warn-bg pad-box box">
+						<?php echo link_to('Отклонить', 'game/cancelJoin?id='.$_game->id.'&teamId='.$candidate->team_id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Отклонить заявку команды '.$candidate->Team->name.' на участие в игре '.$_game->name.'?')) ?>
+					</span>
+					<span class="info info-bg pad-box box">
+						<?php echo link_to('Утвердить', 'game/addTeam?id='.$_game->id.'&teamId='.$candidate->team_id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Принять команду '.$candidate->Team->name.' к участию в игре '.$_game->name.'?')) ?>
+					</span>					
+				<?php endif; ?>
+			</td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+</table>
+<?php endif; ?>
+
+

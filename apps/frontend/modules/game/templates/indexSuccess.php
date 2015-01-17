@@ -26,7 +26,7 @@
 	<tbody>
 		<?php foreach ($_activeGames as $game): ?>
 		<tr>
-			<td><?php echo link_to($game->name, 'game/info?id='.$game->id); ?></td>
+			<td><?php echo link_to($game->name, 'game/promo?id='.$game->id); ?></td>
 			<td>
 				<?php
 					switch ($game->status)
@@ -45,13 +45,6 @@
 					}
 				?>
 			</td>
-			<td>
-				<?php if ($_isActorIndex[$game->id]): ?>
-					<?php echo link_to('Редактор', 'game/promo?id='.$game->id, array('target' => 'new')) ?>
-					<?php echo link_to('Проведение', 'gameControl/pilot?id='.$game->id, array('target' => 'new')) ?>
-				<?php endif; ?>
-				&nbsp;
-			</td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>
@@ -64,15 +57,8 @@
 	<tbody>
 		<?php foreach ($_plannedGames as $game): ?>
 		<tr>
-			<td><?php echo link_to($game->name, 'game/info?id='.$game->id); ?></td>
+			<td><?php echo link_to($game->name, 'game/promo?id='.$game->id); ?></td>
 			<td><?php echo 'брифинг '.$game->start_briefing_datetime; ?></td>
-			<td>
-				<?php if ($_isActorIndex[$game->id]): ?>
-					<?php echo link_to('Редактор', 'game/promo?id='.$game->id, array('target' => 'new')) ?>
-					<?php echo link_to('Проведение', 'gameControl/pilot?id='.$game->id, array('target' => 'new')) ?>
-				<?php endif; ?>
-				&nbsp;
-			</td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

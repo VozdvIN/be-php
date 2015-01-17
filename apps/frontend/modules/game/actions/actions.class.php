@@ -115,17 +115,6 @@ class gameActions extends MyActions
 		$this->setTemplate('promoEdit');
 	}
 		
-	public function executeSettings($request)
-	{
-		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		if ( ! $this->_game->canBeObserved($this->sessionWebUser))
-		{
-			$this->forward('game', 'info');
-		}
-		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
-		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
-	}
-
 	public function executeTeams($request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
@@ -146,6 +135,28 @@ class gameActions extends MyActions
 			->orderBy('gc.Team.name')->execute();
 	}
 
+	public function executeSettings($request)
+	{
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		if ( ! $this->_game->canBeObserved($this->sessionWebUser))
+		{
+			$this->forward('game', 'info');
+		}
+		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
+		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
+	}
+
+	public function executeTemplates($request)
+	{
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		if ( ! $this->_game->canBeObserved($this->sessionWebUser))
+		{
+			$this->forward('game', 'info');
+		}
+		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
+		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
+	}
+	
 	public function executeTasks($request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
@@ -162,12 +173,14 @@ class gameActions extends MyActions
 			->orderBy('t.name')->execute();
 	}
 
+	//TODO: Заменить форму	
 	public function executeNew(sfWebRequest $request)
 	{
 		$this->errorRedirectUnless(Game::isModerator($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'создавать игру'));
 		$this->form = new GameForm();
 	}
 
+	//TODO: Заменить форму
 	public function executeCreate(sfWebRequest $request)
 	{
 		$this->forward404Unless($request->isMethod(sfRequest::POST));
@@ -239,6 +252,8 @@ class gameActions extends MyActions
 	public function executeInfo(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
+		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);		
 		$teamList = $this->_game->getTeamsAvailableToPostJoinBy($this->sessionWebUser);
 		$this->_canPostJoin = $teamList->count() > 0;
 	}
@@ -261,14 +276,15 @@ class gameActions extends MyActions
 		$this->teamList = new Doctrine_Collection('Team');
 		foreach (Team::all() as $team)
 		{
-			if (   (!$this->game->isTeamRegistered($team))
-				&& (!$this->game->isTeamCandidate($team))
+			if (   ( ! $this->game->isTeamRegistered($team))
+				&& ( ! $this->game->isTeamCandidate($team))
 				&& ($team->id != $this->game->team_id))
 			{
 				$this->teamList->add($team);
 			}
 		}
-		$this->errorRedirectIf($this->teamList->count() <= 0, 'Нет команд, которые вы можете зарегистрировать.');
+		
+		$this->errorRedirectIf($this->teamList->count() <= 0, 'Нет команд, которые вы можете зарегистрировать.', Utils::decodeSafeUrl($this->retUrl));
 	}
 
 	public function executePostJoin(sfWebRequest $request)

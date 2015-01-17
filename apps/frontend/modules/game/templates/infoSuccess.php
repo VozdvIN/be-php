@@ -4,14 +4,21 @@
 
 <h1><?php echo $_game->name ?></h1>
 
-<?php echo Utils::decodeBB($_game->description) ?>
-
-<div class="hr"></div>
-<?php if (($_canPostJoin) && ($_game->status < Game::GAME_ARCHIVED)): ?>
+<?php if ((($_canPostJoin) && ($_game->status < Game::GAME_ARCHIVED)) || $_canManage || $_isModerator): ?>
 <p>
-	<span class="info info-bg pad-box box"><?php echo link_to('Подать заявку на участие', 'game/postJoinManual?id='.$_game->id.'&returl='.$retUrlRaw, array('method' => 'post')); ?></span>
+	<?php if (($_canPostJoin) && ($_game->status < Game::GAME_ARCHIVED)): ?>
+		<span class="info info-bg pad-box box"><?php echo link_to('Подать заявку на участие', 'game/postJoinManual?id='.$_game->id.'&returl='.$retUrlRaw, array('method' => 'post')); ?></span>
+	<?php endif ?>
+	<?php if ($_canManage || $_isModerator): ?>
+		<span class="info info-bg pad-box box"><?php echo link_to('Редактировать', 'game/promo?id='.$_game->id); ?></span>
+	<?php endif; ?>
 </p>
-<?php endif ?>
+<?php endif; ?>
+
+<article class="pad-top pad-bottom">
+	<?php echo Utils::decodeBB($_game->description) ?>
+</article>
+
 <?php if ($_game->status >= GAME::GAME_ARCHIVED): ?>
 <p class="info">
 	Игра завершена, опубликованы <?php echo link_to('итоги', 'gameControl/report?id='.$_game->id); ?>

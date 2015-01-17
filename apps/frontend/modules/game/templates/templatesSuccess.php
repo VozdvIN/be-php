@@ -6,7 +6,9 @@
 			'_activeItem' => 'Шаблоны',
 			'_isModerator' => $_isModerator
 		)
-	)
+	);
+	
+	$retUrlRaw = Utils::encodeSafeUrl(url_for('game/teams?id='.$_game->id));
 ?>
 
-<h2>Шаблоны</h2>
+<h3>Шаблоны</h3>

@@ -507,10 +507,9 @@ class Utils
 	 */
 	public static function getReadyMailer()
 	{
-		$settings = SystemSettings::getInstance();
-		$transport = Swift_SmtpTransport::newInstance($settings->smtp_host, $settings->smtp_port, $settings->smtp_security);
+		$transport = Swift_SmtpTransport::newInstance(SiteSettings::NOTIFY_SMTP_HOST, SiteSettings::NOTIFY_SMTP_PORT, SiteSettings::NOTIFY_SMTP_SECURITY);
 		
-		if (($settings->smtp_login !== null) && ($settings->smtp_login !== ''))
+		if ((SiteSettings::NOTIFY_SMTP_LOGIN !== null) && (SiteSettings::NOTIFY_SMTP_PASSWORD !== ''))
 		{
 			$transport->setUsername($settings->smtp_login)->setPassword($settings->smtp_password);
 		}
@@ -519,7 +518,7 @@ class Utils
 		{
 			$transport->start();
 		}
-		catch (Exception $exc)
+		catch (Exception $e)
 		{
 			return false;
 		}
