@@ -42,7 +42,7 @@ render_named_line($width, 'Пароль:', SiteSettings::NOTIFY_SMTP_PASSWORD);
 <?php   if ($_isWebUserModer): ?>
 <h3>Пользователи</h3>
 <p>
-  Вы можете управлять анкетой <?php echo link_to('любого пользователя', 'webUser/index', array('target' => 'new'))?>.
+  Вы можете управлять анкетой <?php echo link_to('любого пользователя', 'webUser/index', array('target' => '_blank'))?>.
 </p>
 <?php     if ($_isPermissionModer): ?>
 <p>
@@ -54,10 +54,10 @@ render_named_line($width, 'Пароль:', SiteSettings::NOTIFY_SMTP_PASSWORD);
 <?php   if ($_isFullTeamModer): ?>
 <h3>Команды</h3>
 <p>
-  Вы можете управлять <?php echo link_to('любой командой', 'team/index', array('target' => 'new'))?>.
+  Вы можете управлять <?php echo link_to('любой командой', 'team/index', array('target' => '_blank'))?>.
 </p>
 <p>
-  Вы также можете управлять <?php echo link_to('заявками на создание команд', 'team/index', array('target' => 'new'))?>.
+  Вы также можете управлять <?php echo link_to('заявками на создание команд', 'team/index', array('target' => '_blank'))?>.
 </p>
 <?php   endif ?>
 <?php   if (( ! $_isFullTeamModer) && ($_teamsUnderModeration->count() > 0)): ?>
@@ -72,7 +72,7 @@ render_named_line($width, 'Пароль:', SiteSettings::NOTIFY_SMTP_PASSWORD);
 <?php   if ($_isFullGameModer): ?>
 <h3>Игры</h3>
 <p>
-  Вы можете управлять <?php echo link_to('любой игрой', 'game/index', array('target' => 'new'))?>.
+  Вы можете управлять <?php echo link_to('любой игрой', 'game/index', array('target' => '_blank'))?>.
 </p>
 <?php   endif ?>
 <?php   if (( ! $_isFullGameModer) && ($_gamesUnderModeration->count() > 0)): ?>
@@ -87,7 +87,7 @@ render_named_line($width, 'Пароль:', SiteSettings::NOTIFY_SMTP_PASSWORD);
 <?php   if ($_isFullArticleModer): ?>
 <h3>Статьи</h3>
 <p>
-  Вы можете редактировать <?php echo link_to('любую статью', 'article/index', array('target' => 'new'))?>.
+  Вы можете редактировать <?php echo link_to('любую статью', 'article/index', array('target' => '_blank'))?>.
 </p>
 <?php   endif ?>
 <?php   if (( ! $_isFullArticleModer) && ($_articlesUnderModeration->count() > 0)): ?>

@@ -50,7 +50,7 @@
 				$isLeader = $teamPlayer->is_leader;
 			?>
 			<td>
-				<?php echo link_to($webUser->login, 'webUser/show?id='.$webUser->id, array('target' => 'new')); ?>
+				<?php echo link_to($webUser->login, 'webUser/show?id='.$webUser->id, array('target' => '_blank')); ?>
 			</td>
 			<td>
 				<?php echo ($isLeader) ? 'Капитан' : 'Рядовой'; ?>
@@ -93,7 +93,7 @@
 		<?php foreach ($_teamCandidates as $teamCandidate): ?>
 		<?php $candidateUser = $teamCandidate->WebUser; ?>
 		<tr>
-			<td><?php echo link_to($candidateUser->login, 'webUser/show?id='.$candidateUser->id, array('target' => 'new')); ?></td>
+			<td><?php echo link_to($candidateUser->login, 'webUser/show?id='.$candidateUser->id, array('target' => '_blank')); ?></td>
 			<td>
 				<?php if ($_sessionIsLeader || $_sessionIsModerator): ?>
 				<span class="warn warn-bg pad-box box"><?php echo link_to('Вербовать', 'team/setPlayer?id='.$_team->id.'&userId='.$webUser->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Утвердить '.$webUser->login.' в состав команды '.$_team->name.'?')); ?></span>
@@ -118,18 +118,16 @@
 	<tbody>
 		<?php foreach ($_teamStates as $teamState): ?>
 		<tr>
-			<td><?php echo link_to($teamState->Game->name, 'game/info?id='.$teamState->game_id, array('target' => 'new')); ?></td>
+			<td><?php echo link_to($teamState->Game->name, 'game/info?id='.$teamState->game_id, array('target' => '_blank')); ?></td>
 			<td>
 				<?php
-				if ($teamState->Game->status == Game::GAME_STEADY
-					|| $teamState->Game->status == Game::GAME_ACTIVE
-					|| $teamState->Game->status == Game::GAME_FINISHED)
+				if ($teamState->Game->status >= Game::GAME_STEADY || $teamState->Game->status <= Game::GAME_FINISHED)
 				{
-					echo link_to('К&nbsp;заданию', 'teamState/task?id='.$teamState->id, array('target' => 'new'));
+					echo link_to('К&nbsp;заданию', 'teamState/task?id='.$teamState->id, array('target' => '_blank'));
 				}
 				elseif ($teamState->Game->status == Game::GAME_ARCHIVED)
 				{
-					echo link_to('Итоги', 'gameControl/report?id='.$teamState->game_id, array('target' => 'new'));
+					echo link_to('Итоги', 'gameControl/report?id='.$teamState->game_id, array('target' => '_blank'));
 				}
 				?>
 			</td>
@@ -149,20 +147,11 @@
 	<tbody>
 		<?php foreach ($_games as $game): ?>
 		<tr>
-			<td><?php echo link_to($game->name, 'game/promo?id='.$game->id, array('target' => 'new')); ?></td>
+			<td><?php echo link_to($game->name, 'game/promo?id='.$game->id, array('target' => '_blank')); ?></td>
 			<td>
-				<?php
-				if ($game->status == Game::GAME_STEADY
-					|| $game->status == Game::GAME_ACTIVE
-					|| $game->status == Game::GAME_FINISHED)
-				{
-					echo link_to('Управление', 'gameControl/pilot?id='.$game->id, array('target' => 'new'));
-				}
-				elseif ($game->status == Game::GAME_ARCHIVED)
-				{
-					echo link_to('Итоги', 'gameControl/report?id='.$game->id, array('target' => 'new'));
-				}
-				?>
+				<?php if ($game->status >= Game::GAME_ARCHIVED): ?>
+					<?php echo link_to('Итоги', 'gameControl/report?id='.$game->id, array('target' => '_blank')); ?>
+				<?php endif; ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>;

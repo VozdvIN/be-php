@@ -59,7 +59,7 @@
             echo link_to($task->name, 'task/show?id='.$task->id).' - ';
             $linkName = $currentTaskState->describeStatus();
             $linkUrl = 'teamState/task?id='.$teamState->id;
-            echo link_to($linkName, $linkUrl, array('target' => 'new'));
+            echo link_to($linkName, $linkUrl, array('target' => '_blank'));
             
             if ($currentTaskState->status == TaskState::TASK_GIVEN)
             {
@@ -101,11 +101,11 @@
             <?php
             if ($teamState->status == TeamState::TEAM_FINISHED)
             {
-              echo decorate_span('info', link_to('Финишировала', 'teamState/task?id='.$teamState->id, array('target' => 'new')));
+              echo decorate_span('info', link_to('Финишировала', 'teamState/task?id='.$teamState->id, array('target' => '_blank')));
             }
             else
             {
-              echo decorate_span('warnBorder', link_to('Нет&nbsp;задания', 'teamState/task?id='.$teamState->id, array('target' => 'new')));
+              echo decorate_span('warnBorder', link_to('Нет&nbsp;задания', 'teamState/task?id='.$teamState->id, array('target' => '_blank')));
               
               if ($teamState->status == TeamState::TEAM_WAIT_TASK)
               {

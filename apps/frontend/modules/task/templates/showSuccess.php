@@ -81,7 +81,7 @@ render_h3_inline_end();
     echo ' '.link_to($answer->name, 'answer/edit?id='.$answer->id);
     echo '&nbsp;'.decorate_span('info', $answer->value).'&nbsp;('.$answer->info.')';
     echo (($answer->team_id !== null) && ($answer->team_id != 0))
-        ? ' только для '.link_to($answer->Team->name, 'team/show?id='.$answer->team_id, array('target' => 'new'))
+        ? ' только для '.link_to($answer->Team->name, 'team/show?id='.$answer->team_id, array('target' => '_blank'))
         : '';
     ?>
   </li>
@@ -114,7 +114,7 @@ render_h3_inline_end();
           ? decorate_span('info', $numLink)
           : decorate_span('warn', $numLink);
       echo '&nbsp;на&nbsp;';
-      echo link_to($targetTask->name, 'task/show?id='.$targetTask->id, array('target' => 'new'));
+      echo link_to($targetTask->name, 'task/show?id='.$targetTask->id, array('target' => '_blank'));
     }
     ?>
   </li>
@@ -155,7 +155,7 @@ render_h3_inline_end();
         echo decorate_span('warn', link_to('При неудаче', $linkTarget));
       }
       echo '&nbsp;на&nbsp;';
-      echo link_to($targetTask->name, 'task/show?id='.$targetTask->id, array('target' => 'new'));
+      echo link_to($targetTask->name, 'task/show?id='.$targetTask->id, array('target' => '_blank'));
       echo $taskTransition->manual_selection ? '&nbsp;вручную' : '';      
     }
     ?>

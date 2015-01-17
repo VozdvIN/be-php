@@ -87,7 +87,7 @@
 		<tr>
 			<td><?php echo $gameCreateRequest->name; ?></td>
 			<td><?php echo $gameCreateRequest->description; ?></td>
-			<td><?php echo link_to($gameCreateRequest->Team->name, 'team/show?id='.$gameCreateRequest->team_id, array('target' => 'new')); ?></td>
+			<td><?php echo link_to($gameCreateRequest->Team->name, 'team/show?id='.$gameCreateRequest->team_id, array('target' => '_blank')); ?></td>
 			<td>
 				<span class="info info-bg pad-box box"><?php echo link_to('Отменить', 'gameCreateRequest/delete?id='.$gameCreateRequest->id, array('method' => 'post')); ?></span>
 				<?php if ($_isGameModerator): ?>

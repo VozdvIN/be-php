@@ -111,7 +111,7 @@ render_h3_inline_end();
           else
           {  
             $html .= decorate_number($taskConstraint->priority_shift).'&nbsp;';
-            $html .= link_to($targetTask->name, 'task/show?id='.$targetTask->id, array ('target' => 'new'));
+            $html .= link_to($targetTask->name, 'task/show?id='.$targetTask->id, array ('target' => '_blank'));
           }
         }
       }
@@ -146,7 +146,7 @@ render_h3_inline_end();
         }
         else
         {  
-          $link = link_to($targetTask->name, 'task/show?id='.$targetTask->id, array ('target' => 'new'));
+          $link = link_to($targetTask->name, 'task/show?id='.$targetTask->id, array ('target' => '_blank'));
           $tail = $taskTransition->manual_selection ? '&nbsp;вручную': '';
           if ($taskTransition->allow_on_success && $taskTransition->allow_on_fail)
           {

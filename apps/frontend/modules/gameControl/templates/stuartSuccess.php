@@ -14,7 +14,7 @@
     <?php include_partial('results', array('_game' => $_game)) ?>
   </p>
   <p>
-    <?php echo link_to('Просмотр полной телеметрии', 'gameControl/report?id='.$_game->id, array('target' => 'new')) ?>
+    <?php echo link_to('Просмотр полной телеметрии', 'gameControl/report?id='.$_game->id, array('target' => '_blank')) ?>
   </p>
 
 </div>

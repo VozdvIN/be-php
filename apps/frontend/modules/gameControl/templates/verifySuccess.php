@@ -9,7 +9,7 @@
 <?php if (isset($report['tasks'])):?>
 <h3>Проверка заданий</h3>
 <?php   foreach ($report['tasks'] as $taskId => $taskReport): ?>
-<div><?php echo link_to(Task::byId($taskId)->name, 'task/show?id='.$taskId, array('target' => 'new')).':' ?></div>
+<div><?php echo link_to(Task::byId($taskId)->name, 'task/show?id='.$taskId, array('target' => '_blank')).':' ?></div>
 <ul>
 <?php    foreach ($taskReport as $reportLine): ?>
 <?php      if ($reportLine['errLevel'] == Game::VERIFY_ERR):?>
@@ -25,7 +25,7 @@
 <?php if (isset($report['teams'])):?>
 <h3>Проверка команд</h3>
 <?php   foreach ($report['teams'] as $teamId => $teamReport): ?>
-<div><?php echo link_to(Team::byId($teamId)->name, 'team/show?id='.$teamId, array('target' => 'new')).':' ?></div>
+<div><?php echo link_to(Team::byId($teamId)->name, 'team/show?id='.$teamId, array('target' => '_blank')).':' ?></div>
 <ul>
 <?php    foreach ($teamReport as $reportLine): ?>
 <?php      if ($reportLine['errLevel'] == Game::VERIFY_ERR):?>

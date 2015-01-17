@@ -29,7 +29,7 @@ foreach ($usedTips as $usedTip)
   }
   
   $value = $withLink
-      ? link_to($usedTip->Tip->name, 'tip/edit?id='.$usedTip->tip_id, array('target' => 'new'))
+      ? link_to($usedTip->Tip->name, 'tip/edit?id='.$usedTip->tip_id, array('target' => '_blank'))
       : $usedTip->Tip->name;
   $value = $withTime
       ? $value.'('.Timing::timeToStr($usedTip->used_since).')'
