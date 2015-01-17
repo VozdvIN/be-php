@@ -7,8 +7,6 @@
 			'_isModerator' => $_isModerator
 		)
 	);
-	
-	$retUrlRaw = Utils::encodeSafeUrl(url_for('game/teams?id='.$_game->id));
 ?>
 
 <h3>Параметры</h3>

@@ -179,11 +179,6 @@ thead tr:first-child
     background-color: #001c33;
 }
 
-tfoot tr:first-child
-{
-    background: none;
-}
-
 table.no-border, table.no-border tr, table.no-border th, table.no-border td
 {
     border-style: none;
