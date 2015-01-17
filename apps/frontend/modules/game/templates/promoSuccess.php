@@ -9,7 +9,7 @@
 	)
 ?>
 
-<h2>Информация</h2>
+<h3>Информация</h3>
 
 <table class="no-border">
 	<tbody>
@@ -37,6 +37,26 @@
 			<th>Описание:</th>
 			<td><a target="_self" href="#info">см. ниже</a></td>
 		</tr>
+		<tr>
+			<th>Брифинг:</th>
+			<td><?php echo $_game->start_briefing_datetime ?></td>
+		</tr>
+		<tr>
+			<th>Старт:</th>
+			<td><?php echo $_game->start_datetime ?></td>
+		</tr>
+		<tr>
+			<th>Длительность:</th>
+			<td><?php echo Timing::intervalToStr($_game->time_per_game*60) ?></td>
+		</tr>
+		<tr>
+			<th>Остановка:</th>
+			<td><?php echo $_game->stop_datetime ?></td>
+		</tr>
+		<tr>
+			<th>Подведение итогов:</th>
+			<td><?php echo $_game->finish_briefing_datetime ?></td>
+		</tr>		
 	</tbody>
 	
 	<tfoot>

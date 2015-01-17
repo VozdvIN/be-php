@@ -145,7 +145,23 @@ class gameActions extends MyActions
 		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
 		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
 	}
-
+	
+	public function executeSettingsEdit(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->errorRedirectUnless($this->game->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру'));
+		$this->form = new GameFormSettings($this->game);
+	}
+		
+	public function executeSettingsUpdate(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
+		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->form = new GameFormSettings($this->game);
+		$this->processForm($request, $this->form, 'game/settings?id='.$this->game->id);
+		$this->setTemplate('settingsEdit');
+	}
+	
 	public function executeTemplates($request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
