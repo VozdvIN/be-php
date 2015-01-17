@@ -26,7 +26,7 @@
 			<td><?php echo ($_game->team_id <= 0) ? $_game->getTeamBackupName() : link_to($_game->Team->name, 'team/show?id='.$_game->Team->id, array ('target' => '_blank')) ?></td>
 		</tr>
 		<tr>
-			<th>Анонс опубликован:</th>
+			<th>Анонсирована:</th>
 			<td><?php echo ($_game->short_info_enabled) ? 'Да' : 'Нет' ?></td>
 		</tr>
 		<tr>

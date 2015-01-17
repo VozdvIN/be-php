@@ -33,7 +33,7 @@ class GameFormPromo extends BaseGameForm
 			//Общее
 			'name' => '* Название:',
 			'short_info' => '* Анонс:',
-			'short_info_enabled' => 'Анонс опубликован:',
+			'short_info_enabled' => 'Анонсирована:',
 			'description' => '* Описание:',
 			'team_id' => 'Организаторы:',
 			'region_id' => 'Проект:',

@@ -40,15 +40,9 @@
 		<tr>
 			<td><?php echo link_to($teamState->Team->name, 'team/show?id='.$teamState->team_id, array ('target' => '_blank')); ?></td>
 			<td><?php echo ($teamState->start_delay == 0) ? 'сразу' : 'через '.Timing::intervalToStr($teamState->start_delay*60) ?></td>
+			<td><?php echo ($teamState->ai_enabled == 0) ? 'отключена' : 'да' ?></td>
 			<td>
-				<?php if ($teamState->ai_enabled == 0): ?>
-					<span class="warn warn-bg">отключена</span>
-				<?php else: ?>
-					<span>включена</span>
-				<?php endif; ?>
-			</td>
-			<td>
-				<span class="info info-bg pad-box box"><?php echo link_to('Настройки', 'teamState/show?id='.$teamState->id) ?></span>
+				<span class="info info-bg pad-box box"><?php echo link_to('Настройки', 'teamState/edit?id='.$teamState->id) ?></span>
 				<?php if ($_canManage || $_isModerator): ?>
 					<span class="warn warn-bg pad-box box"><?php echo link_to('Снять с игры', 'game/removeTeam?id='.$_game->id.'&teamId='.$teamState->team_id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Вы точно хотите снять команду '.$teamState->Team->name.' с игры '.$_game->name.'?')) ?></span>
 				<?php endif; ?>

@@ -285,7 +285,7 @@ p.info, p.warn, p.danger
 
 /* === Form === */
 
-input[type="text"], input[type="checkbox"], select, textarea
+input[type="text"], input[type="checkbox"], input[type="password"], select, textarea
 {
     border: solid 1px royalblue;
     background-color: black;
