@@ -22,7 +22,7 @@
 <div class="border-top" style="width: 100%"><!--
 	
  --><div style="display:inline-block; width: 50%">
-		<div style="text-align: left;">
+		<div style="text-align: center;">
 			<div style="display: inline-block; min-width: 50%">	 
 				<h3>Анонсы</h3>
 				<?php if ($_games->count() > 0): ?>
@@ -42,7 +42,7 @@
 	</div><!--
 
  --><div style="display:inline-block; width: 50%">
-		<div style="text-align: right;">
+		<div style="text-align: center;">
 			<div style="display: inline-block; min-width: 50%">	 
 				<?php if ($_localNews): ?>
 				<h3>Новости</h3>

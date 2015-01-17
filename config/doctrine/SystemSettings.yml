@@ -3,8 +3,6 @@ SystemSettings:
   tableName: system_settings
   columns:
     id: { type: integer, primary: true, notnull: true }
-    # Число дней до игры, когда открывается анонс
-    games_announce_interval: { type: integer, notnull: true, default: 31 }
     # Разрешить мгновенную регистрацию пользователей
     fast_user_register: { type: boolean, notnull: true, default: false }
     # Разрешить быстрое создание команд (без модерирования или подтверждения по почте)

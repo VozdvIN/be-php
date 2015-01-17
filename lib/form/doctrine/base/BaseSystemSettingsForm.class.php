@@ -16,7 +16,6 @@ abstract class BaseSystemSettingsForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'                      => new sfWidgetFormInputHidden(),
-      'games_announce_interval' => new sfWidgetFormInputText(),
       'fast_user_register'      => new sfWidgetFormInputCheckbox(),
       'fast_team_create'        => new sfWidgetFormInputCheckbox(),
       'email_team_create'       => new sfWidgetFormInputCheckbox(),
@@ -25,7 +24,6 @@ abstract class BaseSystemSettingsForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'                      => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
-      'games_announce_interval' => new sfValidatorInteger(array('required' => false)),
       'fast_user_register'      => new sfValidatorBoolean(array('required' => false)),
       'fast_team_create'        => new sfValidatorBoolean(array('required' => false)),
       'email_team_create'       => new sfValidatorBoolean(array('required' => false)),

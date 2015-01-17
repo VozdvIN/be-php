@@ -14,7 +14,6 @@
   ?>
   <h4>Модерация</h4>
   <?php
-  render_form_field($form['games_announce_interval'], $width);
   render_form_field($form['email_team_create'], $width);
   render_form_field($form['email_game_create'], $width);
   render_form_field($form['fast_team_create'], $width);
