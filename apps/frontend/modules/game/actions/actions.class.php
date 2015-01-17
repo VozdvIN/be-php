@@ -209,16 +209,15 @@ class gameActions extends MyActions
 	public function executeNew(sfWebRequest $request)
 	{
 		$this->errorRedirectUnless(Game::isModerator($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'создавать игру'));
-		$this->form = new GameForm();
+		$this->form = new GameFormPromo();
 	}
 
-	//TODO: Заменить форму
 	public function executeCreate(sfWebRequest $request)
 	{
 		$this->forward404Unless($request->isMethod(sfRequest::POST));
 		$this->errorRedirectUnless(Game::isModerator($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'создавать игру'));
-		$this->form = new gameForm();
-		$this->processForm($request, $this->form);
+		$this->form = new GameFormPromo();
+		$this->processForm($request, $this->form, 'game/index');
 		$this->setTemplate('new');
 	}
 

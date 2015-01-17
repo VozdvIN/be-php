@@ -36,10 +36,10 @@ class GameFormPromo extends BaseGameForm
 			'description' => '* Описание:',
 			'team_id' => 'Организаторы:',
 			'region_id' => 'Проект:',
-			'start_briefing_datetime' => '* Брифинг:',
+			'start_briefing_datetime' => 'Брифинг:',
 			'start_datetime' => '* Старт:',
 			'stop_datetime' => '* Остановка:',
-			'finish_briefing_datetime' => '* Подведение итогов:',
+			'finish_briefing_datetime' => 'Подведение итогов:',
 			'time_per_game' => '* Длительность:',
 		));
 		

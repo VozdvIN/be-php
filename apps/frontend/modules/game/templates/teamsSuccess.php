@@ -22,7 +22,7 @@
 <?php endif; ?>
 
 <?php if ($_teamStates->count() <= 0): ?>
-<p class="info">
+<p>
 	Нет участвующих команд.
 </p>
 <?php else: ?>
