@@ -164,19 +164,24 @@ tbody th
     text-align: right;
 }
 
+tr:nth-child(even)
+{
+    background-color: #002a4c;
+}
+
+tr:nth-child(odd)
+{
+    background-color: #001c33;
+}
+
 thead tr:first-child
 {
     background-color: #001c33;
 }
 
-tr:nth-child(even)
+tfoot tr:first-child
 {
-    background-color: #001c33;
-}
-
-tr:nth-child(odd)
-{
-    background-color: #002a4c;
+    background: none;
 }
 
 table.no-border, table.no-border tr, table.no-border th, table.no-border td
