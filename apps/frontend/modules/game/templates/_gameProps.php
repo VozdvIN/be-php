@@ -38,7 +38,7 @@ render_named_line   ($width, 'Награждение:', $_game->finish_briefing_
 <h4>Параметры новых заданий</h4>
 <?php
 render_named_line   ($width, 'Длительность:', $_game->time_per_task.'&nbsp;мин');
-render_named_line   ($width, 'Интервал подсказок:', $_game->time_per_task.'&nbsp;мин');
+render_named_line   ($width, 'Интервал подсказок:', $_game->time_per_tip.'&nbsp;мин');
 render_named_line   ($width, 'Неверных ответов:', 'не&nbsp;более&nbsp;'.$_game->try_count);
 render_named_line   ($width, 'Название формулировки:', $_game->task_define_default_name);
 render_named_line   ($width, 'Префикс подсказки:', $_game->task_tip_prefix);
