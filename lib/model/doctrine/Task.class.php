@@ -390,8 +390,6 @@ class Task extends BaseTask implements IStored, IAuth
     }
     return false;
   }
-
-  //// Self ////
   
   /**
    * Ищет фильтр перехода на указанное задание, вернет false если не найдено.
@@ -400,7 +398,7 @@ class Task extends BaseTask implements IStored, IAuth
    * 
    * @return  TaskTransition
    */
-  protected function findTransitionToTask(Task $task)
+  public function findTransitionToTask(Task $task)
   {
     foreach ($this->taskTransitions as $taskTransition)
     {

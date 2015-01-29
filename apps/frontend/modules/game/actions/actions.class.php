@@ -200,7 +200,7 @@ class gameActions extends MyActions
 		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
 
 		$this->_tasks = Doctrine::getTable('Task')
-			->createQuery('t')->leftJoin('t.taskConstraints')->leftJoin('t.taskTransitions')
+			->createQuery('t')->leftJoin('t.answers')->leftJoin('t.taskConstraints')->leftJoin('t.taskTransitions')
 			->select()->where('game_id = ?', $this->_game->id)
 			->orderBy('t.name')->execute();
 	}
