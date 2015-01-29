@@ -220,43 +220,33 @@ table.no-border, table.no-border tr, table.no-border th, table.no-border td
 
 .box
 {
-    border-top-style: solid;
-    border-top-width: 1px;
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-left-style: solid;
-    border-left-width: 1px;	
+    border-style: solid;
+    border-width: 1px;	
 }
 
 .border-top
 {
-    border-top-style: solid;
-    border-top-width: 1px;
-    border-top-color: royalblue;
+    border-top: solid 1px royalblue;
 }
 
 .border-bottom
 {
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-bottom-color: royalblue;
+    border-bottom: solid 1px royalblue;
 }
 
 /* === Highlights === */
 
-.info
+.info, .info > a
 {
     color: lime;
 } 
 
-.warn
+.warn, .warn > a
 {
     color: yellow;
 } 
 
-.danger
+.danger, .danger > a
 {
     color: orangered;
 } 
@@ -339,6 +329,5 @@ nav.menu ul
 			
                 nav.menu ul li a.active, nav.menu ul li a.active:hover
                 {
-                    color: inherit;
                     text-decoration: none;
                 }
