@@ -30,18 +30,22 @@
 
 <h3>Игроки команды</h3>
 
-<?php if ($_sessionIsLeader || $_sessionIsModerator): ?>
-<p>
-	<span class="info info-bg pad-box box"><?php echo link_to('Вербовать нового', 'team/registerPlayer'.'?id='.$_team->id.'&returl='.$retUrlRaw); ?></span>
-</p>
-<?php endif; ?>
-
 <?php if ($_team->teamPlayers->count() == 0): ?>
 <p class="warn">
 	В команде нет игроков. Все действия от лица капитана и игроков команды должен выполнять модератор.
 </p>
+
 <?php else: ?>
 <table class="no-border">
+	<?php if ($_sessionIsLeader || $_sessionIsModerator): ?>
+	<thead>
+		<tr>
+			<td colspan="3">
+				<span class="info info-bg pad-box box"><?php echo link_to('Вербовать нового', 'team/registerPlayer'.'?id='.$_team->id.'&returl='.$retUrlRaw); ?></span>
+			</td>
+		</tr>
+	</thead>
+	<?php endif; ?>
 	<tbody>
 		<?php foreach ($_team->teamPlayers as $teamPlayer): ?>
 		<tr>
@@ -77,18 +81,21 @@
 
 <h3>Заявки в состав</h3>
 
-<?php if ($_sessionIsLeader || $_sessionIsModerator): ?>
-<p>
-	<span class="info info-bg pad-box box"><?php echo link_to('Подать свою', 'team/postJoin'.'?id='.$_team->id.'&userId='.$_sessionWebUserId.'&returl='.$retUrlRaw, array('method' => 'post')); ?></span>
-</p>
-<?php endif; ?>
-
 <?php if ($_teamCandidates->count() == 0): ?>
 <p>
 	Активных заявок нет.
 </p>
 <?php else: ?>
 <table class="no-border">
+	<?php if ($_sessionIsLeader || $_sessionIsModerator): ?>
+	<thead>
+		<tr>
+			<td colspan="3">
+				<span class="info info-bg pad-box box"><?php echo link_to('Подать свою', 'team/postJoin'.'?id='.$_team->id.'&userId='.$_sessionWebUserId.'&returl='.$retUrlRaw, array('method' => 'post')); ?></span>
+			</td>
+		</tr>
+	</thead>
+	<?php endif; ?>	
 	<tbody>
 		<?php foreach ($_teamCandidates as $teamCandidate): ?>
 		<?php $candidateUser = $teamCandidate->WebUser; ?>

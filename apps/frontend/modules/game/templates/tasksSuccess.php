@@ -13,31 +13,31 @@
 
 <h3>Задания</h3>
 
-<?php if ($_canManage || $_isModerator): ?>
-<p class="pad-top">
-	<span class="info info-bg pad-box box">
-		<?php echo link_to('Создать задание', 'task/new?gameId='.$_game->id); ?>
-	</span>
-</p>
-<?php endif; ?>
 <table class="no-border">
 	<thead>
+		<?php if ($_canManage || $_isModerator): ?>
+		<tr>
+			<td colspan="11">
+				<span class="info info-bg pad-box box"><?php echo link_to('Создать задание', 'task/new?gameId='.$_game->id); ?></span>
+			</td>
+		</tr>
+		<?php endif; ?>
 		<tr>
 			<th rowspan="2">Название</th>
 			<th rowspan="2">Длительность</th>
 			<th colspan="2">Ответов</th>
 			<th rowspan="2">Ошибок</th>
-			<th rowspan="2">Ручной старт</th>
+			<th rowspan="2">Пауза</th>
 			<th rowspan="2">Команд</th>
 			<th colspan="4">Собственные приоритеты</th>
 		</tr>
 		<tr>
 			<th>Всего</th>
-			<th>Для зачета</th>
+			<th>Зачетных</th>
 			<th>Свободно</th>
 			<th>Выдано</th>
 			<th>Заполнено</th>
-			<th>На команду</th>
+			<th>Командный</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -56,10 +56,10 @@
 			<td><?php echo '&lt;=&nbsp;'.$task->try_count_local ?></td>
 			<td><?php echo $task->manual_start ? 'Да' : '.' ?></td>
 			<td><?php echo ($task->max_teams > 0) ? '&lt;=&nbsp;'.$task->max_teams : '&infin;' ?></td>
-			<td><?php echo $task->priority_free ?></td>
-			<td><?php echo $task->priority_busy ?></td>
-			<td><?php echo $task->priority_filled ?></td>
-			<td><?php echo $task->priority_per_team ?></td>
+			<td><?php echo decorate_number($task->priority_free); ?></td>
+			<td><?php echo decorate_number($task->priority_busy); ?></td>
+			<td><?php echo decorate_number($task->priority_filled); ?></td>
+			<td><?php echo decorate_number($task->priority_per_team); ?></td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

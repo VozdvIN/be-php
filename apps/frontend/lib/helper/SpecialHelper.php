@@ -52,6 +52,8 @@ function get_path_to_article(Article $article)
  * @param   mixed   $value  (Число) - длина строки, (Строка) - как есть.
  *
  * @return  integer         ширина блока в единицах ex
+ * 
+ * @deprecated since version 0.16.4
  */
 function get_text_block_size_ex($value)
 {
@@ -67,6 +69,8 @@ function get_text_block_size_ex($value)
  * @param   array   $array  массив со строками
  *
  * @return  integer
+ * 
+ * @deprecated since version 0.16.4
  */
 function get_max_strlen($array)
 {
@@ -96,6 +100,8 @@ function get_max_strlen($array)
  * @param   string                $fieldName    имя поля
  *
  * @return  integer
+ * 
+ * @deprecated since version 0.16.4
  */
 function get_max_field_length(Doctrine_Collection $collection, $fieldName)
 {
@@ -126,13 +132,13 @@ function get_max_field_length(Doctrine_Collection $collection, $fieldName)
  */
 function decorate_number($value)
 {
-  if ($value == 0)
-  {
-    return '<span style="padding-left:1ex">'.$value.'</span>';
-  }
-  return ($value >= 0)
-      ? decorate_span('info', '+'.$value)
-      : decorate_span('warn', '&ndash;'.(-$value));
+	if ($value == 0)
+	{
+		return decorate_span('', '&nbsp;'.$value);
+	}
+	return ($value >= 0)
+		? decorate_span('info', '+'.$value)
+		: decorate_span('warn', '-'.(-$value));
 }
 
 /**
@@ -155,6 +161,8 @@ function decorate_span($class, $innerHtml)
  * @param   string   $innerHtml   HTML-код для обрамления
  *
  * @return  string
+ * 
+ * @deprecated since version 0.16.4
  */
 function decorate_div($class, $innerHtml)
 {
@@ -169,6 +177,8 @@ function decorate_div($class, $innerHtml)
  * @param   string  $nameWidth  ширина колонки названия свойства (в единицах ex)
  * @param   string  $name       заголовок строки
  * @param   mixed   $value      значение строкой или значения массивом
+ * 
+ * @deprecated since version 0.16.4
  */
 function render_named_line($nameWidth, $name, $values)
 {
@@ -202,6 +212,8 @@ function render_named_line($nameWidth, $name, $values)
  * @param   string          $nameWidth  ширина колонки названия свойства (в единицах ex)
  * @param   string          $name       заголовок строки
  * @param   array<string>   $value      значения
+ * 
+ * @deprecated since version 0.16.4
  */
 function render_named_line_if($condition, $nameWidth, $name, $values)
 {
@@ -217,6 +229,8 @@ function render_named_line_if($condition, $nameWidth, $name, $values)
  * @param   string   $headerText  текст заголовка
  *
  * @return  string
+ * 
+ * @deprecated since version 0.16.4
  */
 function render_h3_inline_begin($headerText)
 {
@@ -230,6 +244,8 @@ function render_h3_inline_begin($headerText)
  * Генерирует в поток вывода HTML-код завершения заколовка h3 с встроенными ссылками.
  *
  * @return  string
+ * 
+ * @deprecated since version 0.16.4
  */
 function render_h3_inline_end()
 {
@@ -337,6 +353,8 @@ function render_form(sfForm $form, $commitLabel, $backHtml)
  *
  * @param   string    $columnName   заголовок
  * @param   integer   $width        ширина в ex
+ * 
+ * @deprecated since version 0.16.4
  */
 function render_column_name($columnName, $width = 0)
 {
@@ -348,6 +366,8 @@ function render_column_name($columnName, $width = 0)
  * @param   string    $value  значение
  * @param   integer   $width  ширина в ex
  * @param   string    $align  выравнивание text-align
+ * 
+ * @deprecated since version 0.16.4
  */
 function render_column_value($value, $width = 0, $align = '')
 {
@@ -362,10 +382,12 @@ function render_column_value($value, $width = 0, $align = '')
  * @param   string    $value  значение
  * @param   integer   $width  ширина в ex
  * @param   string    $align  выравнивание text-align
+ * 
+ * @deprecated since version 0.16.4
  */
-
 function render_timer_script()
 {
+  //TODO: Вынести в шаблон
   $decodedTime = localtime(Timing::getActualTime(), true);
   $s = $decodedTime['tm_sec'];
   $m = $decodedTime['tm_min'];

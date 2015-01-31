@@ -21,7 +21,7 @@
 
 <?php if ($_teams->count() == 0): ?>
 <p class="info">
-	В этом игровом проекте нет команд.
+	В текущем игровом проекте нет команд.
 </p>
 <?php else: ?>
 <table class="no-border">

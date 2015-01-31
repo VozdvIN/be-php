@@ -13,14 +13,6 @@
 
 <h3>Регистрация</h3>
 
-<?php if ($_isModerator): ?>
-<p class="pad-top">
-	<span class="info info-bg pad-box box">
-		<?php echo link_to('Зарегистрировать команду', 'game/addTeamManual?id='.$_game->id.'&returl='.$retUrlRaw, array('method' => 'post')); ?>
-	</span>
-</p>
-<?php endif; ?>
-
 <?php if ($_teamStates->count() <= 0): ?>
 <p>
 	Нет участвующих команд.
@@ -28,6 +20,13 @@
 <?php else: ?>
 <table class="no-border">
 	<thead>
+		<?php if ($_isModerator): ?>
+		<tr>
+			<td colspan="4">
+				<span class="info info-bg pad-box box"><?php echo link_to('Зарегистрировать команду', 'game/addTeamManual?id='.$_game->id.'&returl='.$retUrlRaw, array('method' => 'post')); ?></span>
+			</td>
+		</tr>
+		<?php endif; ?>
 		<tr>
 			<th>Команда</th>
 			<th>Стартует</th>
