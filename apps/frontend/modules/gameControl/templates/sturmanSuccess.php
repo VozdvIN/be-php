@@ -85,7 +85,7 @@
           if ($teamState->task_id > 0)
           {
             $task = DCTools::recordById($_tasks->getRawValue(), $teamState->task_id);
-            echo link_to($task->name, 'task/show?id='.$task->id, array('target' => '_blank'));
+            echo link_to($task->name, 'task/params?id='.$task->id, array('target' => '_blank'));
           }
           else
           {

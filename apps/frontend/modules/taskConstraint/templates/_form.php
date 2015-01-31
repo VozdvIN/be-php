@@ -23,7 +23,7 @@
           'warnAction',
           link_to(
               'Отмена',
-              'task/show?id='.$task->id,
+              'task/constraints?id='.$task->id,
               array('confirm' => 'Вернуться без сохранения?'))),
       $width);
   ?>

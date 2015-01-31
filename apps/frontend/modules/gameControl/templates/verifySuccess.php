@@ -9,7 +9,7 @@
 <?php if (isset($report['tasks'])):?>
 <h3>Проверка заданий</h3>
 <?php   foreach ($report['tasks'] as $taskId => $taskReport): ?>
-<div><?php echo link_to(Task::byId($taskId)->name, 'task/show?id='.$taskId, array('target' => '_blank')).':' ?></div>
+<div><?php echo link_to(Task::byId($taskId)->name, 'task/params?id='.$taskId, array('target' => '_blank')).':' ?></div>
 <ul>
 <?php    foreach ($taskReport as $reportLine): ?>
 <?php      if ($reportLine['errLevel'] == Game::VERIFY_ERR):?>

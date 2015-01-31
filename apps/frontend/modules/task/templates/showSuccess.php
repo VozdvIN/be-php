@@ -1,8 +1,10 @@
 <?php
-	$retUrlRaw = Utils::encodeSafeUrl(url_for('task/show?id='.$_task->id));
+	$retUrlRaw = Utils::encodeSafeUrl(url_for('task/params?id='.$_task->id));
 ?>
 
 <h2>Задание <?php echo $_task->name ?> игры <?php echo $_task->Game->name ?></h2>
+
+
 
 <?php
 render_h3_inline_begin('Cвойства');
@@ -114,7 +116,7 @@ render_h3_inline_end();
           ? decorate_span('info', $numLink)
           : decorate_span('warn', $numLink);
       echo '&nbsp;на&nbsp;';
-      echo link_to($targetTask->name, 'task/show?id='.$targetTask->id, array('target' => '_blank'));
+      echo link_to($targetTask->name, 'task/params?id='.$targetTask->id, array('target' => '_blank'));
     }
     ?>
   </li>
@@ -155,7 +157,7 @@ render_h3_inline_end();
         echo decorate_span('warn', link_to('При неудаче', $linkTarget));
       }
       echo '&nbsp;на&nbsp;';
-      echo link_to($targetTask->name, 'task/show?id='.$targetTask->id, array('target' => '_blank'));
+      echo link_to($targetTask->name, 'task/params?id='.$targetTask->id, array('target' => '_blank'));
       echo $taskTransition->manual_selection ? '&nbsp;вручную' : '';      
     }
     ?>
@@ -164,12 +166,12 @@ render_h3_inline_end();
 </ul>
 <?php if ($_isManager || $_isModerator): ?>
 <p>
-  <span class="safeAction"><?php echo link_to('Добавить на все остальные задания', 'task/transitions?id='.$_task->id.'&operation=addAll'.'&returl='.$retUrlRaw, array('method' => 'post')) ?></span>
+  <span class="safeAction"><?php echo link_to('Добавить на все остальные задания', 'task/transitionsBatch?id='.$_task->id.'&operation=addAll'.'&returl='.$retUrlRaw, array('method' => 'post')) ?></span>
 </p>
 <?php   if ($_taskTransitions->count() > 0): ?>
 <p>
-  <span class="warnAction"><?php echo link_to('Поставить всем "Выбор вручную"', 'task/transitions?id='.$_task->id.'&operation=allManual'.'&returl='.$retUrlRaw, array('method' => 'post')) ?></span>
-  <span class="safeAction"><?php echo link_to('Снять со всех "Выбор вручную"', 'task/transitions?id='.$_task->id.'&operation=allAuto'.'&returl='.$retUrlRaw, array('method' => 'post')) ?></span>
+  <span class="warnAction"><?php echo link_to('Поставить всем "Выбор вручную"', 'task/transitionsBatch?id='.$_task->id.'&operation=allManual'.'&returl='.$retUrlRaw, array('method' => 'post')) ?></span>
+  <span class="safeAction"><?php echo link_to('Снять со всех "Выбор вручную"', 'task/transitionsBatch?id='.$_task->id.'&operation=allAuto'.'&returl='.$retUrlRaw, array('method' => 'post')) ?></span>
 </p>
 <?php   endif ?>
 <?php endif ?>

@@ -9,7 +9,7 @@
           'warnAction',
           link_to(
               'Отмена',
-              'task/show?id='.$form->getObject()->task_id,
+              'task/tips?id='.$form->getObject()->task_id,
               array('confirm' => 'Вернуться без сохранения?')))
   );
   ?>

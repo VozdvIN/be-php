@@ -76,7 +76,7 @@ class tipActions extends MyActions
         $object->initDefaults();
       }
       $object->save();
-      $this->successRedirect('Подсказка '.$object->name.' к заданию '.$object->Task->name.' успешно сохранена.', 'task/show?id='.$object->task_id);
+      $this->successRedirect('Подсказка '.$object->name.' к заданию '.$object->Task->name.' успешно сохранена.', 'task/tips?id='.$object->task_id);
     }
     else
     {

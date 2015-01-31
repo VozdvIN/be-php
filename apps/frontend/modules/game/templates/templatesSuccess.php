@@ -3,8 +3,7 @@
 		'gameMenu',
 		array(
 			'_game' => $_game,
-			'_activeItem' => 'Шаблоны',
-			'_isModerator' => $_isModerator
+			'_activeItem' => 'Шаблоны'
 		)
 	);
 ?>
@@ -22,7 +21,7 @@
 			<td><?php echo Timing::intervalToStr($_game->time_per_tip*60) ?></td>
 		</tr>
 		<tr>
-			<th>Неверных ответов:</th>
+			<th>Ошибок не более:</th>
 			<td><?php echo 'не&nbsp;более&nbsp;'.$_game->try_count.' за задание' ?></td>
 		</tr>
 		<tr>

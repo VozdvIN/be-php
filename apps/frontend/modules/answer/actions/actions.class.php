@@ -63,7 +63,7 @@ class answerActions extends MyActions
       $object = $form->updateObject();
       $this->errorRedirectUnless($object->Task->Game->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'изменять ответ к заданию'));
       $object->save();
-      $this->successRedirect('Ответ '.$object->name.' к заданию '.$object->Task->name.' успешно сохранен.', 'task/show?id='.$object->task_id);
+      $this->successRedirect('Ответ '.$object->name.' к заданию '.$object->Task->name.' успешно сохранен.', 'task/answers?id='.$object->task_id);
     }
     else
     {

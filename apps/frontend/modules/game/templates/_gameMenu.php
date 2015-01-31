@@ -8,12 +8,6 @@
 
 <h2>Игра <?php echo $_game->name ?></h2>
 
-<?php if ($_isModerator): ?>
-<p>
-	
-</p>
-<?php endif; ?>
-
 <?php
 	include_partial('global/menu', array(
 		'activeItem' => $_activeItem,

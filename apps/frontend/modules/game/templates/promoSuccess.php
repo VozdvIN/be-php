@@ -3,8 +3,7 @@
 		'gameMenu',
 		array(
 			'_game' => $_game,
-			'_activeItem' => 'Информация',
-			'_isModerator' => $_isModerator
+			'_activeItem' => 'Информация'
 		)
 	)
 ?>

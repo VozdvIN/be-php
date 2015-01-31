@@ -91,7 +91,7 @@ class TaskConstraintActions extends MyActions
           if ($targetTask->id != $srcTask->id)
           {
             $object->save();
-            $this->successRedirect('Правило перехода c задания '.$srcTask->name.' на задание '.$targetTask->name.' успешно сохранено.', 'task/show?id='.$srcTask->id);
+            $this->successRedirect('Правило перехода c задания '.$srcTask->name.' на задание '.$targetTask->name.' успешно сохранено.', 'task/transitions?id='.$srcTask->id);
           }
           else
           {

@@ -90,7 +90,7 @@ class TaskTransitionActions extends MyActions
           if ($targetTask->id != $srcTask->id)
           {
             $object->save();
-            $this->successRedirect('Фильтр перехода c задания '.$srcTask->name.' на задание '.$targetTask->name.' успешно сохранен.', 'task/show?id='.$srcTask->id);
+            $this->successRedirect('Фильтр перехода c задания '.$srcTask->name.' на задание '.$targetTask->name.' успешно сохранен.', 'task/transitions?id='.$srcTask->id);
           }
           else
           {

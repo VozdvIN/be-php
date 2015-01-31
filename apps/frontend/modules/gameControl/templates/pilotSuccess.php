@@ -56,7 +56,7 @@
           <?php if ($currentTaskState): ?>
             <?php
             $task = DCTools::recordById($_tasks->getRawValue(), $currentTaskState->task_id);
-            echo link_to($task->name, 'task/show?id='.$task->id).' - ';
+            echo link_to($task->name, 'task/params?id='.$task->id).' - ';
             $linkName = $currentTaskState->describeStatus();
             $linkUrl = 'teamState/task?id='.$teamState->id;
             echo link_to($linkName, $linkUrl, array('target' => '_blank'));
