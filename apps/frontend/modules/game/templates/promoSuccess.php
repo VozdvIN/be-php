@@ -8,8 +8,6 @@
 	)
 ?>
 
-<h3>Информация</h3>
-
 <table class="no-border">
 	<tbody>
 		<tr>

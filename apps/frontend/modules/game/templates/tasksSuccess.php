@@ -11,8 +11,6 @@
 	$retUrlRaw = Utils::encodeSafeUrl(url_for('game/teams?id='.$_game->id));
 ?>
 
-<h3>Задания</h3>
-
 <table class="no-border">
 	<thead>
 		<?php if ($_canManage || $_isModerator): ?>

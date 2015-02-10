@@ -28,8 +28,6 @@ body
     margin-right: auto;
     min-width: 320px;
     min-height: 200px;
-    padding-left: 6px;
-    padding-right: 6px;
     background-color: black;
 }
 
@@ -38,7 +36,7 @@ h1, h2, h3, h4, h5, h6,
 ol, ul, li,
 th, td
 {
-    font-size: 14px;
+    font-size: 18px;
     text-align: left;
     color: lightcyan;
 }
@@ -59,17 +57,17 @@ a
     {
         /* reserved */
     }
-	
+
     a:visited
     {
         /* reserved */
     }
-	
+
     a:hover
     {
         text-decoration: none;
     }
-	
+
     a:active
     {
         text-decoration: none;
@@ -90,12 +88,12 @@ h1, h2, h3, h4, h5, h6
     padding-bottom: 0;
 }
 
-h1 { color: white; font-size: 20px; padding-left: 10%; }
-h2 { color: aliceblue; font-size: 19px; padding-left: 8%; }
-h3 { color: paleturquoise; font-size: 18px; padding-left: 6%; }
-h4 { color: turquoise; font-size: 17px; padding-left: 4%; }
-h5 { color: darkturquoise; font-size: 16px; padding-left: 2%; }
-h6 { color: inherit; font-size: 15px; padding-left: 0; }
+h1 { color: white; font-size: 23px; padding-left: 10%; }
+h2 { color: aliceblue; font-size: 22px; padding-left: 8%; }
+h3 { color: paleturquoise; font-size: 21px; padding-left: 6%; }
+h4 { color: turquoise; font-size: 20px; padding-left: 4%; }
+h5 { color: darkturquoise; font-size: 19px; padding-left: 2%; }
+h6 { color: inherit; font-size: 18px; padding-left: 0; }
 
 /* === Lists === */
 
@@ -106,9 +104,9 @@ ul, ol
 
 li
 {
-    padding-top: 3px;
-    padding-bottom: 3px;
-    padding-left: 4px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 7px;
     text-align: justify;
 }
 
@@ -124,9 +122,9 @@ table, tr, th, td
 table
 {
     border-style: none;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    padding-left: 4px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 7px;
 }
 
 tr
@@ -141,7 +139,7 @@ tr:first-child
 
 th, td
 { 
-    padding: 3px 6px 3px 6px;
+    padding: 6px 9px 6px 9px;
     border-style: inherit;
     border-right-style: solid;
     vertical-align: middle;
@@ -209,13 +207,13 @@ table.no-border, table.no-border tr, table.no-border th, table.no-border td
 
 .pad-top
 {
-    padding-top: 6px;
+    padding-top: 9px;
 }
 
 .pad-box
 {
     display: inline-block;
-    padding: 3px 6px 3px 6px
+    padding: 6px 9px 6px 9px
 }
 
 .box
@@ -281,19 +279,19 @@ input[type="text"], input[type="checkbox"], input[type="password"], select, text
     background-color: black;
     color: inherit;
     font-family: verdana, helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 textarea
 {
     font-family: monospace;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 input[type="submit"]
 {
     font-family: verdana, helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 /* === Menu === */
@@ -315,19 +313,20 @@ nav.menu ul
         border-top: solid 2px steelblue;
         background-color: inherit;
     }
-	
+
         nav.menu ul li a
         {
             display: block;
-            padding: 3px 9px 6px 9px;
+            padding: 3px 9px 9px 9px;
         }
-		
+
             nav.menu ul li a:hover
             {
                 background-color: deepskyblue;
             }
-			
+
                 nav.menu ul li a.active, nav.menu ul li a.active:hover
                 {
                     text-decoration: none;
+                    background-color: black;
                 }

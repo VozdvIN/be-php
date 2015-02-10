@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <meta http-equiv="content-language" content="ru">
+		<meta http-equiv="content-language" content="ru">
 		<link rel="stylesheet" type="text/css" href="/css/basic.css" />
 		<link rel='shortcut icon' href='/images/favicon.png' />
 		<?php include_title() ?>

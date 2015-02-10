@@ -8,8 +8,6 @@
 	);
 ?>
 
-<h3>Шаблоны</h3>
-
 <table class="no-border">
 	<tbody>
 		<tr>

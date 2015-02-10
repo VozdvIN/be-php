@@ -10,8 +10,6 @@
 	$retUrlRaw = Utils::encodeSafeUrl(url_for('game/teams?id='.$_game->id));
 ?>
 
-<h3>Регистрация</h3>
-
 <?php if ($_teamStates->count() <= 0): ?>
 <p>
 	Нет участвующих команд.

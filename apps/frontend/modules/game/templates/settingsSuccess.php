@@ -8,8 +8,6 @@
 	);
 ?>
 
-<h3>Параметры</h3>
-
 <table class="no-border">
 	<tbody>
 		<tr>
