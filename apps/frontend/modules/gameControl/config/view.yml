@@ -1,5 +1,9 @@
-autoUpdateSuccess:
+pollSuccess:
   has_layout: false
+
+autoUpdateSuccess:
+  metas:
+    title: "Автопересчет игры"
 
 all:
   metas:

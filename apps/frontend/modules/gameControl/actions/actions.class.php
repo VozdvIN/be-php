@@ -144,6 +144,12 @@ class gameControlActions extends MyActions
   {
     $this->checkAndSetGame($request);
     $this->errorRedirectUnless($this->_game->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'обновлять состояние игры'));
+  }
+  
+  public function executePoll(sfWebRequest $request)
+  {
+    $this->checkAndSetGame($request);
+    $this->errorRedirectUnless($this->_game->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'обновлять состояние игры'));
     if (is_bool($res = $this->_game->updateState($this->sessionWebUser)))
     {
       $this->_result = 'Ok';
