@@ -61,10 +61,14 @@
 		</tr>
 		<?php endforeach; ?>
 	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="11">
+				Примечание: <span class="danger">цветом</span> выделены блокированные задания.
+			</td>
+		</tr>
+	</tfoot>
 </table>
-<p>
-	Примечание: <span class="danger">цветом</span> выделены блокированные задания.
-</p>
 
 <h4>Приоритеты переходов</h4>
 

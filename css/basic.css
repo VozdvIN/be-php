@@ -327,6 +327,10 @@ nav.menu ul
 
                 nav.menu ul li a.active, nav.menu ul li a.active:hover
                 {
-                    text-decoration: none;
                     background-color: black;
                 }
+		
+                nav.menu ul li a.active:hover
+                {
+                    background-color: deepskyblue;
+                }		

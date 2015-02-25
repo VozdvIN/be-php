@@ -3,8 +3,6 @@
 	$retUrlRaw = Utils::encodeSafeUrl(url_for('game/tasks?id='.$_game->id));
 ?>
 
-<h4>Параметры</h4>
-
 <table class="no-border">
 	<tbody>
 		<tr>
