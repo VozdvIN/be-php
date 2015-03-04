@@ -34,7 +34,16 @@
 					<?php echo link_to('Править', 'answer/edit?id='.$answer->id); ?>
 				</span>
 				<span class="danger danger-bg pad-box box">
-					<?php echo link_to('Удалить', 'answer/delete?id='.$answer->id.'&returl='.$retUrlRaw, array('method' => 'delete', 'confirm' => 'Вы действительно хотите удалить ответ '.$answer->name.' задания '.$_task->name.'?')) ?>
+					<?php
+						echo link_to(
+							'Удалить',
+							'answer/delete?id='.$answer->id.'&returl='.$retUrlRaw,
+							array(
+								'method' => 'delete',
+								'confirm' => 'Вы действительно хотите удалить ответ '.$answer->name.' задания '.$_task->name.'?'
+							)
+						)
+					?>
 				</span>
 				<?php endif; ?>
 			</td>

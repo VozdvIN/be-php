@@ -4,8 +4,6 @@
 
 <h2>Задание <?php echo $_task->name ?> игры <?php echo $_task->Game->name ?></h2>
 
-
-
 <?php
 render_h3_inline_begin('Cвойства');
 if ($_isManager || $_isModerator) echo ' '.decorate_span('safeAction', link_to('Редактировать', 'task/edit?id='.$_task->id));

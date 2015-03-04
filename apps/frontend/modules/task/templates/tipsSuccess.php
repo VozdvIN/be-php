@@ -3,7 +3,7 @@
 	$retUrlRaw = Utils::encodeSafeUrl(url_for('task/tips?id='.$_task->id));
 ?>
 
-<table class="no-border">
+<table>
 	<thead>
 		<tr>
 			<th>Название</th>
@@ -45,7 +45,16 @@
 					<?php echo link_to('Править', 'tip/edit?id='.$tip->id); ?>
 				</span>
 				<span class="danger danger-bg pad-box box">
-					<?php echo link_to('Удалить', 'tip/delete?id='.$tip->id.'&returl='.$retUrlRaw, array('method' => 'delete', 'confirm' => 'Вы действительно хотите удалить подсказку '.$tip->name.' к заданию '.$tip->Task->name.'?')) ?>
+					<?php
+						echo link_to(
+							'Удалить',
+							'tip/delete?id='.$tip->id.'&returl='.$retUrlRaw,
+							array(
+								'method' => 'delete',
+								'confirm' => 'Вы действительно хотите удалить подсказку '.$tip->name.' к заданию '.$tip->Task->name.'?'
+							)
+						)
+					?>
 				</span>
 				<?php endif; ?>
 			</td>

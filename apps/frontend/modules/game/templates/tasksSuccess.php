@@ -87,7 +87,7 @@
 	<tbody>
 		<?php foreach ($_tasks as $task): ?>
 		<tr>
-			<td><?php echo $task->name ?></td>
+			<td><?php echo link_to($task->name, 'task/constraints?id='.$task->id) ?></td>
 			<?php for($i = 0; $i < $_tasks->count(); $i++): //Если поставить foreach, то внешний цикл почему-то только один раз выполняется.?>
 				<?php $priority = $task->getPriorityJump($_tasks[$i]->getRawValue()); ?>
 				<td><?php echo (($priority === false) || ($priority == 0)) ? '.' : decorate_number($priority) ?></td>			
@@ -114,18 +114,18 @@
 	<tbody>
 		<?php foreach ($_tasks as $task): ?>
 		<tr>
-			<td><?php echo $task->name ?></td>
+			<td><?php echo link_to($task->name, 'task/transitions?id='.$task->id) ?></td>
 			<?php for($i = 0; $i < $_tasks->count(); $i++): //Если поставить foreach, то внешний цикл почему-то только один раз выполняется.?>
 				<?php $transition = $task->findTransitionToTask($_tasks[$i]->getRawValue()); ?>
 				<td>
 					<?php if ($transition === false): ?>
 						.
 					<?php elseif ($transition->allow_on_success && $transition->allow_on_fail): ?>
-						<?php echo 'всегда'.($transition->manual_selection ? '<br>командой' : '') ?>
+						<?php echo 'Всегда'.($transition->manual_selection ? ',<br>вручную' : '') ?>
 					<?php elseif ($transition->allow_on_success): ?>
-						<span class="info"><?php echo 'успех' ?></span><?php echo ($transition->manual_selection ? '<br>командой' : '') ?>
+						<span class="info"><?php echo 'При&nbsp;успехе' ?></span><?php echo ($transition->manual_selection ? ',<br>вручную' : '') ?>
 					<?php elseif ($transition->allow_on_fail): ?>
-						<span class="warn"><?php echo 'неудача' ?></span><?php echo ($transition->manual_selection ? '<br>командой' : '') ?>
+						<span class="warn"><?php echo 'При&nbsp;неудаче' ?></span><?php echo ($transition->manual_selection ? ',<br>вручную' : '') ?>
 					<?php endif; ?>
 				</td>			
 			<?php endfor; ?>
