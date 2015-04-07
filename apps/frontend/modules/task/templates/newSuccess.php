@@ -1,3 +1,3 @@
 <h2>Новое задание игры <?php echo $form->getObject()->Game->name ?></h2>
 
-<?php include_partial('form', array('form' => $form)) ?>
+<?php include_partial('global/formCrud', array('form' => $form, 'module' => 'task')) ?>
