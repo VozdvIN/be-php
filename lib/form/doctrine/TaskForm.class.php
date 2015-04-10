@@ -22,18 +22,18 @@ class TaskForm extends BaseTaskForm
 
     //Русифицируем:
     $this->getWidgetSchema()->setLabels(array(
-        'name' => 'Внутреннее название:',
-        'public_name' => 'Открытое название:',
+        'name' => '* Внутреннее название:',
+        'public_name' => '* Открытое название:',
         'time_per_task_local' => 'Длительность:',
-        'try_count_local' => 'Неверных ответов:',
+        'try_count_local' => 'Ошибок не более:',
         'manual_start' => 'Ручной старт:',
-        'max_teams' => 'Выполняющих команд:',
+        'max_teams' => 'Команд на задании:',
         'locked' => 'Заблокировано:',
         'priority_free' => 'Когда свободно:',
-        'priority_busy' => 'Когда кому-то выдано:',
+        'priority_busy' => 'Когда выдано:',
         'priority_filled' => 'Когда заполнено:',
         'priority_per_team' => 'На каждую команду:',
-        'min_answers_to_success' => 'Ответов для зачета:'
+        'min_answers_to_success' => 'Ответов необходимо:'
     ));
     
     $this->getWidgetSchema()->setHelps(array(
