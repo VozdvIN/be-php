@@ -40,7 +40,7 @@ abstract class BaseRegion extends sfDoctrineRecord
         $this->hasColumn('name', 'string', 32, array(
              'type' => 'string',
              'notnull' => true,
-             'default' => '(Любой)',
+             'default' => '(Новый проект)',
              'length' => 32,
              ));
 

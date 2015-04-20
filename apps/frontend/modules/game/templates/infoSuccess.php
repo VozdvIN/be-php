@@ -10,7 +10,7 @@
 		<span class="info info-bg pad-box box"><?php echo link_to('Подать заявку на участие', 'game/postJoinManual?id='.$_game->id.'&returl='.$retUrlRaw, array('method' => 'post')); ?></span>
 	<?php endif ?>
 	<?php if ($_canManage || $_isModerator): ?>
-		<span class="info info-bg pad-box box"><?php echo link_to('Редактировать', 'game/promo?id='.$_game->id); ?></span>
+		<span class="pad-box box"><?php echo link_to('Редактировать', 'game/promo?id='.$_game->id); ?></span>
 	<?php endif; ?>
 </p>
 <?php endif; ?>
