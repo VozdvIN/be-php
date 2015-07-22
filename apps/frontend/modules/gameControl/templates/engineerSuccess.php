@@ -7,156 +7,96 @@
 		'_activeTab' => 'Бортмеханик'));
 ?>
 
-<div class="tabSheet">
+<h3>Задания</h3>
 
-  <h3>Состояние текущих заданий</h3>
-  <div class="complexList">
-    <?php $odd = true ?>
-    <?php foreach ($_teamStates as $teamState): ?>
-    <div class="<?php echo $odd ? 'oddLine' : 'evenLine' ?>">
-      <div class="cell">
-        <?php echo $teamState->Team->name.': ' ?>
-      </div>
-      <div class="cell">
-        <div>
-          <?php $currentTaskState = $teamState->getCurrentTaskState() ?>
-          <?php
-          if ($currentTaskState)
-          {
-            $task = DCTools::recordById($_tasks->getRawValue(), $currentTaskState->task_id);
-            echo $task->name.' - '.$currentTaskState->describeStatus().'('.Timing::timeToStr($currentTaskState->task_last_update).')';
-          }
-          else
-          {
-            echo decorate_span('warn', 'Нет&nbsp;задания');
-          }
-          ?>
-        </div>
-        <div>
-          <?php
-          if ($currentTaskState)
-          {
-            echo decorate_span('indent', Timing::timeToStr($currentTaskState->given_at)).', ';
-            echo decorate_span('indent', Timing::timeToStr($currentTaskState->started_at)).', ';
-            echo decorate_span('info', Timing::timeToStr($currentTaskState->accepted_at)).', ';
-            echo decorate_span('warn', Timing::intervalToStr($currentTaskState->task_idle_time)).', ';
-            echo decorate_span('indent', Timing::timeToStr($currentTaskState->done_at)).', ';
-            echo decorate_span('indent', Timing::intervalToStr($currentTaskState->getTaskSpentTimeCurrent()));
-          }
-          echo '&nbsp;';  
-          ?>
-        </div>
-        <div>
-          <?php
-          if ($currentTaskState)
-          {
-            foreach ($currentTaskState->usedTips as $usedTip)
-            {
-              $tip = DCTools::recordById($_usedTips->getRawValue(), $usedTip->id)->Tip;
-              echo $tip->name.'('.Timing::timeToStr($usedTip->used_since).') ';
-            }
-          }
-          echo '&nbsp;';
-          ?>
-        </div>
-        <div>
-          <?php
-          if ($currentTaskState)
-          {
-            foreach ($currentTaskState->postedAnswers as $postedAnswer)
-            {
-              echo $postedAnswer->value.'('.$postedAnswer->WebUser->login.'@'.Timing::timeToStr($postedAnswer->post_time).') ';
-            }
-          }
-          echo '&nbsp;';
-          ?>
-        </div>
-      </div>
-    </div>
-    <?php $odd = ( ! $odd); ?>
-    <?php endforeach ?>
-  </div>
+<table>
+	<thead>
+		<tr>
+			<th>Название</th>
+			<th>Состояние</th>
+			<th>Выдано, стартовало, прочитано, завершено</th>
+			<th>Простой</th>
+			<th>Длилось</th>
+			<th>Подсказки</th>
+			<th>Ответы</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($_teamStates as $teamState): ?>
+			<tr>
+				<th colspan="7" style="text-align: left" class="info-bg"><?php echo $teamState->Team->name ?></th>
+			</tr>
+			<?php foreach ($teamState->taskStates as $taskState): ?>
+			<tr>
+				<td><?php echo $taskState->Task->name ?></td>
+				<td><?php echo $taskState->describeStatus() ?></td>
+				<td>
+					<?php echo Timing::timeToStr($taskState->given_at) ?>,
+					<?php echo Timing::timeToStr($taskState->started_at) ?>,
+					<?php echo Timing::timeToStr($taskState->accepted_at) ?>,
+					<?php echo Timing::timeToStr($taskState->done_at) ?>
+				</td>
+				<td><?php echo Timing::intervalToStr($taskState->task_idle_time) ?></td>
+				<td><?php echo Timing::intervalToStr($taskState->getTaskSpentTimeCurrent()) ?></td>
+				<td>
+					<?php foreach ($taskState->usedTips as $usedTip): ?>
+						<?php $tip = DCTools::recordById($_usedTips->getRawValue(), $usedTip->id)->Tip; ?>
+						<span><?php echo $tip->name.'('.Timing::timeToStr($usedTip->used_since).')'; ?></span> 
+					<?php endforeach ?>
+				</td>
+				<td>
+					<?php foreach ($taskState->postedAnswers as $postedAnswer): ?>
+						<span><?php echo $postedAnswer->value.'('.$postedAnswer->WebUser->login.'@'.Timing::timeToStr($postedAnswer->post_time).')'; ?></span> 
+					<?php endforeach ?>
+				</td>
+			</tr>
+			<?php endforeach ?>
+		</tr>
+		<?php endforeach ?>
+	</tbody>
+</table>
 
-  <h3>Состояние команд</h3>
-  <div class="complexList">
-    <?php $odd = true ?>
-    <?php foreach ($_teamStates as $teamState): ?>
-    <div class="<?php echo $odd ? 'oddLine' : 'evenLine' ?>">
-      <div class="cell" style="font-weight: bold">
-        <?php echo $teamState->Team->name.': ' ?>
-      </div>
-      <div class="cell">
-        <?php echo $teamState->describeStatus().'&nbsp;('.Timing::timeToStr($teamState->team_last_update).')' ?>
-      </div>
-    </div>
-    <?php $odd = ( ! $odd); ?>
-    <?php endforeach ?>
-  </div>
-  
-  <h3>Состояние игры</h3>
-  <div class="complexList">
-    <div class="oddLine">
-      <div class="cell">
-        <?php echo $_game->describeStatus().'&nbsp;('.Timing::timeToStr($_game->game_last_update).')' ?>
-      </div>
-      <div class="cell">
-        <?php
-        echo decorate_span('indent', $_game->start_datetime).', ';
-        echo decorate_span('info', Timing::timeToStr($_game->started_at)).', ';
-        echo decorate_span('indent', $_game->stop_datetime).', ';
-        echo decorate_span('indent', Timing::timeToStr($_game->finished_at));
-        ?>
-      </div>
-    </div>
-  </div>
-  
-  
-  <h3>Справка</h3>
+<h3>Команды</h3>
 
-  <div class="comment">
+<table>
+	<thead>
+		<tr>
+			<th>Название</th>
+			<th>Состояние</th>
+			<th>Обновлено</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($_teamStates as $teamState): ?>
+		<tr>
+			<td><?php echo $teamState->Team->name ?></td>
+			<td><?php echo $teamState->describeStatus() ?></td>
+			<td><?php echo Timing::timeToStr($teamState->team_last_update) ?></td>
+		</tr>
+		<?php endforeach ?>
+	</tbody>
+</table>
 
-    <h4>Состояние текущих заданий</h4>
-    <p>
-      Формат строки:
-    </p>
-    <div class="complexList">
-      <div class="oddLine">
-        <div class="cell">Название_Команды: </div>
-        <div class="cell">
-          <div>Название_задания - состояние_задания(На_момент)</div>
-          <div>Выдано_в, Стартовало_в, <span class="info">Прочтено_в</span>, <span class="warn">Простой</span>, Завершено_в, Потрачено</div>
-          <div>Подсказка1(Выдана_в) ... ПодсказкаN(Выдана_в)</div>
-          <div>Ответ1(От_кого@Когда) ... ОтветN(От_кого@Когда)</div>
-        </div>
-      </div>
-    </div>
-
-    <h4>Состояние команд</h4>
-    <p>
-      Формат строки:
-    </p>
-    <div class="complexList">
-      <div class="oddLine">
-        <div class="cell">Название_Команды: </div>
-        <div class="cell">Состояние(На_момент)</div>
-      </div>
-    </div>
-
-    <h4>Состояние игры</h4>
-    <p>
-      Формат строки:
-    </p>
-    <div class="complexList">
-      <div class="oddLine">
-        <div class="cell">Состояние(На_момент)</div>
-        <div class="cell">
-          <div>
-            Плановый_старт_в, <span class="info">Стартовала_в</span>, Остановка_в, Финишировала_в 
-          </div>
-        </div>
-      </div>
-    </div>
-    
-  </div>
-
-</div>
+<h3>Игра</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Состояние</th>
+			<th>Обновлено</th>
+			<th>Плановый старт</th>
+			<th>Стартовала</th>
+			<th>Плановая остановка</th>
+			<th>Финишировала</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th><?php echo $_game->describeStatus() ?></th>
+			<th><?php echo Timing::dateToStr($_game->game_last_update) ?></th>
+			<th><?php echo $_game->start_datetime ?></th>
+			<th><?php echo Timing::dateToStr($_game->started_at) ?></th>
+			<th><?php echo $_game->stop_datetime ?></th>
+			<th><?php echo Timing::dateToStr($_game->finished_at) ?></th>
+		</tr>
+	</tbody>
+</table>
