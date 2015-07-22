@@ -7,14 +7,10 @@
 		'_activeTab' => 'Стюардесса'));
 ?>
 
-<div class="tabSheet">
-  
-  <h3>Текущие результаты команд</h3>
-  <p>
-    <?php include_partial('results', array('_game' => $_game)) ?>
-  </p>
-  <p>
-    <?php echo link_to('Просмотр полной телеметрии', 'gameControl/report?id='.$_game->id, array('target' => '_blank')) ?>
-  </p>
+<h3>Текущие результаты команд</h3>
 
-</div>
+<?php include_partial('results', array('_game' => $_game)) ?>
+
+<p>
+	<span class="pad-box box"><?php echo link_to('Подробно', 'gameControl/report?id='.$_game->id, array('target' => '_blank')) ?></span>
+</p>
