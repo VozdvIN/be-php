@@ -782,7 +782,7 @@ class TaskState extends BaseTaskState implements IStored, IAuth
       case TaskState::TASK_GIVEN:
       case TaskState::TASK_STARTED:
       case TaskState::TASK_ACCEPTED:
-        $class = 'indent';
+        $class = '';
         break;
       case TaskState::TASK_CHEAT_FOUND:
         $class = 'danger';
@@ -801,7 +801,7 @@ class TaskState extends BaseTaskState implements IStored, IAuth
         $class = 'danger';
         break;
       default:
-        $class = 'indent';
+        $class = '';
     }
     return $class;
   }

@@ -134,11 +134,11 @@ function decorate_number($value)
 {
 	if ($value == 0)
 	{
-		return decorate_span('', '&nbsp;'.$value);
+		return '<span>&nbsp;'.$value.'</span>';
 	}
 	return ($value >= 0)
-		? decorate_span('info', '+'.$value)
-		: decorate_span('warn', '-'.(-$value));
+		? '<span class="info">+'.$value.'</span>'
+		: '<span class="info">-'.(-$value).'</span>';
 }
 
 /**
