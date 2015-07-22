@@ -4,172 +4,137 @@
 		'_game' => $_game,
 		'_isManager' => $_isManager,
 		'_retUrlRaw' => $retUrlRaw,
-		'_activeTab' => 'pilot'));
+		'_activeTab' => 'Пилот'));
 ?>
 
-<div class="tabSheet">
-  
-  <h3>Ответы к текущим заданиям</h3>
-  <div class="complexList">
-    <?php $odd = true ?>
-    <?php foreach ($_teamStates as $teamState): ?>
-    <div class="<?php echo $odd ? 'oddLine' : 'evenLine' ?>">
-      <div class="cell">
-        <?php echo link_to($teamState->Team->name, 'teamState/show?id='.$teamState->id).': ' ?>
-      </div>
-      <div class="cell">
-        <?php
-        $currentTaskState = $teamState->getCurrentTaskState();
-        if ($currentTaskState)
-        {
-          ?><span style="font-weight: bold"><?php echo $currentTaskState->Task->name.': ';?></span><?php
-          if ($currentTaskState->status == TaskState::TASK_ACCEPTED)
-          {
-            ?><div style="display: inline-block"><?php
-            echo include_partial('taskState/taskAnswerPostedForm', array('form' => new SimpleAnswerForm, 'id' => $currentTaskState->id, 'retUrl' => $retUrlRaw));
-            ?></div><?php
-            include_component('taskState', 'answersForGameManager', array('taskStateId' => $currentTaskState->id));
-          }
-        }
-        else
-        {
-          echo decorate_span('warnBorder', 'Нет&nbsp;задания');
-        }
-        ?>
-      </div>
-    </div>  
-    <?php $odd = ( ! $odd); ?>
-    <?php endforeach ?>
-  </div>  
-  
-  <h3>Текущие задания</h3>
-  <div class="complexList">
-    <?php $odd = true ?>
-    <?php foreach ($_teamStates as $teamState): ?>
-    <div class="<?php echo $odd ? 'oddLine' : 'evenLine' ?>">
-      <div class="cell">
-        <?php echo $teamState->Team->name.': ' ?>
-      </div>
-      <div class="cell">
-        <div>
-          <?php $currentTaskState = $teamState->getCurrentTaskState() ?>
-          <?php if ($currentTaskState): ?>
-            <?php
-            $task = DCTools::recordById($_tasks->getRawValue(), $currentTaskState->task_id);
-            echo link_to($task->name, 'task/params?id='.$task->id).' - ';
-            $linkName = $currentTaskState->describeStatus();
-            $linkUrl = 'teamState/task?id='.$teamState->id;
-            echo link_to($linkName, $linkUrl, array('target' => '_blank'));
-            
-            if ($currentTaskState->status == TaskState::TASK_GIVEN)
-            {
-              if ($currentTaskState->Task->isFilled())
-              {
-                echo ' '.decorate_span('warn', 'Заполнено');
-              }
-              
-              if ($currentTaskState->Task->manual_start)
-              {
-                echo ' '.decorate_span('warn', 'Ручной старт');
-              }
-              else
-              {
-                echo ' '.decorate_span('info', 'Автостарт');
-              }
-            }
-            
-            switch ($currentTaskState->status)
-            {
-              case (TaskState::TASK_GIVEN):
-                echo ($currentTaskState->Task->isFilled() || $currentTaskState->Task->manual_start)
-                  ? ' '.decorate_span('warnAction', link_to('Старт','taskState/start?id='.$currentTaskState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Дать старт заданию '.$task->name.' для команды '.$teamState->Team->name.' ?')))
-                  : '';
-                echo ' '.decorate_span('warnAction', link_to('Отменить','teamState/abandonTask?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Отменить выдачу задания '.$task->name.' командe '.$teamState->Team->name.' ?')));
-                break;
-              
-              case (TaskState::TASK_STARTED):
-                echo ' '.decorate_span('warnAction', link_to('Прочесть','taskState/forceAccept?id='.$currentTaskState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Подтвердить прочтение задания '.$task->name.' командой '.$teamState->Team->name.' ?')));
-                echo ' '.decorate_span('warnAction', link_to('Отменить','teamState/abandonTask?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Отменить выдачу задания '.$task->name.' командe '.$teamState->Team->name.' ?')));
-                break;
-              
-              case (TaskState::TASK_ACCEPTED):
-                echo ' '.decorate_span('dangerAction', link_to('Прекратить','teamState/abandonTask?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Прекратить выполнение задания '.$task->name.' командой '.$teamState->Team->name.' ?')));
-                break;
-            };            
-            ?>
-          <?php else: ?>
-            <?php
-            if ($teamState->status == TeamState::TEAM_FINISHED)
-            {
-              echo decorate_span('info', link_to('Финишировала', 'teamState/task?id='.$teamState->id, array('target' => '_blank')));
-            }
-            else
-            {
-              echo decorate_span('warnBorder', link_to('Нет&nbsp;задания', 'teamState/task?id='.$teamState->id, array('target' => '_blank')));
-              
-              if ($teamState->status == TeamState::TEAM_WAIT_TASK)
-              {
-                $htmlLink = link_to('Финишировать','teamState/forceFinish?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Отправить команду '.$teamState->Team->name.' на финиш?'));
-                echo ' '.decorate_span('dangerAction', $htmlLink);
-              }
-            }
-            ?>
-          <?php endif ?>
-        </div>
-        <div class="comment">
-          <?php
-          if ($currentTaskState)
-          {
-            foreach ($currentTaskState->usedTips as $usedTip)
-            {
-              $tip = DCTools::recordById($_usedTips->getRawValue(), $usedTip->id)->Tip;
-              echo $tip->name.' ';
-            }
-          }
-          echo '&nbsp;';
-          ?>
-        </div>
-      </div>
-    </div>
-    <?php $odd = ( ! $odd); ?>
-    <?php endforeach ?>
-  </div>
-  
-  <h3>Справка</h3>
-  
-  <div class="comment">
-    
-    <h4>Ответы к текущим заданиям</h4>
-    <p>
-      Ссылка с названием команды - переход к настройкам команды.
-    </p>
-    <p>
-      Ожидаемые ответы указаны названиями.
-    </p>
-    <p>
-      Полученные ответы указаны значениями: <span class="info">правильными</span>, <span class="warn">не проверенными</span> и <span class="danger">неверными</span>.
-    </p>
+<h3>Управление заданиями</h3>
+<table>
+	<thead>
+		<tr>
+			<th>Команда</th>
+			<th>Задание</th>
+			<th>Состояние</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($_teamStates as $teamState): ?>
+		<tr>
+			<?php
+				$currentTaskState = $teamState->getCurrentTaskState();
+				$task = $currentTaskState ? DCTools::recordById($_tasks->getRawValue(), $currentTaskState->task_id) : false;
+			?>
+			<td>
+				<?php echo link_to($teamState->Team->name, 'team/show?id='.$teamState->Team->id, array('target' => '_blank')); ?>
+			</td>
+			<?php if ($currentTaskState): ?>
+			<td>
+				<?php echo link_to($task->name, 'task/params?id='.$task->id, array('target' => '_blank')); ?>
+			</td>
+			<td>
+				<span><?php echo link_to($currentTaskState->describeStatus(), 'teamState/task?id='.$teamState->id, array('target' => '_blank')); ?></span>
+				<?php if (($currentTaskState->status == TaskState::TASK_GIVEN) && $currentTaskState->Task->isFilled()): ?>
+					<span class="warn">, заполнено</span>
+				<?php endif ?>
+			</td>
+			<td>
+				<?php if ($currentTaskState->status == TaskState::TASK_GIVEN): ?>
+					<?php if ($currentTaskState->Task->manual_start): ?>
+						<span class="warn">Ручной старт</span>
+					<?php else: ?>
+						<span class="info">Автостарт</span>
+					<?php endif; ?>				
+					<?php if (($currentTaskState->Task->isFilled() || $currentTaskState->Task->manual_start)): ?>
+						<span class="warn warn-bg pad-box box"><?php echo link_to('Старт','taskState/start?id='.$currentTaskState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Дать старт заданию '.$task->name.' для команды '.$teamState->Team->name.' ?')) ?></span>
+					<?php endif; ?>
+					<span class="info info-bg pad-box box"><?php echo link_to('Отменить','teamState/abandonTask?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Отменить выдачу задания '.$task->name.' командe '.$teamState->Team->name.' ?')) ?></span>
+				<?php elseif ($currentTaskState->status == TaskState::TASK_STARTED): ?>
+					<span class="warn warn-bg pad-box box"><?php echo link_to('Прочесть','taskState/forceAccept?id='.$currentTaskState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Подтвердить прочтение задания '.$task->name.' командой '.$teamState->Team->name.' ?')) ?></span>
+					<span class="info info-bg pad-box box"><?php echo link_to('Отменить','teamState/abandonTask?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Отменить выдачу задания '.$task->name.' командe '.$teamState->Team->name.' ?')) ?></span>
+				<?php elseif ($currentTaskState->status == TaskState::TASK_ACCEPTED): ?>
+					<span class="danger danger-bg pad-box box"><?php echo link_to('Прекратить','teamState/abandonTask?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Прекратить выполнение задания '.$task->name.' командой '.$teamState->Team->name.' ?')) ?></span>
+				<?php endif; ?>
+			</td>
+			<?php else: ?>
+			<td colspan="3">
+				<?php if ($teamState->status == TeamState::TEAM_FINISHED): ?>
+					<p>
+						<span class="info">Финишировала</span>
+					</p>
+				<?php else: ?>
+					<p>
+						<span class="warn">Нет задания</span>
+						<?php if ($teamState->status == TeamState::TEAM_WAIT_TASK): ?>
+							<span class="danger danger-bg pad-box box"><?php echo link_to('Финишировать','teamState/forceFinish?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Отправить команду '.$teamState->Team->name.' на финиш?')) ?></span>
+						<?php endif; ?>
+					</p>
+				<?php endif; ?>
+			</td>
+			<?php endif; ?>
+		</tr>
+		<?php endforeach ?>
+	</tbody>
+</table>
 
-    <h4>Текущие задания</h4>
-    <p>
-      Ссылка с названием задания - переход к просмотру задания.
-    </p>
-    <p>
-      Ссылка с состоянием задания - переход к странице текущего задания.
-    </p>
-    <p>
-      Формат строки:
-    </p>
-    <div class="complexList">
-      <div class="oddLine">
-        <div class="cell">Название_Команды: </div>
-        <div class="cell">
-          <div>Название_задания - состояние_задания</div>
-          <div>Подсказка1 ... ПодсказкаN</div>
-        </div>
-      </div>
-    </div>
-    
-  </div>
-
-</div>
+<h3>Текущие данные</h3>
+<table>
+	<thead>
+		<tr>
+			<th rowspan="2">Команда</th>
+			<th rowspan="2">Подсказки</th>
+			<th colspan="4">Ответы</th>
+		</tr>
+		<tr>
+			<th>Ожидается</th>
+			<th>Проверка</th>
+			<th>Верно</th>
+			<th>Неверно</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($_teamStates as $teamState): ?>
+		<tr>
+			<?php
+				$currentTaskState = $teamState->getCurrentTaskState();
+				$taskState = $currentTaskState ? DCTools::recordById($_taskStates->getRawValue(), $currentTaskState->id) : false;
+			?>
+			<td>
+				<?php echo $teamState->Team->name ?>
+			</td>
+			<?php if ($currentTaskState): ?>
+			<td>
+				<?php foreach ($taskState->usedTips as $usedTip): ?>
+				<p><?php echo DCTools::recordById($_usedTips->getRawValue(), $usedTip->id)->Tip->name ?></p>
+				<?php endforeach ?>
+			</td>
+			<td>
+				<?php foreach ($taskState->getRestAnswers() as $restAnswer): ?>
+				<p><?php echo $restAnswer->name ?></p>
+				<?php endforeach ?>
+			</td>
+			<td>
+				<?php foreach ($taskState->getBeingVerifiedPostedAnswers() as $beingVerifiedAnswer): ?>
+				<p><span class="warn"><?php echo $beingVerifiedAnswer->value ?></span></p>
+				<?php endforeach ?>
+			</td>
+			<td>
+				<?php foreach ($taskState->getGoodPostedAnswers() as $goodAnswer): ?>
+				<p><span class="info"><?php echo $goodAnswer->value ?></span></p>
+				<?php endforeach ?>
+			</td>
+			<td>
+				<?php foreach ($taskState->getBadPostedAnswers() as $badAnswer): ?>
+				<p><span class="danger"><?php echo $badAnswer->value ?></span></p>
+				<?php endforeach ?>
+			</td>
+			<?php else: ?>
+			<td colspan="6">
+				<p>
+					<span class="warn">Нет задания</span>
+				</p>
+			</td>
+			<?php endif ?>
+		</tr>
+		<?php endforeach ?>
+	</tbody>
+</table>

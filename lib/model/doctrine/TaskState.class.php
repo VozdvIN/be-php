@@ -88,27 +88,27 @@ class TaskState extends BaseTaskState implements IStored, IAuth
   {
     switch ($this->status)
     {
-      case TaskState::TASK_GIVEN: return 'выдано';
+      case TaskState::TASK_GIVEN: return 'Выдано';
         break;
-      case TaskState::TASK_STARTED: return 'стартовало';
+      case TaskState::TASK_STARTED: return 'Стартовало';
         break;
-      case TaskState::TASK_ACCEPTED: return 'выполняется';
+      case TaskState::TASK_ACCEPTED: return 'Выполняется';
         break;
-      case TaskState::TASK_CHEAT_FOUND: return 'дисквалифицируется';
+      case TaskState::TASK_CHEAT_FOUND: return 'Дисквалифицируется';
         break;
-      case TaskState::TASK_DONE: return 'завершено';
+      case TaskState::TASK_DONE: return 'Завершено';
         break;
-      case TaskState::TASK_DONE_SUCCESS: return 'выполнено';
+      case TaskState::TASK_DONE_SUCCESS: return 'Выполнено';
         break;
-      case TaskState::TASK_DONE_TIME_FAIL: return 'провалено';
+      case TaskState::TASK_DONE_TIME_FAIL: return 'Провалено';
         break;
-      case TaskState::TASK_DONE_GAME_OVER: return 'остановлено с игрой';
+      case TaskState::TASK_DONE_GAME_OVER: return 'Остановлено с игрой';
         break;
-      case TaskState::TASK_DONE_BANNED: return 'дисквалифицировано';
+      case TaskState::TASK_DONE_BANNED: return 'Дисквалифицировано';
         break;
-      case TaskState::TASK_DONE_SKIPPED: return 'пропущено';
+      case TaskState::TASK_DONE_SKIPPED: return 'Пропущено';
         break;
-      case TaskState::TASK_DONE_ABANDONED: return 'отменено';
+      case TaskState::TASK_DONE_ABANDONED: return 'Отменено';
         break;
       default: return 'неизвестно';
         break;

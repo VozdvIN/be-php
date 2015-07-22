@@ -4,7 +4,7 @@
 		'_game' => $_game,
 		'_isManager' => $_isManager,
 		'_retUrlRaw' => $retUrlRaw,
-		'_activeTab' => 'stuart'));
+		'_activeTab' => 'Стюардесса'));
 ?>
 
 <div class="tabSheet">
