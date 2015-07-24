@@ -5,6 +5,11 @@ autoUpdateSuccess:
   metas:
     title: "Автопересчет игры"
 
+reportSuccess:
+  metas:
+    title: "Результаты игры"
+  has_layout: true
+
 all:
   metas:
     title: "Управление игрой"

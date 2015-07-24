@@ -24,7 +24,7 @@
 	<tbody>
 		<?php foreach ($_teamStates as $teamState): ?>
 			<tr>
-				<th colspan="7" style="text-align: left" class="info-bg"><?php echo $teamState->Team->name ?></th>
+				<th colspan="7" style="text-align: left" class="note-bg"><?php echo $teamState->Team->name ?></th>
 			</tr>
 			<?php foreach ($teamState->taskStates as $taskState): ?>
 			<tr>
@@ -46,7 +46,8 @@
 				</td>
 				<td>
 					<?php foreach ($taskState->postedAnswers as $postedAnswer): ?>
-						<span><?php echo $postedAnswer->value.'('.$postedAnswer->WebUser->login.'@'.Timing::timeToStr($postedAnswer->post_time).')'; ?></span> 
+						<?php $webUser = DCTools::recordById($_postedAnswers->getRawValue(), $postedAnswer->id)->WebUser; ?>
+						<span><?php echo $postedAnswer->value.'('.$webUser->login.'@'.Timing::timeToStr($postedAnswer->post_time).')'; ?></span> 
 					<?php endforeach ?>
 				</td>
 			</tr>

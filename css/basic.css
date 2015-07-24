@@ -185,19 +185,10 @@ table.no-border, table.no-border tr, table.no-border th, table.no-border td
 
 /* === Formatting === */
 
+/* TODO: Deprecated */
 .indent
 {
     text-indent: 4ex;
-}
-
-.full-width
-{
-    width: 100%
-}
-
-.strong
-{
-    font-weight: bold;
 }
 
 .pad-bottom
@@ -254,6 +245,11 @@ p.info, p.warn, p.danger
     border-left-style: solid;
     border-left-width: 2px;
     padding-left: 2px;
+}
+
+.note-bg
+{
+	background-color: steelblue;
 }
 
 .info-bg

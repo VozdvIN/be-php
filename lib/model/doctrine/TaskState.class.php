@@ -769,42 +769,39 @@ class TaskState extends BaseTaskState implements IStored, IAuth
     $this->task_last_update = time();
   }
 
-  /**
-   * Возвращает имя CSS-класса для отображения состояния.
-   *
-   * @param   integer   $aStatus  Код статуса
-   * @return  string
-   */
-  public function getHighlightClass()
-  {
-    switch ($this->status)
-    {
-      case TaskState::TASK_GIVEN:
-      case TaskState::TASK_STARTED:
-      case TaskState::TASK_ACCEPTED:
-        $class = '';
-        break;
-      case TaskState::TASK_CHEAT_FOUND:
-        $class = 'danger';
-        break;
-      case TaskState::TASK_DONE:
-      case TaskState::TASK_DONE_SUCCESS:
-        $class = 'info';
-        break;
-      case TaskState::TASK_DONE_TIME_FAIL:
-      case TaskState::TASK_DONE_SKIPPED:
-      case TaskState::TASK_DONE_GAME_OVER:
-        $class = 'warn';
-        break;
-      case TaskState::TASK_DONE_BANNED:
-      case TaskState::TASK_DONE_ABANDONED:
-        $class = 'danger';
-        break;
-      default:
-        $class = '';
-    }
-    return $class;
-  }
+	/**
+	 * Возвращает имя CSS-класса для индикации состояния.
+	 *
+	 * @return  string
+	 */
+	public function getHighlightClass()
+	{
+		$class = '';
+		switch ($this->status)
+		{
+			case TaskState::TASK_GIVEN:
+			case TaskState::TASK_STARTED:
+			case TaskState::TASK_ACCEPTED:
+				break;
+			case TaskState::TASK_CHEAT_FOUND:
+				$class = 'danger';
+				break;
+			case TaskState::TASK_DONE:
+			case TaskState::TASK_DONE_SUCCESS:
+				$class = 'info';
+				break;
+			case TaskState::TASK_DONE_TIME_FAIL:
+			case TaskState::TASK_DONE_SKIPPED:
+			case TaskState::TASK_DONE_GAME_OVER:
+				$class = 'warn';
+				break;
+			case TaskState::TASK_DONE_BANNED:
+			case TaskState::TASK_DONE_ABANDONED:
+				$class = 'danger';
+				break;
+		}
+		return $class;
+	}
 
   /**
    * Разбирает строку на отдельные ответы (по пробелам) и помещает их в очередь проверки.

@@ -77,6 +77,7 @@ class gameControlActions extends MyActions
         || ($this->_game->status >= Game::GAME_ARCHIVED),
         Utils::cannotMessage($this->sessionWebUser->login, 'просматривать игру')
     );
+	$this->prefetchAll($request);
   }
   
   //// Game control
@@ -226,72 +227,79 @@ class gameControlActions extends MyActions
   
   //// Self
   
-  protected function prefetchAll(sfRequest $request)
-  {
-    $game = $this->_game;
+	protected function prefetchAll(sfRequest $request)
+	{
+		$game = $this->_game;
 
-    $teamStates = Doctrine::getTable('TeamState')
-        ->createQuery('ts')
-        ->select()
-            ->innerJoin('ts.Game')
-            ->innerJoin('ts.Team')
-            ->leftJoin('ts.taskStates')
-        ->where('game_id = ?', $game->id)
-        ->orderBy('ts.Team.name, ts.taskStates.given_at')
-        ->execute();
+		$teamStates = Doctrine::getTable('TeamState')
+			->createQuery('ts')
+			->select()
+				->innerJoin('ts.Game')
+				->innerJoin('ts.Team')
+				->leftJoin('ts.taskStates')
+			->where('game_id = ?', $game->id)
+			->orderBy('ts.Team.name, ts.taskStates.given_at')
+			->execute();
 
-    $teamStatesIds = DCTools::idsToArray($teamStates);
-    $taskStates = Doctrine::getTable('TaskState')
-        ->createQuery('ts')
-        ->select()
-            ->innerJoin('ts.TeamState')
-            ->innerJoin('ts.Task')
-            ->leftJoin('ts.usedTips')
-            ->leftJoin('ts.postedAnswers')
-        ->whereIn('team_state_id', $teamStatesIds)
-        ->orderBy('ts.given_at')
-        ->execute();
+		$teamStatesIds = DCTools::idsToArray($teamStates);
+		$taskStates = Doctrine::getTable('TaskState')
+			->createQuery('ts')
+			->select()
+				->innerJoin('ts.TeamState')
+				->innerJoin('ts.Task')
+				->leftJoin('ts.usedTips')
+				->leftJoin('ts.postedAnswers')
+			->whereIn('team_state_id', $teamStatesIds)
+			->orderBy('ts.given_at')
+			->execute();
 
-    $taskStatesIds = DCTools::idsToArray($taskStates);
-    $usedTips = Doctrine::getTable('UsedTip')
-        ->createQuery('ut')
-        ->select()
-            ->innerJoin('ut.TaskState')
-            ->innerJoin('ut.Tip')
-        ->whereIn('task_state_id', $taskStatesIds)
-        ->orderBy('ut.used_since')
-        ->execute();
+		$taskStatesIds = DCTools::idsToArray($taskStates);
+		$usedTips = Doctrine::getTable('UsedTip')
+			->createQuery('ut')
+			->select()
+				->innerJoin('ut.TaskState')
+				->innerJoin('ut.Tip')
+			->whereIn('task_state_id', $taskStatesIds)
+			->orderBy('ut.used_since')
+			->execute();
 
-    $tasks = Doctrine::getTable('Task')
-        ->createQuery('t')
-        ->select()
-            ->innerJoin('t.Game')
-            ->leftJoin('t.taskStates')
-        ->where('game_id = ?', $game->id)
-        ->orderBy('t.name')
-        ->execute();
+		$tasks = Doctrine::getTable('Task')
+			->createQuery('t')
+			->select()
+				->innerJoin('t.Game')
+				->leftJoin('t.taskStates')
+			->where('game_id = ?', $game->id)
+			->orderBy('t.name')
+			->execute();
 
+		$postedAnswers = Doctrine::getTable('PostedAnswer')
+			->createQuery('pa')
+			->select()
+				->innerJoin('pa.WebUser')
+			->whereIn('task_state_id', $taskStatesIds)
+			->execute();
 
-    /* Формат $currentTaskStatesIndex:
-     * ключ - id состояния команды
-     * значение - текущее состояние задания
-     */
-    $currentTaskStatesIndex = array();
-    foreach ($teamStates as $teamState)
-    {
-      $currentTaskState = $teamState->getCurrentTaskState();
-      $currentTaskStatesIndex[$teamState->id] = $currentTaskState
-          ? DCTools::recordById($taskStates, $currentTaskState->id)
-          : false;
-    }
+		/* Формат $currentTaskStatesIndex:
+		 * ключ - id состояния команды
+		 * значение - текущее состояние задания
+		 */
+		$currentTaskStatesIndex = array();
+		foreach ($teamStates as $teamState)
+		{
+			$currentTaskState = $teamState->getCurrentTaskState();
+			$currentTaskStatesIndex[$teamState->id] = $currentTaskState
+				? DCTools::recordById($taskStates, $currentTaskState->id)
+				: false;
+		}
 
-    $this->_teamStates = $teamStates;
-    $this->_taskStates = $taskStates;
-    $this->_usedTips = $usedTips;
-    $this->_tasks = $tasks;
+		$this->_teamStates = $teamStates;
+		$this->_taskStates = $taskStates;
+		$this->_usedTips = $usedTips;
+		$this->_tasks = $tasks;
+		$this->_postedAnswers = $postedAnswers;
 
-    $this->_currentTaskStatesIndex = $currentTaskStatesIndex;
-  }
+		$this->_currentTaskStatesIndex = $currentTaskStatesIndex;
+	}
 
   protected function checkPostAndCsrf(sfRequest $request)
   {

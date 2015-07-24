@@ -1,11 +1,3 @@
-<?php
-/**
- * Входные аргументы:
- * - Game $_game - игра, для которой строится отчет.
- */
-$results = $_game->getGameResults();
-?>
-
 <table>
 	<thead>
 		<tr>
@@ -17,10 +9,10 @@ $results = $_game->getGameResults();
 	</thead>
 	<tbody>
 		<?php $place = 1 ?>
-		<?php foreach ($results as $teamResult): ?>
+		<?php foreach ($_results as $teamResult): ?>
 		<tr>
 			<td style="text-align: center"><?php echo $place ?></td>
-			<td><?php echo Team::byId($teamResult['id'])->name ?></td>
+			<td><?php echo DCTools::recordById($_teams->getRawValue(), $teamResult['id'])->name ?></td>
 			<td style="text-align: center"><?php echo $teamResult['points'] ?></td>
 			<td><?php echo Timing::intervalToStr($teamResult['time']) ?></td>
 		</tr>

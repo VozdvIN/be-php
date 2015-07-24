@@ -1,13 +1,7 @@
 <h2>Результаты игры <?php echo $_game->name ?></h2>
 
-<?php if ($_game->status < GAME::GAME_ARCHIVED): ?>
-<p>
-  <span class="safeAction"><?php echo link_to('Обновить', 'gameControl/report?id='.$_game->id) ?></span>
-</p>
-<?php endif ?>
-
 <h3>Итоги</h3>
-<?php include_partial('results', array('_game' => $_game)) ?>
+<?php include_component('gameControl','results', array('gameId' => $_game->id)) ?>
 
 <h3>Телеметрия</h3>
-<?php include_partial('report', array('_game' => $_game)) ?>
+<?php include_component('gameControl', 'report', array('gameId' => $_game->id)); ?>

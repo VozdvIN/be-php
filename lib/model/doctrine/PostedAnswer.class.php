@@ -12,7 +12,30 @@
  */
 class PostedAnswer extends BasePostedAnswer
 {
-  const ANSWER_POSTED = 100;
-  const ANSWER_OK = 200;
-  const ANSWER_BAD = 300;
+	const ANSWER_POSTED = 100;
+	const ANSWER_OK = 200;
+	const ANSWER_BAD = 300;
+	
+	/**
+	 * Возвращает имя CSS-класса для отображения состояния.
+	 *
+	 * @return  string
+	 */
+	public function getHighlightClass()
+	{
+		$class = '';
+		switch ($this->status)
+		{
+			case PostedAnswer::ANSWER_POSTED:
+				$class = 'warn';
+				break;
+			case PostedAnswer::ANSWER_OK:
+				$class = 'info';
+				break;
+			case PostedAnswer::ANSWER_BAD:
+				$class = 'danger';
+				break;
+		}
+		return $class;
+	}
 }
