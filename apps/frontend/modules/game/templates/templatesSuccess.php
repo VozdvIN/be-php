@@ -19,8 +19,8 @@
 			<td><?php echo Timing::intervalToStr($_game->time_per_tip*60) ?></td>
 		</tr>
 		<tr>
-			<th>Ошибок не более:</th>
-			<td><?php echo 'не&nbsp;более&nbsp;'.$_game->try_count.' за задание' ?></td>
+			<th>Ошибок, не более:</th>
+			<td><?php echo $_game->try_count.' за задание' ?></td>
 		</tr>
 		<tr>
 			<th>Название формулировки:</th>

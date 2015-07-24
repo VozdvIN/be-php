@@ -9,9 +9,9 @@
 
 <h2>Управление игрой <?php echo $_game->name ?></h2>
 
-<div>
+<p>
 	<span class="pad-box box"><?php echo link_to('Редактор', 'game/promo?id='.$_game->id, array('target' => '_blank')); ?></span>
-	<span class="pad-box box"><?php echo Timing::timeToStr($_game->game_last_update) ?>&nbsp;-&nbsp;<?php echo $_game->describeStatus() ?></span>
+	<span class="pad-box box"><?php echo Timing::dateToStr($_game->game_last_update) ?>&nbsp;-&nbsp;<?php echo $_game->describeStatus() ?></span>
 	<?php if ($_isManager): ?>
 		<?php if (($_game->status >= Game::GAME_STEADY) && ($_game->status <= Game::GAME_FINISHED)): ?>
 			<span class="warn warn-bg pad-box box"><?php echo link_to('Пересчитать', 'gameControl/update?id='.$_game->id.'&returl='.$_retUrlRaw, array('method' => 'post')); ?></span>
@@ -33,7 +33,7 @@
 			<span class="danger danger-bg pad-box box"><?php echo link_to('Перезапустить', 'gameControl/reset?id='.$_game->id.'&returl='.$_retUrlRaw, array('method' => 'post', 'confirm' => 'Перезапустить игру '.$_game->name.'?'));?></span>
 		<?php endif; ?>
 	<?php endif; ?>
-</div>
+</p>
 
 <?php if (( ! $_game->teams_can_update) && $_game->isActive() && (Timing::isExpired(time(), $_game->update_interval_max, $_game->game_last_update))): ?>
 <p class="danger">

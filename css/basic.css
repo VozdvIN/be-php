@@ -84,8 +84,8 @@ p, article
 h1, h2, h3, h4, h5, h6
 {
     line-height: 150%;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-top: 6px;
+    padding-bottom: 6px;
 }
 
 h1 { color: white; font-size: 23px; padding-left: 10%; }
@@ -124,7 +124,6 @@ table
     border-style: none;
     padding-top: 6px;
     padding-bottom: 6px;
-    padding-left: 7px;
 }
 
 tr

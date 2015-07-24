@@ -1,6 +1,7 @@
 <h2>Результаты игры <?php echo $_game->name ?></h2>
-
-<h3>Итоги</h3>
+<p>
+	<span class="pad-box box"><?php echo link_to('Афиша', 'game/info?id='.$_game->id); ?></span>
+</p>
 <?php include_component('gameControl','results', array('gameId' => $_game->id)) ?>
 
 <h3>Телеметрия</h3>

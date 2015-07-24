@@ -22,16 +22,16 @@
 <div class="border-top" style="width: 100%"><!--
 	
  --><div style="display:inline-block; width: 50%">
-		<div style="text-align: center;">
-			<div style="display: inline-block; min-width: 50%">	 
+		<div style="text-align: right; margin-right: 12px;">
+			<div style="display: inline-block">	 
 				<h3>Анонсы</h3>
 				<?php if ($_games->count() > 0): ?>
-				<?php
-				foreach ($_games as $game)
-				{
-					include_partial('gameAnnounce', array('game' => $game, '_isAuth' => $_userAuthenticated));
-				}
-				?>
+					<?php
+					foreach ($_games as $game)
+					{
+						include_partial('gameAnnounce', array('game' => $game, '_isAuth' => $_userAuthenticated));
+					}
+					?>
 				<?php else: ?>
 				<p>
 					В ближайшее время игр не планируется.
@@ -42,8 +42,8 @@
 	</div><!--
 
  --><div style="display:inline-block; width: 50%">
-		<div style="text-align: center;">
-			<div style="display: inline-block; min-width: 50%">	 
+		<div style="text-align: left; margin-left: 12px;">
+			<div style="display: inline-block">	 
 				<?php if ($_localNews): ?>
 				<h3>Новости</h3>
 				<?php else: ?>

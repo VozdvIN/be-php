@@ -7,13 +7,13 @@
 $region = $game->getRegionSafe();
 ?>
 <div>
-	<h4 class="border-top">
+	<h4>
 		<?php
 			echo ($_isAuth ? link_to($game->name, 'game/info?id='.$game->id) : $game->name)
 				.(($region->id != Region::DEFAULT_REGION) ? ('&nbsp;('.$game->getRegionSafe()->name.')') : '');
 		?>
 	</h4>
-	<article>
+	<article class="pad-bottom">
 		<?php echo Utils::decodeBB($game->short_info) ?>
 	</article>
 </div>

@@ -1,19 +1,11 @@
 <div class="border-top">
 	<div style="display: inline-block; width: 50%">
 		<div style="text-align: left;">
-			<div style="display: inline-block;">
-				<?php if ($sf_user->isAuthenticated()): ?>
-				<p>
-					Текущий проект: <?php echo Region::byId($sf_user->getAttribute('region_id'))->name ?>
-				</p>
-				<?php endif; ?>
-				<p>
-					Время сервера: <span id="serverTime">--:--:--</span>.
-				</p>
-			</div>
+			<p>
+				Время сервера: <span id="serverTime">--:--:--</span>.
+			</p>
 		</div>
 	</div><!--
-
 	 --><div style="display: inline-block; width: 50%">
 		<div style="text-align: right;">
 			<div style="display: inline-block;">	

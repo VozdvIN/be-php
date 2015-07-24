@@ -10,20 +10,21 @@
 		<span class="info info-bg pad-box box"><?php echo link_to('Подать заявку на участие', 'game/postJoinManual?id='.$_game->id.'&returl='.$retUrlRaw, array('method' => 'post')); ?></span>
 	<?php endif ?>
 	<?php if ($_canManage || $_isModerator): ?>
-		<span class="pad-box box"><?php echo link_to('Редактировать', 'game/promo?id='.$_game->id); ?></span>
+		<span class="pad-box box"><?php echo link_to('Редактор', 'game/promo?id='.$_game->id); ?></span>
 	<?php endif; ?>
 </p>
 <?php endif; ?>
 
+<?php if ($_game->status >= GAME::GAME_ARCHIVED): ?>
+<h2 class="info">Игра завершена</h2>
+<p>
+	<span class="pad-box box"><?php echo link_to('Результаты игры', 'gameControl/report?id='.$_game->id); ?></span>
+</p>
+<?php endif ?>
+
 <article class="pad-top pad-bottom">
 	<?php echo Utils::decodeBB($_game->description) ?>
 </article>
-
-<?php if ($_game->status >= GAME::GAME_ARCHIVED): ?>
-<p class="info">
-	Игра завершена, опубликованы <?php echo link_to('итоги', 'gameControl/report?id='.$_game->id); ?>
-</p>
-<?php endif ?>
 
 <table class="no-border">
 	<tbody>

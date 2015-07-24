@@ -19,13 +19,12 @@ $showModeration = $sessionWebUser && $sessionWebUser->hasSomeToModerate();
 		 --><li><?php echo link_to('Команды', 'team/index') ?></li><!--
 		 --><li><?php echo link_to('Игры', 'game/index') ?></li><!--
 		 --><li><?php echo link_to('Участники', 'webUser/index') ?></li><!--
-			<?php	if ($showModeration): ?>
-		 --><li><?php	echo link_to('Модерирование', 'moderation/show') ?></li><!--
-			<?php	endif; ?>
-		 --><li><?php echo link_to_article_name('Инструкции') ?></li><!--
 		 --><li><?php echo link_to('Статьи', 'article/by?name=Разделы') ?></li><!--
 		 --><li><?php echo link_to('Проект:'.Region::byId($sf_user->getAttribute('region_id'))->name, 'region/setCurrent?returl='.Utils::encodeSafeUrl($_SERVER['REQUEST_URI'])) ?></li><!--
 		 --><li><?php echo link_to('Профиль:'.$sf_user->getAttribute('login'), 'webUser/show?id='.$sf_user->getAttribute('id')) ?></li><!--
+			<?php	if ($showModeration): ?>
+		 --><li><?php	echo link_to('Модерирование', 'moderation/show') ?></li><!--
+			<?php	endif; ?><!--		 
 		 --><li><?php echo link_to('Выход', 'auth/logout') ?></li>
 			<?php else: ?>
 			<li><?php echo link_to('Вход', 'auth/login') ?></li><!--
