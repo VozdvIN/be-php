@@ -27,9 +27,8 @@ class SimpleAnswerForm extends BaseForm
     );
 
     $this->getWidgetSchema()->setNameFormat('simpleAnswer[%s]');
-    $this->getWidget('value')->setAttribute('size', 5);
-
-    $this->getWidgetSchema()->setLabels(array('value' => 'Ответ'));
+//    $this->getWidget('value')->setAttribute('size', 50);
+    $this->getWidget('value')->setAttribute('style', 'width: 100%');
   }
 
 }

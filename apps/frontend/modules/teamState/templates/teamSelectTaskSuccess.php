@@ -1,6 +1,6 @@
 <?php
 include_partial('header', array('teamState' => $_teamState));
-$retUrlRaw = Utils::encodeSafeUrl(url_for('teamState/task?id='.$_teamState->id));
+$retUrlRaw = Utils::encodeSafeUrl(url_for('play/task?id='.$_teamState->id));
 ?>
 
 <div class="info">

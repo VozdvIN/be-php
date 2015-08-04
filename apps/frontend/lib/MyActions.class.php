@@ -130,7 +130,10 @@ class MyActions extends sfActions
     {
       $target = 'home/index';
     }
-    $this->session->setFlash($messageKind, $message);
+	if ($message !== '')
+	{
+		$this->session->setFlash($messageKind, $message);
+	}
     $this->redirectSafe($target);
   }
 

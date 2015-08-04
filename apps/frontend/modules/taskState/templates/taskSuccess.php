@@ -3,7 +3,7 @@
 <div style="font-weight: bold"><?php echo $teamState->Team->name ?></div>
 <div><?php echo $teamState->Game->name ?></div>
 <div class="hr">
-  <span class="safeAction"><?php echo link_to('Обновить', 'teamState/task?id='.$teamState->id) ?></span>
+  <span class="safeAction"><?php echo link_to('Обновить', 'play/task?id='.$teamState->id) ?></span>
 </div>
 
 <?php if ($_taskState->status == TaskState::TASK_GIVEN): ?>
@@ -77,7 +77,7 @@ include_partial('taskStats', array('taskState' => $_taskState));
 
 <?php elseif ($_taskState->status >= TaskState::TASK_DONE): ?>
 <p>
-  <span class="info">Задание завершено.</span> <span class="safeAction"><?php echo link_to('Перейти к следующему заданию', 'teamState/task?id='.$teamState->id); ?></span>
+  <span class="info">Задание завершено.</span> <span class="safeAction"><?php echo link_to('Перейти к следующему заданию', 'play/task?id='.$teamState->id); ?></span>
 </p>
 <?php include_partial('taskDefine', array('taskState' => $_taskState)) ?>
 

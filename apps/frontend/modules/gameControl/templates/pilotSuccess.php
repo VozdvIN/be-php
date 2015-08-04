@@ -32,7 +32,7 @@
 				<?php echo link_to($task->name, 'task/params?id='.$task->id, array('target' => '_blank')); ?>
 			</td>
 			<td>
-				<span><?php echo link_to($currentTaskState->describeStatus(), 'teamState/task?id='.$teamState->id, array('target' => '_blank')); ?></span>
+				<span><?php echo link_to($currentTaskState->describeStatus(), 'play/task?id='.$teamState->id, array('target' => '_blank')); ?></span>
 				<?php if (($currentTaskState->status == TaskState::TASK_GIVEN) && $currentTaskState->Task->isFilled()): ?>
 					<span class="warn">, заполнено</span>
 				<?php endif ?>

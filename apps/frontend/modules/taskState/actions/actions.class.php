@@ -47,8 +47,8 @@ class taskStateActions extends MyActions
             {      
               $this->taskState->save();
             }
-          }          
-          $this->successRedirect('Ответ(ы) успешно отправлен(ы).');
+          }
+          $this->successRedirect();
         }
       }
       else
@@ -103,7 +103,7 @@ class taskStateActions extends MyActions
     // Если это задание уже закончилось, то надо перейти к текущему активному.
     if ($this->_taskState->status >= TaskState::TASK_DONE)
     {
-      $this->redirectSafe('teamState/task?id='.$this->_taskState->team_state_id);
+      $this->redirectSafe('play/task?id='.$this->_taskState->team_state_id);
     }
   }
 

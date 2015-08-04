@@ -130,7 +130,7 @@
 				<?php
 				if ($teamState->Game->status >= Game::GAME_STEADY || $teamState->Game->status <= Game::GAME_FINISHED)
 				{
-					echo link_to('К&nbsp;заданию', 'teamState/task?id='.$teamState->id, array('target' => '_blank'));
+					echo link_to('К&nbsp;заданию', 'play/task?id='.$teamState->id, array('target' => '_blank'));
 				}
 				elseif ($teamState->Game->status == Game::GAME_ARCHIVED)
 				{

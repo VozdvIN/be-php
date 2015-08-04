@@ -69,16 +69,18 @@
 	<tbody>
 		<?php foreach ($_game->teamStates as $teamState): ?>
 		<tr>
-			<td><?php echo ($teamState->Team->full_name !== '') ? $teamState->Team->full_name : $teamState->Team->name ?></td>
 			<td>
-				<?php if ($teamState->Team->isPlayer($sf_user->getSessionWebUser()->getRawValue()) && ($_game->status >= Game::GAME_STEADY) && ($_game->status < Game::GAME_ARCHIVED)): ?>
-					<?php echo link_to('к&nbsp;заданию', 'teamState/task?id='.$teamState->id) ?>
-				<?php endif; ?>
-				&nbsp;
+				<?php
+					$title = ($teamState->Team->full_name !== '') ? $teamState->Team->full_name : $teamState->Team->name;
+					echo link_to($title, 'team/show?id='.$teamState->Team->id, array('target' => '_blank'));
+				?>
 			</td>
 			<td>
 				<?php if ($teamState->Team->canBeManaged($sf_user->getSessionWebUser()->getRawValue())): ?>
 				<span class="info info-bg pad-box box"><?php echo link_to('Отказаться', 'game/removeTeam?id='.$_game->id.'&teamId='.$teamState->team_id.'&returl='.$retUrlRaw, array('confirm' => 'Вы точно хотите снять команду '.$teamState->Team->name.' с игры '.$_game->name.' ?')) ?></span>
+				<?php endif; ?>
+				<?php if ($teamState->Team->isPlayer($sf_user->getSessionWebUser()->getRawValue()) && ($_game->status >= Game::GAME_STEADY) && ($_game->status < Game::GAME_ARCHIVED)): ?>
+				<span class="pad-box box"><?php echo link_to('Войти&nbsp;в&nbsp;игру', 'play/task?id='.$teamState->id) ?></span>
 				<?php endif; ?>
 				&nbsp;
 			</td>
@@ -95,7 +97,10 @@
 		<?php foreach ($_game->gameCandidates as $gameCandidate): ?>
 		<tr>
 			<td>
-				<?php echo ($gameCandidate->Team->full_name !== '') ? $gameCandidate->Team->full_name : $gameCandidate->Team->name ?>
+				<?php
+					$title = ($gameCandidate->Team->full_name !== '') ? $gameCandidate->Team->full_name : $gameCandidate->Team->name;
+					echo link_to($title, 'team/show?id='.$gameCandidate->Team->id, array('target' => '_blank'));
+				?>
 			</td>
 			<td>
 				<?php if ($gameCandidate->Team->canBeManaged($sf_user->getSessionWebUser()->getRawValue())): ?>
