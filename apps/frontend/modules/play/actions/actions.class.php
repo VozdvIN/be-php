@@ -99,6 +99,7 @@ class playActions extends MyActions
 			$this->taskState = $this->teamState->getCurrentTaskState();
 			if ($this->taskState)
 			{
+				$this->confirmTaskDisplayIfRequired($this->taskState);
 				$this->restAnswers = $this->taskState->getRestAnswers();
 				$this->goodAnswers = $this->taskState->getGoodPostedAnswers();
 				$this->beingVerifiedAnswers = $this->taskState->getBeingVerifiedPostedAnswers();

@@ -1,17 +1,19 @@
-<?php include_partial('menu', array('_activeItem' => 'Ответы', '_teamState' => $teamState)) ?>
+<?php
+include_partial('menu', array('_activeItem' => 'Ответы', '_teamState' => $teamState));
+$form = new SimpleAnswerForm();
+$retUrl = Utils::encodeSafeUrl(url_for('play/answers?id='.$teamState->id));
+?>
 
 <?php if ($taskState->status == TaskState::TASK_ACCEPTED): ?>
-<section style="width: 100%">
-<?php
-	include_partial('taskState/taskAnswerPostedForm',
-		array(
-			'form' => new SimpleAnswerForm,
-			'id' => $taskState->id,
-			'retUrl' => Utils::encodeSafeUrl(url_for('play/answers?id='.$teamState->id))
-		)
-	);
-?>
-</section>
+<form action="<?php echo url_for('taskState/postAnswers').'?id='.$taskState->id.'&returl='.$retUrl; ?>" method="post">
+	<table class="no-border" style="width: 100%">
+		<tr>
+			<td><?php echo $form['value']->render() ?></td>
+			<td><input type="submit" value="Послать"/></td>
+			<td><?php echo $form['_csrf_token']->render() ?></td>
+		</tr>
+	</table>
+</form>
 <?php elseif ($taskState->status == TaskState::TASK_CHEAT_FOUND): ?>
 <p class="danger">
 	Вы не можете отправлять ответы: вы сделали слишком много ошибок.
