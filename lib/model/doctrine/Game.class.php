@@ -690,13 +690,7 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
           }
 
           /* Проверка наличия невидимых символов в значении. */
-          $parts = explode(' ', $answer->value);
-          $count = 0;
-          foreach ($parts as $part)
-          {
-            $count++;
-          }
-          if ($count > 1)
+          if (count(explode(' ', $answer->value)) > 1)
           {
             $line++;
             $report['tasks'][$task->id][$line]['errLevel'] = Game::VERIFY_ERR;
@@ -712,7 +706,7 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
         {
           $line++;
           $report['tasks'][$task->id][$line]['errLevel'] = Game::VERIFY_WARN;
-          $report['tasks'][$task->id][$line]['msg'] = 'В задании меньше ответов ('.$task->answers->count().') чем требуется для зачета ('.$task->min_answers_to_success.').';
+          $report['tasks'][$task->id][$line]['msg'] = 'В задании меньше ответов ('.$task->answers->count().') чем требуется для зачета ('.$task->min_answers_to_success.'), зачет будет выполнен по всем доступным ответам.';
         }
         
         /* Проверка персональных ответов */
@@ -802,7 +796,7 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
             {
               $line++;
               $report['teams'][$teamState->team_id][$line]['errLevel'] = Game::VERIFY_ERR;
-              $report['teams'][$teamState->team_id][$line]['msg'] = 'Игрок '.$player->login.' является организатором игры '.$this->name.'.';
+              $report['teams'][$teamState->team_id][$line]['msg'] = 'Игрок '.$player->login.' также является организатором игры '.$this->name.'.';
               $canStart = false;
             }
           }
@@ -817,7 +811,7 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
             {
               $line++;
               $report['teams'][$teamState->team_id][$line]['errLevel'] = Game::VERIFY_ERR;
-              $report['teams'][$teamState->team_id][$line]['msg'] = 'Игрок '.$player->login.' играет еще и за команду '.$teamStatus2->Team->name.'.';
+              $report['teams'][$teamState->team_id][$line]['msg'] = 'Игрок '.$player->login.' также играет еще и за команду '.$teamStatus2->Team->name.'.';
               $canStart = false;
             }
           }

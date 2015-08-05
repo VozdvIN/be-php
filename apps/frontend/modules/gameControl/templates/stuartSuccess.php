@@ -9,7 +9,7 @@
 
 <h3>Текущие результаты команд</h3>
 
-<?php include_partial('results', array('_game' => $_game)) ?>
+<?php include_component('gameControl','results', array('gameId' => $_game->id)) ?>
 
 <p>
 	<span class="pad-box box"><?php echo link_to('Подробно', 'gameControl/report?id='.$_game->id, array('target' => '_blank')) ?></span>
