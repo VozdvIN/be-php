@@ -1,5 +1,5 @@
 <h2>404 ...Not found</h2>
-<h3>Статья "<?php echo $_articleName ?>"</h3>
+<h3>Статья &quot;<?php echo $_articleName ?>&quot;</h3>
 <p>
 	Извините, но такую статью найти не удалось.
 </p>
@@ -10,7 +10,7 @@
 <?php if ($_children->count() > 0):?>
 <h3>Ссылающиеся статьи</h3>
 <p>
-	Ниже приведен список статей, для которых статья "<?php echo $_articleName ?>" объявлена как родительская:
+	Ниже приведен список статей, для которых статья &quot;<?php echo $_articleName ?>&quot; указана как родительская:
 </p>
 <ul>
 <?php	foreach ($_children as $article): ?>

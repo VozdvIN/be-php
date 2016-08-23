@@ -128,7 +128,7 @@ class authActions extends MyActions
 					//Быстрая регистрация
 					$webUser->is_enabled = true;
 					$webUser->save();
-					$this->successRedirect('Вы успешно зарегистрированы. Можете входить.', 'auth/login');          
+					$this->successRedirect('Вы успешно зарегистрированы. Можете входить.', 'auth/login');
 				}
 				elseif (($webUser->email !== null) && ($webUser->email !== ''))
 				{

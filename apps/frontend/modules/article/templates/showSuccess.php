@@ -11,8 +11,8 @@
 
 <?php if ($_canEdit): ?>
 <p>
-  <span class="info info-bg pad-box box"><?php echo link_to('Редактировать статью', 'article/edit?id='.$_article->id) ?></span>
-  <span class="danger danger-bg pad-box box"><?php echo link_to('Удалить статью', 'article/delete?id='.$_article->id, array('method' => 'post', 'confirm' => 'Вы уверены, что хотите удалить статью?')) ?></span>
+	<span class="info info-bg pad-box box"><?php echo link_to('Редактировать статью', 'article/edit?id='.$_article->id) ?></span>
+	<span class="danger danger-bg pad-box box"><?php echo link_to('Удалить статью', 'article/delete?id='.$_article->id, array('method' => 'post', 'confirm' => 'Вы уверены, что хотите удалить статью?')) ?></span>
 </p>
 <?php endif; ?>
 

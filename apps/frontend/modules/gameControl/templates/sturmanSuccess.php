@@ -14,12 +14,14 @@
 		<th style="font-weight: bold">Команда</th>
 		<?php foreach ($_tasks as $task): ?>
 		<th>
-			<span class="<?php
-						if ($task->locked)                               { echo 'danger'; }
+			<span class="
+				<?php
+					if ($task->locked) { echo 'danger'; }
 					elseif ($task->getNotDoneTaskStates()->count() == 0) { echo 'info'; }
-					elseif ($task->isFilled())                           { echo 'warn'; }
-					else                                                 { echo ''; }
-				?>"><?php echo $task->name ?></span>
+					elseif ($task->isFilled()) { echo 'warn'; }
+					else { echo ''; }
+				?>
+				"><?php echo $task->name ?></span>
 		</th>
 		<?php endforeach ?>
 	</tr>

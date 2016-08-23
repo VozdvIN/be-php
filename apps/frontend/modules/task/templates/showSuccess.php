@@ -2,7 +2,7 @@
 	$retUrlRaw = Utils::encodeSafeUrl(url_for('task/params?id='.$_task->id));
 ?>
 
-<h2>Задание <?php echo $_task->name ?> игры <?php echo $_task->Game->name ?></h2>
+<h2>Задание &quot;<?php echo $_task->name ?>&quot; игры &quot;<?php echo $_task->Game->name ?>&quot;</h2>
 
 <?php
 render_h3_inline_begin('Cвойства');

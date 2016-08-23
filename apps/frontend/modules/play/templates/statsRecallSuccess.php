@@ -15,14 +15,14 @@
 <h2>Подсказки</h2>
 
 <?php foreach ($taskState->usedTips as $usedTip): ?>
-<?php   if ($usedTip->status == UsedTip::TIP_USED): ?>
+<?php	if ($usedTip->status == UsedTip::TIP_USED): ?>
 <p class="note-bg" style="width: 100%">
 	<?php echo Timing::timeToStr($usedTip->used_since) ?>
 </p>
 <section>
 	<?php echo Utils::decodeBB($usedTip->Tip->define) ?>
 </section>
-<?php   endif; ?>
+<?php	endif; ?>
 <?php endforeach; ?>
 
 <h2>Ответы</h2>

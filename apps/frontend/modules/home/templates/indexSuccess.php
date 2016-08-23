@@ -20,7 +20,6 @@
 </div>
 
 <div class="border-top" style="width: 100%"><!--
-	
  --><div style="display:inline-block; width: 50%">
 		<div style="text-align: right; margin-right: 12px;">
 			<div style="display: inline-block">	 

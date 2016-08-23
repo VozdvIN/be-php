@@ -4,7 +4,7 @@
 	Задание завершилось.
 </p>
 
-<?php     if ($taskState->status == TaskState::TASK_DONE_SUCCESS): ?>
+<?php if ($taskState->status == TaskState::TASK_DONE_SUCCESS): ?>
 <p class="info">
 	Вы успешно выполнили задание.
 </p>

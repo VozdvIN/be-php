@@ -1,4 +1,4 @@
-<h2>Предстартовая проверка игры <?php echo $_game->name ?></h2>
+<h2>Предстартовая проверка игры &quot;<?php echo $_game->name ?>&quot;</h2>
 
 <?php $cannotStart = false; ?>
 

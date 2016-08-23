@@ -1,4 +1,4 @@
-<h2>Команды</h2>
+<h2>Статьи</h2>
 
 <?php if ($sf_user->isAuthenticated()): ?>
 <p>

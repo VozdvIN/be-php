@@ -8,7 +8,7 @@
 	</div><!--
 	 --><div style="display: inline-block; width: 50%">
 		<div style="text-align: right;">
-			<div style="display: inline-block;">	
+			<div style="display: inline-block;">
 				<article>
 					<?php echo ($footerArticle = Article::byName('Шаблонные-Подвал')) ? Utils::decodeBB($footerArticle->text) : '(Заполните статью \'Шаблонные-Подвал\')'; ?>  
 				</article>

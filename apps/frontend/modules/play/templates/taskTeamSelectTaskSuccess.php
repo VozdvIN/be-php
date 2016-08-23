@@ -3,9 +3,15 @@ include_partial('menu', array('_activeItem' => 'Задание', '_teamState' =>
 $retUrlRaw = Utils::encodeSafeUrl(url_for('play/task?id='.$_teamState->id));
 ?>
 
+<?php if ( ! $isLeader): ?>
 <p class="info">
-	Ваша команда может выбрать себе следующее задание:
+	Ваш капитан может выбрать для вашей команды следующее задание.
 </p>
+<?php else: ?>
+<p>
+	Вы можете выбрать для вашей команды следующее задание:
+</p>
+<?php endif ?>
 
 <ul>
 	<?php foreach ($availableTasksManual as $task): ?>
@@ -18,12 +24,6 @@ $retUrlRaw = Utils::encodeSafeUrl(url_for('play/task?id='.$_teamState->id));
 	</li>
 	<?php endforeach ?>
 </ul>
-
-<?php if ( ! $isLeader): ?>
-<p class="info">
-	Выбрать следующее задание может только капитан команды.
-</p>
-<?php endif ?>
 
 <p>
 	Время ожидания не влияет на доступное игровое время.
