@@ -9,7 +9,6 @@ class regionActions extends myActions
 		$this->_regions = Doctrine_Core::getTable('Region')
 			->createQuery('r')
 			->select()
-			->where('r.id <> ?', Region::DEFAULT_REGION)
 			->orderBy('r.name')
 			->execute();
 	}
@@ -33,10 +32,6 @@ class regionActions extends myActions
 	{
 		$this->checkRights();
 		$this->forward404Unless($region = Doctrine_Core::getTable('Region')->find(array($request->getParameter('id'))), sprintf('Object region does not exist (%s).', $request->getParameter('id')));
-		if ($region->id == Region::DEFAULT_REGION)
-		{
-			$this->errorRedirect('Нельзя править игровой проект, используемый по умолчанию.', 'region/index');
-		}
 		$this->form = new RegionForm($region);
 	}
 
