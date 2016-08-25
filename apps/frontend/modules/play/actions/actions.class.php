@@ -80,7 +80,7 @@ class playActions extends MyActions
 				}
 				break;
 			case TeamState::TEAM_FINISHED:
-				$this->setTemplate('teamFinished');
+				$this->setTemplate('taskTeamFinished');
 				break;
 
 			default:
