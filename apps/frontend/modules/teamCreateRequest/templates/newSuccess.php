@@ -25,4 +25,4 @@
 	Позже капитан команды (или модератор) может сменить игровой проект команды.
 </p>
 
-<?php include_partial('global/formCrud', array('form' => $form, 'moduel' => 'teamCreateRequest')) ?>
+<?php include_partial('global/formCrud', array('form' => $form, 'module' => 'teamCreateRequest')) ?>
