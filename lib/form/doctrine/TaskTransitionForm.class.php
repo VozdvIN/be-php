@@ -39,7 +39,7 @@ class TaskTransitionForm extends BaseTaskTransitionForm
 
     //Русифицируем:
     $this->getWidgetSchema()->setLabels(array(
-        'target_task_id' => '* На задание:',
+        'target_task_id' => 'На задание:',
         'allow_on_success' => 'При успехе:',
         'allow_on_fail' => 'При неудаче:',
         'manual_selection' => 'Выбор вручную:',
