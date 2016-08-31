@@ -3,7 +3,7 @@ $sessionWebUser = $sf_user->isAuthenticated() ? $sf_user->getSessionWebUser()->g
 $showModeration = $sessionWebUser && $sessionWebUser->hasSomeToModerate();
 ?>
 
-<div class="border-bottom" style="min-height: 50px"><!--
+<div class="pad-bottom" style="min-height: 50px"><!--
  --><div style="display: inline-block;">
 		<a href="/home/index" style="display: inline-block">
 			<img src="/images/logo.png" alt="<?php echo SiteSettings::SITE_NAME ?>" />
@@ -15,9 +15,8 @@ $showModeration = $sessionWebUser && $sessionWebUser->hasSomeToModerate();
  --><nav class="menu">
 		<ul>
 			<?php if ($sf_user->isAuthenticated()): ?>
-			<li><?php echo link_to('Главная', '/home/index') ?></li><!--
+			<li style="background-color: #002a4c"><?php echo link_to(Region::byId($sf_user->getAttribute('region_id'))->name, '/home/index') ?></li><!--
 		 --><li><?php echo link_to('Профиль', 'webUser/show?id='.$sf_user->getAttribute('id')) ?></li><!--
-		 --><li><?php echo link_to('Проект', 'region/setCurrent?returl='.Utils::encodeSafeUrl($_SERVER['REQUEST_URI'])) ?></li><!--
 		 --><li><?php echo link_to('Команды', 'team/index') ?></li><!--
 		 --><li><?php echo link_to('Игры', 'game/index') ?></li><!--
 		 --><li><?php echo link_to('Участники', 'webUser/index') ?></li><!--

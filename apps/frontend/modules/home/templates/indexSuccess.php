@@ -1,28 +1,17 @@
-<div>
-	<?php if (!$_userAuthenticated): ?>
-	<div class="border-bottom">
-		<p>
-			Для участия Вам нужно <?php echo link_to('войти', 'auth/login')?>.
-		</p>
-		<p>
-			Если Вы здесь впервые, то <?php echo link_to('зарегистрируйтесь', 'auth/register')?>.
-		</p>
-	</div>
-	<?php endif; ?>
-	<div style="text-align: center">
-		<div style="display: inline-block; max-width: 75%">
+<span class="pad-box box"><?php echo link_to('Сменить проект', 'region/setCurrent?returl='.Utils::encodeSafeUrl($_SERVER['REQUEST_URI'])) ?></span>
+
+<div style="width: 100%"><!--
+ --><div style="display:inline-block; width: 50%">
+		<div style="text-align: right; margin-right: 6px;">
 			<article>
 				<?php echo ($homeArticle = Article::byName('Шаблонные-Главная')) ? Utils::decodeBB($homeArticle->text) : 'Заполните статью \'Шаблонные-Главная\''; ?>
 			</article>
 		</div>
-	</div>
+	</div><!--
 
-</div>
-
-<div class="border-top" style="width: 100%"><!--
  --><div style="display:inline-block; width: 50%">
-		<div style="text-align: right; margin-right: 12px;">
-			<div style="display: inline-block">	 
+		<div style="text-align: left; margin-left: 6px;">
+			<div style="display: inline-block">
 				<h3>Анонсы</h3>
 				<?php if ($_games->count() > 0): ?>
 					<?php
@@ -36,26 +25,6 @@
 					В ближайшее время игр не планируется.
 				</p>
 				<?php endif; ?>
-			</div>
-		</div>
-	</div><!--
-
- --><div style="display:inline-block; width: 50%">
-		<div style="text-align: left; margin-left: 12px;">
-			<div style="display: inline-block">	 
-				<?php if ($_localNews): ?>
-				<h3>Новости</h3>
-				<?php else: ?>
-				<h3>Новости проекта&quot;<?php echo $_currentRegion->name; ?> &quot;</h3>
-				<?php endif; ?>
-
-				<?php if ($_canEditNews && $_localNews): ?>
-				<span class="info info-bg pad-box box"><?php echo link_to('Редактировать', 'article/edit?id='.$_localNews->id); ?></span>
-				<?php endif; ?>
-
-				<article>
-					<?php echo ($_localNews) ? Utils::decodeBB($_localNews->text) : 'Создайте для этого проекта новостной канал - статью &quot;Новости&quot;-'.$_currentRegion->name; ?>
-				</article>
 			</div>
 		</div>
 	</div><!--
