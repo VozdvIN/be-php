@@ -1,78 +1,36 @@
-<?php 
-	$this->_retUrlRaw = Utils::encodeSafeUrl(url_for('game/index'));
+<?php
+	include_partial(
+		'gameIndexMenu',
+		array(
+			'_game' => $_game,
+			'_activeItem' => 'Все'
+		)
+	)
 ?>
 
-<h2>Игры</h2>
-
-<p>
-	<span class="info info-bg pad-box box">
-		<?php
-		echo $_isGameModerator
-			? link_to('Создать новую игру', 'game/new')
-			: link_to('Подать заявку на создание игры', 'gameCreateRequest/newManual');
-		?>
-	</span>
+<?php if ($_games->count() == 0): ?>
+<p class="info">
+	Игр не обнаружено.
 </p>
-
-<?php if ( ($_plannedGames->count() == 0) && ($_activeGames->count() == 0) && ($_archivedGames->count() == 0)): ?>
-<p clas="info">
-	Игр пока нет.
-</p>
-<?php endif ?>
-
-<?php if ($_activeGames->count() > 0): ?>
-<h4>Проходят сейчас</h4>
+<?php else: ?>
 <table class="no-border">
+	<thead>
+		<th>&nbsp;</th>
+		<th>Статус</th>
+		<th>Брифинг</th>
+		<th>Старт</th>
+		<th>Стоп</th>
+		<th>Итоги</th>
+	</thead>
 	<tbody>
-		<?php foreach ($_activeGames as $game): ?>
+		<?php foreach ($_games as $game): ?>
 		<tr>
 			<td><?php echo link_to($game->name, 'game/promo?id='.$game->id); ?></td>
-			<td>
-				<?php
-					switch ($game->status)
-					{
-						case Game::GAME_VERIFICATION:
-						case Game::GAME_READY:
-						case Game::GAME_STEADY:
-							echo 'стартует '.$game->start_datetime;
-							break;
-						case Game::GAME_ACTIVE:
-							echo 'закончится '.$game->stop_datetime;
-							break;
-						case Game::GAME_FINISHED:
-							echo 'финишировала, подведение итогов '.$game->finish_briefing_datetime;
-							break;
-					}
-				?>
-			</td>
-		</tr>
-		<?php endforeach; ?>
-	</tbody>
-</table>
-<?php endif; ?>
-
-<?php if ($_plannedGames->count() > 0): ?>
-<h4>Запланированы</h4>
-<table class="no-border">
-	<tbody>
-		<?php foreach ($_plannedGames as $game): ?>
-		<tr>
-			<td><?php echo link_to($game->name, 'game/promo?id='.$game->id); ?></td>
-			<td><?php echo 'брифинг '.$game->start_briefing_datetime; ?></td>
-		</tr>
-		<?php endforeach; ?>
-	</tbody>
-</table>
-<?php endif; ?>
-
-<?php if ($_archivedGames->count() > 0): ?>
-<h4>Завершены</h4>
-<table class="no-border">
-	<tbody>
-		<?php foreach ($_archivedGames as $game): ?>
-		<tr>
-			<td><?php echo link_to($game->name, 'game/info?id='.$game->id); ?></td>
-			<td><?php echo link_to('итоги', 'gameControl/report?id='.$game->id) ?></td>
+			<td><span class="<?php echo $game->cssForStatus(); ?>"><?php echo $game->describeStatus(); ?></span></td>
+			<td><?php echo $game->start_briefing_datetime; ?></td>
+			<td><?php echo $game->start_datetime; ?></td>
+			<td><?php echo $game->stop_datetime; ?></td>
+			<td><?php echo $game->finish_briefing_datetime; ?></td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

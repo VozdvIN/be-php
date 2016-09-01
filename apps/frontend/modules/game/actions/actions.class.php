@@ -15,56 +15,12 @@ class gameActions extends MyActions
 			Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список игр')
 		);
 
-		$this->_currentRegion = Region::byIdSafe($this->session->getAttribute('region_id'));    
+		$this->_currentRegion = Region::byIdSafe($this->session->getAttribute('region_id'));
 
 		$this->_retUrlRaw = Utils::encodeSafeUrl('game/index');
 		$this->_isGameModerator = Game::isModerator($this->sessionWebUser);
 
-		$this->_plannedGames = new Doctrine_Collection('Game');
-		$this->_activeGames = new Doctrine_Collection('Game');
-		$this->_archivedGames = new Doctrine_Collection('Game');
-		$this->_playIndex = array();
-		$this->_isActorIndex = array();
-
-		$gamesQuery = Doctrine::getTable('Game')
-			->createQuery('g')
-			->select()
-			->where('g.region_id = ?', $this->_currentRegion->id)
-			->orderBy('g.start_datetime');
-		if ($this->_currentRegion->id == Region::DEFAULT_REGION)
-		{
-			$gamesQuery->orWhere('g.region_id IS NULL');
-		}
-
-		$games = $gamesQuery->execute();
-
-		foreach ($games as $game)
-		{
-			switch ($game->status)
-			{
-				case Game::GAME_PLANNED:
-					$this->_plannedGames->add($game);
-					break;
-				case Game::GAME_VERIFICATION:
-				case Game::GAME_READY:
-				case Game::GAME_STEADY:
-				case Game::GAME_ACTIVE:
-				case Game::GAME_FINISHED:
-					$this->_activeGames->add($game);
-					break;
-				case Game::GAME_ARCHIVED:
-					$this->_archivedGames->add($game);
-					break;
-				default:
-					$this->_plannedGames->add($game);
-					break;
-			}
-			$this->_playIndex[$game->id] = $game->isPlayerRegistered($this->sessionWebUser);
-			$this->_isActorIndex[$game->id] =
-				$game->isActor($this->sessionWebUser)
-				|| $game->isManager($this->sessionWebUser)
-				|| $this->_isGameModerator;
-		}
+		$this->_games = Game::byRegion($this->_currentRegion);
 
 		$gameCreateRequests = Doctrine::getTable('GameCreateRequest')
 			->createQuery('gcr')
@@ -85,9 +41,61 @@ class gameActions extends MyActions
 				}
 			}
 		}
-
 	}
-	
+
+	public function executeIndexActive(sfWebRequest $request)
+	{
+		$this->errorRedirectIf(
+			$this->sessionWebUser->cannot(Permission::GAME_INDEX, 0),
+			Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список игр')
+		);
+		$this->_retUrlRaw = Utils::encodeSafeUrl('game/index');
+		$this->_games = Game::getGamesActive(Region::byIdSafe($this->session->getAttribute('region_id')));
+	}
+
+	public function executeIndexPlayer(sfWebRequest $request)
+	{
+		$this->errorRedirectIf(
+			$this->sessionWebUser->cannot(Permission::GAME_INDEX, 0),
+			Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список игр')
+		);
+		$this->_retUrlRaw = Utils::encodeSafeUrl('game/index');
+		$this->_isGameModerator = Game::isModerator($this->sessionWebUser);
+		$this->_games = Game::getGamesOfPlayer($this->sessionWebUser);
+	}
+
+	public function executeIndexAuthor(sfWebRequest $request)
+	{
+		$this->errorRedirectIf(
+			$this->sessionWebUser->cannot(Permission::GAME_INDEX, 0),
+			Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список игр')
+		);
+		$this->_retUrlRaw = Utils::encodeSafeUrl('game/index');
+		$this->_currentRegion = Region::byIdSafe($this->session->getAttribute('region_id'));
+		$this->_isGameModerator = Game::isModerator($this->sessionWebUser);
+		$this->_games = Game::getGamesOfActor($this->sessionWebUser);
+	}
+
+	public function executeIndexAnnounced(sfWebRequest $request)
+	{
+		$this->errorRedirectIf(
+			$this->sessionWebUser->cannot(Permission::GAME_INDEX, 0),
+			Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список игр')
+		);
+		$this->_retUrlRaw = Utils::encodeSafeUrl('game/index');
+		$this->_games = Game::getGamesForAnnounce(Region::byIdSafe($this->session->getAttribute('region_id')));
+	}
+
+	public function executeIndexArchived(sfWebRequest $request)
+	{
+		$this->errorRedirectIf(
+			$this->sessionWebUser->cannot(Permission::GAME_INDEX, 0),
+			Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список игр')
+		);
+		$this->_retUrlRaw = Utils::encodeSafeUrl('game/index');
+		$this->_games = Game::getGamesArchived(Region::byIdSafe($this->session->getAttribute('region_id')));
+	}
+
 	public function executePromo(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');

@@ -224,6 +224,11 @@ table.no-border, table.no-border tr, table.no-border th, table.no-border td
 
 /* === Highlights === */
 
+.note
+{
+	color: inherit;
+}
+
 .info, .info > a
 {
     color: lime;

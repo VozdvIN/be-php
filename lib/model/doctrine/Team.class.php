@@ -104,6 +104,29 @@ class Team extends BaseTeam implements IStored, IAuth, IRegion
     return $res->is_leader;
   }
 
+	/**
+	 * Возвращает список команд, в которых пользователь состоит
+	 * 
+	 * @param  WebUser $user 
+	 * @return Doctrine_Collection<Team>
+	 */
+	public static function getTeamsOfUser(WebUser $user)
+	{
+		$teams = Doctrine::getTable('TeamPlayer')
+			->createQuery('tp')
+			->innerJoin('tp.Team')
+			->select()
+			->where('tp.web_user_id = ?', $user->id)
+			->execute();
+
+		$result = new Doctrine_Collection('Team');
+		foreach ($teams as $team) {
+			$result->add($team);
+		}
+
+		return $result;
+	}
+
   /**
    * Подает заявку в команду.
    * Если игрок уже в команде, ничего не делает.

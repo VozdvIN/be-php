@@ -182,34 +182,63 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
     return false;
   }
 
-  /**
-   * Описывает состояние игры по коду статуса
-   *
-   * @param   integer   $aStatus  Код статуса
-   * @return  string
-   */
-  public function describeStatus()
-  {
-    switch ($this->status)
-    {
-      case Game::GAME_PLANNED: return 'Запланирована';
-        break;
-      case Game::GAME_VERIFICATION: return 'На проверке';
-        break;
-      case Game::GAME_READY: return 'Готова к старту';
-        break;
-      case Game::GAME_STEADY: return 'Стартует';
-        break;
-      case Game::GAME_ACTIVE: return 'Идет';
-        break;
-      case Game::GAME_FINISHED: return 'Финишировала';
-        break;
-      case Game::GAME_ARCHIVED: return 'Сдана в архив';
-        break;
-      default: return 'Неизвестно';
-        break;
-    }
-  }
+	/**
+	 * Описывает состояние игры по коду статуса
+	 *
+	 * @param   integer   $aStatus  Код статуса
+	 * @return  string
+	 */
+	public function describeStatus()
+	{
+	switch ($this->status)
+	{
+	  case Game::GAME_PLANNED: return 'Запланирована';
+	    break;
+	  case Game::GAME_VERIFICATION: return 'На проверке';
+	    break;
+	  case Game::GAME_READY: return 'Готова к старту';
+	    break;
+	  case Game::GAME_STEADY: return 'Стартует';
+	    break;
+	  case Game::GAME_ACTIVE: return 'Идет';
+	    break;
+	  case Game::GAME_FINISHED: return 'Финишировала';
+	    break;
+	  case Game::GAME_ARCHIVED: return 'Сдана в архив';
+	    break;
+	  default: return 'Неизвестно';
+	    break;
+	}
+	}
+
+	/**
+	 * Возвращает класс для выделения статуса цветом
+	 *
+	 * @param   integer   $aStatus  Код статуса
+	 * @return  string
+	 */
+	public function cssForStatus()
+	{
+		switch ($this->status)
+		{
+			case Game::GAME_PLANNED: return 'info';
+				break;
+			case Game::GAME_VERIFICATION: return 'warn';
+				break;
+			case Game::GAME_READY: return 'warn';
+				break;
+			case Game::GAME_STEADY: return 'warn';
+				break;
+			case Game::GAME_ACTIVE: return 'warn';
+				break;
+			case Game::GAME_FINISHED: return 'warn';
+				break;
+			case Game::GAME_ARCHIVED: return 'note';
+				break;
+			default: return 'Неизвестно';
+				break;
+		}
+	}
 
   /**
    * Проверяет, находится ли игра в активной фазе.
@@ -312,24 +341,160 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
     return $teamList;
   }
 
-  /**
-   * Возвращает список игр с активными анонсами (максимальный интервал анонса указывается).
-   * 
-   * @param   integer   $maxDaysBeforeGame  Число дней до игры, когда открывается анонс.
-   * @param   Region    $region             Игровой проект, в котором отбирать игры.
-   */
+	/**
+	 * Возвращает список игр с активными анонсами.
+	 * 
+	 * @return Doctrine_Collection<Game>
+	 */
 	public static function getGamesForAnnounce()
 	{
 		return Doctrine::getTable('Game')
 			->createQuery('g')
 			->select()
-			->where('g.status < ?', Game::GAME_ARCHIVED)
+			->where('g.status <= ?', Game::GAME_FINISHED)
 			->andWhere('g.short_info_enabled = ?', true)
-			->orderBy('g.start_datetime')
+			->orderBy('g.start_datetime DESC')
 			->execute();
 	}
-  
-  // Action
+
+	/**
+	 * Возвращает запланированные игры с фильтром по проекту, если указан.
+	 * 
+	 * @param  Region  $region
+	 * @return Doctrine_Collection<Game>
+	 */
+	public static function getGamesPlanned(Region $region)
+	{
+		$query = Doctrine::getTable('Game')
+			->createQuery('g')
+			->select()
+			->orderBy('g.start_datetime DESC')
+			->where('g.status < ?', Game::GAME_VERIFICATION);
+
+		if ($projectId !== null)
+		{
+			$query->andWhere('g.region_id = ?', $region->id);
+		}
+
+		return $query->execute();
+	}
+
+	/**
+	 * Возвращает активные игры с фильтром по проекту, если указан.
+	 * 
+	 * @param  Region  $region
+	 * @return Doctrine_Collection<Game>
+	 */
+	public static function getGamesActive(Region $region)
+	{
+		$query = Doctrine::getTable('Game')
+			->createQuery('g')
+			->select()
+			->orderBy('g.start_datetime DESC')
+			->where('g.status >= ?', Game::GAME_VERIFICATION)
+			->andWhere('g.status < ?', Game::GAME_ARCHIVED);
+
+		if ($projectId !== null)
+		{
+			$query->andWhere('g.region_id = ?', $region->id);
+		}
+
+		return $query->execute();
+	}
+
+	/**
+	 * Возвращает игры, по которым подведены итоги, с фильтром по проекту, если указан.
+	 * 
+	 * @param  Region  $region
+	 * @return Doctrine_Collection<Game>
+	 */
+	public static function getGamesArchived(Region $region)
+	{
+		$query = Doctrine::getTable('Game')
+			->createQuery('g')
+			->select()
+			->orderBy('g.start_datetime DESC')
+			->where('g.status >= ?', Game::GAME_ARCHIVED);
+
+		if ($projectId !== null)
+		{
+			$query->andWhere('g.region_id = ?', $region->id);
+		}
+
+		return $query->execute();
+	}
+
+	/**
+	 * Возвращает список всех игр, в которых пользователь так или иначе участвовал как игрок.
+	 * 
+	 * @param  WebUser  $user  Игрок
+	 * @return Doctrine_Collection<Game>
+	 */
+	public static function getGamesOfPlayer(WebUser $user)
+	{
+		$userTeamsIds = DCTools::idsToArray(Team::getTeamsOfUser($user));
+		$query = Doctrine::getTable('TeamState')
+			->createQuery('ts')
+			->innerJoin('ts.Game')
+			->select()
+			->whereIn('ts.team_id', $userTeamsIds)
+			->orderBy('ts.Game.start_datetime DESC')
+			->execute();
+
+		$result = new Doctrine_Collection('Game');
+		foreach ($query as $teamState) {
+			$result->add($teamState->Game);
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Возвращает список всех игр, в которые пользователь может играть сейчас.
+	 * 
+	 * @param  WebUser  $user  Игрок
+	 * @return Doctrine_Collection<Game>
+	 */
+	public static function getGamesOfPlayerActive(WebUser $user)
+	{
+		$games = Game::getGamesOfPlayer($user);
+
+		$result = new Doctrine_Collection('Game');
+		foreach ($games as $game) {
+			if ($game->isActive())
+			{
+				$result->add($game);
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Возвращает список всех игр, в которых игрок выступает как автор или агент.
+	 * 
+	 * @param  WebUser  $user  Игрок
+	 * @return Doctrine_Collection<Game>
+	 */
+	public static function getGamesOfActor(WebUser $user)
+	{
+		$userTeamsIds = DCTools::idsToArray(Team::getTeamsOfUser($user));
+
+		$query = Doctrine::getTable('Game')
+			->createQuery('g')
+			->select()
+			->whereIn('g.team_id', $userTeamsIds)
+			->execute();
+
+		$result = new Doctrine_Collection('Game');
+		foreach ($query as $game) {
+			$result->add($game);
+		}
+
+		return $result;
+	}
+
+	// Action
 
   /**
    * Регистрирует заявку на игру от команды.

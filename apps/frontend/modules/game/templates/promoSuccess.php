@@ -28,11 +28,11 @@
 		</tr>
 		<tr>
 			<th>Анонс:</th>
-			<td><a target="_self" href="#announce">см. ниже</a></td>
+			<td><?php echo link_to('см. афишу', 'game/info?id='.$_game->id, array('target' => '_blank')); ?></td>
 		</tr>
 		<tr>
 			<th>Описание:</th>
-			<td><a target="_self" href="#info">см. ниже</a></td>
+			<td><?php echo link_to('см. афишу', 'game/info?id='.$_game->id, array('target' => '_blank')); ?></td>
 		</tr>
 		<tr>
 			<th>Брифинг:</th>
@@ -64,22 +64,10 @@
 					<span class="info info-bg pad-box box"><?php echo link_to('Редактировать', 'game/promoEdit?id='.$_game->id) ?></span>
 					<?php if ($_isModerator): ?>
 						<span class="danger danger-bg pad-box box"><?php echo link_to('Удалить игру', 'game/delete?id='.$_game->id, array('method' => 'delete', 'confirm' => 'Вы точно хотите удалить игру '.$_game->name.'?')) ?></span>
-					<?php endif; ?>				
+					<?php endif; ?>
 				</p>
 				<?php endif; ?>
 			</td>
 		</tr>
 	</tfoot>
 </table>
-
-<a name="announce"></a>
-<h3>Предпросмотр анонса</h3>
-<article>
-	<?php echo Utils::decodeBB($_game->short_info) ?>
-</article>
-
-<a name="info"></a>
-<h3>Предпросмотр описания</h3>
-<article>
-	<?php echo Utils::decodeBB($_game->description) ?>
-</article>
