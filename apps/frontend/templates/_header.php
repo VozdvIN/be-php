@@ -10,7 +10,7 @@ $showModeration = $sessionWebUser && $sessionWebUser->hasSomeToModerate();
 		</a>
 	</div><!--
  --><div style="display: inline-block; padding-left: 6px;">
-		<h1 style="text-align: left; padding: 0 0 0 0;"><?php echo SiteSettings::SITE_NAME.' - '.Region::byId($sf_user->getAttribute('region_id'))->name ?></h1>
+		<h1 style="text-align: left; padding: 0 0 0 0;"><?php echo SiteSettings::SITE_NAME.' - '.Region::byId($sf_user->getSessionRegionId())->name ?></h1>
 	</div><!--
  --><nav class="menu">
 		<ul>
