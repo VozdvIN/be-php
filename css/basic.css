@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5, h6,
 ol, ul, li,
 th, td
 {
-    font-size: 18px;
+    font-size: 16px;
     text-align: left;
     color: lightcyan;
 }
@@ -83,7 +83,7 @@ p, article
 
 h1, h2, h3, h4, h5, h6
 {
-    line-height: 150%;
+    line-height: 120%;
     padding-top: 6px;
     padding-bottom: 6px;
 }
@@ -268,25 +268,15 @@ p.info, p.warn, p.danger
 
 /* === Form === */
 
-input[type="text"], input[type="checkbox"], input[type="password"], select, textarea
+input[type="text"], input[type="checkbox"], input[type="password"], select, textarea, input[type="submit"]
 {
-    border: solid 1px royalblue;
-    background-color: black;
-    color: inherit;
-    font-family: verdana, helvetica, sans-serif;
-    font-size: 18px;
-}
-
-textarea
-{
-    font-family: monospace;
-    font-size: 20px;
-}
-
-input[type="submit"]
-{
-    font-family: verdana, helvetica, sans-serif;
-    font-size: 18px;
+/*	border: solid 1px royalblue;
+	background-color: ;*/
+	/* Фон должен быть светлым, так как старые Java MIDP версии OperaMini учитывают фон, но шрифт всегда используют черный. */
+	color: black;
+	background-color: white;
+	font-family: verdana, helvetica, sans-serif;
+	font-size: 16px;
 }
 
 /* === Menu === */
