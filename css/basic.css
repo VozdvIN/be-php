@@ -288,39 +288,46 @@ input[type="text"], input[type="checkbox"], input[type="password"], select, text
 
 nav.menu ul
 {
-    display: block;
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
-    list-style: none;
-    background-color: steelblue;
+	display: block;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	list-style: none;
+	background-color: steelblue;
 }
 
-    nav.menu ul li
-    {
-        display: inline-block;
-        margin: 0 0 0 0;
-        padding: 0 0 0 0;
-        border-top: solid 2px steelblue;
-        background-color: inherit;
-    }
+nav.menu ul li
+{
+	display: inline-block;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	border-top: solid 2px steelblue;
+	background-color: inherit;
+	vertical-align: bottom;
+}
 
-        nav.menu ul li a
-        {
-            display: block;
-            padding: 3px 9px 9px 9px;
-        }
+nav.menu ul li a
+{
+	display: block;
+	padding: 3px 9px 7px 9px;
+}
 
-            nav.menu ul li a:hover
-            {
-                background-color: deepskyblue;
-            }
+nav.menu ul li a:hover
+{
+	background-color: deepskyblue;
+}
 
-                nav.menu ul li a.active, nav.menu ul li a.active:hover
-                {
-                    background-color: black;
-                }
-		
-                nav.menu ul li a.active:hover
-                {
-                    background-color: deepskyblue;
-                }		
+nav.menu ul li a.header
+{
+	font-weight: bold;
+	background-color: #002a4c;
+}
+
+nav.menu ul li a.active, nav.menu ul li a.active:hover, nav.menu ul li a.header:hover
+{
+	background-color: black;
+}
+
+nav.menu ul li a.active:hover
+{
+	background-color: deepskyblue;
+}

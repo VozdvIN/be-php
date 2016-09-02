@@ -1,3 +1,7 @@
+<?php
+	include_partial('mainMenu');
+?>
+
 <span class="pad-box box"><?php echo link_to('Сменить проект', 'region/setCurrent?returl='.Utils::encodeSafeUrl($_SERVER['REQUEST_URI'])) ?></span>
 
 <div style="width: 100%"><!--
@@ -30,3 +34,19 @@
 	</div><!--
 
 --></div>
+
+<div class="border-top">
+	<div style="display: inline-block; width: 30%"><!--
+	 --><p>
+			Время сервера: <span id="serverTime">--:--:--</span>.
+		</p>
+		<p class="pad-top">
+			Powered by <a href="http://beavengine.ru" target="_blank">Beaver's Engine</a>.
+		</p>
+	</div><!--
+ --><div style="display: inline-block; width: 70%">
+		<article>
+			<?php echo ($footerArticle = Article::byName('Шаблонные-Подвал')) ? Utils::decodeBB($footerArticle->text) : '(Заполните статью \'Шаблонные-Подвал\')'; ?>
+		</article>
+	</div>
+</div>

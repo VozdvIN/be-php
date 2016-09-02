@@ -12,19 +12,10 @@
 	</head>
 	<body onload="startTime()"><!--
 	 --><section>
-			<?php include_partial('global/header'); ?>
-		</section>
-		
-		<section>
 			<?php include_partial('global/flashes'); ?>
-		</section>
-		
-		<section>
+		</section><!--
+	 --><section>
 			<?php echo $sf_content; ?>
 		</section>
-		
-		<footer class="pad-top"><!--
-		 --><?php include_partial('global/footer'); ?><!--
-	 --></footer>
 	</body>
 </html>
