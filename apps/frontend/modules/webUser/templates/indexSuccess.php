@@ -1,4 +1,11 @@
-<h2>Участники</h2>
+<?php
+	include_partial(
+		'indexMenu',
+		array(
+			'_activeItem' => 'Участники'
+		)
+	)
+?>
 
 <table class="no-border">
 	<tbody>

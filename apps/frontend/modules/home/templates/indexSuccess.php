@@ -40,7 +40,7 @@
 	 --><p>
 			Время сервера: <span id="serverTime">--:--:--</span>.
 		</p>
-		<p class="pad-top">
+		<p>
 			Powered by <a href="http://beavengine.ru" target="_blank">Beaver's Engine</a>.
 		</p>
 	</div><!--

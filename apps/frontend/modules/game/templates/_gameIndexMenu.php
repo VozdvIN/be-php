@@ -8,6 +8,8 @@
 <?php
 	include_partial('global/menu', array(
 		'activeItem' => $_activeItem,
+		'headerItem' => 'Игры',
+		'backUrl' => '/home/index',
 		'items' => array(
 			'Игры' => 'game/index',
 			'Игрок' => 'game/indexPlayer',
@@ -15,8 +17,6 @@
 			'Анонсы' => 'game/indexAnnounced',
 			'Активные' => 'game/indexActive',
 			'Завершены' => 'game/indexArchived'
-		),
-		'useHeader' => true,
-		'backUrl' => '/home/index'
+		)
 	));
 ?>

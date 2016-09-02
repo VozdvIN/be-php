@@ -22,7 +22,7 @@
 </p>
 <?php endif ?>
 
-<article class="pad-top pad-bottom">
+<article>
 	<?php echo Utils::decodeBB($_game->description) ?>
 </article>
 

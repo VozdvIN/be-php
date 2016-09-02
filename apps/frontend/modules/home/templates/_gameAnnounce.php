@@ -13,7 +13,7 @@ $region = $game->getRegionSafe();
 				.(($region->id != Region::DEFAULT_REGION) ? ('&nbsp;('.$game->getRegionSafe()->name.')') : '');
 		?>
 	</h4>
-	<article class="pad-bottom">
+	<article>
 		<?php echo Utils::decodeBB($game->short_info) ?>
 	</article>
 </div>

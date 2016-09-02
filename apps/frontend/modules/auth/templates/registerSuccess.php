@@ -28,11 +28,11 @@
 	Создавайте учетную запись только в том случае, если согласны со всеми положениями!
 </p>
 
-<div class="pad-top">
+<div>
 	<?php include_partial('global/formSimple', array('form' => $form, 'url' => 'auth/register', 'commitLabel' => 'Зарегистрироваться')); ?>
 </div>
 
-<div class="pad-top"></div>
+<div></div>
 <p class="warn">
 	Перед вводом пароля проверьте:
 </p>

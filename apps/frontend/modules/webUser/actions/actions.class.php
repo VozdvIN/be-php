@@ -18,6 +18,27 @@ class webUserActions extends MyActions
 		//Подготовим данные о правах:
 		$this->_isSelf = ($this->_webUser->id == $this->sessionWebUser->id);
 		$this->_isModerator = $this->sessionWebUser->can(Permission::WEB_USER_MODER, $this->_webUser->id);
+	}
+
+	public function executeShowPermissions(sfWebRequest $request)
+	{
+		//Просматривать пользователя можно в любом случае, но на самой странице просмотра будут дополнительные ограничения.
+		$this->_webUser = WebUser::byId($request->getParameter('id'));
+		$this->forward404Unless($this->_webUser, 'Анкета не найдена.');
+		//Подготовим данные о правах:
+		$this->_isSelf = ($this->_webUser->id == $this->sessionWebUser->id);
+		$this->_isPermissionModerator = $this->sessionWebUser->can(Permission::PERMISSION_MODER, 0);
+	}
+
+
+	public function executeShowActions(sfWebRequest $request)
+	{
+		//Просматривать пользователя можно в любом случае, но на самой странице просмотра будут дополнительные ограничения.
+		$this->_webUser = WebUser::byId($request->getParameter('id'));
+		$this->forward404Unless($this->_webUser, 'Анкета не найдена.');
+		//Подготовим данные о правах:
+		$this->_isSelf = ($this->_webUser->id == $this->sessionWebUser->id);
+		$this->_isModerator = $this->sessionWebUser->can(Permission::WEB_USER_MODER, $this->_webUser->id);
 		$this->_isPermissionModerator = $this->sessionWebUser->can(Permission::PERMISSION_MODER, 0);
 	}
 
@@ -80,7 +101,7 @@ class webUserActions extends MyActions
 		$this->forward404Unless($webUser = WebUser::byId($request->getParameter('id')), 'Анкета не найдена.');
 		$webUser->is_enabled = true;
 		$webUser->save();
-		$this->successRedirect('Пользователь успешно разблокирован');
+		$this->successRedirect('Пользователь успешно разблокирован', 'webUser/showActions?id='.$object->id);
 	}
 
 	public function executeDisable(sfWebRequest $request)
@@ -91,7 +112,7 @@ class webUserActions extends MyActions
 		$this->forward404Unless($webUser = WebUser::byId($request->getParameter('id')), 'Анкета не найдена.');
 		$webUser->is_enabled = false;
 		$webUser->save();
-		$this->successRedirect('Пользователь успешно заблокирован');
+		$this->successRedirect('Пользователь успешно заблокирован', 'webUser/showActions?id='.$object->id);
 	}
 
 }

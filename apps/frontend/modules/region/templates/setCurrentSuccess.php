@@ -1,6 +1,6 @@
 <h2>Выбор проекта</h2>
 
-<ul class="pad-bottom">
+<ul>
 	<?php if ($_selfRegionId != Region::DEFAULT_REGION): ?>
 	<li class="info">
 		<?php echo link_to('Свой проект (из анкеты)', 'region/setCurrent?id='.$_selfRegionId.'&returl='.$_retUrlRaw, array('method' => 'post')); ?>

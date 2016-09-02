@@ -58,7 +58,7 @@
 	<p class="warn">Игру можно запустить, но в ходе проведения возможны организационные проблемы.</p>
 <?php endif; ?>
 
-<p class="pad-top">
+<p>
 	<?php if ( ! $cannotStart): ?>
 	<span class="warn warn-bg pad-box box"><?php echo link_to('Запустить игру', 'gameControl/start?id='.$_game->id.'&returl='.Utils::encodeSafeUrl(url_for('gameControl/pilot?id='.$_game->id)), array('method' => 'post', 'confirm' => 'Запустить игру '.$_game->name.'?')); ?></span>
 	<?php endif; ?>
