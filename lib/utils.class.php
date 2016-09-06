@@ -15,33 +15,33 @@ class SiteSettings
 	 * - Владивосток = +25200
 	 */
 	const SERVER_TIME_SHIFT = -3600;
-	
+
 	/**
 	 * Название сайта, отображается в заголовке и указывается в письмах-уведомлениях.
 	 */
 	const SITE_NAME = "Beaver's Engine v0.16.3b";
-	
+
 	/**
 	 * Домен сайта, требуется для формирования ссылок в письмах-уведомлениях
 	 * Указывается без http:// и '/' на конце (!).
 	 */
 	const SITE_DOMAIN = 'localhost:8080';
-	
+
 	/**
 	 * Адрес для связи с администрацией сайта.
 	 */
 	const ADMIN_EMAIL_ADDR = 'admin_login@host.zone';
-	
+
 	/**
 	 * Обратный адрес для уведомлений, не предполагает прием ответов.
 	 */
 	const NOTIFY_EMAIL_ADDR = 'do_not_reply@host.zone';
-	
+
 	/** 
 	 * Имя сервера SMTP, используемого для отправки уведомлений.
 	 */
-    const NOTIFY_SMTP_HOST = 'smtp.host.zone';
-	
+	const NOTIFY_SMTP_HOST = 'smtp.host.zone';
+
 	/** 
 	 * Порт сервера SMTP, используемого для отправки уведомлений:
 	 * 
@@ -201,7 +201,7 @@ class DCTools
 		
 		return false;
 	}
-  
+
 	/**
 	 * Ищет в указанной коллекции запись с указанным значением в казанном поле
 	 * 
@@ -223,7 +223,7 @@ class DCTools
 		
 		return false;
 	}
-  
+
 	/**
 	 * Возвращает все значения поля id в виде массива.
 	 * 
@@ -241,7 +241,7 @@ class DCTools
 		
 		return $res;
 	}
-  
+
 	/**
 	 * Возвращает все значения указанного поля в виде массива.
 	 * 
@@ -276,7 +276,7 @@ class DCTools
 		
 		return ($distinct) ? array_unique($res) : $res;
 	}
-  
+
 }
 
 /**
@@ -310,7 +310,7 @@ class Utils
 	{
 		return substr(md5($base.time().Utils::PASSWORD_SALT), 0, Utils::ACTIVATION_KEY_LENGTH);
 	}
-  
+
 	/**
 	 * Кодирует адрес обратного перехода, чтобы при записи в URL, он не нарушал правил маршрутизации
 	 *
@@ -558,7 +558,7 @@ class Utils
 		
 		return $isSent;
 	}
-  
+
 	/**
 	 * Отправляет уведомление стандартного вида на один адрес.
 	 * 
@@ -590,7 +590,7 @@ class Utils
 			->setBody($bodyAll);
 		return Utils::sendEmailSafe($message, Utils::getReadyMailer());
 	}
- 
+
 	/**
 	 * Отправляет уведомление стандартного вида пользователю.
 	 * Если у пользователя нет e-mail-адреса в анкете - вернет false.
@@ -611,7 +611,7 @@ class Utils
 			return false;
 		}
 	}
-  
+
 	/**
 	 * Отправляет уведомление стандартного вида группе.
 	 * Вернет true если хотя бы одна отправка удачна.
@@ -635,7 +635,7 @@ class Utils
 		}
 		return $res;
 	}
-  
+
 	/**
 	 * Отправляет уведомление стандартного вида администратору.
 	 * 
@@ -645,8 +645,7 @@ class Utils
 	 */
 	public static function sendNotifyAdmin($topic, $body)
 	{
-		$settings = SystemSettings::getInstance();
-		Utils::sendNotify($topic, $body, $settings->contact_email_addr);
+		Utils::sendNotify($topic, $body, SiteSettings::ADMIN_EMAIL_ADDR);
 	}
 }
 ?>
