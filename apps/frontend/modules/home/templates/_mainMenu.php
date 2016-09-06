@@ -32,10 +32,10 @@ $showModeration = $sessionWebUser && $sessionWebUser->hasSomeToModerate();
 		{
 			$items = array(
 				$header => '/home/index',
-				'Профиль' => 'webUser/show?id='.$sf_user->getAttribute('id'),
-				'Команды' => 'team/index',
 				'Игры' => 'game/index',
+				'Команды' => 'team/index',
 				'Участники' => 'webUser/index',
+				'Профиль' => 'webUser/show?id='.$sf_user->getAttribute('id'),
 				'Статьи' => 'article/by?name=Разделы'
 			);
 

@@ -9,8 +9,8 @@
 	include_partial('global/menu', array(
 		'activeItem' => $_activeItem,
 		'headerItem' => 'Игры',
-		'backUrl' => '/home/index',
 		'items' => array(
+			Region::byId($sf_user->getAttribute('region_id'))->name => '/home/index',
 			'Игры' => 'game/index',
 			'Игрок' => 'game/indexPlayer',
 			'Автор' => 'game/indexAuthor',

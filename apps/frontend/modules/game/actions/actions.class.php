@@ -18,29 +18,8 @@ class gameActions extends MyActions
 		$this->_currentRegion = Region::byIdSafe($this->session->getAttribute('region_id'));
 
 		$this->_retUrlRaw = Utils::encodeSafeUrl('game/index');
-		$this->_isGameModerator = Game::isModerator($this->sessionWebUser);
 
 		$this->_games = Game::byRegion($this->_currentRegion);
-
-		$gameCreateRequests = Doctrine::getTable('GameCreateRequest')
-			->createQuery('gcr')
-			->select()->orderBy('gcr.name')
-			->execute();
-		if ($this->_isGameModerator)
-		{
-			$this->_gameCreateRequests = $gameCreateRequests;
-		}
-		else
-		{
-			$this->_gameCreateRequests = new Doctrine_Collection('GameCreateRequest');
-			foreach ($gameCreateRequests as $gameCreateRequest)
-			{
-				if ($gameCreateRequest->Team->canBeManaged($this->sessionWebUser))
-				{
-					$this->_gameCreateRequests->add($gameCreateRequest);
-				}
-			}
-		}
 	}
 
 	public function executeIndexActive(sfWebRequest $request)
@@ -74,6 +53,26 @@ class gameActions extends MyActions
 		$this->_currentRegion = Region::byIdSafe($this->session->getAttribute('region_id'));
 		$this->_isGameModerator = Game::isModerator($this->sessionWebUser);
 		$this->_games = Game::getGamesOfActor($this->sessionWebUser);
+
+		$gameCreateRequests = Doctrine::getTable('GameCreateRequest')
+			->createQuery('gcr')
+			->select()->orderBy('gcr.name')
+			->execute();
+		if ($this->_isGameModerator)
+		{
+			$this->_gameCreateRequests = $gameCreateRequests;
+		}
+		else
+		{
+			$this->_gameCreateRequests = new Doctrine_Collection('GameCreateRequest');
+			foreach ($gameCreateRequests as $gameCreateRequest)
+			{
+				if ($gameCreateRequest->Team->canBeManaged($this->sessionWebUser))
+				{
+					$this->_gameCreateRequests->add($gameCreateRequest);
+				}
+			}
+		}
 	}
 
 	public function executeIndexAnnounced(sfWebRequest $request)
