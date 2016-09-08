@@ -9,16 +9,6 @@
 	)
 ?>
 
-<p>
-	<span class="info info-bg pad-box box">
-		<?php
-		echo $_isGameModerator
-			? link_to('Создать новую игру', 'game/new')
-			: link_to('Подать заявку на создание игры', 'gameCreateRequest/newManual');
-		?>
-	</span>
-</p>
-
 <?php if ($_games->count() == 0): ?>
 <p class="info">
 	Игр не обнаружено.
@@ -48,21 +38,33 @@
 </table>
 <?php endif; ?>
 
+<p>
+	Ваши заявки на создание игр:
+</p>
+<p>
+	<span class="info info-bg pad-box box">
+		<?php
+		echo $_isGameModerator
+			? link_to('Создать игру', 'game/new')
+			: link_to('Подать заявку', 'gameCreateRequest/newManual');
+		?>
+	</span>
+</p>
 <?php if ($_gameCreateRequests->count() > 0): ?>
-<h3>Заявки</h3>
 <table class="no-border">
+	<thead>
+		<tr>
+			<th>Название</th>
+			<th>Сообщение</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
 	<tbody>
 		<?php foreach ($_gameCreateRequests as $gameCreateRequest): ?>
 		<tr>
 			<td><?php echo $gameCreateRequest->name; ?></td>
 			<td><?php echo $gameCreateRequest->description; ?></td>
-			<td><?php echo link_to($gameCreateRequest->Team->name, 'team/show?id='.$gameCreateRequest->team_id, array('target' => '_blank')); ?></td>
-			<td>
-				<span class="info info-bg pad-box box"><?php echo link_to('Отменить', 'gameCreateRequest/delete?id='.$gameCreateRequest->id, array('method' => 'post')); ?></span>
-				<?php if ($_isGameModerator): ?>
-				<span class="warn warn-bg pad-box box"><?php echo link_to('Создать', 'gameCreateRequest/acceptManual?id='.$gameCreateRequest->id, array('method' => 'post', 'confirm' => 'Подтвердить создание игры '.$gameCreateRequest->name.' ('.$gameCreateRequest->Team->name.' будут ее организаторами) ?')); ?></span>
-				<?php endif; ?>
-			</td>
+			<td><span class="info info-bg pad-box box"><?php echo link_to('Отменить', 'gameCreateRequest/delete?id='.$gameCreateRequest->id, array('method' => 'post')); ?></span></td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

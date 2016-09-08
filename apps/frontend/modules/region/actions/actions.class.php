@@ -80,10 +80,9 @@ class regionActions extends myActions
 		{
 			$this->_regions = Doctrine_Core::getTable('Region')
 				->createQuery('r')
-				->select()->orderBy('r.name')
+				->orderBy('r.name')
+				->select()
 				->execute();
-			$this->_retUrlRaw = $this->retUrlRaw;
-			$this->_retUrlDecoded = Utils::getReturnUrl($request);
 			$this->_selfRegionId = ($this->sessionWebUser instanceof WebUser)
 				? $this->sessionWebUser->getRegionSafe()->id
 				: Region::DEFAULT_REGION;

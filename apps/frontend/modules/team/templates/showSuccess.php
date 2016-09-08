@@ -2,6 +2,16 @@
 	$retUrlRaw = Utils::encodeSafeUrl(url_for('team/show?id='.$_team->id));
 ?>
 
+<?php
+	include_partial(
+		'menu',
+		array(
+			'_team' => $_team,
+			'_activeItem' => $_webUser
+		)
+	)
+?>
+
 <h2>Команда &quot;<?php echo $_team->name ?>&quot;</h2>
 
 <table class="no-border">

@@ -10,7 +10,7 @@
 
 <?php if ($_games->count() == 0): ?>
 <p class="info">
-	Игр не обнаружено.
+	В текущем игровом проекте пока нет игр.
 </p>
 <?php else: ?>
 <table class="no-border">
@@ -35,4 +35,7 @@
 		<?php endforeach; ?>
 	</tbody>
 </table>
+<p class="info">
+	Показаны игры только текущего игрового проекта.
+</p>
 <?php endif; ?>

@@ -90,7 +90,7 @@ h2 { color: aliceblue; font-size: 22px; padding-left: 8%; }
 h3 { color: paleturquoise; font-size: 21px; padding-left: 6%; }
 h4 { color: turquoise; font-size: 20px; padding-left: 4%; }
 h5 { color: darkturquoise; font-size: 19px; padding-left: 2%; }
-h6 { color: inherit; font-size: 18px; padding-left: 0; }
+h6 { color: lightcyan; font-size: 18px; padding-left: 0; }
 
 /* === Lists === */
 

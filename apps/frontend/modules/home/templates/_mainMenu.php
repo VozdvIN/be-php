@@ -3,19 +3,6 @@ $sessionWebUser = $sf_user->isAuthenticated() ? $sf_user->getSessionWebUser()->g
 $showModeration = $sessionWebUser && $sessionWebUser->hasSomeToModerate();
 ?>
 
-<div><!--
- --><div style="display: inline-block;">
-		<a href="/home/index" style="display: inline-block">
-			<img src="/images/logo.png" alt="<?php echo SiteSettings::SITE_NAME ?>" />
-		</a>
-	</div><!--
- --><div style="display: inline-block;">
-		<article>
-			<?php echo ($footerArticle = Article::byName('Шаблонные-Шапка')) ? Utils::decodeBB($footerArticle->text) : '(Заполните статью \'Шаблонные-Шапка\')'; ?>
-		</article>
-	</div>
-</div>
-
 <div>
 	<?php
 		$items = array();
@@ -35,6 +22,7 @@ $showModeration = $sessionWebUser && $sessionWebUser->hasSomeToModerate();
 				'Игры' => 'game/index',
 				'Команды' => 'team/index',
 				'Участники' => 'webUser/index',
+				'Проект' => 'region/setCurrent',
 				'Профиль' => 'webUser/show?id='.$sf_user->getAttribute('id'),
 				'Статьи' => 'article/by?name=Разделы'
 			);

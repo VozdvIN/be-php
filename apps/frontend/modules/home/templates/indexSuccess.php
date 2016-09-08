@@ -2,7 +2,18 @@
 	include_partial('mainMenu');
 ?>
 
-<span class="pad-box box"><?php echo link_to('Сменить проект', 'region/setCurrent?returl='.Utils::encodeSafeUrl($_SERVER['REQUEST_URI'])) ?></span>
+<div><!--
+ --><div style="display: inline-block;">
+		<a href="/home/index" style="display: inline-block">
+			<img src="/images/logo.png" alt="<?php echo SiteSettings::SITE_NAME ?>" />
+		</a>
+	</div><!--
+ --><div style="display: inline-block;">
+		<article>
+			<?php echo ($footerArticle = Article::byName('Шаблонные-Шапка')) ? Utils::decodeBB($footerArticle->text) : '(Заполните статью \'Шаблонные-Шапка\')'; ?>
+		</article>
+	</div>
+</div>
 
 <div style="width: 100%"><!--
  --><div style="display:inline-block; width: 50%">

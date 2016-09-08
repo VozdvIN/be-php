@@ -15,7 +15,17 @@
 <?php endif ?>
 
 <table class="no-border">
-	<?php if ($_webUser->grantedPermissions->count() > 0): ?>
+	<?php if ($_webUser->grantedPermissions->count() == 0): ?>
+	<tbody>
+		<tr>
+			<td>
+				<p>
+					У этого пользователя нет особых прав или запретов.
+				</p>
+			</td>
+		</tr>
+	</tbody>
+	<?php else: ?>
 	<tbody>
 		<?php foreach ($_webUser->grantedPermissions as $grantedPermission): ?>
 		<tr>
