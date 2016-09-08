@@ -10,7 +10,7 @@
 		'activeItem' => $_activeItem,
 		'headerItem' => $_team->name,
 		'items' => array(
-			'Команды' => 'team/index',
+			'&nbsp;&#094;&nbsp;' => 'team/index',
 			$_team->name => 'team/show?id='.$_team->id,
 			'Состав' => 'team/showCrew?id='.$_team->id,
 			'Игры' => 'team/showGameStates?id='.$_team->id,

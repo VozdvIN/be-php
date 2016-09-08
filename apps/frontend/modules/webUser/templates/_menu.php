@@ -10,10 +10,12 @@
 		'activeItem' => $_activeItem,
 		'headerItem' => $_webUser->login,
 		'items' => array(
-			'Участники' => 'webUser/index',
+			'&nbsp;&#094;&nbsp;' => 'webUser/index',
 			$_webUser->login => 'webUser/show?id='.$_webUser->id,
+			'Команды' => 'webUser/showTeamsPlayer?id='.$_webUser->id,
+			'Игры' => 'webUser/showGamesPlayer?id='.$_webUser->id,
 			'Права' => 'webUser/showPermissions?id='.$_webUser->id,
-			'Действия' => 'webUser/showActions?id='.$_webUser->id
+			'Выход' => 'auth/logout'
 		)
 	));
 ?>

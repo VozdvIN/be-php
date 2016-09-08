@@ -432,18 +432,21 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
 	 */
 	public static function getGamesOfPlayer(WebUser $user)
 	{
-		$userTeamsIds = DCTools::idsToArray(Team::getTeamsOfUser($user));
-		$query = Doctrine::getTable('TeamState')
-			->createQuery('ts')
-			->innerJoin('ts.Game')
-			->select()
-			->whereIn('ts.team_id', $userTeamsIds)
-			->orderBy('ts.Game.start_datetime DESC')
-			->execute();
-
 		$result = new Doctrine_Collection('Game');
-		foreach ($query as $teamState) {
-			$result->add($teamState->Game);
+		$userTeamsIds = DCTools::idsToArray(Team::getTeamsOfUser($user));
+		if (count($userTeamsIds) > 0)
+		{
+			$query = Doctrine::getTable('TeamState')
+				->createQuery('ts')
+				->innerJoin('ts.Game')
+				->select()
+				->whereIn('ts.team_id', $userTeamsIds)
+				->orderBy('ts.Game.start_datetime DESC')
+				->execute();
+
+			foreach ($query as $teamState) {
+				$result->add($teamState->Game);
+			}
 		}
 
 		return $result;

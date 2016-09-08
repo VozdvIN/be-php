@@ -10,7 +10,7 @@
  * @author     VozdvIN
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
-class GameCreateRequest extends BaseGameCreateRequest implements IStored
+class GameCreateRequest extends BaseGameCreateRequest implements IStored, IAuth
 {
   const MAX_REQUESTS_PER_TEAM = 3; // Максимальное число активных заявок от одной команды.
   
@@ -25,9 +25,52 @@ class GameCreateRequest extends BaseGameCreateRequest implements IStored
   {
     return Utils::byId('GameCreateRequest', $id);
   }
-  
-  //// Public ////
-  
+
+  //// IAuth ////
+
+	static function isModerator(WebUser $account)
+	{
+		return $account->can(Permission::GAME_MODER, 0);
+	}
+
+	function canBeManaged(WebUser $account)
+	{
+		return $this->Team->canBeManaged($account);
+	}
+
+	function canBeObserved(WebUser $account)
+	{
+		return $this->Team->canBeObserved($account);
+	}
+
+	//// Public ////
+
+	/**
+	 * Возвращает список заявок на создание команды, поданные пользователем
+	 * 
+	 * @param  WebUser  $user 
+	 * @return Doctrine_Colleсtion<TeamCreateRequest>
+	 */
+	public static function getForWithRelations(WebUser $user)
+	{
+		$query = Doctrine::getTable('GameCreateRequest')
+			->createQuery('gcr')
+			->innerJoin('gcr.Team')
+			->select()
+			->execute();
+
+		$result = new Doctrine_Collection('GameCreateRequest');
+
+		foreach ($query as $gameCreateRequest) {
+			if ($gameCreateRequest->Team->canBeManaged($user))
+			{
+				$result->add($gameCreateRequest);
+			}
+		}
+
+		return $result;
+	}
+
   /**
    * Создает игру по заявке, заявка удаляется.
    * 
@@ -43,9 +86,9 @@ class GameCreateRequest extends BaseGameCreateRequest implements IStored
     $game->initDefaults();
     $game->region_id = $gameCreateRequest->Team->getRegionSafe()->id;
     $game->save();
-    
+
     $gameCreateRequest->delete();
-    
+
     return $game;
   }
   

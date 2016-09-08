@@ -27,22 +27,22 @@ class Team extends BaseTeam implements IStored, IAuth, IRegion
 
   //// IAuth ////
 
-  static function isModerator(WebUser $account)
-  {
-    return $account->can(Permission::TEAM_MODER, 0);
-  }
+	static function isModerator(WebUser $account)
+	{
+		return $account->can(Permission::TEAM_MODER, 0);
+	}
 
-  function canBeManaged(WebUser $account)
-  {
-    return $this->isLeader($account)
-    || $account->can(Permission::TEAM_MODER, $this->id);
-  }
+	function canBeManaged(WebUser $account)
+	{
+	return $this->isLeader($account)
+		|| $account->can(Permission::TEAM_MODER, $this->id);
+	}
 
-  function canBeObserved(WebUser $account)
-  {
-    return $this->isPlayer($account)
-    || $account->can(Permission::TEAM_SHOW, $this->id);
-  }
+	function canBeObserved(WebUser $account)
+	{
+	return $this->isPlayer($account)
+		|| $account->can(Permission::TEAM_SHOW, $this->id);
+	}
 
   //// IRegion ////
 

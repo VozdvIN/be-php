@@ -26,8 +26,6 @@
 		$classStr .= '"';
 	?>
 	<?php if (( ! isset($conditions[$title])) || $conditions[$title]): ?>
-	<p>
-		<span <?php echo $classStr ?>><?php echo $html; ?></span>
-	</p>
+	<span <?php echo $classStr ?>><?php echo $html; ?></span>
 	<?php endif; ?>
 <?php endforeach; ?>

@@ -4,6 +4,7 @@
  * string  $activeItem название активного элемента
  * string  $headerItem этот элемент меню отображать как заголовок
  */
+$headerItem = isset($headerItem) ? $headerItem : '';
 ?>
 <nav class="menu">
 	<ul><!--
@@ -19,7 +20,7 @@
 				$class = 'active';
 			}
 		?>
-		--><li><a class="<?php echo $class; ?>" href="<?php echo url_for($addr); ?>"><?php echo $title ?></a></li><!--
+		--><li><a class="<?php echo $class; ?>" href="<?php echo url_for($addr); ?>"><?php echo $title ?></a></li><?php echo ($title === $headerItem) ? '<br>' : ''?><!--
 		<?php endforeach; ?>
  --></ul>
 </nav>

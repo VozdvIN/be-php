@@ -76,8 +76,8 @@ class SiteSettings
  */
 class Timing
 {
-  const NO_DATE = '____:__:__';
-  const NO_TIME = '--:--:--';
+	const NO_DATE = '____:__:__';
+	const NO_TIME = '--:--:--';
 
 	/**
 	 * Возвращает время сайта с учетом сдвига относительно времени хостера. 
@@ -286,6 +286,9 @@ class Utils
 {
 	const PASSWORD_SALT = 'cHaNgEtHiS';
 	const ACTIVATION_KEY_LENGTH = 16;
+	const MENU_BACK_BUTTON_TITLE = '&nbsp;&#094;&nbsp;';
+	const CROSS_PAGE_LINK_MARKER = '...';
+	const EXTERNAL_LINK_MARKER = '&#094;';
 
 	const LOAD_TEST_MODE = false; // True - включить режим нагрузочного тестирования
 

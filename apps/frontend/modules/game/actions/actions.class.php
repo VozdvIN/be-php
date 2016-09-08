@@ -32,49 +32,6 @@ class gameActions extends MyActions
 		$this->_games = Game::getGamesActive(Region::byIdSafe($this->session->getAttribute('region_id')));
 	}
 
-	public function executeIndexPlayer(sfWebRequest $request)
-	{
-		$this->errorRedirectIf(
-			$this->sessionWebUser->cannot(Permission::GAME_INDEX, 0),
-			Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список игр')
-		);
-		$this->_retUrlRaw = Utils::encodeSafeUrl('game/index');
-		$this->_isGameModerator = Game::isModerator($this->sessionWebUser);
-		$this->_games = Game::getGamesOfPlayer($this->sessionWebUser);
-	}
-
-	public function executeIndexAuthor(sfWebRequest $request)
-	{
-		$this->errorRedirectIf(
-			$this->sessionWebUser->cannot(Permission::GAME_INDEX, 0),
-			Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список игр')
-		);
-		$this->_retUrlRaw = Utils::encodeSafeUrl('game/index');
-		$this->_currentRegion = Region::byIdSafe($this->session->getAttribute('region_id'));
-		$this->_isGameModerator = Game::isModerator($this->sessionWebUser);
-		$this->_games = Game::getGamesOfActor($this->sessionWebUser);
-
-		$gameCreateRequests = Doctrine::getTable('GameCreateRequest')
-			->createQuery('gcr')
-			->select()->orderBy('gcr.name')
-			->execute();
-		if ($this->_isGameModerator)
-		{
-			$this->_gameCreateRequests = $gameCreateRequests;
-		}
-		else
-		{
-			$this->_gameCreateRequests = new Doctrine_Collection('GameCreateRequest');
-			foreach ($gameCreateRequests as $gameCreateRequest)
-			{
-				if ($gameCreateRequest->Team->canBeManaged($this->sessionWebUser))
-				{
-					$this->_gameCreateRequests->add($gameCreateRequest);
-				}
-			}
-		}
-	}
-
 	public function executeIndexAnnounced(sfWebRequest $request)
 	{
 		$this->errorRedirectIf(
@@ -212,7 +169,7 @@ class gameActions extends MyActions
 			->orderBy('t.name')->execute();
 	}
 
-	//TODO: Заменить форму	
+	//TODO: Заменить форму
 	public function executeNew(sfWebRequest $request)
 	{
 		$this->errorRedirectUnless(Game::isModerator($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'создавать игру'));

@@ -9,10 +9,8 @@
 		'activeItem' => $_activeItem,
 		'headerItem' => 'Команды',
 		'items' => array(
-			Region::byId($sf_user->getAttribute('region_id'))->name => '/home/index',
-			'Команды' => 'team/index',
-			'Рядовой' => 'team/indexPlayer',
-			'Капитан' => 'team/indexLeader'
+			'&nbsp;&#094;&nbsp;' => '/home/index',
+			'Команды' => 'team/index'
 		),
 	));
 ?>

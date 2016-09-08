@@ -30,16 +30,39 @@ class webUserActions extends MyActions
 		$this->_isPermissionModerator = $this->sessionWebUser->can(Permission::PERMISSION_MODER, 0);
 	}
 
-
-	public function executeShowActions(sfWebRequest $request)
+	public function executeShowTeamsPlayer(sfWebRequest $request)
 	{
-		//Просматривать пользователя можно в любом случае, но на самой странице просмотра будут дополнительные ограничения.
 		$this->_webUser = WebUser::byId($request->getParameter('id'));
 		$this->forward404Unless($this->_webUser, 'Анкета не найдена.');
-		//Подготовим данные о правах:
 		$this->_isSelf = ($this->_webUser->id == $this->sessionWebUser->id);
-		$this->_isModerator = $this->sessionWebUser->can(Permission::WEB_USER_MODER, $this->_webUser->id);
-		$this->_isPermissionModerator = $this->sessionWebUser->can(Permission::PERMISSION_MODER, 0);
+		$this->_teams = Team::getTeamsOfUserAsPlayer($this->_webUser);
+		$this->_teamsCandidateTo = TeamCandidate::getForWithRelations($this->_webUser);
+	}
+
+	public function executeShowTeamsLeader(sfWebRequest $request)
+	{
+		$this->_webUser = WebUser::byId($request->getParameter('id'));
+		$this->forward404Unless($this->_webUser, 'Анкета не найдена.');
+		$this->_isSelf = ($this->_webUser->id == $this->sessionWebUser->id);
+		$this->_teams = Team::getTeamsOfUserAsLeader($this->_webUser);
+		$this->_teamCreateRequests = TeamCreateRequest::getForWithRelations($this->_webUser);
+	}
+
+	public function executeShowGamesPlayer(sfWebRequest $request)
+	{
+		$this->_webUser = WebUser::byId($request->getParameter('id'));
+		$this->forward404Unless($this->_webUser, 'Анкета не найдена.');
+		$this->_isSelf = ($this->_webUser->id == $this->sessionWebUser->id);
+		$this->_games = Game::getGamesOfPlayer($this->_webUser);
+	}
+
+	public function executeShowGamesActor(sfWebRequest $request)
+	{
+		$this->_webUser = WebUser::byId($request->getParameter('id'));
+		$this->forward404Unless($this->_webUser, 'Анкета не найдена.');
+		$this->_isSelf = ($this->_webUser->id == $this->sessionWebUser->id);
+		$this->_games = Game::getGamesOfActor($this->_webUser);
+		$this->_gameCreateRequests = GameCreateRequest::getForWithRelations($this->_webUser);
 	}
 
 	public function executeEdit(sfWebRequest $request)
@@ -101,7 +124,7 @@ class webUserActions extends MyActions
 		$this->forward404Unless($webUser = WebUser::byId($request->getParameter('id')), 'Анкета не найдена.');
 		$webUser->is_enabled = true;
 		$webUser->save();
-		$this->successRedirect('Пользователь успешно разблокирован', 'webUser/showActions?id='.$object->id);
+		$this->successRedirect('Пользователь успешно разблокирован', 'webUser/show?id='.$webUser->id);
 	}
 
 	public function executeDisable(sfWebRequest $request)
@@ -112,7 +135,7 @@ class webUserActions extends MyActions
 		$this->forward404Unless($webUser = WebUser::byId($request->getParameter('id')), 'Анкета не найдена.');
 		$webUser->is_enabled = false;
 		$webUser->save();
-		$this->successRedirect('Пользователь успешно заблокирован', 'webUser/showActions?id='.$object->id);
+		$this->successRedirect('Пользователь успешно заблокирован', 'webUser/show?id='.$webUser->id);
 	}
 
 }

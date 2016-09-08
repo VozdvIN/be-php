@@ -16,18 +16,16 @@ class TeamCandidate extends BaseTeamCandidate
 	 * Возвращает список команд, куда пользователь подал заявки
 	 * 
 	 * @param  WebUser  $user 
-	 * @return Doctrine_Collcetion<Team>
+	 * @return Doctrine_Collcetion<TeamCandidate>
 	 */
 	public static function getForWithRelations(WebUser $user)
 	{
-		$teams = Doctrine::getTable('TeamCandidate')
+		return Doctrine::getTable('TeamCandidate')
 			->createQuery('tc')
 			->innerJoin('tc.Team')
 			->innerJoin('tc.WebUser')
 			->select()
 			->where('tc.web_user_id = ?', $user->id)
 			->execute();
-
-		return $teams;
 	}
 }

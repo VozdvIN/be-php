@@ -33,29 +33,6 @@ class teamActions extends MyActions
 		}
 	}
 
-	public function executeIndexPlayer(sfWebRequest $request)
-	{
-		$this->errorRedirectIf($this->sessionWebUser->cannot(Permission::TEAM_INDEX, 0), Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список команд'));
-		$this->_currentRegion = Region::byIdSafe($this->session->getAttribute('region_id'));
-		$this->_teams = Team::getTeamsOfUserAsPlayer($this->sessionWebUser);
-		$this->_teamsCandidateTo = TeamCandidate::getForWithRelations($this->sessionWebUser);
-	}
-
-	public function executeIndexLeader(sfWebRequest $request)
-	{
-		$this->errorRedirectIf($this->sessionWebUser->cannot(Permission::TEAM_INDEX, 0), Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список команд'));
-		$this->_teams = Team::getTeamsOfUserAsLeader($this->sessionWebUser);
-
-		$this->_isModerator = $this->sessionWebUser->can(Permission::TEAM_MODER, 0);
-		$this->_fastTeamCreate = SystemSettings::getInstance()->fast_team_create;
-		$this->_teamCreateRequests = Doctrine::getTable('TeamCreateRequest')
-			->createQuery('tcr')
-			->select()
-			->where('web_user_id = ?', $this->sessionWebUser->id)
-			->orderBy('name')
-			->execute();
-	}
-
 	public function executeShow(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->_team = Team::byId($request->getParameter('id')), 'Команда не найдена.');
@@ -186,7 +163,7 @@ class teamActions extends MyActions
 			$this->candidate
 		);
 
-		$this->successRedirect('Заявка от '.$this->candidate->login.' в состав команды '.$this->team->name.' отменена.');
+		$this->successRedirect('Заявка от '.$this->candidate->login.' в состав команды '.$this->team->name.' отменена.', url_for('webUser/teamsPlayer?id='.$this->candidate->id));
 	}
 
 	public function executeSetPlayer(sfWebRequest $request)
@@ -266,7 +243,7 @@ class teamActions extends MyActions
 		{
 			if ((!$team->isPlayer($webUser)) && (!$team->isCandidate($webUser)))
 			{
-				$this->webUsers->add($webUser);        
+				$this->webUsers->add($webUser);
 			}
 		}
 		$this->team = $team;

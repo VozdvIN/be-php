@@ -6,7 +6,7 @@ class teamCreateRequestActions extends MyActions
 	{
 		parent::preExecute();
 	}
-  
+
 	public function executeNew(sfWebRequest $request)
 	{
 		$teamCreateRequest = new TeamCreateRequest();
@@ -48,7 +48,7 @@ class teamCreateRequestActions extends MyActions
 			$webUser
 		);    
 
-		$this->successRedirect('Заявка на создание команды успешно отменена.', 'team/index');
+		$this->successRedirect('Заявка на создание команды успешно отменена.', 'webUser/showTeamsLeader?id='.$webUser->id);
 	}
 
 	protected function processForm(sfWebRequest $request, sfForm $form)

@@ -1,5 +1,6 @@
 <?php
 /* Входные данные:
+ * - $_webUser - агкета пользователя
  * - $_activeItem - название активной вкладки
  */
 ?>
@@ -7,10 +8,9 @@
 <?php
 	include_partial('global/menu', array(
 		'activeItem' => $_activeItem,
-		'headerItem' => 'Участники',
 		'items' => array(
-			'&nbsp;&#094;&nbsp;' => '/home/index',
-			'Участники' => 'webUser/index'
-		),
+			'Игрок' => 'webUser/showGamesPlayer?id='.$_webUser->id,
+			'Организатор' => 'webUser/showGamesActor?id='.$_webUser->id
+		)
 	));
 ?>

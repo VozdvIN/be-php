@@ -18,21 +18,17 @@ $showModeration = $sessionWebUser && $sessionWebUser->hasSomeToModerate();
 		else
 		{
 			$items = array(
-				$header => '/home/index',
+				$header => '/region/setCurrent',
 				'Игры' => 'game/index',
 				'Команды' => 'team/index',
-				'Участники' => 'webUser/index',
-				'Проект' => 'region/setCurrent',
 				'Профиль' => 'webUser/show?id='.$sf_user->getAttribute('id'),
-				'Статьи' => 'article/by?name=Разделы'
+				'Участники' => 'webUser/index'
 			);
 
 			if ($showModeration)
 			{
 				$items = array_merge($items, array('Модерирование' =>'moderation/show'));
 			};
-
-			$items = array_merge($items, array('Выход' => 'auth/logout'));
 		}
 
 		include_partial('global/menu', array('activeItem' => '', 'headerItem' => $header, 'items' => $items));
