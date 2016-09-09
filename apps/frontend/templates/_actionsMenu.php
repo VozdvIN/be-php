@@ -15,7 +15,8 @@
 	}
 ?>
 
-<?php foreach ($items->getRawValue() as $title => $html): ?>
+<div style="text-align: left">
+	<?php foreach ($items->getRawValue() as $title => $html): ?>
 	<?php
 		$classStr = 'class="pad-box box';
 		$class = isset($css[$title]) ? $css[$title] : '';
@@ -28,4 +29,5 @@
 	<?php if (( ! isset($conditions[$title])) || $conditions[$title]): ?>
 	<span <?php echo $classStr ?>><?php echo $html; ?></span>
 	<?php endif; ?>
-<?php endforeach; ?>
+	<?php endforeach; ?>
+</div>
