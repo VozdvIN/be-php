@@ -10,7 +10,9 @@
 		'activeItem' => $_activeItem,
 		'items' => array(
 			'Игрок' => 'webUser/showTeamsPlayer?id='.$_webUser->id,
-			'Капитан' => 'webUser/showTeamsLeader?id='.$_webUser->id
+			'Капитан' => 'webUser/showTeamsLeader?id='.$_webUser->id,
+			'Заявки' => 'webUser/showTeamsJoins?id='.$_webUser->id,
+			'Создание' => 'webUser/showTeamsCreation?id='.$_webUser->id
 		)
 	));
 ?>

@@ -30,13 +30,20 @@ class webUserActions extends MyActions
 		$this->_isPermissionModerator = $this->sessionWebUser->can(Permission::PERMISSION_MODER, 0);
 	}
 
+	public function executeShowTeamsJoins(sfWebRequest $request)
+	{
+		$this->_webUser = WebUser::byId($request->getParameter('id'));
+		$this->forward404Unless($this->_webUser, 'Анкета не найдена.');
+		$this->_isSelf = ($this->_webUser->id == $this->sessionWebUser->id);
+		$this->_teamsCandidateTo = TeamCandidate::getForWithRelations($this->_webUser);
+	}
+
 	public function executeShowTeamsPlayer(sfWebRequest $request)
 	{
 		$this->_webUser = WebUser::byId($request->getParameter('id'));
 		$this->forward404Unless($this->_webUser, 'Анкета не найдена.');
 		$this->_isSelf = ($this->_webUser->id == $this->sessionWebUser->id);
 		$this->_teams = Team::getTeamsOfUserAsPlayer($this->_webUser);
-		$this->_teamsCandidateTo = TeamCandidate::getForWithRelations($this->_webUser);
 	}
 
 	public function executeShowTeamsLeader(sfWebRequest $request)
@@ -45,6 +52,14 @@ class webUserActions extends MyActions
 		$this->forward404Unless($this->_webUser, 'Анкета не найдена.');
 		$this->_isSelf = ($this->_webUser->id == $this->sessionWebUser->id);
 		$this->_teams = Team::getTeamsOfUserAsLeader($this->_webUser);
+		$this->_teamCreateRequests = TeamCreateRequest::getForWithRelations($this->_webUser);
+	}
+
+	public function executeShowTeamsCreation(sfWebRequest $request)
+	{
+		$this->_webUser = WebUser::byId($request->getParameter('id'));
+		$this->forward404Unless($this->_webUser, 'Анкета не найдена.');
+		$this->_isSelf = ($this->_webUser->id == $this->sessionWebUser->id);
 		$this->_teamCreateRequests = TeamCreateRequest::getForWithRelations($this->_webUser);
 	}
 
@@ -62,7 +77,6 @@ class webUserActions extends MyActions
 		$this->forward404Unless($this->_webUser, 'Анкета не найдена.');
 		$this->_isSelf = ($this->_webUser->id == $this->sessionWebUser->id);
 		$this->_games = Game::getGamesOfActor($this->_webUser);
-		$this->_gameCreateRequests = GameCreateRequest::getForWithRelations($this->_webUser);
 	}
 
 	public function executeEdit(sfWebRequest $request)
@@ -102,12 +116,6 @@ class webUserActions extends MyActions
 			$this->errorRedirectUnless($object->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'изменять анкету'));
 			$object = $form->save();
 
-			//Если сменился игровой проект текущего пользователя, то надо его изменить в сессии.
-			if ($object->id == $this->sessionWebUser->id)
-			{
-				$this->session->setAttribute('region_id', $object->region_id);
-				$this->session->setFlash('warning', 'Назначен текущий игровой проект: '.$object->getRegionSafe()->name);
-			}
 			$this->successRedirect('Анкета '.$object->login.' успешно сохранена.', 'webUser/show?id='.$object->id);
 		}
 		else

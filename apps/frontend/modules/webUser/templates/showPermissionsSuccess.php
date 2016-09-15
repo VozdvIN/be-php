@@ -1,28 +1,10 @@
-<?php
-	include_partial(
-		'menu',
-		array(
-			'_webUser' => $_webUser,
-			'_activeItem' => 'Права'
-		)
-	)
-?>
-
-<?php if ($_isSelf): ?>
-<p class="info">
-	Это ваша анкета.
-</p>
-<?php endif ?>
+<?php include_partial('menu', array('_webUser' => $_webUser, '_activeItem' => 'Права', '_isSelf' => $_isSelf)) ?>
 
 <table class="no-border">
 	<?php if ($_webUser->grantedPermissions->count() == 0): ?>
 	<tbody>
 		<tr>
-			<td>
-				<p>
-					У пользователя нет особых прав или запретов.
-				</p>
-			</td>
+			<td>У пользователя нет особых прав или запретов.</td>
 		</tr>
 	</tbody>
 	<?php else: ?>
@@ -54,7 +36,9 @@
 
 	<?php if ($_isPermissionModerator): ?>
 	<tfoot>
-		<tr><td colspan="3"><span class="info info-bg pad-box box"><?php echo link_to('Добавить', 'grantedPermission/new?webUserId='.$_webUser->id); ?></span></td></tr>
+		<tr>
+			<td colspan="2"><span class="info info-bg pad-box box"><?php echo link_to('Добавить', 'grantedPermission/new?webUserId='.$_webUser->id); ?></span></td>
+		</tr>
 	</tfoot>
 	<?php endif; ?>
 </table>

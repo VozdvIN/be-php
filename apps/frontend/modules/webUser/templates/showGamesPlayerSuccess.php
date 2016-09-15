@@ -1,32 +1,6 @@
-<?php
-	include_partial(
-		'menu',
-		array(
-			'_webUser' => $_webUser,
-			'_activeItem' => 'Игры'
-		)
-	)
-?>
+<?php include_partial('menu', array('_webUser' => $_webUser, '_activeItem' => 'Игры', '_isSelf' => $_isSelf)) ?>
 
-<?php if ($_isSelf): ?>
-<p class="info">
-	Это ваша анкета.
-</p>
-<?php endif ?>
-
-<?php
-	include_partial(
-		'gamesMenu',
-		array(
-			'_webUser' => $_webUser,
-			'_activeItem' => 'Игрок'
-		)
-	)
-?>
-
-<p class="info">
-	Показаны команды из всех игровых проектов.
-</p>
+<?php include_partial('gamesMenu', array('_webUser' => $_webUser, '_activeItem' => 'Игрок')) ?>
 
 <?php if ($_games->count() == 0): ?>
 <p>
@@ -56,3 +30,7 @@
 	</tbody>
 </table>
 <?php endif; ?>
+
+<p class="info">
+	Показаны команды из всех игровых проектов.
+</p>

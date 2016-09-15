@@ -1,26 +1,10 @@
-<?php
-	$retUrlRaw = Utils::encodeSafeUrl('webUser/show?id='.$_webUser->id);
-?>
+<?php $retUrlRaw = Utils::encodeSafeUrl('webUser/show?id='.$_webUser->id); ?>
 
-<?php
-	include_partial(
-		'menu',
-		array(
-			'_webUser' => $_webUser,
-			'_activeItem' => $_webUser
-		)
-	)
-?>
+<?php include_partial('menu', array('_webUser' => $_webUser, '_activeItem' => $_webUser, '_isSelf' => $_isSelf)) ?>
 
 <?php if ( ! $_webUser->is_enabled): ?>
 <p class="warn warn-bg">
 	Этот пользователь заблокирован.
-</p>
-<?php endif ?>
-
-<?php if ($_isSelf): ?>
-<p class="info">
-	Это ваша анкета.
 </p>
 <?php endif ?>
 

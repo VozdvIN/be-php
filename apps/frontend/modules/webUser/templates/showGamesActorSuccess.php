@@ -1,38 +1,7 @@
-<?php
-	include_partial(
-		'menu',
-		array(
-			'_webUser' => $_webUser,
-			'_activeItem' => 'Игры'
-		)
-	)
-?>
+<?php include_partial('menu', array('_webUser' => $_webUser, '_activeItem' => 'Игры', '_isSelf' => $_isSelf)) ?>
 
-<?php if ($_isSelf): ?>
-<p class="info">
-	Это ваша анкета.
-</p>
-<?php endif ?>
+<?php include_partial('gamesMenu', array('_webUser' => $_webUser, '_activeItem' => 'Организатор')) ?>
 
-<?php
-	include_partial(
-		'gamesMenu',
-		array(
-			'_webUser' => $_webUser,
-			'_activeItem' => 'Организатор'
-		)
-	)
-?>
-
-<p class="info">
-	Показаны команды из всех игровых проектов.
-</p>
-
-<?php if ($_games->count() == 0): ?>
-<p>
-	Пользователь не принимал участия в организации игр.
-</p>
-<?php else: ?>
 <table class="no-border wide">
 	<thead>
 		<th>&nbsp;</th>
@@ -44,6 +13,11 @@
 		<th>Итоги</th>
 	</thead>
 	<tbody>
+		<?php if ($_games->count() == 0): ?>
+		<tr>
+			<td colspan="7">Пользователь не принимал участия в организации игр.<td>
+		</tr>
+		<?php else: ?>
 		<?php foreach ($_games as $game): ?>
 		<tr>
 			<td><?php echo link_to($game->name, 'game/promo?id='.$game->id); ?></td>
@@ -62,39 +36,16 @@
 		</tr>
 		<?php endforeach; ?>
 	</tbody>
-</table>
-<?php endif; ?>
-
-<p class="lf-before">
-	Поданы заявки на создание игр:
-</p>
-<?php if ($_gameCreateRequests->count() > 0): ?>
-<table class="no-border wide">
-	<thead>
+	<tfoot>
 		<tr>
-			<th>Название</th>
-			<th>Сообщение</th>
-			<th>&nbsp;</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php foreach ($_gameCreateRequests as $gameCreateRequest): ?>
-		<tr>
-			<td><?php echo $gameCreateRequest->name; ?></td>
-			<td><?php echo $gameCreateRequest->description; ?></td>
-			<td>
-				<?php if ($gameCreateRequest->canBeManaged($_webUser->getRawValue())): ?>
-				<span class="info info-bg pad-box box"><?php echo link_to('Отменить', 'gameCreateRequest/delete?id='.$gameCreateRequest->id, array('method' => 'post')); ?></span>
-				<?php else: ?>
-				&nbsp;
-				<?php endif; ?>
+			<td colspan="7">
+				<span class="info info-bg pad-box box"><?php echo link_to('Создать игру', 'gameCreateRequest/newManual'); ?></span>
 			</td>
 		</tr>
-		<?php endforeach; ?>
-	</tbody>
+	</tfoot>
 </table>
 <?php endif; ?>
 
-<p>
-	<span class="info info-bg pad-box box"><?php echo link_to('Создать игру', 'gameCreateRequest/newManual'); ?></span>
+<p class="info">
+	Показаны команды из всех игровых проектов.
 </p>

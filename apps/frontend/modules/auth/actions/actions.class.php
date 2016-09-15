@@ -7,10 +7,10 @@ class authActions extends MyActions
     parent::preExecute();
   }
 
-  public function executeIndex(sfWebRequest $request)
-  {
-    $this->redirectSafe('home/index');
-  }
+	public function executeIndex(sfWebRequest $request)
+	{
+		$this->redirect('home/index');
+	}
 
   public function executeLogin(sfWebRequest $request)
   {
@@ -167,7 +167,7 @@ class authActions extends MyActions
     $this->session->clearCredentials();
     $this->session->getAttributeHolder()->clear();
     $this->session->setAuthenticated(false);
-    $this->redirectSafe('home/index');
+    $this->redirect('home/index');
   }
 
   public function executeChangePassword(sfWebRequest $request)

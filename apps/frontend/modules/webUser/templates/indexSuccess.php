@@ -1,12 +1,10 @@
-<?php
-	include_partial(
-		'indexMenu',
-		array(
-			'_activeItem' => 'Участники'
-		)
-	)
-?>
+<?php include_partial('indexMenu', array('_activeItem' => 'Участники')) ?>
 
+<?php if ($_webUsers->count() == 0): ?>
+<p>
+	В текущем игровом проекте нет участников.
+</p>
+<?php else: ?>
 <table class="no-border">
 	<tbody>
 		<?php foreach ($_webUsers as $webUser): ?>
@@ -22,3 +20,4 @@
 		<?php endforeach; ?>
 	</tbody>
 </table>
+<?php endif; ?>

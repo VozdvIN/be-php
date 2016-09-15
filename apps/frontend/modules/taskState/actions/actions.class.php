@@ -49,7 +49,7 @@ class taskStateActions extends MyActions
 			else
 			{
 				// Строка с ответами пуста, просто перейдем обратно.
-				$this->redirectSafe($this->retUrlDecoded);
+				$this->redirect($this->retUrlDecoded);
 			}
 		}
 		else

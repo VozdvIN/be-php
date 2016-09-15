@@ -113,40 +113,32 @@ class MyActions extends sfActions
     }
   }
 
-  /**
-   * Выполняет перенаправление с простановкой сообщения об ошибке заданного типа
-   *
-   * @param   string  $messageKind  Тип сообщения
-   * @param   string  $message      Сообщение
-   * @param   string  $target       Адрес перенаправления
-   */
-  protected function doRedirect($messageKind, $message, $target = '')
-  {
-    if ($target == '')
-    {
-      $target = $this->retUrlDecoded;
-    }
-    if ($target == '')
-    {
-      $target = 'home/index';
-    }
-	if ($message !== '')
+	/**
+	 * Выполняет перенаправление с простановкой сообщения об ошибке заданного типа
+	 *
+	 * @param   string  $messageKind  Тип сообщения
+	 * @param   string  $message      Сообщение
+	 * @param   string  $target       Адрес перенаправления
+	 */
+	protected function doRedirect($messageKind, $message, $target = '')
 	{
-		$this->session->setFlash($messageKind, $message);
-	}
-    $this->redirectSafe($target);
-  }
+		if ($target == '')
+		{
+			$target = $this->retUrlDecoded;
+		}
 
-  /**
-   * Выполняет перенаправление с простановкой признака, что оно было.
-   *
-   * @param   string  $target   Адрес перенаправления
-   */
-  protected function redirectSafe($target)
-  {
-    $this->session->setAttribute('redirected', '1');
-    $this->redirect($target);
-  }
+		if ($target == '')
+		{
+			$target = 'home/index';
+		}
+
+		if ($message !== '')
+		{
+			$this->session->setFlash($messageKind, $message);
+		}
+
+		$this->redirect($target);
+	}
 
 }
 

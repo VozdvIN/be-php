@@ -124,12 +124,12 @@ class Timing
 	 */
 	public static function timeToStr($time)
 	{
-	  if ($time == 0)
-	  {
+		if ($time == 0)
+		{
 			return Timing::NO_TIME;
-	  }
-	  
-	  return date('H:i:s', $time + SiteSettings::SERVER_TIME_SHIFT);
+		}
+
+		return date('H:i:s', $time + SiteSettings::SERVER_TIME_SHIFT);
 	}
 
 	/**
