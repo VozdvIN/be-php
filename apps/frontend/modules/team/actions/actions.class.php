@@ -5,62 +5,66 @@ class teamActions extends MyActions
 	public function executeIndex(sfWebRequest $request)
 	{
 		$this->errorRedirectIf($this->sessionWebUser->cannot(Permission::TEAM_INDEX, 0), Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список команд'));
-
-		$this->_currentRegion = Region::byIdSafe($this->session->getAttribute('region_id'));
-
-		$query = Doctrine::getTable('Team')
-			->createQuery('t')->leftJoin('t.teamPlayers')->leftJoin('t.teamCandidates')
-			->select()
-			->orderBy('name')
-			->where('region_id = ?', $this->_currentRegion->id);
-		if ($this->_currentRegion->id == Region::DEFAULT_REGION)
-		{
-			$query->orWhere('t.region_id IS NULL');
-		}
-
-		$this->_teams = $query->execute();
-
-		$this->_isModerator = $this->sessionWebUser->can(Permission::TEAM_MODER, 0);
-		$this->_fastTeamCreate = SystemSettings::getInstance()->fast_team_create;
-		if ($this->_isModerator)
-		{
-			$this->_teamCreateRequests = Doctrine::getTable('TeamCreateRequest')
-				->createQuery('tcr')
-				->leftJoin('tcr.WebUser')
-				->select()
-				->orderBy('name')
-				->execute();
-		}
+		$this->_teams = Team::byRegion(Region::byIdSafe($this->session->getAttribute('region_id')));
 	}
 
 	public function executeShow(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->_team = Team::byId($request->getParameter('id')), 'Команда не найдена.');
-		//Просматривать команду могут все,
-		//но конкретный перечень видимых элементов зависит от прав.
-		//Детализируем права:
-		$this->_sessionWebUserId = $this->sessionWebUser->id;
-		$this->_sessionIsModerator = $this->sessionWebUser->can(Permission::TEAM_MODER, $this->_sessionWebUserId);
-		$this->_sessionIsLeader    = $this->_team->isLeader($this->sessionWebUser);
-		$this->_sessionIsPlayer    = $this->_team->isPlayer($this->sessionWebUser);
-		$this->_sessionIsCandidate = $this->_team->isCandidate($this->sessionWebUser);
-		if ($this->_sessionIsPlayer || $this->_sessionIsModerator)
-		{
-			//Капитану и игрокам видны все заявки в команду
-			$this->_teamCandidates = $this->_team->teamCandidates;
-		}
-		else
-		{
-			//Кандидату в команду видна только своя заявка
-			$this->_teamCandidates = Doctrine::getTable('TeamCandidate')
-				->createQuery('tc')
-				->select()
-				->where('team_id = ?', $this->_team->id)
-				->andWhere('web_user_id = ?', $this->_sessionWebUserId)
-				->execute();
-		}
+		$this->_sessionIsModerator = $this->sessionWebUser->can(Permission::TEAM_MODER, $this->sessionWebUser->id);
+		$this->_sessionIsLeader = $this->_team->isLeader($this->sessionWebUser);
+	}
+
+	public function executeShowCrewIndex(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->_team = Team::byId($request->getParameter('id')), 'Команда не найдена.');
+		$this->_sessionCanManage =
+			$this->_team->isLeader($this->sessionWebUser)
+			|| $this->sessionWebUser->can(Permission::TEAM_MODER, $this->sessionWebUser->id);
+	}
+
+	public function executeShowCrewJoins(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->_team = Team::byId($request->getParameter('id')), 'Команда не найдена.');
+		$this->_teamCandidates = $this->_team->teamCandidates;
+		$this->_sessionWebUser = $this->sessionWebUser;
+		$this->_sessionCanManage =
+			$this->_team->isLeader($this->sessionWebUser)
+			|| $this->sessionWebUser->can(Permission::TEAM_MODER, $this->sessionWebUser->id);
+		$this->_canPostJoin =
+			( ! $this->_team->isCandidate($this->sessionWebUser))
+			&& ( ! $this->_team->isPlayer($this->sessionWebUser));
+	}
+
+	public function executeShowGames(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->_team = Team::byId($request->getParameter('id')), 'Команда не найдена.');
 		$this->_teamStates = $this->_team->teamStates;
+	}
+
+	public function executeShowAuthorsIndex(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->_team = Team::byId($request->getParameter('id')), 'Команда не найдена.');
 		$this->_games = $this->_team->games;
+		$this->_sessionCanManage =
+			$this->_team->isLeader($this->sessionWebUser)
+			|| $this->sessionWebUser->can(Permission::TEAM_MODER, $this->sessionWebUser->id);
+	}
+
+	public function executeShowAuthorsCreation(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->_team = Team::byId($request->getParameter('id')), 'Команда не найдена.');
+		
+		$this->_gameCreateRequests = Doctrine::getTable('GameCreateRequest')
+			->createQuery('gcr')
+			->select()
+			->orderBy('gcr.name')
+			->where('gcr.team_id = ?', $this->_team->id)
+			->execute();
+
+		$this->_sessionCanManage =
+			$this->_team->isLeader($this->sessionWebUser)
+			|| $this->sessionWebUser->can(Permission::TEAM_MODER, $this->sessionWebUser->id);
 	}
 
 	public function executeNew(sfWebRequest $request)
@@ -114,14 +118,17 @@ class teamActions extends MyActions
 			$object->save();
 
 			$webUser = WebUser::byId($form->getValue('leader', 0));
-			if (!$webUser)
+			if ( ! $webUser)
 			{
 				$this->successRedirect('Команда '.$object->name.' успешно сохранена.', 'team/show?id='.$object->id);
 			}
 			else
 			{
 				$object->registerPlayer($webUser, true, $this->sessionWebUser);
-				$this->successRedirect('Команда '.$object->name.' успешно сохранена, ее капитаном назначен '.$webUser->login.'.', 'team/show?id='.$object->id);
+				$this->successRedirect(
+					'Команда '.$object->name.' успешно сохранена, ее капитаном назначен '.$webUser->login.'.',
+					'team/show?id='.$object->id
+				);
 			}
 		}
 		else
@@ -145,7 +152,10 @@ class teamActions extends MyActions
 			$this->team->getLeadersRaw()
 		);
 
-		$this->successRedirect($this->candidate->login.' подал заявку в состав команды '.$this->team->name.'.');
+		$this->successRedirect(
+			$this->candidate->login.' подал заявку в состав команды '.$this->team->name.'.',
+			'team/showCrewJoins?id='.$this->team->id
+		);
 	}
 
 	public function executeCancelJoin(sfWebRequest $request)
@@ -163,7 +173,10 @@ class teamActions extends MyActions
 			$this->candidate
 		);
 
-		$this->successRedirect('Заявка от '.$this->candidate->login.' в состав команды '.$this->team->name.' отменена.', url_for('webUser/teamsPlayer?id='.$this->candidate->id));
+		$this->successRedirect(
+			'Отменена заявка от '.$this->candidate->login.' в состав команды '.$this->team->name.'.',
+			'team/showCrewJoins?id='.$this->team->id
+		);
 	}
 
 	public function executeSetPlayer(sfWebRequest $request)
@@ -184,15 +197,16 @@ class teamActions extends MyActions
 				: ('Вы рядовой в '.$this->team->name)),
 			($willBeLeader
 				? ('Вы назначены капитаном команды "'.$this->team->name."\".\n")
-				: ('Вы приняты рядовым в команду "'.$this->team->name."\".\n"))
+				: ('Вы назначены рядовым игроком в команду "'.$this->team->name."\".\n"))
 			.'Страница команды: http://'.SiteSettings::SITE_DOMAIN.'/team/show?id='.$this->team->id,
 			$this->candidate
 		);
 
 		$this->successRedirect(
-			$willBeLeader
+			($willBeLeader
 				? $this->candidate->login.' назначен капитаном команды '.$this->team->name.'.'
-				: $this->candidate->login.' принят рядовым в команду '.$this->team->name.'.'
+				: $this->candidate->login.' назначен рядовым игроком в команду '.$this->team->name.'.'),
+			'team/showCrewIndex?id='.$this->team->id
 		);
 	}
 
@@ -211,7 +225,7 @@ class teamActions extends MyActions
 			$this->candidate
 		);
 
-		$this->successRedirect($this->candidate->login.' назначен капитаном команды '.$this->team->name.'.');
+		$this->successRedirect($this->candidate->login.' назначен капитаном команды '.$this->team->name.'.', 'team/showCrewIndex?id='.$this->team->id);
 	}
 
 	public function executeUnregister(sfWebRequest $request)
@@ -228,13 +242,13 @@ class teamActions extends MyActions
 			$this->candidate
 		);
 
-		$this->successRedirect($this->candidate->login.' исключен из состава команды '.$this->team->name.'.');
+		$this->successRedirect($this->candidate->login.' исключен из состава команды '.$this->team->name.'.', 'team/showCrewIndex?id='.$this->team->id);
 	}
 
 	public function executeRegisterPlayer(sfWebRequest $request)
 	{
 		$this->forward404Unless($team = Team::byId($request->getParameter('id')), 'Команда не найдена.');
-		if (!$team->canBeManaged($this->sessionWebUser))
+		if (!$team->isModerator($this->sessionWebUser))
 		{
 			$this->errorRedirect(Utils::cannotMessage($this->sessionWebUser->login, 'регистрировать игрока в команду '.$team->name));
 		}
@@ -251,7 +265,7 @@ class teamActions extends MyActions
 	}
 
 	/**
-	 * Поготавливает переменные путем выбора параметров запроса.
+	 * Подготавливает переменные путем выбора параметров запроса.
 	 * Входные аргументы из $request:
 	 * - id - ключ команды, над которой выполняется операция
 	 * - userId - ключ пользователя, над которым выполняется операция.

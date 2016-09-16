@@ -10,59 +10,63 @@
 class gameCreateRequestActions extends MyActions
 {
 
-  public function preExecute()
-  {
-    parent::preExecute();
-  }
-  
-  public function executeNew(sfWebRequest $request)
-  {
-    $this->errorRedirectUnless(
-        $team = Team::byId($request->getParameter('teamId')),
-        'Не указана команда, которая организует игру'
-    );
-    $this->errorRedirectUnless(
-        $this->canCrateNewRequest($team->id),
-        'От имени одной команды нельзя подавать более '.GameCreateRequest::MAX_REQUESTS_PER_TEAM.' заявок на создание игры. Отзовите предыдущие заявки или дождитесь их утверждения.'
-    );
-    $gameCreateRequest = new gameCreateRequest();
-    $gameCreateRequest->team_id = $team->id;
-    $this->form = new GameCreateRequestForm($gameCreateRequest);
-  }
-  
-  public function executeCreate(sfWebRequest $request)
-  {
-    $this->forward404Unless($request->isMethod(sfRequest::POST));
-    $this->form = new GameCreateRequestForm();
-    $this->processForm($request, $this->form);
-    $this->setTemplate('new');
-  }
-  
-  public function executeDelete(sfWebRequest $request)
-  {
-    $request->checkCSRFProtection();
-    $this->errorRedirectUnless(
-        $gameCreateRequest = GameCreateRequest::byId($request->getParameter('id')),
-        'Заявка на создание игры не найдена'
-    );
-    $this->errorRedirectUnless(
-        $gameCreateRequest->Team->canBeManaged($this->sessionWebUser)
-        || $this->sessionWebUser->can(Permission::GAME_MODER, 0),
-        'Отменить заявку на создание игры может только капитан команды организаторов или модератор игр.'
-    );
-    
-    $team = $gameCreateRequest->Team;
-    $gameName = $gameCreateRequest->name;
-    $gameCreateRequest->delete();
-    Utils::sendNotifyGroup(
-        'Заявка отклонена - '.$gameName,
-        'Заявка вашей команды "'.$team->name.'" на создание игры "'.$gameName.'" отклонена.',
-        $team->getLeadersRaw()
-    );    
-    
-    $this->successRedirect('Заявка на создание игры успешно отменена.', 'game/index');
-  }
-  
+	public function preExecute()
+	{
+		parent::preExecute();
+	}
+
+	public function executeNew(sfWebRequest $request)
+	{
+		$this->errorRedirectUnless(
+			$team = Team::byId($request->getParameter('teamId')),
+			'Не указана команда, которая организует игру'
+		);
+
+		$this->errorRedirectUnless(
+		$this->canCrateNewRequest($team->id),
+			'От имени одной команды нельзя подавать более '.GameCreateRequest::MAX_REQUESTS_PER_TEAM.' заявок на создание игры. Отзовите предыдущие заявки или дождитесь их утверждения.',
+			'team/showAuthorsCreation?id='.$team->id
+		);
+
+		$gameCreateRequest = new gameCreateRequest();
+		$gameCreateRequest->team_id = $team->id;
+		$this->form = new GameCreateRequestForm($gameCreateRequest);
+	}
+
+	public function executeCreate(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->isMethod(sfRequest::POST));
+		$this->form = new GameCreateRequestForm();
+		$this->processForm($request, $this->form);
+		$this->setTemplate('new');
+	}
+
+	public function executeDelete(sfWebRequest $request)
+	{
+		$request->checkCSRFProtection();
+		$this->forward404Unless(
+			$gameCreateRequest = GameCreateRequest::byId($request->getParameter('id')),
+			'Заявка на создание игры не найдена'
+		);
+		$this->errorRedirectUnless(
+			$gameCreateRequest->Team->canBeManaged($this->sessionWebUser) || $this->sessionWebUser->can(Permission::GAME_MODER, 0),
+			'Отменить заявку на создание игры может только капитан команды организаторов или модератор игр.',
+			'team/showAuthorsCreation?id='.$gameCreateRequest->Team->id
+		);
+
+		$team = $gameCreateRequest->Team;
+		$gameName = $gameCreateRequest->name;
+		$gameCreateRequest->delete();
+
+		Utils::sendNotifyGroup(
+			'Заявка отклонена - '.$gameName,
+			'Заявка вашей команды "'.$team->name.'" на создание игры "'.$gameName.'" отклонена.',
+			$team->getLeadersRaw()
+		);
+
+		$this->successRedirect('Заявка на создание игры успешно отменена.', 'team/showAuthorsCreation?id='.$gameCreateRequest->Team->id);
+	}
+
 	protected function processForm(sfWebRequest $request, sfForm $form)
 	{
 		$form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
@@ -74,7 +78,8 @@ class gameCreateRequestActions extends MyActions
 			{
 				$this->errorRedirectUnless(
 					$this->canCrateNewRequest($object->team_id),
-					'От имени одной команды нельзя подавать более '.GameCreateRequest::MAX_REQUESTS_PER_TEAM.' заявок на создание игры.'
+					'От имени одной команды нельзя подавать более '.GameCreateRequest::MAX_REQUESTS_PER_TEAM.' заявок на создание игры.',
+					'team/showAuthorsCreation?id='.$object->team_id
 				);
 
 				$object->tag = Utils::generateActivationkey();
@@ -95,18 +100,27 @@ class gameCreateRequestActions extends MyActions
 					if ($notifyResult)
 					{
 						$this->newGameCreateRequestNotify($object);
-						$this->successRedirect('Заявка на создание игры '.$object->name.' принята. Вам отправлено письмо для ее подтверждения.', 'game/index');
+						$this->successRedirect(
+							'Заявка на создание игры '.$object->name.' принята. Вам отправлено письмо для ее подтверждения.',
+							'team/showAuthorsCreation?id='.$object->team_id
+						);
 					}
 					else
 					{
 						// Писать админам смысла нет.
-						$this->warningRedirect('Заявка на создание игры '.$object->name.' принята, но не удалось отправить письмо для ее подтверждения. Обратитесь к администрации сайта.', 'game/index');
+						$this->warningRedirect(
+							'Заявка на создание игры '.$object->name.' принята, но не удалось отправить письмо для ее подтверждения. Обратитесь к администрации сайта.',
+							'team/showAuthorsCreation?id='.$object->team_id
+						);
 					}
 				}
 				else
 				{
 					$this->newGameCreateRequestNotify($object);
-					$this->successRedirect('Заявка на создание игры '.$object->name.' принята. Ожидайте, пока она пройдет модерацию.', 'game/index');
+					$this->successRedirect(
+						'Заявка на создание игры '.$object->name.' принята. Ожидайте, пока она пройдет модерацию.', 
+						'team/showAuthorsCreation?id='.$object->team_id
+					);
 				}
 			}
 			else
@@ -115,20 +129,27 @@ class gameCreateRequestActions extends MyActions
 			}
 		}
 	}
-  
-  public function executeNewManual(sfWebRequest $request)
-  {
-    $this->_teams = new Doctrine_Collection('Team');
-    foreach (Doctrine::getTable('Team')->findAll() as $team)
-    {
-      if ($team->canBeManaged($this->sessionWebUser))
-      {
-        $this->_teams->add($team);
-      }
-    }
-    $this->errorRedirectIf($this->_teams->count() <= 0, 'Нет команд, от лица которых вы можете подать заявку на создание игры.');
-  }
-  
+
+	/**
+	 * @deprecated Подача заявки на создание игры выполняется из профиля подающей заявку команды
+	 */
+	public function executeNewManual(sfWebRequest $request)
+	{
+		throw new Exception("gameCreateRequest::executeNewManual: DEPRECATED");
+/*
+		$this->_teams = new Doctrine_Collection('Team');
+		foreach (Doctrine::getTable('Team')->findAll() as $team)
+		{
+			if ($team->canBeManaged($this->sessionWebUser))
+			{
+				$this->_teams->add($team);
+			}
+		}
+
+		$this->errorRedirectIf($this->_teams->count() <= 0, 'Нет команд, от лица которых вы можете подать заявку на создание игры.');
+*/
+	}
+
 	public function executeAcceptManual(sfWebRequest $request)
 	{
 		$request->checkCSRFProtection();
@@ -173,15 +194,16 @@ class gameCreateRequestActions extends MyActions
 			.'Утвердить или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/game/index'
 		);
 	}
-  
-  protected function canCrateNewRequest($teamId)
-  {
-    $requests = Doctrine::getTable('GameCreateRequest')
-        ->createQuery('gcr')
-        ->select()
-        ->where('team_id = ?', $teamId)
-        ->execute();
-    return $requests->count() < GameCreateRequest::MAX_REQUESTS_PER_TEAM;
-  }
+
+	protected function canCrateNewRequest($teamId)
+	{
+		$requests = Doctrine::getTable('GameCreateRequest')
+			->createQuery('gcr')
+			->select()
+			->where('team_id = ?', $teamId)
+			->execute();
+
+		return $requests->count() < GameCreateRequest::MAX_REQUESTS_PER_TEAM;
+	}
 }
 ?>

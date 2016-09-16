@@ -44,65 +44,66 @@ class Team extends BaseTeam implements IStored, IAuth, IRegion
 		|| $account->can(Permission::TEAM_SHOW, $this->id);
 	}
 
-  //// IRegion ////
+	//// IRegion ////
 
-  public static function byRegion($region)
-  {
-    return Utils::byRegion('Team', $region);
-  }
-  
-  public function getRegionSafe()
-  {
-    return Region::byIdSafe($this->region_id);
-  }
-  
-  //// Public ////
+	public static function byRegion($region)
+	{
+		$query = Doctrine::getTable('Team')
+				->createQuery('t')
+				->select()
+				->orderBy('t.name')
+				->where('t.region_id = ?', $region->id);
 
-  /**
-   * Проверяет, подавал ли игрок заявку в состав.
-   *
-   * @param   WebUser   $webUser  Проверяемый игрок
-   * @return  boolean             Результат проверки
-   */
-  public function isCandidate(WebUser $webUser)
-  {
-    if (!$this->findCandidate($webUser))
-    {
-      return false;
-    }
-    return true;
-  }
+		if ($region->id == Region::DEFAULT_REGION)
+		{
+			$query->orWhere('t.region_id IS NULL');
+		}
 
-  /**
-   * Проверяет, является ли пользователь игроком команды.
-   *
-   * Капитан также является таковым и проходит проверку успешно.
-   * @param   WebUser   $webUser  Проверяемый игрок
-   * @return  boolean             Результат проверки
-   */
-  public function isPlayer(WebUser $webUser)
-  {
-    if (!$this->findPlayer($webUser))
-    {
-      return false;
-    }
-    return true;
-  }
+		return $query->execute();
+	}
 
-  /**
-   * Проверяет, является ли игрок капитаном команды.
-   *
-   * @param   WebUser   $webUser  Проверяемый игрок
-   * @return  boolean             Результат проверки
-   */
-  public function isLeader(WebUser $webUser)
-  {
-    if (!($res = $this->findPlayer($webUser)))
-    {
-      return false;
-    }
-    return $res->is_leader;
-  }
+	public function getRegionSafe()
+	{
+		return Region::byIdSafe($this->region_id);
+	}
+
+	//// Public ////
+
+	/**
+	* Проверяет, подавал ли игрок заявку в состав.
+	*
+	* @param   WebUser   $webUser  Проверяемый игрок
+	* @return  boolean             Результат проверки
+	*/
+	public function isCandidate(WebUser $webUser)
+	{
+		return (bool)($this->findCandidate($webUser));
+	}
+
+	/**
+	 * Проверяет, является ли пользователь игроком команды.
+	 * Капитан также является таковым и проходит проверку успешно.
+	 * 
+	 * @param   WebUser   $webUser  Проверяемый игрок
+	 * @return  boolean             Результат проверки
+	 */
+	public function isPlayer(WebUser $webUser)
+	{
+		return (bool)($this->findPlayer($webUser));
+	}
+
+	/**
+	* Проверяет, является ли игрок капитаном команды.
+	*
+	* @param   WebUser   $webUser  Проверяемый игрок
+	* @return  boolean             Результат проверки
+	*/
+	public function isLeader(WebUser $webUser)
+	{
+		return ((bool)($player = $this->findPlayer($webUser)))
+			? $player->is_leader
+			: false;
+	}
 
 	/**
 	 * Возвращает список команд, в которых пользователь состоит
@@ -212,44 +213,43 @@ class Team extends BaseTeam implements IStored, IAuth, IRegion
     }
   }
 
-  /**
-   * Регистрирует игрока в команду с соответсвующей должностью.
-   * Если игрок был среди подавших заявку, то заявка удаляется.
-   * Если игрок уже в команде, то только меняет ему должность.
-   *
-   * @param   WebUser   $player     Включаемый в состав игрок
-   * @param   boolean   $asLeader   Должность (назначать ли капитаном)
-   * @param   WebUser   $actor      Учетная запись, выполняющая регистрацию
-   * @return  mixed                 True если все в порядке, иначе описание ошибки.
-   */
-  public function registerPlayer(WebUser $player, $asLeader, WebUser $actor)
-  {
-    if (!$this->canBeManaged($actor))
-    {
-      return Utils::cannotMessage($actor->login, 'регистрировать игрока');
-    }
-    return $this->addPlayer($player, $asLeader);
-  }
+	/**
+	 * Регистрирует игрока в команду с соответсвующей должностью.
+	 * Если игрок был среди подавших заявку, то заявка удаляется.
+	 * Если игрок уже в команде, то только меняет ему должность.
+	 *
+	 * @param   WebUser   $player     Включаемый в состав игрок
+	 * @param   boolean   $asLeader   Должность (назначать ли капитаном)
+	 * @param   WebUser   $actor      Учетная запись, выполняющая регистрацию
+	 * @return  mixed                 True если все в порядке, иначе описание ошибки.
+	 */
+	public function registerPlayer(WebUser $player, $asLeader, WebUser $actor)
+	{
+		if ( ! $this->canBeManaged($actor))
+		{
+			return Utils::cannotMessage($actor->login, 'регистрировать игрока');
+		}
 
-  /**
-   * Увольняет игрока из команды.
-   * Если игрок не в команде, ничего не делает.
-   *
-   * @param   WebUser   $player  Исключаемый из состава игрок
-   * @param   WebUser   $actor   Учетная запись, выполняющая увольнение
-   * @return  mixed              True если все в порядке, иначе описание ошибки.
-   */
-  public function unregisterPlayer(WebUser $player, WebUser $actor)
-  {
-    if ($this->canBeManaged($actor) || ($actor->id == $player->id))
-    {
-      return $this->removePlayer($player);
-    }
-    else
-    {
-      return Utils::cannotMessage($actor->login, 'уволить игрока');
-    }
-  }
+		return $this->addPlayer($player, $asLeader);
+	}
+
+	/**
+	 * Увольняет игрока из команды.
+	 * Если игрок не в команде, ничего не делает.
+	 *
+	 * @param   WebUser   $player  Исключаемый из состава игрок
+	 * @param   WebUser   $actor   Учетная запись, выполняющая увольнение
+	 * @return  mixed              True если все в порядке, иначе описание ошибки.
+	 */
+	public function unregisterPlayer(WebUser $player, WebUser $actor)
+	{
+		if ($this->canBeManaged($actor) || ($actor->id == $player->id))
+		{
+			return $this->removePlayer($player);
+		}
+
+		return Utils::cannotMessage($actor->login, 'уволить игрока');
+	}
 
   /**
    * Возвращает список капитанов.

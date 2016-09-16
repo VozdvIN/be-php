@@ -13,9 +13,25 @@
 	{
 		$css = array();
 	}
+/*
+include_partial(
+	'global/actionsMenu',
+	array(
+		'items' => array(
+			'item' => link_to('', ''),
+		),
+		'css' => array(
+			'item' => ''
+		),
+		'conditions' => array(
+			'item' => ''
+		)
+	)
+);
+*/
 ?>
 
-<div style="text-align: left">
+<div style="text-align: left"><!--
 	<?php foreach ($items->getRawValue() as $title => $html): ?>
 	<?php
 		$classStr = 'class="pad-box box';
@@ -27,7 +43,7 @@
 		$classStr .= '"';
 	?>
 	<?php if (( ! isset($conditions[$title])) || $conditions[$title]): ?>
-	<span <?php echo $classStr ?>><?php echo $html; ?></span>
+ --><span <?php echo $classStr ?>><?php echo $html; ?></span><!--
 	<?php endif; ?>
 	<?php endforeach; ?>
-</div>
+--></div>

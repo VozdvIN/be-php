@@ -12,9 +12,9 @@
 		'items' => array(
 			'&nbsp;&#094;&nbsp;' => 'team/index',
 			$_team->name => 'team/show?id='.$_team->id,
-			'Состав' => 'team/showCrew?id='.$_team->id,
-			'Игры' => 'team/showGameStates?id='.$_team->id,
-			'Организация' => 'team/showGames?id='.$_team->id
+			'Состав' => 'team/showCrewIndex?id='.$_team->id,
+			'Игры' => 'team/showGames?id='.$_team->id,
+			'Организация' => 'team/showAuthorsIndex?id='.$_team->id
 		)
 	));
 ?>
