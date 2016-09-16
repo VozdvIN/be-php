@@ -39,7 +39,7 @@
 	<tfoot>
 		<tr>
 			<td colspan="7">
-				<span class="info info-bg pad-box box"><?php echo link_to('Создать игру', 'gameCreateRequest/newManual'); ?></span>
+				<span class="button-info"><?php echo link_to('Создать игру', 'gameCreateRequest/newManual'); ?></span>
 			</td>
 		</tr>
 	</tfoot>

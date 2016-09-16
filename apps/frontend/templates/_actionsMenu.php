@@ -34,13 +34,9 @@ include_partial(
 <div style="text-align: left"><!--
 	<?php foreach ($items->getRawValue() as $title => $html): ?>
 	<?php
-		$classStr = 'class="pad-box box';
+		$classStr = 'class="button';
 		$class = isset($css[$title]) ? $css[$title] : '';
-		if ($class !== '')
-		{
-			$classStr .= ' '.$class.' '.$class.'-bg';
-		}
-		$classStr .= '"';
+		$classStr = 'class="button'.(($class !== '') ? '-'.$class : '').'"';
 	?>
 	<?php if (( ! isset($conditions[$title])) || $conditions[$title]): ?>
  --><span <?php echo $classStr ?>><?php echo $html; ?></span><!--

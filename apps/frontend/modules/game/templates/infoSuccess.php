@@ -7,10 +7,10 @@
 <?php if ((($_canPostJoin) && ($_game->status < Game::GAME_ARCHIVED)) || $_canManage || $_isModerator): ?>
 <p>
 	<?php if (($_canPostJoin) && ($_game->status < Game::GAME_ARCHIVED)): ?>
-		<span class="info info-bg pad-box box"><?php echo link_to('Подать заявку на участие', 'game/postJoinManual?id='.$_game->id.'&returl='.$retUrlRaw, array('method' => 'post')); ?></span>
+		<span class="button-info"><?php echo link_to('Подать заявку на участие', 'game/postJoinManual?id='.$_game->id.'&returl='.$retUrlRaw, array('method' => 'post')); ?></span>
 	<?php endif ?>
 	<?php if ($_canManage || $_isModerator): ?>
-		<span class="pad-box box"><?php echo link_to('Редактор', 'game/promo?id='.$_game->id); ?></span>
+		<span class="button"><?php echo link_to('Редактор', 'game/promo?id='.$_game->id); ?></span>
 	<?php endif; ?>
 </p>
 <?php endif; ?>
@@ -18,7 +18,7 @@
 <?php if ($_game->status >= GAME::GAME_ARCHIVED): ?>
 <h2 class="info">Игра завершена</h2>
 <p>
-	<span class="pad-box box"><?php echo link_to('Результаты игры', 'gameControl/report?id='.$_game->id); ?></span>
+	<span class="button"><?php echo link_to('Результаты игры', 'gameControl/report?id='.$_game->id); ?></span>
 </p>
 <?php endif ?>
 
@@ -77,10 +77,10 @@
 			</td>
 			<td>
 				<?php if ($teamState->Team->canBeManaged($sf_user->getSessionWebUser()->getRawValue())): ?>
-				<span class="info info-bg pad-box box"><?php echo link_to('Отказаться', 'game/removeTeam?id='.$_game->id.'&teamId='.$teamState->team_id.'&returl='.$retUrlRaw, array('confirm' => 'Вы точно хотите снять команду '.$teamState->Team->name.' с игры '.$_game->name.' ?')) ?></span>
+				<span class="button-info"><?php echo link_to('Отказаться', 'game/removeTeam?id='.$_game->id.'&teamId='.$teamState->team_id.'&returl='.$retUrlRaw, array('confirm' => 'Вы точно хотите снять команду '.$teamState->Team->name.' с игры '.$_game->name.' ?')) ?></span>
 				<?php endif; ?>
 				<?php if ($teamState->Team->isPlayer($sf_user->getSessionWebUser()->getRawValue()) && ($_game->status >= Game::GAME_STEADY) && ($_game->status < Game::GAME_ARCHIVED)): ?>
-				<span class="pad-box box"><?php echo link_to('Войти&nbsp;в&nbsp;игру', 'play/task?id='.$teamState->id) ?></span>
+				<span class="button"><?php echo link_to('Войти&nbsp;в&nbsp;игру', 'play/task?id='.$teamState->id) ?></span>
 				<?php endif; ?>
 				&nbsp;
 			</td>
@@ -104,7 +104,7 @@
 			</td>
 			<td>
 				<?php if ($gameCandidate->Team->canBeManaged($sf_user->getSessionWebUser()->getRawValue())): ?>
-					<span class="info info-bg pad-box box"><?php echo link_to('Отменить', 'game/cancelJoin?id='.$_game->id.'&teamId='.$gameCandidate->team_id.'&returl='.$retUrlRaw) ?></span>
+					<span class="button-info"><?php echo link_to('Отменить', 'game/cancelJoin?id='.$_game->id.'&teamId='.$gameCandidate->team_id.'&returl='.$retUrlRaw) ?></span>
 				<?php endif; ?>
 				&nbsp;
 			</td>

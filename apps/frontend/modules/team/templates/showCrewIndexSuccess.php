@@ -12,7 +12,7 @@
 	<thead>
 		<tr>
 			<td colspan="3">
-				<span class="info info-bg pad-box box"><?php echo link_to('Вербовать', 'team/registerPlayer'.'?id='.$_team->id); ?></span>
+				<span class="button-info"><?php echo link_to('Вербовать', 'team/registerPlayer'.'?id='.$_team->id); ?></span>
 			</td>
 		</tr>
 	</thead>

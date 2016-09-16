@@ -24,7 +24,7 @@
 			<td><?php echo $teamCreateRequest->description; ?></td>
 			<td>
 				<?php if ($teamCreateRequest->web_user_id == $_webUser->id): ?>
-				<span class="info info-bg pad-box box"><?php echo link_to('Отменить', 'teamCreateRequest/delete?id='.$teamCreateRequest->id, array('method' => 'post')); ?></span>
+				<span class="button-info"><?php echo link_to('Отменить', 'teamCreateRequest/delete?id='.$teamCreateRequest->id, array('method' => 'post')); ?></span>
 				<?php else: ?>
 				&nbsp;
 				<?php endif; ?>
@@ -37,7 +37,7 @@
 	<tfoot>
 		<tr>
 			<td colspan="3">
-				<span class="info info-bg pad-box box"><?php echo link_to('Создать команду', 'teamCreateRequest/new'); ?></span>
+				<span class="button-info"><?php echo link_to('Создать команду', 'teamCreateRequest/new'); ?></span>
 			</td>
 		</tr>
 	</tfoot>

@@ -24,7 +24,7 @@
 			<td><?php echo $gameCreateRequest->description; ?></td>
 			<td>
 				<?php if ($_sessionCanManage): ?>
-				<span class="info info-bg pad-box box"><?php echo link_to('Отменить', 'gameCreateRequest/delete?id='.$gameCreateRequest->id, array('method' => 'post')); ?></span>
+				<span class="button-info"><?php echo link_to('Отменить', 'gameCreateRequest/delete?id='.$gameCreateRequest->id, array('method' => 'post')); ?></span>
 				<?php else: ?>
 				&nbsp;
 				<?php endif; ?>
@@ -38,7 +38,7 @@
 	<tfoot>
 		<tr>
 			<td colspan="3">
-				<span class="info info-bg pad-box box"><?php echo link_to('Создать игру', 'gameCreateRequest/new?teamId='.$_team->id); ?></span>
+				<span class="button-info"><?php echo link_to('Создать игру', 'gameCreateRequest/new?teamId='.$_team->id); ?></span>
 			</td>
 		</tr>
 	</tfoot>

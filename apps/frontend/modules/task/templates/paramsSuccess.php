@@ -67,8 +67,8 @@
 	<tfoot>
 		<tr>
 			<td colspan="2">
-				<span class="info info-bg pad-box box"><?php echo link_to('Редактировать', 'task/edit?id='.$_task->id) ?></span>
-				<span class="danger danger-bg pad-box box"><?php echo link_to('Удалить задание', 'task/delete?id='.$_task->id.'&returl='.$retUrlRaw, array('method' => 'delete', 'confirm' => 'Вы точно хотите удалить задание '.$_task->name.'?')) ?></span>
+				<span class="button-info"><?php echo link_to('Редактировать', 'task/edit?id='.$_task->id) ?></span>
+				<span class="button-danger"><?php echo link_to('Удалить задание', 'task/delete?id='.$_task->id.'&returl='.$retUrlRaw, array('method' => 'delete', 'confirm' => 'Вы точно хотите удалить задание '.$_task->name.'?')) ?></span>
 			</td>
 		</tr>		
 	</tfoot>

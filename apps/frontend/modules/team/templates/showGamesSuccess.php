@@ -21,9 +21,9 @@
 			<td><?php echo link_to($game->name, 'game/promo?id='.$game->id); ?></td>
 			<td>
 				<?php if ($game->isActive()): ?>
-				<span class="box pad-box"><?php echo link_to('К&nbsp;заданию', 'play/task?id='.$teamState->id, array('target' => '_blank')) ?></span>
+				<span class="button"><?php echo link_to('К&nbsp;заданию', 'play/task?id='.$teamState->id, array('target' => '_blank')) ?></span>
 				<?php elseif ($game->status == Game::GAME_ARCHIVED): ?>
-				<span class="box pad-box"><?php echo link_to('Итоги', 'gameControl/report?id='.$game->id, array('target' => '_blank')) ?></span>
+				<span class="button"><?php echo link_to('Итоги', 'gameControl/report?id='.$game->id, array('target' => '_blank')) ?></span>
 				<?php else: ?>
 				&nbsp;
 				<?php endif; ?>

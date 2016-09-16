@@ -16,7 +16,7 @@
 		<?php if ($_canManage || $_isModerator): ?>
 		<tr>
 			<td colspan="11">
-				<span class="info info-bg pad-box box"><?php echo link_to('Создать задание', 'task/new?gameId='.$_game->id); ?></span>
+				<span class="button-info"><?php echo link_to('Создать задание', 'task/new?gameId='.$_game->id); ?></span>
 			</td>
 		</tr>
 		<?php endif; ?>

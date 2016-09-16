@@ -2,7 +2,7 @@
 
 <?php if ($sf_user->isAuthenticated()): ?>
 <p>
-	<span class="info info-bg pad-box box"><?php echo link_to('Написать статью', 'article/new') ?></span>
+	<span class="button-info"><?php echo link_to('Написать статью', 'article/new') ?></span>
 </p>
 <?php endif ?>
 

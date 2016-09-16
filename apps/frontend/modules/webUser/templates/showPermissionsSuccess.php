@@ -20,7 +20,7 @@
 			</td>
 			<?php if ($_isPermissionModerator): ?>
 			<td>
-				<span class="warn warn-bg pad-box box">
+				<span class="button-warn">
 					<?php
 					echo $grantedPermission->deny
 						? link_to('Снять', 'grantedPermission/delete?id='.$grantedPermission->id.'&returl='.$retUrlRaw, array('method' => 'delete', 'confirm' => 'Снять с пользователя '.$_webUser->login.' запрет '.$grantedPermission->Permission->description.'?'))
@@ -37,7 +37,7 @@
 	<?php if ($_isPermissionModerator): ?>
 	<tfoot>
 		<tr>
-			<td colspan="2"><span class="info info-bg pad-box box"><?php echo link_to('Добавить', 'grantedPermission/new?webUserId='.$_webUser->id); ?></span></td>
+			<td colspan="2"><span class="button-info"><?php echo link_to('Добавить', 'grantedPermission/new?webUserId='.$_webUser->id); ?></span></td>
 		</tr>
 	</tfoot>
 	<?php endif; ?>

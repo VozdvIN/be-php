@@ -91,12 +91,12 @@
 					<?php if ($teamState->ai_enabled): ?>
 						<span class="info">Автоматически</span>
 					<?php else: ?>
-						<span class="Warn">Не&nbsp;задано</span>
+						<span class="warn">Не&nbsp;задано</span>
 					<?php endif ?>
 				<?php endif ?>
 			</td>
 			<td>
-				<span class="warn warn-bg pad-box box"><?php echo link_to('Задать', 'gameControl/setNext?teamState='.$teamState->id.'&returl='.$retUrlRaw) ?></span>
+				<span class="button-warn"><?php echo link_to('Задать', 'gameControl/setNext?teamState='.$teamState->id.'&returl='.$retUrlRaw) ?></span>
 			</td>
 		</tr>
 		<?php endforeach; ?>

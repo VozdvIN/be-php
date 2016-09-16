@@ -3,7 +3,7 @@
 <?php include_partial('menu', array('_webUser' => $_webUser, '_activeItem' => $_webUser, '_isSelf' => $_isSelf)) ?>
 
 <?php if ( ! $_webUser->is_enabled): ?>
-<p class="warn warn-bg">
+<p class="warn">
 	Этот пользователь заблокирован.
 </p>
 <?php endif ?>

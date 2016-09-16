@@ -7,84 +7,63 @@ ul, ol, li,
 table, thead, tbody, tfoot, td, tr, th,
 form, fieldset,
 img, blockquote, iframe,
-nav, header, footer, section, article, aside
-{
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
-    border: none;
-    border-spacing: 0 0;
-    vertical-align: top;
-    font-size: 0;
-    font-family: verdana, helvetica, sans-serif;
-    box-sizing: border-box;
-    white-space: normal;
-    text-align: justify;
+nav, header, footer, section, article, aside {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	border: none;
+	border-spacing: 0 0;
+	vertical-align: top;
+	font-size: 0;
+	font-family: verdana, helvetica, sans-serif;
+	box-sizing: border-box;
+	white-space: normal;
+	text-align: justify;
 }
 
-body
-{
-    margin-left: auto;
-    margin-right: auto;
-    min-width: 320px;
-    min-height: 200px;
-    background-color: black;
-    /**/ width: 480px; /* DEBUG */
+body {
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 320px;
+	min-height: 200px;
+	background-color: black;
+	/**/ width: 480px; /* DEBUG */
 }
 
 span, p, article, form,
 h1, h2, h3, h4, h5, h6,
 ol, ul, li,
-th, td
-{
-    font-size: 16px;
-    text-align: left;
-    color: lightcyan;
+th, td {
+	font-size: 16px;
+	text-align: left;
+	color: lightcyan;
 }
 
-a, em, strong
-{
-    font-size: inherit;
-    text-align: inherit;
+a, em, strong {
+	font-size: inherit;
+	text-align: inherit;
 }
 
-a
-{ 
-    text-indent: inherit;
-    color: bisque;
+a {
+	text-indent: inherit;
+	color: bisque;
 }
 
-    a:link
-    {
-        /* reserved */
-    }
+a:link { /* reserved */ }
 
-    a:visited
-    {
-        /* reserved */
-    }
+a:visited { /* reserved */ }
 
-    a:hover
-    {
-        text-decoration: none;
-    }
+a:hover { text-decoration: none; }
 
-    a:active
-    {
-        text-decoration: none;
-    }
+a:active { text-decoration: none; }
 
 /* === Paragraphs === */
 
-p, article
-{
-    padding-left: 4px;
-    text-indent: 0;
+p, article {
+	padding-left: 4px;
+	text-indent: 0;
 }
 
-h1, h2, h3, h4, h5, h6
-{
-    line-height: 120%;
-}
+h1, h2, h3, h4, h5, h6 { line-height: 120%; }
 
 h1 { color: white; font-size: 23px; padding-left: 10%; }
 h2 { color: aliceblue; font-size: 22px; padding-left: 8%; }
@@ -95,179 +74,118 @@ h6 { color: lightcyan; font-size: 18px; padding-left: 0; }
 
 /* === Lists === */
 
-ul, ol
-{
-    padding-left: 5ex;
-}
+ul, ol { padding-left: 5ex; }
 
-li
-{
-    text-align: justify;
-}
+li { text-align: justify; }
 
 /* === Tables === */
 
-table, tr, th, td
-{
-    border-color: royalblue;
-    border-width: 1px;
-    border-style: none;
+table, tr, th, td {
+	border-color: royalblue;
+	border-width: 1px;
+	border-style: none;
 }
 
-table
-{
-    border-style: none;
+table { border-style: none; }
+
+tr { border-style: none none solid none; }
+
+tr:first-child { border-style: solid none solid none; }
+
+th, td { 
+	padding: 3px 6px 3px 6px;
+	border-style: inherit;
+	border-right-style: solid;
+	vertical-align: middle;
 }
 
-tr
-{
-    border-style: none none solid none;
+th:first-child, td:first-child {
+	border-style: inherit;
+	border-right-style: solid;
+	border-left-style: solid;
 }
 
-tr:first-child
-{
-    border-style: solid none solid none;
+th { text-align: center; }
+
+tbody th { text-align: right; }
+
+tr:nth-child(even) { background-color: #002a4c; }
+
+tr:nth-child(odd) { background-color: #001c33; }
+
+thead tr:first-child { background-color: #001c33; }
+
+table.no-border, table.no-border tr, table.no-border th, table.no-border td {
+	border-style: none;
+	border-width: 0px;
 }
 
-th, td
-{ 
-    padding: 3px 6px 3px 6px;
-    border-style: inherit;
-    border-right-style: solid;
-    vertical-align: middle;
-}
-
-    th:first-child, td:first-child
-    {
-        border-style: inherit;
-        border-right-style: solid;
-        border-left-style: solid;
-    }
-
-th
-{
-    text-align: center;
-}
-
-tbody th
-{
-    text-align: right;
-}
-
-tr:nth-child(even)
-{
-    background-color: #002a4c;
-}
-
-tr:nth-child(odd)
-{
-    background-color: #001c33;
-}
-
-thead tr:first-child
-{
-    background-color: #001c33;
-}
-
-table.no-border, table.no-border tr, table.no-border th, table.no-border td
-{
-    border-style: none;
-    border-width: 0px;
-}
-
-table.no-bg, table.no-bg tr, table.no-bg th, table.no-bg td
-{
-    background: none;
+table.no-bg, table.no-bg tr, table.no-bg th, table.no-bg td {
+	background: none;
 }
 
 /* === Formatting === */
 
-.wide
-{
-	width: 100%;
-}
+.wide { width: 100%; }
 
-.lf-before
-{
-	margin-top: 1em;
-}
+.border-top { border-top: solid 1px royalblue; }
 
-.pad-box
-{
-    display: inline-block;
-    padding: 3px 6px 3px 6px;
-    margin: 3px 3px 3px 3px;
-}
-
-.box
-{
-    border-style: solid;
-    border-width: 1px;
-}
-
-.border-top
-{
-    border-top: solid 1px royalblue;
-}
-
-.border-bottom
-{
-    border-bottom: solid 1px royalblue;
-}
+.border-bottom { border-bottom: solid 1px royalblue; }
 
 /* === Highlights === */
 
-.note
-{
-	color: inherit;
+/* TODO: deprecated, remove usages */
+.note { /* reserved */ }
+
+.info { color: lime; }
+
+.warn { color: yellow; }
+
+.danger { color: orangered; }
+
+p.info, p.warn, p.danger {
+	border-left-style: solid;
+	border-left-width: 2px;
+	padding-left: 2px;
 }
 
-.info, .info > a
-{
-    color: lime;
-} 
+/* TODO: deprecated, remove usages */
+.note-bg { background-color: steelblue; }
 
-.warn, .warn > a
-{
-    color: yellow;
-} 
+.info-bg { background-color: green; }
 
-.danger, .danger > a
-{
-    color: orangered;
-} 
+.warn-bg { background-color: saddlebrown; }
 
-p.info, p.warn, p.danger
-{
-    border-left-style: solid;
-    border-left-width: 2px;
-    padding-left: 2px;
+.danger-bg { background-color: darkred; }
+
+.button, .button-info, .button-warn, .button-danger {
+	display: inline-block;
+	padding: 3px 6px 3px 6px;
+	margin: 3px 3px 3px 3px;
+	border-style: solid;
+	border-width: 1px;
 }
 
-.note-bg
-{
-	background-color: steelblue;
+.button { /* reserved */ }
+
+.button-info {
+	color: lime;
+	background-color: green;
 }
 
-.info-bg
-{
-    background-color: green;
-} 
+.button-warn {
+	color: yellow;
+	background-color: saddlebrown;
+}
 
-.warn-bg
-{
-    background-color: saddlebrown;
-} 
-
-.danger-bg
-{
-    background-color: darkred;
-} 
+.button-danger {
+	color: orangered;
+	background-color: darkred;
+}
 
 /* === Form === */
 
-input[type="text"], input[type="checkbox"], input[type="password"], select, textarea, input[type="submit"]
-{
+input[type="text"], input[type="checkbox"], input[type="password"], select, textarea, input[type="submit"] {
 /*	border: solid 1px royalblue;
 	background-color: ;*/
 	/* Фон должен быть светлым, так как старые Java MIDP версии OperaMini учитывают фон, но шрифт всегда используют черный. */
@@ -279,8 +197,7 @@ input[type="text"], input[type="checkbox"], input[type="password"], select, text
 
 /* === Menu === */
 
-nav.menu ul
-{
+nav.menu ul {
 	display: block;
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
@@ -290,8 +207,7 @@ nav.menu ul
 	border-bottom: solid 2px black;
 }
 
-nav.menu ul li
-{
+nav.menu ul li {
 	display: inline-block;
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
@@ -300,29 +216,18 @@ nav.menu ul li
 	border-top: solid 2px steelblue;
 }
 
-nav.menu ul li a
-{
+nav.menu ul li a {
 	display: block;
 	padding: 3px 6px 5px 6px;
 }
 
-nav.menu ul li a:hover
-{
-	background-color: deepskyblue;
-}
+nav.menu ul li a:hover { background-color: deepskyblue; }
 
-nav.menu ul li a.header
-{
+nav.menu ul li a.header {
 	font-weight: bold;
 	background-color: #002a4c;
 }
 
-nav.menu ul li a.active, nav.menu ul li a.active:hover, nav.menu ul li a.header:hover
-{
-	background-color: black;
-}
+nav.menu ul li a.active, nav.menu ul li a.active:hover, nav.menu ul li a.header:hover { background-color: black; }
 
-nav.menu ul li a.active:hover
-{
-	background-color: deepskyblue;
-}
+nav.menu ul li a.active:hover { background-color: deepskyblue; }

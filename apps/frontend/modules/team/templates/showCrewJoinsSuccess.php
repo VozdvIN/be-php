@@ -44,7 +44,7 @@
 	<tfoot>
 		<tr>
 			<td colspan="3">
-				<span class="info info-bg pad-box box"><?php echo link_to('Подать свою', 'team/postJoin'.'?id='.$_team->id.'&userId='.$_sessionWebUser->id, array('method' => 'post')); ?></span>
+				<span class="button-info"><?php echo link_to('Подать свою', 'team/postJoin'.'?id='.$_team->id.'&userId='.$_sessionWebUser->id, array('method' => 'post')); ?></span>
 			</td>
 		</tr>
 	</tfoot>

@@ -8,9 +8,9 @@
 <h2>Игра <?php echo $_game->name ?></h2>
 
 <p>
-	<span class="pad-box box"><?php echo link_to('Афиша', 'game/info?id='.$_game->id, array('target' => '_blank')); ?></span>
-	<span class="pad-box box"><?php echo link_to('Проведение', 'gameControl/pilot?id='.$_game->id, array('target' => '_blank')); ?></span>
-	<span class="pad-box box"><?php echo link_to('Итоги', 'gameControl/report?id='.$_game->id, array('target' => '_blank')); ?></span>
+	<span class="button"><?php echo link_to('Афиша', 'game/info?id='.$_game->id, array('target' => '_blank')); ?></span>
+	<span class="button"><?php echo link_to('Проведение', 'gameControl/pilot?id='.$_game->id, array('target' => '_blank')); ?></span>
+	<span class="button"><?php echo link_to('Итоги', 'gameControl/report?id='.$_game->id, array('target' => '_blank')); ?></span>
 </p>
 
 <?php

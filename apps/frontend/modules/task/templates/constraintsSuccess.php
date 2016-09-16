@@ -31,10 +31,10 @@
 			<?php endif; ?>
 			<td>
 				<?php if ($_isManager || $_isModerator): ?>
-				<span class="info info-bg pad-box box">
+				<span class="button-info">
 					<?php echo link_to('Править', 'taskConstraint/edit?id='.$taskConstraint->id); ?>
 				</span>
-				<span class="danger danger-bg pad-box box">
+				<span class="button-danger">
 					<?php
 						echo link_to(
 							'Удалить',
@@ -55,7 +55,7 @@
 		<?php if ($_isManager || $_isModerator): ?>
 		<tr>
 			<td colspan="3">
-				<span class="info info-bg pad-box box"><?php echo link_to('Добавить', 'taskConstraint/new?taskId='.$_task->id); ?></span>
+				<span class="button-info"><?php echo link_to('Добавить', 'taskConstraint/new?taskId='.$_task->id); ?></span>
 			</td>
 		</tr>
 		<?php endif; ?>

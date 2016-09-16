@@ -45,14 +45,14 @@
 						<span class="info">Автостарт</span>
 					<?php endif; ?>				
 					<?php if (($currentTaskState->Task->isFilled() || $currentTaskState->Task->manual_start)): ?>
-						<span class="warn warn-bg pad-box box"><?php echo link_to('Старт','taskState/start?id='.$currentTaskState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Дать старт заданию '.$task->name.' для команды '.$teamState->Team->name.' ?')) ?></span>
+						<span class="button-warn"><?php echo link_to('Старт','taskState/start?id='.$currentTaskState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Дать старт заданию '.$task->name.' для команды '.$teamState->Team->name.' ?')) ?></span>
 					<?php endif; ?>
-					<span class="info info-bg pad-box box"><?php echo link_to('Отменить','teamState/abandonTask?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Отменить выдачу задания '.$task->name.' командe '.$teamState->Team->name.' ?')) ?></span>
+					<span class="button-info"><?php echo link_to('Отменить','teamState/abandonTask?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Отменить выдачу задания '.$task->name.' командe '.$teamState->Team->name.' ?')) ?></span>
 				<?php elseif ($currentTaskState->status == TaskState::TASK_STARTED): ?>
-					<span class="warn warn-bg pad-box box"><?php echo link_to('Прочесть','taskState/forceAccept?id='.$currentTaskState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Подтвердить прочтение задания '.$task->name.' командой '.$teamState->Team->name.' ?')) ?></span>
-					<span class="info info-bg pad-box box"><?php echo link_to('Отменить','teamState/abandonTask?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Отменить выдачу задания '.$task->name.' командe '.$teamState->Team->name.' ?')) ?></span>
+					<span class="button-warn"><?php echo link_to('Прочесть','taskState/forceAccept?id='.$currentTaskState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Подтвердить прочтение задания '.$task->name.' командой '.$teamState->Team->name.' ?')) ?></span>
+					<span class="button-info"><?php echo link_to('Отменить','teamState/abandonTask?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Отменить выдачу задания '.$task->name.' командe '.$teamState->Team->name.' ?')) ?></span>
 				<?php elseif ($currentTaskState->status == TaskState::TASK_ACCEPTED): ?>
-					<span class="danger danger-bg pad-box box"><?php echo link_to('Прекратить','teamState/abandonTask?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Прекратить выполнение задания '.$task->name.' командой '.$teamState->Team->name.' ?')) ?></span>
+					<span class="button-danger"><?php echo link_to('Прекратить','teamState/abandonTask?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Прекратить выполнение задания '.$task->name.' командой '.$teamState->Team->name.' ?')) ?></span>
 				<?php endif; ?>
 			</td>
 			<?php else: ?>
@@ -65,7 +65,7 @@
 					<p>
 						<span class="warn">Нет задания</span>
 						<?php if ($teamState->status == TeamState::TEAM_WAIT_TASK): ?>
-							<span class="danger danger-bg pad-box box"><?php echo link_to('Финишировать','teamState/forceFinish?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Отправить команду '.$teamState->Team->name.' на финиш?')) ?></span>
+							<span class="button-danger"><?php echo link_to('Финишировать','teamState/forceFinish?id='.$teamState->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Отправить команду '.$teamState->Team->name.' на финиш?')) ?></span>
 						<?php endif; ?>
 					</p>
 				<?php endif; ?>

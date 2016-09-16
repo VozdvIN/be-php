@@ -16,7 +16,7 @@ if ($_activeItem == 'История')
 }
 ?>
 <div style="display: inline-block">
-	<span class="info info-bg pad-box box"><?php echo link_to('Обновить', 'play/'.$viewName.'?id='.$_teamState->id); ?></span>
+	<span class="button-info"><?php echo link_to('Обновить', 'play/'.$viewName.'?id='.$_teamState->id); ?></span>
 </div>
 <div style="display: inline-block; margin-left: 6px">
 	<span><strong><?php echo $_teamState->Game->name ?></strong><br><?php echo $_teamState->Team->name ?></span>

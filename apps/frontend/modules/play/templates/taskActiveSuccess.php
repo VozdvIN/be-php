@@ -13,7 +13,7 @@
 
 <?php if ($isLeader && $taskState->canBeSkipped()): ?>
 <p class="border-top">
-	<span class="danger danger-bg pad-box box"><?php echo link_to('Пропустить задание', 'taskState/skip?id='.$taskState->id.'&returl='.Utils::encodeSafeUrl(url_for('taskState/task?id='.$taskState->id)), array('method' => 'post', 'confirm' => 'Вы точно хотите пропустить задание?')); ?></span>
+	<span class="button-danger"><?php echo link_to('Пропустить задание', 'taskState/skip?id='.$taskState->id.'&returl='.Utils::encodeSafeUrl(url_for('taskState/task?id='.$taskState->id)), array('method' => 'post', 'confirm' => 'Вы точно хотите пропустить задание?')); ?></span>
 </p>
 <?php endif ?>
 

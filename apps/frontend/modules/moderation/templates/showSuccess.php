@@ -2,7 +2,7 @@
 
 <?php if ($_isAdmin): ?>
 
-<span class="pad-box box"><?php echo link_to('Управление игровыми проектами', 'region/index') ?></span>
+<span class="button"><?php echo link_to('Управление игровыми проектами', 'region/index') ?></span>
 
 <table class="no-border">
 	<tbody>
@@ -26,8 +26,8 @@
 	<tfoot>
 		<tr>
 			<td colspan="2">
-				<span class="info info-bg pad-box box"><?php echo link_to('Редактировать', 'moderation/edit'); ?></span>
-				<span class="info info-bg pad-box box"><?php echo link_to('Тестовое уведомление на '.SiteSettings::ADMIN_EMAIL_ADDR, 'moderation/SMTPTest'); ?></span>
+				<span class="button-info"><?php echo link_to('Редактировать', 'moderation/edit'); ?></span>
+				<span class="button-info"><?php echo link_to('Тестовое уведомление на '.SiteSettings::ADMIN_EMAIL_ADDR, 'moderation/SMTPTest'); ?></span>
 			</td>
 		</tr>
 	</tfoot>

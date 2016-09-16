@@ -29,7 +29,7 @@
 			<td colspan="2">
 				<?php if ($_canManage || $_isModerator): ?>
 				<p>
-					<span class="info info-bg pad-box box"><?php echo link_to('Редактировать', 'game/settingsEdit?id='.$_game->id) ?></span>
+					<span class="button-info"><?php echo link_to('Редактировать', 'game/settingsEdit?id='.$_game->id) ?></span>
 				</p>
 				<?php endif; ?>
 			</td>

@@ -25,7 +25,7 @@
 		<tr>
 			<td><?php echo link_to($game->name, 'game/promo?id='.$game->id); ?></td>
 			<td><?php echo $game->finish_briefing_datetime; ?></td>
-			<td><span class="pad pad-box box"><?php echo link_to('Результаты', 'gameControl/report?id='.$game->id) ?></span></td>
+			<td><span class="button"><?php echo link_to('Результаты', 'gameControl/report?id='.$game->id) ?></span></td>
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

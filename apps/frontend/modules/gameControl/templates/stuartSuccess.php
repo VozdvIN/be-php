@@ -12,5 +12,5 @@
 <?php include_component('gameControl','results', array('gameId' => $_game->id)) ?>
 
 <p>
-	<span class="pad-box box"><?php echo link_to('Подробно', 'gameControl/report?id='.$_game->id, array('target' => '_blank')) ?></span>
+	<span class="button"><?php echo link_to('Подробно', 'gameControl/report?id='.$_game->id, array('target' => '_blank')) ?></span>
 </p>
