@@ -69,6 +69,11 @@ class Team extends BaseTeam implements IStored, IAuth, IRegion
 
 	//// Public ////
 
+	public function getNormalName()
+	{
+		return ($this->full_name !== '') ? $this->full_name : $this->name;
+	}
+
 	/**
 	* Проверяет, подавал ли игрок заявку в состав.
 	*
@@ -113,7 +118,7 @@ class Team extends BaseTeam implements IStored, IAuth, IRegion
 	 */
 	public static function getTeamsOfUser(WebUser $user)
 	{
-		$teams = Doctrine::getTable('TeamPlayer')
+		$teamPlayers = Doctrine::getTable('TeamPlayer')
 			->createQuery('tp')
 			->innerJoin('tp.Team')
 			->select()
@@ -121,8 +126,8 @@ class Team extends BaseTeam implements IStored, IAuth, IRegion
 			->execute();
 
 		$result = new Doctrine_Collection('Team');
-		foreach ($teams as $team) {
-			$result->add($team);
+		foreach ($teamPlayers as $teamPlayer) {
+			$result->add($teamPlayer->Team);
 		}
 
 		return $result;
