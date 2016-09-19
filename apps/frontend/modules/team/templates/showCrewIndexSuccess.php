@@ -10,11 +10,7 @@
 <table class="no-border">
 	<?php if ($_sessionIsModerator): ?>
 	<thead>
-		<tr>
-			<td colspan="3">
-				<span class="button-info"><?php echo link_to('Вербовать', 'team/registerPlayer'.'?id='.$_team->id); ?></span>
-			</td>
-		</tr>
+		<tr><td colspan="3"><span class="button-info"><?php echo link_to('Вербовать', 'team/registerPlayer'.'?id='.$_team->id); ?></span></td></tr>
 	</thead>
 	<?php endif; ?>
 	<tbody>
@@ -24,12 +20,8 @@
 				$webUser = $teamPlayer->WebUser->getRawValue();
 				$isLeader = $teamPlayer->is_leader;
 			?>
-			<td>
-				<?php echo link_to($webUser->login, 'webUser/show?id='.$webUser->id, array('target' => '_blank')); ?>
-			</td>
-			<td>
-				<?php echo ($isLeader) ? 'Капитан' : 'Рядовой'; ?>
-			</td>
+			<td><?php echo link_to($webUser->login, 'webUser/show?id='.$webUser->id, array('target' => '_blank')); ?></td>
+			<td><?php echo ($isLeader) ? 'Капитан' : 'Рядовой'; ?></td>
 			<td>
 				<?php
 					include_partial(

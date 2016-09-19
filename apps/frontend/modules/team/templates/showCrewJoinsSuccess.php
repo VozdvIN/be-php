@@ -5,11 +5,7 @@
 <table class="no-border">
 	<tbody>
 		<?php if ($_teamCandidates->count() == 0): ?>
-		<tr>
-			<td colspan="2">
-				Активных заявок нет.
-			</td>
-		</tr>
+		<tr><td colspan="2">Активных заявок нет.</td></tr>
 		<?php else: ?>
 		<?php     foreach ($_teamCandidates as $teamCandidate): ?>
 		<?php     $candidateUser = $teamCandidate->WebUser; ?>
@@ -43,9 +39,7 @@
 	<?php if ($_canPostJoin): ?>
 	<tfoot>
 		<tr>
-			<td colspan="3">
-				<span class="button-info"><?php echo link_to('Подать свою', 'team/postJoin'.'?id='.$_team->id.'&userId='.$_sessionWebUser->id, array('method' => 'post')); ?></span>
-			</td>
+			<td colspan="3"><span class="button-info"><?php echo link_to('Подать свою', 'team/postJoin'.'?id='.$_team->id.'&userId='.$_sessionWebUser->id, array('method' => 'post')); ?></span></td>
 		</tr>
 	</tfoot>
 	<?php endif; ?>

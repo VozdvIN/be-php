@@ -9,9 +9,7 @@
 <?php else: ?>
 <table class="no-border">
 	<?php foreach ($_teams as $team): ?>
-	<tr>
-		<td><?php echo link_to($team->name, url_for('team/show?id='.$team->id)); ?></td>
-	</tr>
+	<tr><td><?php echo link_to($team->name, url_for('team/show?id='.$team->id)); ?></td></tr>
 	<?php endforeach; ?>
 </table>
 <?php endif; ?>

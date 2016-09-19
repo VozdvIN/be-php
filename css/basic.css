@@ -134,19 +134,13 @@ table.no-bg, table.no-bg tr, table.no-bg th, table.no-bg td {
 /* === Highlights === */
 
 /* TODO: deprecated, remove usages */
-.note { /* reserved */ }
+.note, .note > a { color: inherit; }
 
-.info { color: lime; }
+.info, .info > a { color: lime; }
 
-.warn { color: yellow; }
+.warn, .warn > a { color: yellow; }
 
-.danger { color: orangered; }
-
-p.info, p.warn, p.danger {
-	border-left-style: solid;
-	border-left-width: 2px;
-	padding-left: 2px;
-}
+.danger, .danger > a { color: orangered; }
 
 /* TODO: deprecated, remove usages */
 .note-bg { background-color: steelblue; }

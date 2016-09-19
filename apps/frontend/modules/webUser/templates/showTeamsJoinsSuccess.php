@@ -12,9 +12,7 @@
 </p>
 <table class="no-border wide">
 	<?php foreach ($_teamsCandidateTo as $teamCandidateTo): ?>
-	<tr>
-		<td><?php echo link_to($teamCandidateTo->Team->name, url_for('team/showCrew?id='.$teamCandidateTo->team_id)); ?></td>
-	</tr>
+	<tr><td><?php echo link_to($teamCandidateTo->Team->name, url_for('team/showCrew?id='.$teamCandidateTo->team_id)); ?></td></tr>
 	<?php endforeach; ?>
 </table>
 <?php endif; ?>

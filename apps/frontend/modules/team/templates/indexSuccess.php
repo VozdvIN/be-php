@@ -7,10 +7,7 @@
 <?php else: ?>
 <table class="no-border">
 	</thead>
-		<tr>
-			<th>Название</th>
-			<th>Полностью</th>
-		</tr>
+		<tr><th>Название</th><th>Полностью</th></tr>
 	</thead>
 	<tbody>
 		<?php foreach ($_teams as $team): ?>

@@ -4,20 +4,11 @@
 
 <table>
 	<thead>
-		<tr>
-			<th>Задание</th>
-			<th>Результат</th>
-			<th>Стартовало</th>
-			<th>Длилось</th>
-			<th>Подсказки</th>
-			<th>Ответы</th>
-		</tr>
+		<tr><th>Задание</th><th>Результат</th><th>Стартовало</th><th>Длилось</th><th>Подсказки</th><th>Ответы</th></tr>
 	</thead>
 	<tbody>
 		<?php foreach ($_teamStates as $teamState): ?>
-			<tr>
-				<th colspan="7" style="text-align: left" class="note-bg"><?php echo $teamState->Team->name ?></th>
-			</tr>
+			<tr><th colspan="7" style="text-align: left" class="note-bg"><?php echo $teamState->Team->name ?></th></tr>
 			<?php foreach ($teamState->taskStates as $taskState): ?>
 			<?php if ($taskState->status <= TaskState::TASK_STARTED) { continue; } ?>
 			<tr>

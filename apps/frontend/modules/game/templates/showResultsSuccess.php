@@ -4,12 +4,7 @@
 
 <table>
 	<thead>
-		<tr>
-			<th>Место</th>
-			<th>Команда</th>
-			<th>Очки</th>
-			<th>Время</th>
-		</tr>
+		<tr><th>Место</th><th>Команда</th><th>Очки</th><th>Время</th></tr>
 	</thead>
 	<tbody>
 		<?php $place = 1 ?>

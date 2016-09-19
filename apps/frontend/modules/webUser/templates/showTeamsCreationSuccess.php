@@ -5,17 +5,11 @@
 <table class="no-border">
 	<?php if ($_teamCreateRequests->count() == 0): ?>
 	<thead>
-		<tr>
-			<td colspan="3">Пользователь не подавал заявок на создание команд.</td>
-		</tr>
+		<tr><td colspan="3">Пользователь не подавал заявок на создание команд.</td></tr>
 	</thead>
 	<?php else: ?>
 	<thead>
-		<tr>
-			<th>Название</th>
-			<th>Сообщение</th>
-			<th>&nbsp;</th>
-		</tr>
+		<tr><th>Название</th><th>Сообщение</th><th>&nbsp;</th></tr>
 	</thead>
 	<tbody>
 		<?php foreach ($_teamCreateRequests as $teamCreateRequest): ?>
@@ -35,11 +29,7 @@
 	<?php endif; ?>
 	<?php if ($_isSelf): ?>
 	<tfoot>
-		<tr>
-			<td colspan="3">
-				<span class="button-info"><?php echo link_to('Создать команду', 'teamCreateRequest/new'); ?></span>
-			</td>
-		</tr>
+		<tr><td colspan="3"><span class="button-info"><?php echo link_to('Создать команду', 'teamCreateRequest/new'); ?></span></td></tr>
 	</tfoot>
 	<?php endif; ?>
 </table>
