@@ -7,7 +7,7 @@
 	Пользователь нигде не числится как рядовой игрок.
 </p>
 <?php else: ?>
-<table class="no-border wide">
+<table class="no-border">
 	<?php foreach ($_teams as $team): ?>
 	<tr>
 		<td><?php echo link_to($team->name, url_for('team/show?id='.$team->id)); ?></td>

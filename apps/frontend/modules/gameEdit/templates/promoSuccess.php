@@ -61,9 +61,9 @@
 			<td colspan="2">
 				<?php if ($_canManage || $_isModerator): ?>
 				<p>
-					<span class="button-info"><?php echo link_to('Редактировать', 'game/promoEdit?id='.$_game->id) ?></span>
+					<span class="button-info"><?php echo link_to('Редактировать', 'gameEdit/promoEdit?id='.$_game->id) ?></span>
 					<?php if ($_isModerator): ?>
-						<span class="button-danger"><?php echo link_to('Удалить игру', 'game/delete?id='.$_game->id, array('method' => 'delete', 'confirm' => 'Вы точно хотите удалить игру '.$_game->name.'?')) ?></span>
+						<span class="button-danger"><?php echo link_to('Удалить игру', 'gameEdit/delete?id='.$_game->id, array('method' => 'delete', 'confirm' => 'Вы точно хотите удалить игру '.$_game->name.'?')) ?></span>
 					<?php endif; ?>
 				</p>
 				<?php endif; ?>

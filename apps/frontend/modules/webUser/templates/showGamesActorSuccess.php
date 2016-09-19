@@ -2,7 +2,7 @@
 
 <?php include_partial('gamesMenu', array('_webUser' => $_webUser, '_activeItem' => 'Организатор')) ?>
 
-<table class="no-border wide">
+<table class="no-border">
 	<thead>
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
@@ -20,7 +20,7 @@
 		<?php else: ?>
 		<?php foreach ($_games as $game): ?>
 		<tr>
-			<td><?php echo link_to($game->name, 'game/promo?id='.$game->id); ?></td>
+			<td><?php echo link_to($game->name, 'game/show?id='.$game->id); ?></td>
 			<td>
 			<?php if ($game->isActor($_webUser->getRawValue())): ?>
 				<span class="warn">Автор</span>
@@ -35,6 +35,7 @@
 			<td><?php echo $game->finish_briefing_datetime; ?></td>
 		</tr>
 		<?php endforeach; ?>
+		<?php endif; ?>
 	</tbody>
 	<tfoot>
 		<tr>
@@ -44,7 +45,6 @@
 		</tr>
 	</tfoot>
 </table>
-<?php endif; ?>
 
 <p class="info">
 	Показаны команды из всех игровых проектов.

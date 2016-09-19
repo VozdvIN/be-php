@@ -10,7 +10,7 @@
 <h2>Управление игрой <?php echo $_game->name ?></h2>
 
 <p>
-	<span class="button"><?php echo link_to('Редактор', 'game/promo?id='.$_game->id, array('target' => '_blank')); ?></span>
+	<span class="button"><?php echo link_to('Редактор', 'gameEdit/promo?id='.$_game->id, array('target' => '_blank')); ?></span>
 	<span class="button"><?php echo Timing::dateToStr($_game->game_last_update) ?>&nbsp;-&nbsp;<?php echo $_game->describeStatus() ?></span>
 	<?php if ($_isManager): ?>
 		<?php if (($_game->status >= Game::GAME_STEADY) && ($_game->status <= Game::GAME_FINISHED)): ?>

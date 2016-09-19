@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <h2>Пересчет состояния игры <?php echo $_game->name ?></h2>
-<span class="button"><?php echo link_to('Редактор', 'game/promo?id='.$_game->id, array('target' => '_blank')); ?></span>
+<span class="button"><?php echo link_to('Редактор', 'gameEdit/promo?id='.$_game->id, array('target' => '_blank')); ?></span>
 <span class="button"><?php echo link_to('Управление', 'gameControl/pilot?id='.$_game->id, array('target' => '_blank')); ?></span>
 <p>
 	Следующий через <span id="timerDisplay">0</span>&nbsp;с

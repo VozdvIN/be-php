@@ -2,7 +2,7 @@
 
 <?php include_partial('crewMenu', array('_team' => $_team, '_activeItem' => 'Заявки')) ?>
 
-<table class="no-border wide">
+<table class="no-border">
 	<?php if ($_gameCreateRequests->count() == 0): ?>
 	<thead>
 		<tr>

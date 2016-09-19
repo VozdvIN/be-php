@@ -1,5 +1,4 @@
 /* Designed for "DOCTYPE HTML" */
-/* HEADER & FOOTER do not work in IE8 and older */
 
 html, body, div, p, pre,
 h1, h2, h3, h4, h5, h6,
@@ -113,7 +112,7 @@ tr:nth-child(even) { background-color: #002a4c; }
 
 tr:nth-child(odd) { background-color: #001c33; }
 
-thead tr:first-child { background-color: #001c33; }
+thead tr:first-child { background-color: #002a4c; }
 
 table.no-border, table.no-border tr, table.no-border th, table.no-border td {
 	border-style: none;

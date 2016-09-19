@@ -1,0 +1,4 @@
+all:
+  metas:
+    title: "Редактор игры"
+  has_layout: true

@@ -73,7 +73,7 @@
 <h3>Игры</h3>
 <ul>
 	<?php foreach ($_gamesUnderModeration as $game): ?>
-	<li><?php echo link_to($game->name, 'game/promo?id='.$game->id) ?></li>
+	<li><?php echo link_to($game->name, 'gameEdit/promo?id='.$game->id) ?></li>
 	<?php endforeach ?>
 </ul>
 <?php endif ?>

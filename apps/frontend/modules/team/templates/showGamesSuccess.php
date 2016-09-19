@@ -5,7 +5,7 @@
 	Команда не участвовала ни в одной из игр.
 </p>
 <?php else: ?>
-<table class="no-border wide">
+<table class="no-border">
 	<thead>
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
@@ -18,7 +18,7 @@
 		<?php foreach ($_teamStates as $teamState): ?>
 		<tr>
 			<?php $game = $teamState->Game; ?>
-			<td><?php echo link_to($game->name, 'game/promo?id='.$game->id); ?></td>
+			<td><?php echo link_to($game->name, 'game/show?id='.$game->id); ?></td>
 			<td>
 				<?php if ($game->isActive()): ?>
 				<span class="button"><?php echo link_to('К&nbsp;заданию', 'play/task?id='.$teamState->id, array('target' => '_blank')) ?></span>

@@ -39,6 +39,11 @@ class gameControlActions extends MyActions
     $this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
   }
 
+  /**
+   * @deprecated
+   * @param sfWebRequest $request 
+   * @return type
+   */
   public function executeStuart(sfRequest $request)
   {
     $this->checkAndSetGame($request);
@@ -68,7 +73,12 @@ class gameControlActions extends MyActions
       $this->successRedirect('Игра '.$this->_game->name.' прошла предстартовую проверку без ошибок и замечаний.');
     }
   }
-  
+
+  /**
+   * @deprecated
+   * @param sfWebRequest $request 
+   * @return type
+   */
   public function executeReport(sfWebRequest $request)
   {
     $this->checkAndSetGame($request);
@@ -93,7 +103,7 @@ class gameControlActions extends MyActions
     $this->_game->save();
     $this->successRedirect('Игра '.$this->_game->name.' успешно перезапущена.');
   }
-  
+
   public function executeStart(sfWebRequest $request)
   {
     $this->checkPostAndCsrf($request);
@@ -226,7 +236,13 @@ class gameControlActions extends MyActions
   }  
   
   //// Self
-  
+
+	/**
+	 * @deprecated
+	 * @param sfRequest $request 
+	 * @return type
+	 */
+	// TODO: Выяснить целесообразность этой штуки
 	protected function prefetchAll(sfRequest $request)
 	{
 		$game = $this->_game;

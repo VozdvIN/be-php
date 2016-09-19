@@ -85,6 +85,20 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
 
   //// Public ////
 
+	/**
+	 * Возвращает запрос всех игр указанного региона. Допускает расширение только по andWhere.
+	 * @param  Region $region
+	 * @return Doctrine::Query
+	 */
+	public function queryByRegion(Region $region)
+	{
+		return Doctrine::getTable('Game')
+			->createQuery('g')
+			->select()
+			->where('g.region_id = ?', $region->id)
+			->orderBy('g.start_datetime DESC');
+	}
+
   // Info
 
   /**
@@ -288,6 +302,8 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
    * Массив отсортирован по убыванию занимаемых командами мест.
    *
    * @return array
+   * 
+   * @deprecated
    */
   public function getGameResults()
   {
@@ -299,6 +315,29 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
     usort($res, 'compareTeamPlaces');
     return $res;
   }
+
+
+	/**
+	 * Возвращает массив с результатами команд, отсортированными в порядке увеличения занимаемого места.
+	 * Для каждой команды дается ассоциативная запись со следующми полями:
+	 *    - 'teamState' - экземпляр состояния команды
+	 *    - 'points' - набранные очки
+	 *    - 'time' - потраченное время
+	 *
+	 * @return array
+	 */
+	public function getResults()
+	{
+		$res = array();
+		foreach ($this->teamStates as $teamState)
+		{
+			$teamResults = $teamState->getTeamResults();
+			$teamResultInfo = array('teamState' => $teamState, 'points' => $teamResults['points'], 'time' => $teamResults['time']);
+			array_push($res, $teamResultInfo);
+		}
+		usort($res, 'compareTeamPlaces');
+		return $res;
+	}
 
   /**
    * Возвращает имя команды-организатора из архива.
@@ -346,14 +385,11 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
 	 * 
 	 * @return Doctrine_Collection<Game>
 	 */
-	public static function getGamesForAnnounce()
+	public static function getGamesForAnnounce(Region $region)
 	{
-		return Doctrine::getTable('Game')
-			->createQuery('g')
-			->select()
-			->where('g.status <= ?', Game::GAME_FINISHED)
+		return Game::queryByRegion($region)
+			->andWhere('g.status <= ?', Game::GAME_FINISHED)
 			->andWhere('g.short_info_enabled = ?', true)
-			->orderBy('g.start_datetime DESC')
 			->execute();
 	}
 
@@ -365,18 +401,9 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
 	 */
 	public static function getGamesPlanned(Region $region)
 	{
-		$query = Doctrine::getTable('Game')
-			->createQuery('g')
-			->select()
-			->orderBy('g.start_datetime DESC')
-			->where('g.status < ?', Game::GAME_VERIFICATION);
-
-		if ($projectId !== null)
-		{
-			$query->andWhere('g.region_id = ?', $region->id);
-		}
-
-		return $query->execute();
+		return Game::queryByRegion($region)
+			->andWhere('g.status < ?', Game::GAME_VERIFICATION)
+			->execute();
 	}
 
 	/**
@@ -387,19 +414,10 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
 	 */
 	public static function getGamesActive(Region $region)
 	{
-		$query = Doctrine::getTable('Game')
-			->createQuery('g')
-			->select()
-			->orderBy('g.start_datetime DESC')
-			->where('g.status >= ?', Game::GAME_VERIFICATION)
-			->andWhere('g.status < ?', Game::GAME_ARCHIVED);
-
-		if ($projectId !== null)
-		{
-			$query->andWhere('g.region_id = ?', $region->id);
-		}
-
-		return $query->execute();
+		return Game::queryByRegion($region)
+			->andWhere('g.status >= ?', Game::GAME_VERIFICATION)
+			->andWhere('g.status < ?', Game::GAME_ARCHIVED)
+			->execute();
 	}
 
 	/**
@@ -410,18 +428,9 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
 	 */
 	public static function getGamesArchived(Region $region)
 	{
-		$query = Doctrine::getTable('Game')
-			->createQuery('g')
-			->select()
-			->orderBy('g.start_datetime DESC')
-			->where('g.status >= ?', Game::GAME_ARCHIVED);
-
-		if ($projectId !== null)
-		{
-			$query->andWhere('g.region_id = ?', $region->id);
-		}
-
-		return $query->execute();
+		return Game::queryByRegion($region)
+			->andWhere('g.status >= ?', Game::GAME_ARCHIVED)
+			->execute();
 	}
 
 	/**

@@ -2,7 +2,7 @@
 
 <?php include_partial('teamsMenu', array('_webUser' => $_webUser, '_activeItem' => 'Создание')) ?>
 
-<table class="no-border wide">
+<table class="no-border">
 	<?php if ($_teamCreateRequests->count() == 0): ?>
 	<thead>
 		<tr>
