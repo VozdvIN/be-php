@@ -23,7 +23,7 @@ class GrantedPermissionForm extends BaseGrantedPermissionForm
 
     //Русифицируем:
     $this->getWidgetSchema()->setLabels(array(
-        'permission_id' => '* Действие:',
+        'permission_id' => '*&nbsp;Действие:',
         'filter_id' => 'Фильтр:',
         'deny' => 'Запретить:'
     ));

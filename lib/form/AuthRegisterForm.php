@@ -32,10 +32,10 @@ class AuthRegisterForm extends BaseForm
     //Configure
     $this->getWidgetSchema()->setNameFormat('register[%s]');
     $this->getWidgetSchema()->setLabels(array(
-        'login' => '* Имя:',
-        'full_name' => '* Ф.И.(О.)',
-        'password' => '* Пароль:',
-        'passwordRepeat' => '* Повторите пароль:',
+        'login' => '*&nbsp;Имя:',
+        'full_name' => '*&nbsp;Ф.И.(О.)',
+        'password' => '*&nbsp;Пароль:',
+        'passwordRepeat' => '*&nbsp;Повторите пароль:',
         'email' => '* Адрес e-mail:'));
     $this->getWidgetSchema()->setHelps(array(
         'login' => 'Одно слово, от '.WebUser::MIN_NAME_LENGTH.' до 32 букв.',

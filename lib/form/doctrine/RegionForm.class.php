@@ -13,7 +13,7 @@ class RegionForm extends BaseRegionForm
   public function configure()
   {
     $this->getWidgetSchema()->setLabels(array(
-        'name' => '* Название:'
+        'name' => '*&nbsp;Название:'
     ));
     $this->getWidgetSchema()->setHelps(array(
         'name' => 'Лучше более краткое.'

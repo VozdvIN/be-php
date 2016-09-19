@@ -24,8 +24,8 @@ class AuthLoginForm extends BaseForm
     //Configure
     $this->getWidgetSchema()->setNameFormat('auth[%s]');
     $this->getWidgetSchema()->setLabels(array(
-        'login' => '* Имя:',
-        'password' => '* Пароль:'
+        'login' => '*&nbsp;Имя:',
+        'password' => '*&nbsp;Пароль:'
     ));
   }
 

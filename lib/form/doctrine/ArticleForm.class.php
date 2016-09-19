@@ -28,9 +28,9 @@ class ArticleForm extends BaseArticleForm
     unset($this['web_user_id']);
     
     $this->getWidgetSchema()->setLabels(array(
-        'name' => '* Название:',
+        'name' => '*&nbsp;Название:',
         'path' => 'Путь:',
-        'text' => '* Текст:'
+        'text' => '*&nbsp;Текст:'
     ));
 
     $this->getWidgetSchema()->setHelps(array(

@@ -35,7 +35,7 @@ class TeamStateForm extends BaseTeamStateForm
     //Русифицируем:
     $this->getWidgetSchema()->setLabels(array(
         'start_delay' => 'Задержка старта:',
-        'ai_enabled' => 'Автоматизация выбора заданий:'
+        'ai_enabled' => 'Автовыбор заданий:'
     ));
     $this->getWidgetSchema()->setHelps(array(
         'start_delay' => '&gt;=&nbsp;0, мин.|Задержка будет отсчитана от фактического времени начала игры.',
