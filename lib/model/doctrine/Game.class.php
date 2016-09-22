@@ -80,7 +80,7 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
 	 * @param  Region $region
 	 * @return Doctrine::Query
 	 */
-	public function queryByRegion(Region $region)
+	public static function queryByRegion(Region $region)
 	{
 		return Doctrine::getTable('Game')
 			->createQuery('g')

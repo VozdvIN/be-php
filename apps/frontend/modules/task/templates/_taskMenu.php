@@ -5,7 +5,7 @@
  */
 ?>
 
-<?php include_partial('game/gameMenu', array('_game' => $_task->Game, '_activeItem' => 'Задания')) ?>
+<?php include_partial('gameEdit/menu', array('_game' => $_task->Game, '_activeItem' => 'Задания')) ?>
 
 <h3>Задание &quot;<?php echo $_task->name ?>&quot;</h3>
 

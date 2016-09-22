@@ -11,7 +11,7 @@
 		'activeItem' => $_activeItem,
 		'headerItem' => $_webUser->login,
 		'items' => array(
-			'&nbsp;&#094;&nbsp;' => 'webUser/index',
+			Utils::MENU_BACK_BUTTON_TITLE => 'webUser/index',
 			$_webUser->login => 'webUser/show?id='.$_webUser->id,
 			'Команды' => 'webUser/showTeamsPlayer?id='.$_webUser->id,
 			'Игры' => 'webUser/showGamesPlayer?id='.$_webUser->id,

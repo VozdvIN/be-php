@@ -10,7 +10,7 @@
 		'activeItem' => $_activeItem,
 		'headerItem' => $_team->name,
 		'items' => array(
-			'&nbsp;&#094;&nbsp;' => 'team/index',
+			Utils::MENU_BACK_BUTTON_TITLE => 'team/index',
 			$_team->name => 'team/show?id='.$_team->id,
 			'Состав' => 'team/showCrewIndex?id='.$_team->id,
 			'Игры' => 'team/showGames?id='.$_team->id,

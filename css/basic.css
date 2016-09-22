@@ -25,7 +25,7 @@ body {
 	min-width: 320px;
 	min-height: 200px;
 	background-color: black;
-	/**/ width: 480px; /* DEBUG */
+	/* width: 480px; /* DEBUG */
 }
 
 span, p, article, form,
@@ -161,17 +161,17 @@ table.no-bg, table.no-bg tr, table.no-bg th, table.no-bg td {
 
 .button { /* reserved */ }
 
-.button-info {
+.button-info, .button-info > a {
 	color: lime;
 	background-color: green;
 }
 
-.button-warn {
+.button-warn, .button-warn > a {
 	color: yellow;
 	background-color: saddlebrown;
 }
 
-.button-danger {
+.button-danger, .button-danger > a {
 	color: orangered;
 	background-color: darkred;
 }

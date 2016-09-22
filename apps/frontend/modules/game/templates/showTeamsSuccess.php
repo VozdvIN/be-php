@@ -29,7 +29,7 @@
 							),
 							'css' => array(
 								'Play' => 'info',
-								'Leave' => $_game->isActive() ? 'danger' : 'warn'
+								'Leave' => $_game->status >= Game::GAME_STEADY ? 'danger' : 'warn'
 							),
 							'conditions' => array(
 								'Play' => $_game->isActive() && ($_canManage || $teamState->Team->isPlayer($currentUser)),

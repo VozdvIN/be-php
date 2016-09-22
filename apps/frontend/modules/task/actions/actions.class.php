@@ -28,13 +28,13 @@ class taskActions extends MyActions
 	public function executeConstraints(sfWebRequest $request)
 	{
 		$this->pageInit($request);
-		$this->_taskConstraints = $this->_task->taskConstraints;		
+		$this->_taskConstraints = $this->_task->taskConstraints;
 	}
 
 	public function executeTransitions(sfWebRequest $request)
 	{
 		$this->pageInit($request);
-		$this->_taskTransitions = $this->_task->taskTransitions;		
+		$this->_taskTransitions = $this->_task->taskTransitions;
 	}
 
 	public function executeNew(sfWebRequest $request)
@@ -80,7 +80,7 @@ class taskActions extends MyActions
 		$this->errorRedirectUnless($this->task->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'удалять задания для игры'));
 		$game_id = $this->task->game_id;
 		$this->task->delete();
-		$this->successRedirect('Задание успешно удалено.', 'game/tasks?id='.$game_id);
+		$this->successRedirect('Задание успешно удалено.', 'gameEdit/tasks?id='.$game_id);
 	}
 
 	protected function processForm(sfWebRequest $request, sfForm $form)
@@ -97,12 +97,18 @@ class taskActions extends MyActions
 			{
 				// Задание новое, надо редактировать его формулировку.
 				$tip = $object->tips->getFirst();
-				$this->successRedirect('Задание '.$object->name.' игры '.$object->Game->name.' успешно сохранено. Отредактируйте его формулировку.', 'tip/edit?id='.$tip->id);
+				$this->successRedirect(
+					'Задание '.$object->name.' игры '.$object->Game->name.' успешно сохранено. Отредактируйте его формулировку.',
+					'tip/edit?id='.$tip->id
+				);
 			}
 			else
 			{
 				// Задание не новое, редактировать его формулировку не надо.
-				$this->successRedirect('Задание '.$object->name.' игры '.$object->Game->name.' успешно сохранено.', 'task/params?id='.$object->id);
+				$this->successRedirect(
+					'Задание '.$object->name.' игры '.$object->Game->name.' успешно сохранено.',
+					'task/params?id='.$object->id
+				);
 			}
 		}
 		else
@@ -156,15 +162,15 @@ class taskActions extends MyActions
 		}
 		else
 		{
-		  $this->errorRedirect('Неизвестная операция над фильтрами: '.$operation);
+			$this->errorRedirect('Неизвестная операция над фильтрами: '.$operation);
 		}
 	}
-  
+
 	protected function pageInit(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->_task = Task::byId($request->getParameter('id')), 'Задание не найдено');
 		$this->errorRedirectUnless($this->_task->canBeObserved($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'просматривать задание'));
 		$this->_isManager = $this->_task->canBeManaged($this->sessionWebUser);
-		$this->_isModerator = Task::isModerator($this->sessionWebUser);		
+		$this->_isModerator = Task::isModerator($this->sessionWebUser);
 	}
 }

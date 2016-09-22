@@ -9,7 +9,7 @@
 		'activeItem' => $_activeItem,
 		'headerItem' => 'Команды',
 		'items' => array(
-			'&nbsp;&#094;&nbsp;' => '/home/index',
+			Utils::MENU_BACK_BUTTON_TITLE => '/home/index',
 			'Команды' => 'team/index'
 		),
 	));

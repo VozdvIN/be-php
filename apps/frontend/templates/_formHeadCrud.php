@@ -17,10 +17,6 @@ if ( ( ! isset($updateAction)) || ($updateAction == ''))
 }
 ?>
 
-<p class="info">
-	Поля, отмеченные звездочками, обязательны для заполнения.
-</p>
-
 <form
 	action="<?php echo url_for($module.'/'.($form->getObject()->isNew() ? $createAction : $updateAction).(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>"
 	method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>

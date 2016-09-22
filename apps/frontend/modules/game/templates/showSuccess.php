@@ -8,6 +8,10 @@
 
 <h1><?php echo $_game->name ?></h1>
 
+<article>
+	<?php echo Utils::decodeBB($_game->short_info) ?>
+</article>
+
 <table class="no-border">
 	<tbody>
 		<tr><th>Организаторы:</th><td><?php echo ($_game->team_id !== null) ? $_game->Team->name : $_game->getTeamBackupName() ?></td></tr>

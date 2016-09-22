@@ -10,7 +10,7 @@
 		'activeItem' => $_activeItem,
 		'headerItem' => 'Игры',
 		'items' => array(
-			'&nbsp;&#094;&nbsp;' => '/home/index',
+			Utils::MENU_BACK_BUTTON_TITLE => '/home/index',
 			'Игры' => 'game/index',
 			'Анонсы' => 'game/indexAnnounced',
 			'Активные' => 'game/indexActive',

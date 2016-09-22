@@ -1,7 +1,6 @@
 <?php
 class gameEditActions extends MyActions
 {
-
 	public function preExecute()
 	{
 		parent::preExecute();
@@ -11,116 +10,184 @@ class gameEditActions extends MyActions
 	public function executePromo(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		if ( ! $this->_game->canBeObserved($this->sessionWebUser))
-		{
-			$this->forward('game', 'info');
-		}
+		$this->errorRedirectUnless(
+			$this->_game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
 		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
 		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
 	}
-	
+
 	public function executePromoEdit(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		$this->errorRedirectUnless($this->game->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру'));
+		$this->errorRedirectUnless(
+			$this->game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
 		$this->form = new GameFormPromo($this->game);
 	}
-	
+
 	public function executePromoUpdate(sfWebRequest $request)
 	{
 		$this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
 		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->errorRedirectUnless(
+			$this->game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
 		$this->form = new GameFormPromo($this->game);
 		$this->processForm($request, $this->form, 'gameEdit/promo?id='.$this->game->id);
 		$this->setTemplate('promoEdit');
 	}
-		
+
 	public function executeTeams($request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		if ( ! $this->_game->canBeObserved($this->sessionWebUser))
-		{
-			$this->forward('game', 'info');
-		}
+		$this->errorRedirectUnless(
+			$this->_game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
 		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
 		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
-
 		$this->_teamStates = Doctrine::getTable('TeamState')
 			->createQuery('ts')->innerJoin('ts.Team')
 			->select()->where('game_id = ?', $this->_game->id)
 			->orderBy('ts.Team.name')->execute();
-		$this->_gameCandidates = Doctrine::getTable('GameCandidate')
-			->createQuery('gc')->innerJoin('gc.Team')
-			->select()->where('game_id = ?', $this->_game->id)
-			->orderBy('gc.Team.name')->execute();
 	}
 
 	public function executeSettings($request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		if ( ! $this->_game->canBeObserved($this->sessionWebUser))
-		{
-			$this->forward('game', 'info');
-		}
+		$this->errorRedirectUnless(
+			$this->_game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
 		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
 		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
 	}
-	
+
 	public function executeSettingsEdit(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		$this->errorRedirectUnless($this->game->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру'));
+		$this->errorRedirectUnless(
+			$this->game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
 		$this->form = new GameFormSettings($this->game);
 	}
-		
+
 	public function executeSettingsUpdate(sfWebRequest $request)
 	{
 		$this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
 		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->errorRedirectUnless(
+			$this->game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
 		$this->form = new GameFormSettings($this->game);
-		$this->processForm($request, $this->form, 'game/settings?id='.$this->game->id);
+		$this->processForm($request, $this->form, 'gameEdit/settings?id='.$this->game->id);
 		$this->setTemplate('settingsEdit');
 	}
-	
+
 	public function executeTemplates($request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		if ( ! $this->_game->canBeObserved($this->sessionWebUser))
-		{
-			$this->forward('game', 'info');
-		}
+		$this->errorRedirectUnless(
+			$this->_game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
 		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
 		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
 	}
-	
+
 	public function executeTemplatesEdit(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		$this->errorRedirectUnless($this->game->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру'));
+		$this->errorRedirectUnless(
+			$this->game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
 		$this->form = new GameFormTemplates($this->game);
 	}
-		
+
 	public function executeTemplatesUpdate(sfWebRequest $request)
 	{
 		$this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
 		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->errorRedirectUnless(
+			$this->game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
 		$this->form = new GameFormTemplates($this->game);
-		$this->processForm($request, $this->form, 'game/templates?id='.$this->game->id);
+		$this->processForm($request, $this->form, 'gameEdit/templates?id='.$this->game->id);
 		$this->setTemplate('templatesEdit');
 	}
-	
+
 	public function executeTasks($request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		if ( ! $this->_game->canBeObserved($this->sessionWebUser))
-		{
-			$this->forward('game', 'info');
-		}
+		$this->errorRedirectUnless(
+			$this->_game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
 		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
 		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
-
 		$this->_tasks = Doctrine::getTable('Task')
 			->createQuery('t')->leftJoin('t.answers')->leftJoin('t.taskConstraints')->leftJoin('t.taskTransitions')
+			->select()->where('game_id = ?', $this->_game->id)
+			->orderBy('t.name')->execute();
+	}
+
+	public function executeTasksWeights($request)
+	{
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->errorRedirectUnless(
+			$this->_game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
+		$this->_tasks = Doctrine::getTable('Task')
+			->createQuery('t')
+			->select()->where('game_id = ?', $this->_game->id)
+			->orderBy('t.name')->execute();
+	}
+
+	public function executeTasksConstraints($request)
+	{
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->errorRedirectUnless(
+			$this->_game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
+		$this->_tasks = Doctrine::getTable('Task')
+			->createQuery('t')->leftJoin('t.taskConstraints')
+			->select()->where('game_id = ?', $this->_game->id)
+			->orderBy('t.name')->execute();
+	}
+
+	public function executeTasksTransitions($request)
+	{
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->errorRedirectUnless(
+			$this->_game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
+		);
+
+		$this->_tasks = Doctrine::getTable('Task')
+			->createQuery('t')->leftJoin('t.taskTransitions')
 			->select()->where('game_id = ?', $this->_game->id)
 			->orderBy('t.name')->execute();
 	}
@@ -128,14 +195,21 @@ class gameEditActions extends MyActions
 	//TODO: Заменить форму
 	public function executeNew(sfWebRequest $request)
 	{
-		$this->errorRedirectUnless(Game::isModerator($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'создавать игру'));
+		$this->errorRedirectUnless(
+			Game::isModerator($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'создавать игру')
+		);
+
 		$this->form = new GameFormPromo();
 	}
 
 	public function executeCreate(sfWebRequest $request)
 	{
-		$this->forward404Unless($request->isMethod(sfRequest::POST));
-		$this->errorRedirectUnless(Game::isModerator($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'создавать игру'));
+		$this->errorRedirectUnless(
+			Game::isModerator($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'создавать игру')
+		);
+
 		$this->form = new GameFormPromo();
 		$this->processForm($request, $this->form, 'game/index');
 		$this->setTemplate('new');
@@ -146,12 +220,16 @@ class gameEditActions extends MyActions
 		$this->forward404Unless($request->isMethod(sfRequest::DELETE));
 		$request->checkCSRFProtection();
 		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		$this->errorRedirectUnless(Game::isModerator($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'удалять игру'));
+		$this->errorRedirectUnless(
+			$this->game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage($this->sessionWebUser->login, 'удалять игру')
+		);
+
 		$this->game->delete();
 		$this->successRedirect('Игра успешно удалена.', 'game/index');
 	}
 
-	protected function processForm(sfWebRequest $request, sfForm $form, /*string*/ $successRetUrl)
+	protected function processForm(sfWebRequest $request, sfForm $form, $retUrl)
 	{
 		$form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
 
@@ -165,7 +243,7 @@ class gameEditActions extends MyActions
 			{
 				$this->errorMessage('Сохранить игру не удалось. Даты брифинга, начала, остановки, и подведения итогов игры стоят в неправильном порядке.');
 			}
-			if ( (Timing::strToDate($object->stop_datetime) - Timing::strToDate($object->start_datetime)) < $object->time_per_game*60 )
+			if ((Timing::strToDate($object->stop_datetime) - Timing::strToDate($object->start_datetime)) < $object->time_per_game*60)
 			{
 				$this->errorMessage('Сохранить игру не удалось. Даты начала и остановки игры должны отстоять друг от друга не менее, чем на отведенное на игру время.');
 			}
@@ -173,7 +251,7 @@ class gameEditActions extends MyActions
 			{
 				$object->initDefaults();
 				$object->save();
-				$this->successRedirect('Игра '.$object->name.' успешно сохранена.', $successRetUrl);
+				$this->successRedirect('Игра '.$object->name.' успешно сохранена.', $retUrl);
 			}
 		}
 		else
@@ -206,7 +284,10 @@ class gameEditActions extends MyActions
 				$this->team->getLeadersRaw()
 			);
 
-			$this->successRedirect('Отменена заявка команды '.$this->team->name.' на игру '.$this->game->name.'.');
+			$this->successRedirect(
+				'Отменена заявка команды '.$this->team->name.' на игру '.$this->game->name.'.',
+				'gameEdit/teams?id='.$this->game->id
+			);
 		}
 	}
 
@@ -225,9 +306,12 @@ class gameEditActions extends MyActions
 				'Ваша команда "'.$this->team->name.'" принята к участию в игре "'.$this->game->name.'"'."\n"
 				.'Афиша игры: http://'.SiteSettings::SITE_DOMAIN.'/game/info?id='.$this->game->id,
 				$this->team->getLeadersRaw()
-			);      
+			);
 
-			$this->successRedirect('Команда '.$this->team->name.' зарегистрирована на игру '.$this->game->name.'.');
+			$this->successRedirect(
+				'Команда '.$this->team->name.' зарегистрирована на игру '.$this->game->name.'.',
+				'gameEdit/teams?id='.$this->game->id
+			);
 		}
 	}
 
@@ -246,7 +330,10 @@ class gameEditActions extends MyActions
 				$this->team->getLeadersRaw()
 			);
 
-			$this->successRedirect('Команда '.$this->team->name.' снята с игры '.$this->game->name.'.');
+			$this->successRedirect(
+				'Команда '.$this->team->name.' снята с игры '.$this->game->name.'.',
+				'gameEdit/teams?id='.$this->game->id
+			);
 		}
 	}
 

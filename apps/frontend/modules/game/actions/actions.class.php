@@ -121,6 +121,53 @@ class gameActions extends MyActions
 		}
 	}
 
+
+	public function executeCancelJoin(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->forward404Unless($this->team = Team::byId($request->getParameter('teamId')), 'Команда не найдена.');
+		if (is_string($res = $this->game->cancelJoin($this->team, $this->sessionWebUser)))
+		{
+			$this->errorRedirect('Не удалось отменить заявку команды '.$this->team->name.' на игру '.$this->game->name.': '.$res);
+		}
+		else
+		{
+			Utils::sendNotifyGroup(
+				'Отклонена регистрация '.$this->team->name.' на игру '.$this->game->name,
+				'Заявка вашей команды "'.$this->team->name.'" на участие в игре "'.$this->game->name.'" отклонена.',
+				$this->team->getLeadersRaw()
+			);
+
+			$this->successRedirect(
+				'Отменена заявка команды '.$this->team->name.' на игру '.$this->game->name.'.',
+				'game/showTeams?id='.$this->game->id
+			);
+		}
+	}
+
+	public function executeRemoveTeam(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->forward404Unless($this->team = Team::byId($request->getParameter('teamId')), 'Команда не найдена.');
+		if (is_string($res = $this->game->unregisterTeam($this->team, $this->sessionWebUser)))
+		{
+			$this->errorRedirect('Не удалось снять команду '.$this->team->name.' с игры '.$this->game->name.': '.$res);
+		}
+		else
+		{
+			Utils::sendNotifyGroup(
+				'Команда '.$this->team->name.' снята с игры '.$this->game->name,
+				'Ваша команда "'.$this->team->name.'" снята с игры "'.$this->game->name.'".',
+				$this->team->getLeadersRaw()
+			);
+
+			$this->successRedirect(
+				'Команда '.$this->team->name.' снята с игры '.$this->game->name.'.',
+				'game/showTeams?id='.$this->game->id
+			);
+		}
+	}
+
 	private function checkIndexAccess()
 	{
 		$this->errorRedirectIf(
