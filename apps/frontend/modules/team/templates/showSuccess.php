@@ -1,4 +1,4 @@
-<?php include_partial('menu', array('_team' => $_team, '_activeItem' => $_webUser)) ?>
+<?php include_partial('menu', array('_team' => $_team, '_activeItem' => $_team->name)) ?>
 
 <table class="no-border">
 	<tbody>

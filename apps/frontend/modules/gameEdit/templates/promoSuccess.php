@@ -1,4 +1,4 @@
-<?php include_partial('menu', array('_game' => $_game, '_activeItem' => '')) ?>
+<?php include_partial('menu', array('_game' => $_game, '_activeItem' => $_game->name.' (Редактор)')) ?>
 
 <table class="no-border">
 	<tbody>

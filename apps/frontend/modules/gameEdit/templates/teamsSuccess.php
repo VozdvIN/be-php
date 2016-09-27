@@ -7,7 +7,7 @@
 <?php else: ?>
 <table class="no-border">
 	<thead>
-		<tr><th>Команда</th><th>Стартует</th><th>Автоматизация</th><th>&nbsp;</th></tr>
+		<tr><th>Команда</th><th>Стартует</th><th>ИИ</th><th>&nbsp;</th></tr>
 	</thead>
 	<tbody>
 		<?php foreach($_teamStates as $teamState): ?>
@@ -23,7 +23,7 @@
 							'items' => array(
 								'settings' => link_to('Настройки', 'teamState/edit?id='.$teamState->id),
 								'remove' => link_to(
-									'Снять с игры',
+									'Снять&nbsp;с&nbsp;игры',
 									'game/removeTeam?id='.$_game->id.'&teamId='.$teamState->team_id,
 									array(
 										'method' => 'post',

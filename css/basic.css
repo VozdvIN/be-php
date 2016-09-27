@@ -221,6 +221,8 @@ nav.menu ul li a.header {
 	background-color: #002a4c;
 }
 
-nav.menu ul li a.active, nav.menu ul li a.active:hover, nav.menu ul li a.header:hover { background-color: black; }
+nav.menu ul li a.active, nav.menu ul li a.active:hover, nav.menu ul li a.header:hover {
+	background-color: black;
+}
 
 nav.menu ul li a.active:hover { background-color: deepskyblue; }

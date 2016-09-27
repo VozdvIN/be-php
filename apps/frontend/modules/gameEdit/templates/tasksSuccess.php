@@ -5,7 +5,7 @@
 <table class="no-border">
 	<thead>
 		<tr><th rowspan="2">Название</th><th rowspan="2">Времени</th><th colspan="2">Ответов</th><th rowspan="2">Ошибок</th><th rowspan="2">Пауза</th><th rowspan="2">Команд</th></tr>
-		<tr><th>Всего</th><th>Зачетных</th></tr>
+		<tr><th>Всего</th><th>Min</th></tr>
 	</thead>
 	<tbody>
 		<?php foreach ($_tasks as $task): ?>

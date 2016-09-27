@@ -25,7 +25,7 @@ class TaskForm extends BaseTaskForm
         'name' => '*&nbsp;Внутреннее название:',
         'public_name' => '*&nbsp;Открытое название:',
         'time_per_task_local' => 'Длительность:',
-        'try_count_local' => '*&nbsp;Ошибок не более:',
+        'try_count_local' => 'Ошибок не более:',
         'manual_start' => 'Ручной старт:',
         'max_teams' => 'Команд на задании:',
         'locked' => 'Заблокировано:',

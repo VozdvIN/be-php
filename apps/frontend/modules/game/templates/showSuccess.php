@@ -1,4 +1,4 @@
-<?php include_partial('menu', array('_game' => $_game, '_activeItem' => 'Игры', '_editable' => $_canManage)) ?>
+<?php include_partial('menu', array('_game' => $_game, '_activeItem' => $_game->name, '_editable' => $_canManage)) ?>
 
 <?php $retUrlRaw = Utils::encodeSafeUrl('game/info?id='.$_game->id) ?>
 
