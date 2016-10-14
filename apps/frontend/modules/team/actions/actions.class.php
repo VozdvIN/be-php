@@ -39,13 +39,13 @@ class teamActions extends MyActions
 	public function executeShowGames(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->_team = Team::byId($request->getParameter('id')), 'Команда не найдена.');
-		$this->_teamStates = $this->_team->teamStates;
+		$this->_teamStates = $this->_team->getTeamStatesSorted();
 	}
 
 	public function executeShowAuthorsIndex(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->_team = Team::byId($request->getParameter('id')), 'Команда не найдена.');
-		$this->_games = $this->_team->games;
+		$this->_games = Game::getGamesTeamCreated($this->_team);
 		$this->_sessionCanManage =
 			$this->_team->isLeader($this->sessionWebUser)
 			|| $this->sessionWebUser->can(Permission::TEAM_MODER, $this->sessionWebUser->id);
@@ -54,13 +54,8 @@ class teamActions extends MyActions
 	public function executeShowAuthorsCreation(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->_team = Team::byId($request->getParameter('id')), 'Команда не найдена.');
-		
-		$this->_gameCreateRequests = Doctrine::getTable('GameCreateRequest')
-			->createQuery('gcr')
-			->select()
-			->orderBy('gcr.name')
-			->where('gcr.team_id = ?', $this->_team->id)
-			->execute();
+
+		$this->_gameCreateRequests = GameCreateRequest::getForTeam($this->_team);
 
 		$this->_sessionCanManage =
 			$this->_team->isLeader($this->sessionWebUser)

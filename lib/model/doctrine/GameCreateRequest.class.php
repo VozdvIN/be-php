@@ -26,7 +26,7 @@ class GameCreateRequest extends BaseGameCreateRequest implements IStored, IAuth
     return Utils::byId('GameCreateRequest', $id);
   }
 
-  //// IAuth ////
+	//// IAuth ////
 
 	static function isModerator(WebUser $account)
 	{
@@ -69,6 +69,21 @@ class GameCreateRequest extends BaseGameCreateRequest implements IStored, IAuth
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Возвращает список заявок на создание игр, поданных указанной командой.
+	 * 
+	 * @param  Team  $team 
+	 * @return Doctrine_Colleсtion<GameCreateRequest>
+	 */
+	public function getForTeam(Team $team)
+	{
+		return Doctrine::getTable('GameCreateRequest')
+			->createQuery('gcr')
+			->select()
+			->where('gcr.team_id = ?', $this->_team->id)
+			->execute();
 	}
 
   /**

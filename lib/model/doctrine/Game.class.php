@@ -488,6 +488,7 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
 			->createQuery('g')
 			->select()
 			->whereIn('g.team_id', $userTeamsIds)
+			->orderBy('g.start_datetime DESC')
 			->execute();
 
 		$result = new Doctrine_Collection('Game');
@@ -496,6 +497,22 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Возвращает список игр, в которых команда является организаторами, отсортированный по дате старта игры.
+	 * 
+	 * @param   Team  $team команда для отбора игр
+	 * @return  Doctrine_Collection<Game>
+	 */
+	public static function getGamesTeamCreated(Team $team)
+	{
+		return Doctrine::getTable('Game')
+			->createQuery('g')
+			->select()
+			->where('g.team_id = ?', $team->id)
+			->orderBy('g.start_datetime DESC')
+			->execute();
 	}
 
 	// Action

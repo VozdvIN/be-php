@@ -181,6 +181,21 @@ class Team extends BaseTeam implements IStored, IAuth, IRegion
 		return $result;
 	}
 
+	/**
+	 * Возвращает список игровых состояний команды, отсортированный по дате старта соответствующих игр.
+	 * 
+	 * @return Doctrine_Collection<TeamState>
+	 */
+	public function getTeamStatesSorted()
+	{
+		return Doctrine::getTable('TeamState')
+			->createQuery('ts')
+			->innerJoin('ts.Game')
+			->select()
+			->where('ts.team_id = ?', $this->id)
+			->orderBy('ts.Game.start_datetime DESC');
+	}
+
   /**
    * Подает заявку в команду.
    * Если игрок уже в команде, ничего не делает.
