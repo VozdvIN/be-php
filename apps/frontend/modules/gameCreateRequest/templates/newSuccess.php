@@ -1,4 +1,4 @@
-<h2>Подача заявки на создание игры</h2>
+<h2>Подача заявки на создание игры командой <?php echo Team::byId($form['team_id']->getValue()) ?></h2>
 
 <?php if (SystemSettings::getInstance()->email_game_create): ?>
 <p class="info">
@@ -15,5 +15,4 @@
 <p>
 	Позже руководитель игры может сменить игровой проект.
 </p>
-
-<?php include_partial('form', array('form' => $form)) ?>
+<?php include_partial('global/formCrud', array('form' => $form, 'module' => 'gameCreateRequest')) ?>
