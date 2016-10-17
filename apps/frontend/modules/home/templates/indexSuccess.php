@@ -10,7 +10,7 @@
 	</div><!--
  --><div style="display: inline-block;">
 		<article>
-			<?php echo ($footerArticle = Article::byName('Шаблонные-Шапка')) ? Utils::decodeBB($footerArticle->text) : '(Заполните статью \'Шаблонные-Шапка\')'; ?>
+			<?php include './config/layout/header.html'; ?>
 		</article>
 	</div>
 </div>
@@ -19,7 +19,7 @@
  --><div style="display:inline-block; width: 50%">
 		<div style="text-align: right; margin-right: 6px;">
 			<article>
-				<?php echo ($homeArticle = Article::byName('Шаблонные-Главная')) ? Utils::decodeBB($homeArticle->text) : 'Заполните статью \'Шаблонные-Главная\''; ?>
+				<?php include './config/layout/main.html'; ?>
 			</article>
 		</div>
 	</div><!--
@@ -57,7 +57,7 @@
 	</div><!--
  --><div style="display: inline-block; width: 70%">
 		<article>
-			<?php echo ($footerArticle = Article::byName('Шаблонные-Подвал')) ? Utils::decodeBB($footerArticle->text) : '(Заполните статью \'Шаблонные-Подвал\')'; ?>
+			<?php include './config/layout/footer.html'; ?>
 		</article>
 	</div>
 </div>

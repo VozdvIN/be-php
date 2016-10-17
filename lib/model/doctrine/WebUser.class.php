@@ -253,14 +253,12 @@ INSERT INTO granted_permissions(web_user_id, permission_id) VALUES ('1', '666');
     $isPermissionModer = $this->can(Permission::PERMISSION_MODER, 0);
     $isFullTeamModer = $this->can(Permission::TEAM_MODER, 0);
     $isFullGameModer = $this->can(Permission::GAME_MODER, 0);
-    $isFullArticleModer = $this->can(Permission::ARTICLE_MODER, 0);
-    
+
     if ($isAdmin
         || $isWebUserModer
         || $isPermissionModer
         || $isFullTeamModer
-        || $isFullGameModer
-        || $isFullArticleModer)
+        || $isFullGameModer)
     {
       return true;
     }
@@ -289,19 +287,7 @@ INSERT INTO granted_permissions(web_user_id, permission_id) VALUES ('1', '666');
       $partialGameModer = count($gameModerationPermissionIds) > 0;
     }
 
-    $partialArticleModer = false;
-    if ( ! $isFullArticleModer)
-    {
-      $articleModerationPermissionIds = Doctrine::getTable('GrantedPermission')
-          ->createQuery('gp')->select('gp.filter_id')
-          ->where('web_user_id = ?', $this->id)
-          ->andWhere('permission_id = ?', Permission::ARTICLE_MODER)
-          ->andWhere('deny <= 0')
-          ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-      $partialArticleModer = count($articleModerationPermissionIds) > 0;
-    }
-    
-    return $partialTeamModer || $partialGameModer || $partialArticleModer;
+    return $partialTeamModer || $partialGameModer;
   }
   
   /**

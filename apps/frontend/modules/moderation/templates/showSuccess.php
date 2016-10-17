@@ -77,17 +77,3 @@
 	<?php endforeach ?>
 </ul>
 <?php endif ?>
-
-<?php if ($_isFullArticleModer): ?>
-<h3>Статьи</h3>
-<p>
-	Вы можете редактировать <?php echo link_to('любую статью', 'article/index', array('target' => '_blank'))?>.
-</p>
-<?php elseif ($_articlesUnderModeration->count() > 0): ?>
-<h3>Статьи</h3>
-<ul>
-	<?php foreach ($_articlesUnderModeration as $article): ?>
-	<li><?php echo link_to($article->name, 'article/show?id='.$article->id) ?></li>
-	<?php endforeach ?>
-</ul>
-<?php endif ?>
