@@ -14,6 +14,7 @@
 		$css = array();
 	}
 /*
+<?php
 include_partial(
 	'global/actionsMenu',
 	array(
@@ -28,6 +29,7 @@ include_partial(
 		)
 	)
 );
+?>
 */
 ?>
 

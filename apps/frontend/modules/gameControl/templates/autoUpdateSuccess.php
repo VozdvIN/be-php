@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <h2>Пересчет состояния игры <?php echo $_game->name ?></h2>
 <span class="button"><?php echo link_to('Редактор', 'gameEdit/promo?id='.$_game->id, array('target' => '_blank')); ?></span>
-<span class="button"><?php echo link_to('Управление', 'gameControl/pilot?id='.$_game->id, array('target' => '_blank')); ?></span>
+<span class="button"><?php echo link_to('Управление', 'gameControl/state?id='.$_game->id, array('target' => '_blank')); ?></span>
 <p>
 	Следующий через <span id="timerDisplay">0</span>&nbsp;с
 	<iframe style="width: 100%; height: 2cm" id="pollResults" width="100%" height="100%" src="<?php echo url_for('gameControl/poll?id='.$_game->id); ?>"></iframe>

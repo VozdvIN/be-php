@@ -1,4 +1,4 @@
-<?php include_partial('header', array('_game' => $_game, '_isManager' => $_isManager, '_activeTab' => 'Бортмеханик')); ?>
+<?php include_partial('menu', array('_game' => $_game, '_activeItem' => 'Бортмеханик')); ?>
 
 <h3>Задания</h3>
 

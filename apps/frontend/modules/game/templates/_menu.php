@@ -15,11 +15,13 @@
 			$_game->name => 'game/show?id='.$_game->id,
 			'Команды' => 'game/showTeams?id='.$_game->id,
 			'Итоги' => 'game/showResults?id='.$_game->id,
-			'Редактор'.Utils::CROSS_PAGE_LINK_MARKER => 'gameEdit/promo?id='.$_game->id
+			'Редактор'.Utils::CROSS_PAGE_LINK_MARKER => 'gameEdit/promo?id='.$_game->id,
+			'Управление'.Utils::CROSS_PAGE_LINK_MARKER => 'gameControl/state?id='.$_game->id
 		),
 		'itemsVisible' => array(
 			'Итоги' => $_game->status >= Game::GAME_ARCHIVED,
-			'Редактор'.Utils::CROSS_PAGE_LINK_MARKER => $_editable
+			'Редактор'.Utils::CROSS_PAGE_LINK_MARKER => $_editable,
+			'Управление'.Utils::CROSS_PAGE_LINK_MARKER => $_editable
 		)
 	));
 ?>

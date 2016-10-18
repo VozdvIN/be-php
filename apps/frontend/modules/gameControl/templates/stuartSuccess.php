@@ -1,9 +1,4 @@
-<?php
-	include_partial('header', array(
-		'_game' => $_game,
-		'_isManager' => $_isManager,
-		'_activeTab' => 'Стюардесса'));
-?>
+<?php include_partial('menu', array('_game' => $_game, '_activeTab' => 'Стюардесса')); ?>
 
 <h3>Текущие результаты команд</h3>
 

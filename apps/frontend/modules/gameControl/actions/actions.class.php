@@ -8,31 +8,31 @@
 class gameControlActions extends MyActions
 {
 
+	public function executeState(sfRequest $request)
+	{
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
+
+		$this->errorRedirectUnless(
+			$this->_game->canBeObserved($this->sessionWebUser),
+			Utils::cannotMessage(
+				$this->sessionWebUser->login,
+				'просматривать игру'
+			)
+		);
+
+		$this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
+	}
+
+  /**
+   * @deprecated
+   */
   public function executePilot(sfRequest $request)
   {
-    $this->checkAndSetGame($request);
-    $this->errorRedirectUnless(
-        ($this->_game->canBeObserved($this->sessionWebUser)),
-        Utils::cannotMessage($this->sessionWebUser->login, 'просматривать игру')
-    );
-    $this->prefetchAll($request);
-    $this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
-  }
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
 
-  public function executeSturman(sfRequest $request)
-  {
-    $this->checkAndSetGame($request);
-    $this->errorRedirectUnless(
-        ($this->_game->canBeObserved($this->sessionWebUser)),
-        Utils::cannotMessage($this->sessionWebUser->login, 'просматривать игру')
-    );
-    $this->prefetchAll($request);
-    $this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
-  }
-
-  public function executeEngineer(sfRequest $request)
-  {
-    $this->checkAndSetGame($request);
     $this->errorRedirectUnless(
         ($this->_game->canBeObserved($this->sessionWebUser)),
         Utils::cannotMessage($this->sessionWebUser->login, 'просматривать игру')
@@ -43,12 +43,41 @@ class gameControlActions extends MyActions
 
   /**
    * @deprecated
-   * @param sfWebRequest $request 
-   * @return type
+   */
+  public function executeSturman(sfRequest $request)
+  {
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+
+    $this->errorRedirectUnless(
+        ($this->_game->canBeObserved($this->sessionWebUser)),
+        Utils::cannotMessage($this->sessionWebUser->login, 'просматривать игру')
+    );
+    $this->prefetchAll($request);
+    $this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
+  }
+
+  /**
+   * @deprecated
+   */
+  public function executeEngineer(sfRequest $request)
+  {
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+
+    $this->errorRedirectUnless(
+        ($this->_game->canBeObserved($this->sessionWebUser)),
+        Utils::cannotMessage($this->sessionWebUser->login, 'просматривать игру')
+    );
+    $this->prefetchAll($request);
+    $this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
+  }
+
+  /**
+   * @deprecated
    */
   public function executeStuart(sfRequest $request)
   {
-    $this->checkAndSetGame($request);
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+
     $this->errorRedirectUnless(
         ($this->_game->canBeObserved($this->sessionWebUser)),
         Utils::cannotMessage($this->sessionWebUser->login, 'просматривать игру')
@@ -56,122 +85,199 @@ class gameControlActions extends MyActions
     $this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
   }
 
-  public function executeVerify(sfWebRequest $request)
-  {
-    $this->checkPostAndCsrf($request);
-    $this->checkAndSetGame($request);
-    if (is_string($res = $this->_game->prepare($this->sessionWebUser)))
-    {
-      $this->errorRedirect('Выполнить предстартовую проверку игры '.$this->_game->name.' не удалось: '.$res);
-    }
-    if (is_array($res))
-    {
-      $this->report = $res;
-      $this->_game->save();
-    }
-    else
-    {
-      $this->_game->save();
-      $this->successRedirect('Игра '.$this->_game->name.' прошла предстартовую проверку без ошибок и замечаний.');
-    }
-  }
+	public function executeVerify(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->isMethod(sfRequest::POST));
+		$request->checkCSRFProtection();
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
 
-  /**
-   * @deprecated
-   * @param sfWebRequest $request 
-   * @return type
-   */
-  public function executeReport(sfWebRequest $request)
-  {
-    $this->checkAndSetGame($request);
-    $this->errorRedirectUnless(
-        ($this->_game->canBeObserved($this->sessionWebUser))
-        || ($this->_game->status >= Game::GAME_ARCHIVED),
-        Utils::cannotMessage($this->sessionWebUser->login, 'просматривать игру')
-    );
-	$this->prefetchAll($request);
-  }
-  
-  //// Game control
+		if (is_string($res = $this->_game->prepare($this->sessionWebUser)))
+		{
+			$this->errorRedirect(
+				'Выполнить предстартовую проверку игры '.$this->_game->name.' не удалось: '.$res,
+				'gameControl/state?id='.$this->_game->id
+			);
+		}
 
-  public function executeReset(sfWebRequest $request)
-  {
-    $this->checkPostAndCsrf($request);
-    $this->checkAndSetGame($request);
-    if (is_string($res = $this->_game->reset($this->sessionWebUser)))
-    {
-      $this->errorRedirect('Перезапустить игру '.$this->_game->name.' не удалось: '.$res);
-    }
-    $this->_game->save();
-    $this->successRedirect('Игра '.$this->_game->name.' успешно перезапущена.');
-  }
+		if (is_array($res))
+		{
+			$this->report = $res;
+			$this->_game->save();
+		}
+		else
+		{
+			$this->_game->save();
+			$this->successRedirect(
+				'Игра '.$this->_game->name.' прошла предстартовую проверку без ошибок и замечаний.',
+				'gameControl/state?id='.$this->_game->id
+			);
+		}
+	}
 
-  public function executeStart(sfWebRequest $request)
-  {
-    $this->checkPostAndCsrf($request);
-    $this->checkAndSetGame($request);
-    if (is_string($res = $this->_game->start($this->sessionWebUser)))
-    {
-      $this->errorRedirect('Запустить игру'.$this->_game->name.' не удалось: '.$res);
-    }
-    $this->_game->Save();
-    $this->successRedirect('Игра '.$this->_game->name.' успешно запущена.');
-  }  
-  
-  public function executeStop(sfWebRequest $request)
-  {
-    $this->checkPostAndCsrf($request);
-    $this->checkAndSetGame($request);
-    if (is_string($res = $this->_game->stop($this->sessionWebUser)))
-    {
-      $this->errorRedirect('Остановить игру'.$this->_game->name.' не удалось: '.$res);
-    }
-    $this->_game->save();
-    $this->successRedirect('Игра '.$this->_game->name.' успешно остановлена.');
-  }  
-  
-  public function executeClose(sfWebRequest $request)
-  {
-    $this->checkPostAndCsrf($request);
-    $this->checkAndSetGame($request);
-    if (is_string($res = $this->_game->close($this->sessionWebUser)))
-    {
-      $this->errorRedirect('Сдать игру'.$this->_game->name.' в архив не удалось: '.$res);
-    }
-    $this->_game->save();
-    $this->successRedirect('Игра '.$this->_game->name.' успешно сдана в архив.');
-  }
-  
-  public function executeUpdate(sfWebRequest $request)
-  {
-    $this->checkPostAndCsrf($request);
-    $this->checkAndSetGame($request);
-    if (is_string($res = $this->_game->updateState($this->sessionWebUser)))
-    {
-      $this->errorRedirect('Пересчитать состояние игры '.$this->_game->name.' не удалось: '.$res);
-    }
-    $this->successRedirect('Состояние игры '.$this->_game->name.' успешно пересчитано в '.Timing::timeToStr(time()).'.');
-  }
-  
-  public function executeAutoUpdate(sfWebRequest $request)
-  {
-    $this->checkAndSetGame($request);
-    $this->errorRedirectUnless($this->_game->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'обновлять состояние игры'));
-  }
+	public function executeReset(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->isMethod(sfRequest::POST));
+		$request->checkCSRFProtection();
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
 
-  public function executePoll(sfWebRequest $request)
-  {
-    $this->checkAndSetGame($request);
-    $this->errorRedirectUnless($this->_game->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'обновлять состояние игры'));
-    if (is_bool($res = $this->_game->updateState($this->sessionWebUser)))
-    {
-      $this->_result = 'Ok';
-    }
-    else
-    {
-      $this->_result = var_dump($res); //TODO: Переделать во что-то более дружественное.
-    }
-  }
+		if (is_string($res = $this->_game->reset($this->sessionWebUser)))
+		{
+			$this->errorRedirect(
+				'Перезапустить игру '.$this->_game->name.' не удалось: '.$res,
+				'gameControl/state?id='.$this->_game->id
+			);
+		}
+
+		$this->_game->save();
+		$this->successRedirect(
+			'Игра '.$this->_game->name.' успешно перезапущена.',
+			'gameControl/state?id='.$this->_game->id
+		);
+	}
+
+	public function executeStart(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->isMethod(sfRequest::POST));
+		$request->checkCSRFProtection();
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
+
+		if (is_string($res = $this->_game->start($this->sessionWebUser)))
+		{
+			$this->errorRedirect(
+				'Запустить игру'.$this->_game->name.' не удалось: '.$res,
+				'gameControl/state?id='.$this->_game->id
+			);
+		}
+
+		$this->_game->Save();
+		$this->successRedirect(
+			'Игра '.$this->_game->name.' успешно запущена.',
+			'gameControl/state?id='.$this->_game->id
+		);
+	}
+
+	public function executeStop(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->isMethod(sfRequest::POST));
+		$request->checkCSRFProtection();
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
+
+		if (is_string($res = $this->_game->stop($this->sessionWebUser)))
+		{
+			$this->errorRedirect(
+				'Остановить игру'.$this->_game->name.' не удалось: '.$res,
+				'gameControl/state?id='.$this->_game->id
+			);
+		}
+
+		$this->_game->save();
+		$this->successRedirect(
+			'Игра '.$this->_game->name.' успешно остановлена.',
+			'gameControl/state?id='.$this->_game->id
+		);
+	}
+
+	public function executeClose(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->isMethod(sfRequest::POST));
+		$request->checkCSRFProtection();
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
+
+		if (is_string($res = $this->_game->close($this->sessionWebUser)))
+		{
+			$this->errorRedirect(
+				'Сдать игру '.$this->_game->name.' в архив не удалось: '.$res,
+				'gameControl/state?id='.$this->_game->id
+			);
+		}
+
+		$this->_game->save();
+		$this->successRedirect(
+			'Игра '.$this->_game->name.' успешно сдана в архив.',
+			'gameControl/state?id='.$this->_game->id
+		);
+	}
+
+	public function executeUpdate(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->isMethod(sfRequest::POST));
+		$request->checkCSRFProtection();
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
+
+		if (is_string($res = $this->_game->updateState($this->sessionWebUser)))
+		{
+			$this->errorRedirect(
+				'Пересчитать состояние игры '.$this->_game->name.' не удалось: '.$res,
+				'gameControl/state?id='.$this->_game->id
+			);
+		}
+
+		$this->successRedirect(
+			'Состояние игры '.$this->_game->name.' успешно пересчитано в '.Timing::timeToStr(time()).'.',
+			'gameControl/state?id='.$this->_game->id
+		);
+	}
+
+	public function executeAutoUpdate(sfWebRequest $request)
+	{
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
+
+		$this->errorRedirectUnless(
+			$this->_game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage(
+				$this->sessionWebUser->login,
+				'обновлять состояние игры',
+				'gameControl/state?id='.$this->_game->id
+			)
+		);
+	}
+
+	public function executePoll(sfWebRequest $request)
+	{
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
+
+		$this->errorRedirectUnless(
+			$this->_game->canBeManaged($this->sessionWebUser),
+			Utils::cannotMessage(
+				$this->sessionWebUser->login,
+				'обновлять состояние игры',
+				'gameControl/state?id='.$this->_game->id
+			)
+		);
+
+		if (is_bool($res = $this->_game->updateState($this->sessionWebUser)))
+		{
+			$this->_result = 'Ok';
+		}
+		else
+		{
+			$this->_result = var_dump($res); //TODO: Переделать во что-то более дружественное.
+		}
+	}
 
 public function executeSetNext(sfWebRequest $request)
 {
@@ -186,12 +292,15 @@ public function executeSetNext(sfWebRequest $request)
 			if (is_string($res = $this->_teamState->setNextTask(null, $this->sessionWebUser)))
 			{
 				$this->errorRedirect(
-					'Отменить команде '.$this->_teamState->Team->name.' следующее задание не удалось: '.$res
+					'Отменить команде '.$this->_teamState->Team->name.' следующее задание не удалось: '.$res,
+					'gameControl/routes?id='.$this->_game->id
 				);
 			}
+
 			$this->_teamState->save();
 			$this->successRedirect(
-				'Команде '.$this->_teamState->Team->name.' отменено следующее задание.'
+				'Команде '.$this->_teamState->Team->name.' отменено следующее задание.',
+				'gameControl/routes?id='.$this->_game->id
 			);
 		}
 		else
@@ -200,12 +309,14 @@ public function executeSetNext(sfWebRequest $request)
 			if (is_string($res = $this->_teamState->setNextTask($task, $this->sessionWebUser)))
 			{
 				$this->errorRedirect(
-					'Назначить команде '.$this->_teamState->Team->name.' следующее задание не удалось: '.$res
+					'Назначить команде '.$this->_teamState->Team->name.' следующее задание не удалось: '.$res,
+					'gameControl/routes?id='.$this->_game->id
 				);
 			}
 			$this->_teamState->save();
 			$this->successRedirect(
-				'Команде '.$this->_teamState->Team->name.' успешно назначено следующее задание.'
+				'Команде '.$this->_teamState->Team->name.' успешно назначено следующее задание.',
+				'gameControl/routes?id='.$this->_game->id
 			);
 		}
 	}
@@ -241,17 +352,16 @@ public function executeSetNext(sfWebRequest $request)
 			&& ($this->_tasksNonSequence->count() <= 0)
 			&& ($this->_tasksLocked->count() <= 0) )
 		{
-			$this->errorRedirect('У команды '.$this->_teamState->Team->name.' нет доступных для выдачи заданий.');
+			$this->errorRedirect(
+				'У команды '.$this->_teamState->Team->name.' нет доступных для выдачи заданий.',
+				'gameControl/state?id='.$this->_game->id
+			);
 		}
 	}
 }
 
-	//// Self
-
 	/**
 	 * @deprecated
-	 * @param sfRequest $request 
-	 * @return type
 	 */
 	// TODO: Выяснить целесообразность этой штуки
 	protected function prefetchAll(sfRequest $request)
@@ -327,18 +437,6 @@ public function executeSetNext(sfWebRequest $request)
 
 		$this->_currentTaskStatesIndex = $currentTaskStatesIndex;
 	}
-
-  protected function checkPostAndCsrf(sfRequest $request)
-  {
-    $this->forward404Unless($request->isMethod(sfRequest::POST));
-    $request->checkCSRFProtection();
-  }
-
-  protected function checkAndSetGame(sfRequest $request)
-  {
-    $this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-  }
-  
 }
 
 ?>
