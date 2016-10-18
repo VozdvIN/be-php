@@ -8,10 +8,10 @@
 
 <p>
 	<?php if ($_teamState->ai_enabled): ?>
-	<span class="button-info"><?php echo link_to('Использовать автовыбор', 'gameControl/setNext?teamState='.$_teamState->id.'&taskId=0&returl='.$_retUrl, array ('method' => 'post')); ?></span>
+	<span class="button-info"><?php echo link_to('Использовать автовыбор', 'gameControl/setNext?teamState='.$_teamState->id.'&taskId=0', array ('method' => 'post')); ?></span>
 	<?php else: ?>
 		<?php if ($_teamState->task_id > 0): ?>
-	<span class="button-warn"><?php echo link_to('Отменить выбор назначенного задания', 'gameControl/setNext?teamState='.$_teamState->id.'&taskId=0&returl='.$_retUrl, array ('method' => 'post')); ?></span>
+	<span class="button-warn"><?php echo link_to('Отменить выбор назначенного задания', 'gameControl/setNext?teamState='.$_teamState->id.'&taskId=0', array ('method' => 'post')); ?></span>
 		<?php endif ?>
 	<?php endif ?>
 </p>
@@ -39,7 +39,7 @@
 						?>
 					</td>
 					<td>
-						<span class="button-info"><?php echo link_to('Назначить', 'gameControl/setNext?teamState='.$_teamState->id.'&taskId='.$task->id.'&returl='.$_retUrl, array ('method' => 'post')) ?></span>
+						<span class="button-info"><?php echo link_to('Назначить', 'gameControl/setNext?teamState='.$_teamState->id.'&taskId='.$task->id, array ('method' => 'post')) ?></span>
 					</td>			
 				</tr>
 			<?php endforeach; ?>
@@ -59,7 +59,7 @@
 						?>
 					</td>
 					<td>
-						<span class="button-info"><?php echo link_to('Назначить', 'gameControl/setNext?teamState='.$_teamState->id.'&taskId='.$task->id.'&returl='.$_retUrl, array ('method' => 'post')) ?></span>
+						<span class="button-info"><?php echo link_to('Назначить', 'gameControl/setNext?teamState='.$_teamState->id.'&taskId='.$task->id, array ('method' => 'post')) ?></span>
 					</td>			
 				</tr>
 			<?php endforeach; ?>
@@ -79,7 +79,7 @@
 						?>
 					</td>
 					<td>
-						<span class="button-warn"><?php echo link_to('Назначить', 'gameControl/setNext?teamState='.$_teamState->id.'&taskId='.$task->id.'&returl='.$_retUrl, array ('method' => 'post')) ?></span>
+						<span class="button-warn"><?php echo link_to('Назначить', 'gameControl/setNext?teamState='.$_teamState->id.'&taskId='.$task->id, array ('method' => 'post')) ?></span>
 					</td>			
 				</tr>
 			<?php endforeach; ?>
@@ -99,7 +99,7 @@
 						?>
 					</td>
 					<td>
-						<span class="button-warn"><?php echo link_to('Назначить', 'gameControl/setNext?teamState='.$_teamState->id.'&taskId='.$task->id.'&returl='.$_retUrl, array ('method' => 'post')) ?></span>
+						<span class="button-warn"><?php echo link_to('Назначить', 'gameControl/setNext?teamState='.$_teamState->id.'&taskId='.$task->id, array ('method' => 'post')) ?></span>
 					</td>			
 				</tr>
 			<?php endforeach; ?>

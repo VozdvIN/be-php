@@ -23,8 +23,8 @@
 				<span class="button-warn">
 					<?php
 						echo $grantedPermission->deny
-							? link_to('Снять', 'grantedPermission/delete?id='.$grantedPermission->id.'&returl='.$retUrlRaw, array('method' => 'delete', 'confirm' => 'Снять с пользователя '.$_webUser->login.' запрет '.$grantedPermission->Permission->description.'?'))
-							: link_to('Отозвать', 'grantedPermission/delete?id='.$grantedPermission->id.'&returl='.$retUrlRaw, array('method' => 'delete', 'confirm' => 'Отозвать у пользователя '.$_webUser->login.' право '.$grantedPermission->Permission->description.'?'));
+							? link_to('Снять', 'grantedPermission/delete?id='.$grantedPermission->id, array('method' => 'delete', 'confirm' => 'Снять с пользователя '.$_webUser->login.' запрет '.$grantedPermission->Permission->description.'?'))
+							: link_to('Отозвать', 'grantedPermission/delete?id='.$grantedPermission->id, array('method' => 'delete', 'confirm' => 'Отозвать у пользователя '.$_webUser->login.' право '.$grantedPermission->Permission->description.'?'));
 					?>
 				</span>
 			</td>

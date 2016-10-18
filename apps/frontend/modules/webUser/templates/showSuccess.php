@@ -1,5 +1,3 @@
-<?php $retUrlRaw = Utils::encodeSafeUrl('webUser/show?id='.$_webUser->id); ?>
-
 <?php include_partial('menu', array('_webUser' => $_webUser, '_activeItem' => $_webUser->login, '_isSelf' => $_isSelf)) ?>
 
 <?php if ( ! $_webUser->is_enabled): ?>

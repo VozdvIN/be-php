@@ -1,11 +1,10 @@
 <?php
 include_partial('menu', array('_activeItem' => 'Ответы', '_teamState' => $teamState));
 $form = new SimpleAnswerForm();
-$retUrl = Utils::encodeSafeUrl(url_for('play/answers?id='.$teamState->id));
 ?>
 
 <?php if ($taskState->status == TaskState::TASK_ACCEPTED): ?>
-<form action="<?php echo url_for('taskState/postAnswers').'?id='.$taskState->id.'&returl='.$retUrl; ?>" method="post">
+<form action="<?php echo url_for('taskState/postAnswers').'?id='.$taskState->id; ?>" method="post">
 	<table class="no-border" style="width: 100%">
 		<tr>
 			<td><?php echo $form['value']->render() ?></td>

@@ -1,5 +1,7 @@
 <?php
 
+//TODO: Адреса возврата при операциях с игрой
+
 /**
  * Контроллер управления игрой.
  */
@@ -156,7 +158,7 @@ class gameControlActions extends MyActions
     $this->checkAndSetGame($request);
     $this->errorRedirectUnless($this->_game->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'обновлять состояние игры'));
   }
-  
+
   public function executePoll(sfWebRequest $request)
   {
     $this->checkAndSetGame($request);
@@ -170,72 +172,81 @@ class gameControlActions extends MyActions
       $this->_result = var_dump($res); //TODO: Переделать во что-то более дружественное.
     }
   }
-  
-  public function executeSetNext(sfWebRequest $request)
-  {
-    $this->forward404Unless($this->_teamState = TeamState::byId($request->getParameter('teamState')), 'Состояние команды не найдено.');
-    $taskId = $request->getParameter('taskId', -1);
-    $this->_retUrl = $this->retUrlRaw;
 
-    if ($taskId > -1)
-    {
-      // Диалог выполнен, задание выбрано
-      if ($taskId == 0)
-      {
-        if (is_string($res = $this->_teamState->setNextTask(null, $this->sessionWebUser)))
-        {
-          $this->errorRedirect('Отменить команде '.$this->_teamState->Team->name.' следующее задание не удалось: '.$res);
-        }
-        $this->_teamState->save();
-        $this->successRedirect('Команде '.$this->_teamState->Team->name.' отменено следующее задание.');
-      }
-      else
-      {
-        $this->forward404Unless($task = Task::byId($taskId), 'Задание не найдено.');
-        if (is_string($res = $this->_teamState->setNextTask($task, $this->sessionWebUser)))
-        {
-          $this->errorRedirect('Назначить команде '.$this->_teamState->Team->name.' следующее задание не удалось: '.$res);
-        }
-        $this->_teamState->save();
-        $this->successRedirect('Команде '.$this->_teamState->Team->name.' успешно назначено следующее задание.');
-      }
-    }
-    else
-    {
-      // Диалог только что открыт, надо сформировать списки для выбора.
-      $tasksAll = Doctrine::getTable('Task')
-          ->createQuery('t')
-          ->select()
-          ->where('t.game_id = ?', $this->_teamState->game_id)
-          ->orderBy('t.name')
-          ->execute();
-      $tasksNonBlocked = Doctrine::getTable('Task')
-          ->createQuery('t')
-          ->select()
-          ->where('t.game_id = ?', $this->_teamState->game_id)
-          ->andWhere('t.locked = ?', false)
-          ->orderBy('t.name')
-          ->execute();
-      $tasksAvailableAll = $this->_teamState->getTasksAvailableAll();
-      $tasksKnown = $this->_teamState->getKnownTasks();
-      $tasksAvailableManual = $this->_teamState->getTasksAvailableForManualSelect();
-      
-      $this->_tasksInSequenceManual = Task::filterTasks($tasksNonBlocked, $tasksAvailableManual);
-      $this->_tasksInSequence = Task::filterTasks($tasksNonBlocked, $tasksAvailableAll);
-      $this->_tasksNonSequence = Task::excludeTasks(Task::excludeTasks($tasksNonBlocked, $tasksKnown), $tasksAvailableAll);
-      $this->_tasksLocked = Task::excludeTasks(Task::excludeTasks($tasksAll, $tasksNonBlocked), $tasksKnown);
-      
-      if (    ($this->_tasksInSequenceManual->count() <= 0)
-           && ($this->_tasksInSequence->count() <= 0)
-           && ($this->_tasksNonSequence->count() <= 0)
-           && ($this->_tasksLocked->count() <= 0) )
-      {
-        $this->errorRedirect('У команды '.$this->_teamState->Team->name.' нет доступных для выдачи заданий.');
-      }
-    }
-  }  
-  
-  //// Self
+public function executeSetNext(sfWebRequest $request)
+{
+	$this->forward404Unless($this->_teamState = TeamState::byId($request->getParameter('teamState')), 'Состояние команды не найдено.');
+	$taskId = $request->getParameter('taskId', -1);
+
+	if ($taskId > -1)
+	{
+		// Диалог выполнен, задание выбрано
+		if ($taskId == 0)
+		{
+			if (is_string($res = $this->_teamState->setNextTask(null, $this->sessionWebUser)))
+			{
+				$this->errorRedirect(
+					'Отменить команде '.$this->_teamState->Team->name.' следующее задание не удалось: '.$res
+				);
+			}
+			$this->_teamState->save();
+			$this->successRedirect(
+				'Команде '.$this->_teamState->Team->name.' отменено следующее задание.'
+			);
+		}
+		else
+		{
+			$this->forward404Unless($task = Task::byId($taskId), 'Задание не найдено.');
+			if (is_string($res = $this->_teamState->setNextTask($task, $this->sessionWebUser)))
+			{
+				$this->errorRedirect(
+					'Назначить команде '.$this->_teamState->Team->name.' следующее задание не удалось: '.$res
+				);
+			}
+			$this->_teamState->save();
+			$this->successRedirect(
+				'Команде '.$this->_teamState->Team->name.' успешно назначено следующее задание.'
+			);
+		}
+	}
+	else
+	{
+		// Диалог только что открыт, надо сформировать списки для выбора.
+		$tasksAll = Doctrine::getTable('Task')
+			->createQuery('t')
+			->select()
+			->where('t.game_id = ?', $this->_teamState->game_id)
+			->orderBy('t.name')
+			->execute();
+
+		$tasksNonBlocked = Doctrine::getTable('Task')
+			->createQuery('t')
+			->select()
+			->where('t.game_id = ?', $this->_teamState->game_id)
+			->andWhere('t.locked = ?', false)
+			->orderBy('t.name')
+			->execute();
+
+		$tasksAvailableAll = $this->_teamState->getTasksAvailableAll();
+		$tasksKnown = $this->_teamState->getKnownTasks();
+		$tasksAvailableManual = $this->_teamState->getTasksAvailableForManualSelect();
+
+		$this->_tasksInSequenceManual = Task::filterTasks($tasksNonBlocked, $tasksAvailableManual);
+		$this->_tasksInSequence = Task::filterTasks($tasksNonBlocked, $tasksAvailableAll);
+		$this->_tasksNonSequence = Task::excludeTasks(Task::excludeTasks($tasksNonBlocked, $tasksKnown), $tasksAvailableAll);
+		$this->_tasksLocked = Task::excludeTasks(Task::excludeTasks($tasksAll, $tasksNonBlocked), $tasksKnown);
+
+		if (($this->_tasksInSequenceManual->count() <= 0)
+			&& ($this->_tasksInSequence->count() <= 0)
+			&& ($this->_tasksNonSequence->count() <= 0)
+			&& ($this->_tasksLocked->count() <= 0) )
+		{
+			$this->errorRedirect('У команды '.$this->_teamState->Team->name.' нет доступных для выдачи заданий.');
+		}
+	}
+}
+
+	//// Self
 
 	/**
 	 * @deprecated

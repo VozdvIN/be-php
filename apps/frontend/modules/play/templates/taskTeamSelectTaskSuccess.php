@@ -1,7 +1,4 @@
-<?php
-include_partial('menu', array('_activeItem' => 'Задание', '_teamState' => $teamState));
-$retUrlRaw = Utils::encodeSafeUrl(url_for('play/task?id='.$_teamState->id));
-?>
+<?php include_partial('menu', array('_activeItem' => 'Задание', '_teamState' => $teamState)); ?>
 
 <?php if ( ! $isLeader): ?>
 <p class="info">
@@ -17,7 +14,7 @@ $retUrlRaw = Utils::encodeSafeUrl(url_for('play/task?id='.$_teamState->id));
 	<?php foreach ($availableTasksManual as $task): ?>
 	<li>
 		<?php if ($isLeader): ?>
-		<span class="safeAction"><?php echo link_to($task->public_name, 'gameControl/setNext?teamState='.$teamState->id.'&taskId='.$task->id.'&returl='.$retUrlRaw, array('method' => 'post', 'confirm' => 'Вы уверены, что хотите приступить к выполнению задания "'.$task->public_name.'"?')) ?></span>
+		<span class="safeAction"><?php echo link_to($task->public_name, 'gameControl/setNext?teamState='.$teamState->id.'&taskId='.$task->id, array('method' => 'post', 'confirm' => 'Вы уверены, что хотите приступить к выполнению задания "'.$task->public_name.'"?')) ?></span>
 		<?php else: ?>
 		<?php echo $task->public_name ?>
 	<?php endif ?>

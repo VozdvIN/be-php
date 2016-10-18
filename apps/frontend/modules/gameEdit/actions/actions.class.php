@@ -4,7 +4,6 @@ class gameEditActions extends MyActions
 	public function preExecute()
 	{
 		parent::preExecute();
-		$this->retUrl = $this->retUrlRaw;
 	}
 
 	public function executePromo(sfWebRequest $request)
@@ -229,7 +228,7 @@ class gameEditActions extends MyActions
 		$this->successRedirect('Игра успешно удалена.', 'game/index');
 	}
 
-	protected function processForm(sfWebRequest $request, sfForm $form, $retUrl)
+	protected function processForm(sfWebRequest $request, sfForm $form, $redirectUrl)
 	{
 		$form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
 
@@ -251,7 +250,7 @@ class gameEditActions extends MyActions
 			{
 				$object->initDefaults();
 				$object->save();
-				$this->successRedirect('Игра '.$object->name.' успешно сохранена.', $retUrl);
+				$this->successRedirect('Игра '.$object->name.' успешно сохранена.', $redirectUrl);
 			}
 		}
 		else

@@ -1,11 +1,4 @@
-<?php
-	$retUrlRaw = Utils::encodeSafeUrl(url_for('gameControl/engineer?id='.$_game->id));
-	include_partial('header', array(
-		'_game' => $_game,
-		'_isManager' => $_isManager,
-		'_retUrlRaw' => $retUrlRaw,
-		'_activeTab' => 'Бортмеханик'));
-?>
+<?php include_partial('header', array('_game' => $_game, '_isManager' => $_isManager, '_activeTab' => 'Бортмеханик')); ?>
 
 <h3>Задания</h3>
 

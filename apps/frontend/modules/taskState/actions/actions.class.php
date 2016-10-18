@@ -13,6 +13,7 @@ class taskStateActions extends MyActions
 
 	public function executePostAnswers(sfWebRequest $request)
 	{
+		//TODO: Возврат на страницу задания, вкладка "ответы"
 		$this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
 		$this->forward404Unless($taskState = TaskState::byId($request->getParameter('id')), 'Состояние задания не найдено.');
 		$this->errorRedirectUnless($taskState->canBeObserved($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'отправлять ответы команды'));
@@ -49,7 +50,7 @@ class taskStateActions extends MyActions
 			else
 			{
 				// Строка с ответами пуста, просто перейдем обратно.
-				$this->redirect($this->retUrlDecoded);
+				$this->successRedirect();
 			}
 		}
 		else

@@ -1,7 +1,5 @@
 <?php include_partial('menu', array('_game' => $_game, '_activeItem' => $_game->name, '_editable' => $_canManage)) ?>
 
-<?php $retUrlRaw = Utils::encodeSafeUrl('game/info?id='.$_game->id) ?>
-
 <?php if (($_game->status <= Game::GAME_VERIFICATION) && $_canPostJoin): ?>
 	<span class="button-info"><?php echo link_to('Подать заявку на участие', 'game/postJoinManual?id='.$_game->id, array('method' => 'post')); ?></span>
 <?php endif ?>

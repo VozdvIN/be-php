@@ -220,7 +220,10 @@ class teamActions extends MyActions
 			$this->candidate
 		);
 
-		$this->successRedirect($this->candidate->login.' назначен капитаном команды '.$this->team->name.'.', 'team/showCrewIndex?id='.$this->team->id);
+		$this->successRedirect(
+			$this->candidate->login.' назначен капитаном команды '.$this->team->name.'.',
+			'team/showCrewIndex?id='.$this->team->id
+		);
 	}
 
 	public function executeUnregister(sfWebRequest $request)
@@ -237,7 +240,10 @@ class teamActions extends MyActions
 			$this->candidate
 		);
 
-		$this->successRedirect($this->candidate->login.' исключен из состава команды '.$this->team->name.'.', 'team/showCrewIndex?id='.$this->team->id);
+		$this->successRedirect(
+			$this->candidate->login.' исключен из состава команды '.$this->team->name.'.',
+			'team/showCrewIndex?id='.$this->team->id
+		);
 	}
 
 	public function executeRegisterPlayer(sfWebRequest $request)
@@ -256,7 +262,10 @@ class teamActions extends MyActions
 			}
 		}
 		$this->team = $team;
-		$this->retUrl = $this->retUrlRaw;
+		$this->successRedirect(
+			$webUser->login.' включен в состав команды '.$this->team->name.'.',
+			'team/showCrewIndex?id='.$this->team->id
+		);
 	}
 
 	/**

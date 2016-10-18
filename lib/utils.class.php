@@ -489,20 +489,6 @@ class Utils
 	}
 
 	/**
-	 * Корректно формирует значение по умолчанию параметра returl.
-	 *
-	 * @param   sfRequest   $request  HTTP-запрос
-	 * @param   string      $default  Значение по умолчанию
-	 * @return  string
-	 */
-	public static function getReturnUrl(sfRequest $request, $default = 'home/index')
-	{
-		$retUrl = $request->getParameter('returl', false);
-
-		return ( ! $retUrl) ? $default : Utils::decodeSafeUrl($retUrl);
-	}
-
-	/**
 	 * Создает и настраивает экземпляр SwiftMailer, параметры берутся из
 	 * системных настроек. При неудаче соединения возвращает false.
 	 * 

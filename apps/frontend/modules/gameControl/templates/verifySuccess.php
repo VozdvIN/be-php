@@ -60,7 +60,7 @@
 
 <p>
 	<?php if ( ! $cannotStart): ?>
-	<span class="button-warn"><?php echo link_to('Запустить игру', 'gameControl/start?id='.$_game->id.'&returl='.Utils::encodeSafeUrl(url_for('gameControl/pilot?id='.$_game->id)), array('method' => 'post', 'confirm' => 'Запустить игру '.$_game->name.'?')); ?></span>
+	<span class="button-warn"><?php echo link_to('Запустить игру', 'gameControl/start?id='.$_game->id, array('method' => 'post', 'confirm' => 'Запустить игру '.$_game->name.'?')); ?></span>
 	<?php endif; ?>
-	<span class="button-info"><?php echo link_to('Повторить проверку', 'gameControl/verify?id='.$_game->id.'&returl='.Utils::encodeSafeUrl(url_for('gameControl/pilot?id='.$_game->id)), array('method' => 'post')); ?></span>
+	<span class="button-info"><?php echo link_to('Повторить проверку', 'gameControl/verify?id='.$_game->id, array('method' => 'post')); ?></span>
 </p>

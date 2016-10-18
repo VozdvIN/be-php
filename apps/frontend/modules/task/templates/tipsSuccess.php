@@ -1,7 +1,4 @@
-<?php
-	include_partial('taskMenu', array('_task' => $_task, '_activeItem' => 'Подсказки'));
-	$retUrlRaw = Utils::encodeSafeUrl(url_for('task/tips?id='.$_task->id));
-?>
+<?php include_partial('taskMenu', array('_task' => $_task, '_activeItem' => 'Подсказки')); ?>
 
 <table>
 	<thead>
@@ -48,7 +45,7 @@
 					<?php
 						echo link_to(
 							'Удалить',
-							'tip/delete?id='.$tip->id.'&returl='.$retUrlRaw,
+							'tip/delete?id='.$tip->id,
 							array(
 								'method' => 'delete',
 								'confirm' => 'Вы действительно хотите удалить подсказку '.$tip->name.' к заданию '.$tip->Task->name.'?'

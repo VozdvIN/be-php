@@ -1,7 +1,4 @@
-<?php
-	include_partial('taskMenu', array('_task' => $_task, '_activeItem' => 'Фильтры'));
-	$retUrlRaw = Utils::encodeSafeUrl(url_for('task/transitions?id='.$_task->id));
-?>
+<?php include_partial('taskMenu', array('_task' => $_task, '_activeItem' => 'Фильтры')); ?>
 
 <table class="no-border">
 	<thead>
@@ -48,7 +45,7 @@
 					<?php
 						echo link_to(
 							'Удалить',
-							'taskTransition/delete?id='.$taskTransition->id.'&returl='.$retUrlRaw,
+							'taskTransition/delete?id='.$taskTransition->id,
 							array(
 								'method' => 'delete',
 								'confirm' => 'Вы действительно хотите удалить фильтр перехода с задания '.$_task->name.' на задание '.( $targetTask ? $targetTask->name : '(отсутствует)').'?'

@@ -65,12 +65,10 @@ class teamCreateRequestActions extends MyActions
 			if ((Utils::byField('Team', 'name', $object->name) === false)
 				&& (Utils::byField('TeamCreateRequest', 'name', $object->name) === false))
 			{
-				$retUrl = '/webUser/showTeamsCreation?id='.$object->web_user_id;
-
 				$this->errorRedirectUnless(
 					$this->canCreateNewRequest($object->web_user_id),
 					'От имени одного человека нельзя подавать более '.TeamCreateRequest::MAX_REQUESTS_PER_USER.' заявок на создание команды. Отзовите предыдущие заявки или дождитесь их утверждения.',
-					$retUrl
+					'/webUser/showTeamsCreation?id='.$object->web_user_id
 				);
 
 				$object->tag = Utils::generateActivationKey();
@@ -93,7 +91,7 @@ class teamCreateRequestActions extends MyActions
 						$this->newTeamCreateRequestNotify($object);
 						$this->successRedirect(
 							'Заявка на создание команды '.$object->name.' принята. Вам отправлено письмо для ее подтверждения.',
-							$retUrl
+							'/webUser/showTeamsCreation?id='.$object->web_user_id
 						);
 					}
 					else
@@ -101,7 +99,7 @@ class teamCreateRequestActions extends MyActions
 						// Тут посылать письмо админам смысла нет...
 						$this->warningRedirect(
 							'Заявка на создание команды '.$object->name.' принята, но не удалось отправить письмо для ее подтверждения. Обратитесь к администрации сайта.',
-							$retUrl
+							'/webUser/showTeamsCreation?id='.$object->web_user_id
 						);
 					}
 				}
@@ -110,7 +108,7 @@ class teamCreateRequestActions extends MyActions
 					$this->newTeamCreateRequestNotify($object);
 					$this->successRedirect(
 						'Заявка на создание команды '.$object->name.' принята. Ожидайте, пока она пройдет модерацию.',
-						$retUrl
+						'/webUser/showTeamsCreation?id='.$object->web_user_id
 					);
 				}
 			}
@@ -129,8 +127,6 @@ class teamCreateRequestActions extends MyActions
 			'Заявка на создание команды не найдена'
 		);
 
-		$retUrl = '/webUser/showTeamsCreation?id='.$teamCreateRequest->web_user_id;
-
 		$fastTeamCreate = SystemSettings::getInstance()->fast_team_create;
 		if ($fastTeamCreate)
 		{
@@ -138,7 +134,7 @@ class teamCreateRequestActions extends MyActions
 				$this->sessionWebUser->id == $teamCreateRequest->web_user_id
 					|| $this->sessionWebUser->can(Permission::TEAM_MODER, 0),
 				'В режиме быстрого создания команд создать команду может только автор заявки.',
-				$retUrl
+				'/webUser/showTeamsCreation?id='.$teamCreateRequest->web_user_id
 			);
 		}
 		else
@@ -146,14 +142,14 @@ class teamCreateRequestActions extends MyActions
 			$this->errorRedirectUnless(
 				$this->sessionWebUser->can(Permission::TEAM_MODER, 0),
 				'Создать команду по заявке может только модератор команд.',
-				$retUrl
+				'/webUser/showTeamsCreation?id='.$teamCreateRequest->web_user_id
 			);
 		}
 
 		$this->errorRedirectUnless(
 			Utils::byField('Team', 'name', $teamCreateRequest->name) === false,
 			'Не удалось создать команду: команда '.$teamCreateRequest->name.' уже существует.',
-			$retUrl
+			'/webUser/showTeamsCreation?id='.$teamCreateRequest->web_user_id
 		);
 
 		$webUser = $teamCreateRequest->WebUser;

@@ -1,7 +1,4 @@
-<?php
-	include_partial('taskMenu', array('_task' => $_task, '_activeItem' => 'Переходы'));
-	$retUrlRaw = Utils::encodeSafeUrl(url_for('task/constraints?id='.$_task->id));
-?>
+<?php include_partial('taskMenu', array('_task' => $_task, '_activeItem' => 'Переходы')); ?>
 
 <table class="no-border">
 	<thead>
@@ -38,7 +35,7 @@
 					<?php
 						echo link_to(
 							'Удалить',
-							'taskConstraint/delete?id='.$taskConstraint->id.'&returl='.$retUrlRaw,
+							'taskConstraint/delete?id='.$taskConstraint->id,
 							array(
 								'method' => 'delete',
 								'confirm' => 'Вы действительно хотите удалить правило перехода с задания '.$_task->name.' на задание '.( $targetTask ? $targetTask->name : '(отсутствует)').'?'

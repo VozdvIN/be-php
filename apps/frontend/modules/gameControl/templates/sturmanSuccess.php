@@ -1,9 +1,7 @@
 <?php
-	$retUrlRaw = Utils::encodeSafeUrl(url_for('gameControl/sturman?id='.$_game->id));
 	include_partial('header', array(
 		'_game' => $_game,
 		'_isManager' => $_isManager,
-		'_retUrlRaw' => $retUrlRaw,
 		'_activeTab' => 'Штурман'));
 ?>
 
@@ -96,7 +94,7 @@
 				<?php endif ?>
 			</td>
 			<td>
-				<span class="button-warn"><?php echo link_to('Задать', 'gameControl/setNext?teamState='.$teamState->id.'&returl='.$retUrlRaw) ?></span>
+				<span class="button-warn"><?php echo link_to('Задать', 'gameControl/setNext?teamState='.$teamState->id) ?></span>
 			</td>
 		</tr>
 		<?php endforeach; ?>
