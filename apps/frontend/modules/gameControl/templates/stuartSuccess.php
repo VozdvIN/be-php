@@ -7,8 +7,10 @@
 
 <h3>Текущие результаты команд</h3>
 
-<?php include_component('gameControl','results', array('gameId' => $_game->id)) ?>
+<p>
+	<span class="button"><?php echo link_to('Результаты', 'game/showResults?id='.$_game->id, array('target' => '_blank')) ?></span>
+</p>
 
 <p>
-	<span class="button"><?php echo link_to('Подробно', 'gameControl/report?id='.$_game->id, array('target' => '_blank')) ?></span>
+	<span class="button"><?php echo link_to('Телеметрия', 'game/showResultsDetails?id='.$_game->id, array('target' => '_blank')) ?></span>
 </p>

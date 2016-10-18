@@ -13,8 +13,8 @@ class MyActions extends sfActions
 
 	public function preExecute()
 	{
-		this->session = $this->getUser();
-		this->sessionWebUser = $this->session->getSessionWebUser();
+		$this->session = $this->getUser();
+		$this->sessionWebUser = $this->session->getSessionWebUser();
 	}
 
   /**
@@ -83,7 +83,7 @@ class MyActions extends sfActions
 	 */
 	protected function errorRedirectIf($condition, $message, $target = '/home')
 	{
-		f ($condition)
+		if ($condition)
 		{
 			$this->errorRedirect($message, $target);
 		}
