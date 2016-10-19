@@ -16,47 +16,47 @@ class taskStateActions extends MyActions
 		//TODO: Возврат на страницу задания, вкладка "ответы"
 		$this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
 		$this->forward404Unless($taskState = TaskState::byId($request->getParameter('id')), 'Состояние задания не найдено.');
-		$this->errorRedirectUnless($taskState->canBeObserved($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'отправлять ответы команды'));
-		$this->errorRedirectIf($taskState->status != TaskState::TASK_ACCEPTED, 'Для этого задания сейчас нельзя отправлять ответы.');
+		$redirectUrl = 'play/answers?id='.$taskState->team_state_id;
+		$this->errorRedirectUnless($taskState->canBeObserved($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'отправлять ответы команды'), $redirectUrl);
+		$this->errorRedirectIf($taskState->status != TaskState::TASK_ACCEPTED, 'Для этого задания сейчас нельзя отправлять ответы.', $redirectUrl);
 
 		$form = new SimpleAnswerForm();
 		$form->bind($request->getParameter('simpleAnswer'));
-		if ($form->isValid())
+		if ( ! $form->isValid())
 		{
-			$formData = $form->getValues();
-			$answer = $formData['value'];
-			if (trim($answer) != '')
-			{
-				if (is_string($res = $taskState->postAnswers($answer, $this->sessionWebUser)))
-				{
-					$this->errorRedirect('Не удалось отправить ответ(ы):'.$res.'.');
-				}
-				else
-				{
-					if ($this->taskState->TeamState->Game->teams_can_update)
-					{
-						if (is_string($res = $this->taskState->updateState($this->sessionWebUser)))
-						{
-							$this->errorMessage('Не удалось обновить состояние задания: '.$res);
-						}
-						else
-						{
-							$this->taskState->save();
-						}
-					}
-					$this->successRedirect();
-				}
-			}
-			else
-			{
-				// Строка с ответами пуста, просто перейдем обратно.
-				$this->successRedirect();
-			}
+			$this->errorRedirect(
+				'Нельзя подделывать ответы!',
+				$redirectUrl
+			);
 		}
-		else
+
+		$formData = $form->getValues();
+		$answer = $formData['value'];
+		if (trim($answer) == '')
 		{
-			$this->errorRedirect('Нельзя подделывать ответы!');
+			// Строка с ответами пуста, просто перейдем обратно.
+			$this->redirect('play/answers?id='.$this->taskState->TeamState->id);
 		}
+
+		if (is_string($res = $taskState->postAnswers($answer, $this->sessionWebUser)))
+		{
+			$this->errorRedirect(
+				'Не удалось отправить ответ(ы):'.$res.'.',
+				$redirectUrl
+			);
+		}
+
+		if ($this->taskState->TeamState->Game->teams_can_update)
+		{
+			if (is_string($res = $this->taskState->updateState($this->sessionWebUser)))
+			{
+				$this->errorMessage('Не удалось обновить состояние задания: '.$res);
+			}
+
+			$this->taskState->save();
+		}
+
+		$this->redirect($redirectUrl);
 	}
 
 	public function executeStart(sfWebRequest $request)

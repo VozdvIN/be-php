@@ -67,12 +67,12 @@
 			<?php else: ?>
 			<td colspan="3">
 				<?php if ($teamState->status == TeamState::TEAM_FINISHED): ?>
-				<span class="info">Финишировала</span>
+				<span class="info"><?php echo link_to('Финишировала', 'play/task?id='.$teamState->id, array('target' => '_blank')) ?></span>
 				<?php else: ?>
-				<span class="warn">Нет задания</span>
-				<?php if ($_isManager && ($teamState->status == TeamState::TEAM_WAIT_TASK)): ?>
+				<span class="warn"><?php echo link_to('Нет&nbsp;задания', 'play/task?id='.$teamState->id, array('target' => '_blank')) ?></span>
+				<?php     if ($_isManager && ($teamState->status == TeamState::TEAM_WAIT_TASK)): ?>
 				<span class="button-danger"><?php echo link_to('Финишировать','teamState/forceFinish?id='.$teamState->id, array('method' => 'post', 'confirm' => 'Отправить команду '.$teamState->Team->name.' на финиш?')) ?></span>
-				<?php endif; ?>
+				<?php     endif; ?>
 				<?php endif; ?>
 			</td>
 			<?php endif; ?>

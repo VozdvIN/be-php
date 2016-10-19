@@ -14,7 +14,7 @@
 		<tr>
 			<td><?php echo link_to($teamState->Team->name, 'team/show?id='.$teamState->team_id, array ('target' => '_blank')); ?></td>
 			<td><?php echo ($teamState->start_delay == 0) ? 'сразу' : 'через '.Timing::intervalToStr($teamState->start_delay*60) ?></td>
-			<td><?php echo ($teamState->ai_enabled == 0) ? 'отключена' : 'да' ?></td>
+			<td><?php echo ($teamState->ai_enabled == 0) ? 'отключен' : 'активен' ?></td>
 			<td>
 				<?php
 					include_partial(
