@@ -64,10 +64,16 @@ class taskStateActions extends MyActions
 		$this->decodeArgs($request);
 		if (is_string($res = $this->taskState->start($this->sessionWebUser)))
 		{
-			$this->errorRedirect('Не удалось разрешить старт задания '.$this->taskName.' команды '.$this->teamName.' : '.$res);
+			$this->errorRedirect(
+				'Не удалось разрешить старт задания '.$this->taskName.' команды '.$this->teamName.' : '.$res,
+				'gameControl/tasks?id='.$this->game->id
+			);
 		}
 		$this->taskState->save();
-		$this->successRedirect('Старт заданию '.$this->taskName.' команды '.$this->teamName.' успешно разрешен.');
+		$this->successRedirect(
+			'Старт заданию '.$this->taskName.' команды '.$this->teamName.' успешно разрешен.',
+			'gameControl/tasks?id='.$this->game->id
+		);
 	}
 
 	public function executeRestart(sfWebRequest $request)
@@ -75,10 +81,16 @@ class taskStateActions extends MyActions
 		$this->decodeArgs($request);
 		if (is_string($res = $this->taskState->restart($this->sessionWebUser)))
 		{
-			$this->errorRedirect('Не удалось перезапустить задание '.$this->taskName.' команды '.$this->teamName.' : '.$res);
+			$this->errorRedirect(
+				'Не удалось перезапустить задание '.$this->taskState->Task->name.' команды '.$this->teamName.' : '.$res,
+				'gameControl/tasks?id='.$this->game->id
+			);
 		}
 		$this->taskState->save();
-		$this->successRedirect('Задание '.$this->taskName.' команды '.$this->teamName.' успешно перезапущено.');
+		$this->successRedirect(
+			'Задание '.$this->taskState->Task->name.' команды '.$this->teamName.' успешно перезапущено.',
+			'gameControl/tasks?id='.$this->game->id
+		);
 	}
 
 	public function executeForceAccept(sfWebRequest $request)
@@ -86,10 +98,16 @@ class taskStateActions extends MyActions
 		$this->decodeArgs($request);
 		if (is_string($res = $this->taskState->accept($this->sessionWebUser)))
 		{
-			$this->errorRedirect('Не удалось подтвердить просмотор задания '.$this->taskName.' командой '.$this->teamName.' : '.$res);
+			$this->errorRedirect(
+				'Не удалось подтвердить просмотр задания '.$this->taskName.' командой '.$this->teamName.' : '.$res,
+				'gameControl/tasks?id='.$this->game->id
+			);
 		}
 		$this->taskState->save();
-		$this->successRedirect('Просмотр задания '.$this->taskName.' командой '.$this->teamName.' успешно подтвержден.');
+		$this->successRedirect(
+			'Просмотр задания '.$this->taskName.' командой '.$this->teamName.' успешно подтвержден.',
+			'gameControl/tasks?id='.$this->game->id
+		);
 	}
 
 	public function executeSkip(sfWebRequest $request)
@@ -97,10 +115,16 @@ class taskStateActions extends MyActions
 		$this->decodeArgs($request);
 		if (is_string($res = $this->taskState->doneSkip($this->sessionWebUser)))
 		{
-			$this->errorRedirect('Команде '.$this->teamName.' не удалось пропустить задание '.$this->taskName.': '.$res);
+			$this->errorRedirect(
+				'Команде '.$this->teamName.' не удалось пропустить задание '.$this->taskName.': '.$res,
+				'gameControl/tasks?id='.$this->game->id
+			);
 		}
 		$this->taskState->save();
-		$this->successRedirect('Задание '.$this->taskName.' команды '.$this->teamName.' успешно пропущено.');
+		$this->successRedirect(
+			'Задание '.$this->taskName.' команды '.$this->teamName.' успешно пропущено.',
+			'gameControl/tasks?id='.$this->game->id
+		);
 	}
 
 	public function decodeArgs(sfWebRequest $request)

@@ -26,6 +26,36 @@ class gameControlActions extends MyActions
 		$this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
 	}
 
+	public function executeTasks(sfRequest $request)
+	{
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
+
+		$this->errorRedirectUnless(
+			$this->_game->canBeObserved($this->sessionWebUser),
+			Utils::cannotMessage(
+				$this->sessionWebUser->login,
+				'просматривать игру'
+			)
+		);
+
+		//TODO: перенести запрос в модель
+		$teamStates = Doctrine::getTable('TeamState')
+			->createQuery('ts')
+			->select()
+				->innerJoin('ts.Game')
+				->innerJoin('ts.Team')
+				->leftJoin('ts.taskStates')
+			->where('ts.game_id = ?', $this->_game->id)
+			->orderBy('ts.Team.name, ts.taskStates.given_at')
+			->execute();
+
+		$this->_teamStates = $teamStates;
+
+		$this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
+	}
   /**
    * @deprecated
    */
@@ -363,7 +393,6 @@ public function executeSetNext(sfWebRequest $request)
 	/**
 	 * @deprecated
 	 */
-	// TODO: Выяснить целесообразность этой штуки
 	protected function prefetchAll(sfRequest $request)
 	{
 		$game = $this->_game;
