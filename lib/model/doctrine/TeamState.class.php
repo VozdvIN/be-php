@@ -126,50 +126,45 @@ class TeamState extends BaseTeamState implements IStored, IAuth
     return $res;
   }
 
-  /**
-   * Возвращает личное время команды, затраченное на игру (время Unix).
-   * Основа для определения момента финиша команды!
-   *
-   * @return  integer
-   */
-  public function getGameSpentTimeCurrent()
-  {
-    if ($this->started_at == 0)
-    {
-      return 0;
-    }
-    // Рассчитаем затраченное на игре время как сумму времен известных заданий.
-    // Завершенные значения вернут данные из БД, текущее задание само сосчитает.
-    // В БД затраченное время хранится с учетом корректировок, т.е. если
-    // время задания не входит в игровое, там хранится 0.
-    $gameSpentTime = 0;
-    foreach ($this->taskStates as $taskState)
-    {
-      $gameSpentTime += $taskState->getTaskSpentTimeCurrent();
-    }
-    return $gameSpentTime;
-  }
+	/**
+	 * Возвращает личное время команды, затраченное на игру (время Unix).
+	 * Основа для определения момента финиша команды!
+	 * @return  integer
+	 */
+	public function getGameSpentTimeCurrent()
+	{
+		if ($this->started_at == 0)
+		{
+			return 0;
+		}
+		// Рассчитаем затраченное на игре время как сумму времен известных заданий.
+		// Завершенные задания вернут данные из БД, текущее задание сосчитает за себя.
+		// В БД затраченное время хранится с учетом корректировок, т.е. если
+		// время задания не входит в игровое, там хранится 0.
+		$gameSpentTime = 0;
+		foreach ($this->taskStates as $taskState)
+		{
+			$gameSpentTime += $taskState->getTaskSpentTimeCurrent();
+		}
+		return $gameSpentTime;
+	}
 
-  /**
-   * Возвращает статус текущего задания, если оно есть, иначе false.
-   * Внимание! Технические подробности:
-   * Если ссылка на текущее задание окажется битая, то сначала попытается ее
-   * исправить и при успехе вернет задание;
-   * если исправить не удастся, обнулит ссылку и вернет false.
-   *
-   * @return  TaskState
-   */
-  public function getCurrentTaskState()
-  {
-    foreach ($this->taskStates as $taskState)
-    {
-      if ( ! $taskState->closed)
-      {
-        return $taskState;
-      }
-    }
-    return false;
-  }
+	/**
+	 * Возвращает статус текущего задания, если оно есть, иначе false.
+	 * @return  TaskState
+	 */
+	public function getCurrentTaskState()
+	{
+		foreach ($this->taskStates as $taskState)
+		{
+			if ( ! $taskState->closed)
+			{
+				return $taskState;
+			}
+		}
+
+		return false;
+	}
 
   /**
    * Возвращает статус последнего завершенного задания, если оно есть, иначе false.
@@ -196,28 +191,27 @@ class TeamState extends BaseTeamState implements IStored, IAuth
     return $res;
   }
 
-  /**
-   * Возвращает статус наиболее позднего задания, с которым ознакомилась команда.
-   * Это задание может быть как завершенным, так и активным.
-   *
-   * @return  TaskState   Или false, если команда только приступила к игре.
-   */
-  public function getLastKnownTaskState()
-  {
-    $currentTask = $this->getCurrentTaskState();
-    if ( $currentTask )
-    {
-      return $currentTask;
-    }
-    elseif ($lastDoneTask = $this->getLastDoneTaskState())
-    {
-      return $lastDoneTask;
-    }
-    else
-    {
-      return false;
-    }
-  }
+	/**
+	* Возвращает статус наиболее позднего задания, с которым ознакомилась команда.
+	* Это задание может быть как завершенным, так и активным.
+	* @return  TaskState   Или false, если команда только приступила к игре.
+	*/
+	public function getLastKnownTaskState()
+	{
+		$currentTask = $this->getCurrentTaskState();
+
+		if ( $currentTask )
+		{
+			return $currentTask;
+		}
+
+		if ($lastDoneTask = $this->getLastDoneTaskState())
+		{
+			return $lastDoneTask;
+		}
+
+		return false;
+	}
 
   /**
    * Возвращает приоритет перехода на указанное задание.
@@ -331,7 +325,7 @@ class TeamState extends BaseTeamState implements IStored, IAuth
     }
     return $result;
   }
-  
+
   /**
    * Проверяет, может ли команда финишировать автоматически.
    * 
@@ -341,7 +335,7 @@ class TeamState extends BaseTeamState implements IStored, IAuth
   {
     return $this->Game->tasks->Count() == $this->getKnownTasks()->Count();
   }
-  
+
   // Action
 
   /**
@@ -911,48 +905,43 @@ class TeamState extends BaseTeamState implements IStored, IAuth
     return $this->status < TeamState::TEAM_FINISHED;
   }
 
-  /**
-   * Возвращает список доступных для выдачи заданий: все или только для ручного выбора.
-   * Учитывает фильтры последнего известного задания.
-   * Если последнее известное задание не закончилось,
-   * то фильтры применяются для случая неуспешного завершения задания.
-   *
-   * @param   boolean               $forManualSelectOnly  Только задания для ручного выбора.
-   *
-   * @return  Doctrine_Collection<Task>
-   */
-  protected function getAvailableTasks($forManualSelectOnly)
-  {
-    $result = new Doctrine_Collection('Task');
-    $unknownTasks = Task::excludeTasks($this->Game->tasks, $this->getKnownTasks());
+	/**
+	* Возвращает список доступных для выдачи заданий: все или только для ручного выбора.
+	* Учитывает фильтры последнего известного задания.
+	* Если последнее известное задание не закончилось,
+	* то фильтры применяются для случая неуспешного завершения задания.
+	* @param   boolean  $forManualSelectOnly  Только задания для ручного выбора.
+	* @return  Doctrine_Collection<Task>
+	*/
+	protected function getAvailableTasks($forManualSelectOnly)
+	{
+		$result = new Doctrine_Collection('Task');
+		//TODO: Здесь нужно исключить блокированные задания?
+		$unknownTasks = Task::excludeTasks($this->Game->tasks, $this->getKnownTasks());
 
-    $lastKnownTaskState = $this->getLastKnownTaskState();
-    if ( ! $lastKnownTaskState )
-    {
-      // Команда еще не делала ни одного задания.
-      if ($forManualSelectOnly)
-      {
-        return $result; // Первое задание не может быть выбрано вручную.
-      }
-      return $unknownTasks;
-    }
+		$lastKnownTaskState = $this->getLastKnownTaskState();
+		if ( ! $lastKnownTaskState )
+		{
+			// Команда еще не делала ни одного задания.
+			return $forManualSelectOnly ? $result : $unknownTasks; // Первое задание не может быть выбрано вручную.
+		}
 
-    $isLastTaskSuccesful = $lastKnownTaskState->status == TaskState::TASK_DONE_SUCCESS;
-    foreach ($unknownTasks as $unknownTask)
-    {
-      if ($lastKnownTaskState->Task->isAvailableAsNext($unknownTask, $isLastTaskSuccesful, $forManualSelectOnly))
-      {
-        $result->add($unknownTask);
-      }
-    }
-    
-    // Если подходящий заданий нет, но выбираются они для автоматического
-    // перехода, то нужно вернуть все неизвестные.
-    if (($result->Count() == 0) && ( ! $forManualSelectOnly))
-    {
-      return $unknownTasks;
-    }
-    
-    return $result;
-  }
+		$isLastTaskSuccesful = $lastKnownTaskState->status == TaskState::TASK_DONE_SUCCESS;
+		foreach ($unknownTasks as $unknownTask)
+		{
+			if ($lastKnownTaskState->Task->isAvailableAsNext($unknownTask, $isLastTaskSuccesful, $forManualSelectOnly))
+			{
+				$result->add($unknownTask);
+			}
+		}
+
+		// Если подходящих заданий нет, но выбираются они для автоматического
+		// перехода, то нужно вернуть все неизвестные.
+		if (($result->Count() == 0) && ( ! $forManualSelectOnly))
+		{
+			return $unknownTasks;
+		}
+
+		return $result;
+	}
 }

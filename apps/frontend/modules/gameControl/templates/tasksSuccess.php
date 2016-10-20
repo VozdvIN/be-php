@@ -6,42 +6,46 @@
 	</thead>
 	<tbody>
 		<?php foreach ($_teamStates as $teamState): ?>
+		<?php
+			$currentTaskState = $teamState->getCurrentTaskState();
+			$task = $currentTaskState ? $currentTaskState->Task : false;
+		?>
 		<tr>
-			<?php
-				$currentTaskState = $teamState->getCurrentTaskState();
-				$task = $currentTaskState ? $currentTaskState->Task : false;
-			?>
 			<td>
-				<?php echo link_to($teamState->Team->name, 'team/show?id='.$teamState->Team->id, array('target' => '_blank')); ?>
+				<?php echo link_to($teamState->Team->name, 'play/task?id='.$teamState->id, array('target' => '_blank')) ?>
 			</td>
 			<td>
 				<?php if ($currentTaskState): ?>
 				<?php echo link_to($task->name, 'task/params?id='.$task->id, array('target' => '_blank')); ?>
 				<?php else: ?>
 					<?php if ($teamState->status == TeamState::TEAM_FINISHED): ?>
-				<span class="info" style="font-style: italic;"><?php echo link_to('Финишировала', 'play/task?id='.$teamState->id, array('target' => '_blank')) ?></span>
+				<span class="info" style="font-style: italic;">Финишировала</span>
 					<?php else: ?>
-				<span class="warn" style="font-style: italic;"><?php echo link_to('Нет&nbsp;задания', 'play/task?id='.$teamState->id, array('target' => '_blank')) ?></span>
+				<span class="warn" style="font-style: italic;">Нет&nbsp;задания</span>
 					<?php endif; ?>
 				<?php endif; ?>
 			</td>
 			<td>
 				<?php if ($currentTaskState): ?>
-				<span><?php echo link_to($currentTaskState->describeStatus(), 'play/task?id='.$teamState->id, array('target' => '_blank')); ?></span>
+				<span><?php echo $currentTaskState->describeStatus() ?></span>
 					<?php if ($currentTaskState->Task->manual_start): ?>
 				<span class="warn">,&nbsp;вручную</span>
-					<?php else: ?>
+					<?php elseif ($currentTaskState->status <= TaskState::TASK_GIVEN): ?>
 				<span class="info">,&nbsp;автостарт</span>
 					<?php endif; ?>
 					<?php if ($currentTaskState->Task->isFilled()): ?>
 				<span class="warn">,&nbsp;заполнено</span>
 					<?php endif ?>
 				<?php else: ?>
-					<?php if ($teamState->ai_enabled): ?>
+					<?php if ($teamState->status != TeamState::TEAM_FINISHED): ?>
+						<?php if ($teamState->getTasksAvailableForManualSelect()->count() > 0): ?>
+				<span class="info">Выбор&nbsp;командой</span>
+						<?php elseif ($teamState->ai_enabled): ?>
 				<span class="info">Автовыбор</span>
-					<?php elseif ($teamState->status != TeamState::TEAM_FINISHED): ?>
-				<span class="warn">ИИ&nbsp;выключен</span>
-					<?php endif ?>
+						<?php else: ?>
+				<span class="warn"><?php echo link_to('ИИ&nbsp;выключен', 'teamState/edit?id='.$teamState->id, array('target' => '_blank')) ?></span>
+						<?php endif; ?>
+					<?php endif; ?>
 				<?php endif; ?>
 			</td>
 			<td>

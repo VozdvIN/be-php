@@ -41,21 +41,46 @@ class gameControlActions extends MyActions
 			)
 		);
 
-		//TODO: перенести запрос в модель
-		$teamStates = Doctrine::getTable('TeamState')
+		$this->_teamStates = Doctrine::getTable('TeamState')
 			->createQuery('ts')
 			->select()
-				->innerJoin('ts.Game')
-				->innerJoin('ts.Team')
-				->leftJoin('ts.taskStates')
+			->innerJoin('ts.Team')
+			->leftJoin('ts.taskStates')
 			->where('ts.game_id = ?', $this->_game->id)
 			->orderBy('ts.Team.name, ts.taskStates.given_at')
 			->execute();
 
-		$this->_teamStates = $teamStates;
+		$this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
+	}
+
+	public function executeRoutes(sfRequest $request)
+	{
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
+
+		$this->errorRedirectUnless(
+			$this->_game->canBeObserved($this->sessionWebUser),
+			Utils::cannotMessage(
+				$this->sessionWebUser->login,
+				'просматривать игру'
+			)
+		);
+
+		$this->_teamStates = Doctrine::getTable('TeamState')
+			->createQuery('ts')
+			->select()
+			->innerJoin('ts.Team')
+			->leftJoin('ts.Task')
+			->leftJoin('ts.taskStates')
+			->where('ts.game_id = ?', $this->_game->id)
+			->orderBy('ts.Team.name, ts.taskStates.given_at')
+			->execute();
 
 		$this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
 	}
+
   /**
    * @deprecated
    */
@@ -323,14 +348,14 @@ public function executeSetNext(sfWebRequest $request)
 			{
 				$this->errorRedirect(
 					'Отменить команде '.$this->_teamState->Team->name.' следующее задание не удалось: '.$res,
-					'gameControl/routes?id='.$this->_game->id
+					'gameControl/routes?id='.$this->_teamState->Game->id
 				);
 			}
 
 			$this->_teamState->save();
 			$this->successRedirect(
 				'Команде '.$this->_teamState->Team->name.' отменено следующее задание.',
-				'gameControl/routes?id='.$this->_game->id
+				'gameControl/routes?id='.$this->_teamState->Game->id
 			);
 		}
 		else
@@ -340,13 +365,13 @@ public function executeSetNext(sfWebRequest $request)
 			{
 				$this->errorRedirect(
 					'Назначить команде '.$this->_teamState->Team->name.' следующее задание не удалось: '.$res,
-					'gameControl/routes?id='.$this->_game->id
+					'gameControl/routes?id='.$this->_teamState->Game>id
 				);
 			}
 			$this->_teamState->save();
 			$this->successRedirect(
 				'Команде '.$this->_teamState->Team->name.' успешно назначено следующее задание.',
-				'gameControl/routes?id='.$this->_game->id
+				'gameControl/routes?id='.$this->_teamState->Game->id
 			);
 		}
 	}
