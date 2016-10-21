@@ -2,7 +2,8 @@
 
 <table>
 	<thead>
-		<th>Команда</th><th>Крайнее</th><th>Следующее</th><th>&nbsp;</th>
+		<tr><th rowspan="2">Команда</th><th colspan="2">Задание</th><th rowspan="2">&nbsp;</th></tr>
+		<tr><th>Крайнее</th><th>Следующее</th></tr>
 	</thead>
 	<tbody>
 		<?php foreach ($_teamStates as $teamState): ?>
@@ -13,7 +14,7 @@
 			<td>
 				<?php $lastKnownTaskState = $teamState->getLastKnownTaskState(); ?>
 				<?php if ($lastKnownTaskState): ?>
-					<?php echo $lastKnownTaskState->Task->name ?> -&nbsp;<span class="<?php echo $lastKnownTaskState->getHighlightClass() ?>"><?php echo $lastKnownTaskState->describeStatus() ?></span>
+					<?php echo link_to($lastKnownTaskState->Task->name, 'task/params?id='.$lastKnownTaskState->task_id, array('target' => '_blank')); ?>
 				<?php endif ?>
 			</td>
 			<td>

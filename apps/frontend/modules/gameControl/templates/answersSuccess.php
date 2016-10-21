@@ -2,15 +2,23 @@
 
 <table>
 	<thead>
-		<tr><th rowspan="2">Команда</th><th colspan="4">Ответы</th>/tr>
+		<tr><th rowspan="2">Команда</th><th rowspan="2">Задание</th><th colspan="4">Ответы</th>/tr>
 		<tr><th>Ожидается</th><th>Верно</th><th>Проверка</th><th>Неверно</th>/tr>
 	</thead>
 	<tbody>
 		<?php foreach ($_teamStates as $teamState): ?>
 		<tr>
-			<?php $taskState = $teamState->getCurrentTaskState(); ?>
+			<?php
+			$taskState = $teamState->getCurrentTaskState();
+			$task = $taskState ? $taskState->Task : false;
+			?>
 			<td>
 				<?php echo link_to($teamState->Team->name, 'play/task?id='.$teamState->id, array('target' => '_blank')) ?>
+			</td>
+			<td>
+				<?php if ($taskState): ?>
+				<?php echo link_to($task->name, 'task/params?id='.$task->id, array('target' => '_blank')); ?>
+				<?php endif ?>
 			</td>
 			<?php if ($taskState): ?>
 			<td>

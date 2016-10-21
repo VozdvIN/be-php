@@ -16,7 +16,7 @@
 			</td>
 			<td>
 				<?php if ($currentTaskState): ?>
-				<?php echo link_to($task->name, 'task/params?id='.$task->id, array('target' => '_blank')); ?>
+					<?php echo link_to($task->name, 'task/params?id='.$task->id, array('target' => '_blank')); ?>
 				<?php else: ?>
 					<?php if ($teamState->status == TeamState::TEAM_FINISHED): ?>
 				<span class="info" style="font-style: italic;">Финишировала</span>
@@ -39,11 +39,11 @@
 				<?php else: ?>
 					<?php if ($teamState->status != TeamState::TEAM_FINISHED): ?>
 						<?php if ($teamState->getTasksAvailableForManualSelect()->count() > 0): ?>
-				<span class="info">Выбор&nbsp;командой</span>
+				<span class="info" style="font-style: italic;">Выбор&nbsp;командой</span>
 						<?php elseif ($teamState->ai_enabled): ?>
-				<span class="info">Автовыбор</span>
+				<span class="info" style="font-style: italic;">Автовыбор</span>
 						<?php else: ?>
-				<span class="warn"><?php echo link_to('ИИ&nbsp;выключен', 'teamState/edit?id='.$teamState->id, array('target' => '_blank')) ?></span>
+				<span class="warn" style="font-style: italic;"><?php echo link_to('ИИ&nbsp;выключен', 'teamState/edit?id='.$teamState->id, array('target' => '_blank')) ?></span>
 						<?php endif; ?>
 					<?php endif; ?>
 				<?php endif; ?>
