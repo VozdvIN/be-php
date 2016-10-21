@@ -31,37 +31,31 @@ $form = new SimpleAnswerForm();
 	Допустимо ошибок: <?php echo $badAnswersLeft ?>
 </p>
 
-<?php if ($restAnswers->count() > 0): ?>
-<p class="border-bottom">
-<?php foreach ($restAnswers as $answer): ?>
-	<span><?php echo $answer->info ?> </span>
-<?php endforeach ?>
-</p>
-<?php endif ?>
+<?php if ($taskState->status >= TaskState::TASK_ACCEPTED): ?>
 
-<?php if ($goodAnswers->count() > 0): ?>
 <p class="border-bottom">
-<?php foreach ($goodAnswers as $postedAnswer): ?>
-	<span class="info"><?php echo $postedAnswer->value ?> </span>
-<?php endforeach ?>
+	<?php foreach ($restAnswers as $answer) echo ' '.$answer->info ?>
 </p>
-<?php endif ?>
 
-<?php if ($beingVerifiedAnswers->count() > 0): ?>
 <p class="border-bottom">
-<?php foreach ($beingVerifiedAnswers as $postedAnswer): ?>
-	<span class="warn"><?php echo $postedAnswer->value ?> </span>
-<?php endforeach ?>
+	<span class="info">
+	<?php foreach ($goodAnswers as $postedAnswer) echo ' '.$postedAnswer->value ?>
+	</span>
 </p>
-<?php endif ?>
 
-<?php if ($badAnswers->count() > 0): ?>
 <p class="border-bottom">
-<?php foreach ($badAnswers as $postedAnswer): ?>
-	<span class="danger"><?php echo $postedAnswer->value ?> </span>
-<?php endforeach ?>
+	<span class="warn">
+		<?php foreach ($beingVerifiedAnswers as $postedAnswer) echo ' '.$postedAnswer->value ?>
+	</span>
 </p>
-<?php endif ?>
+
+<p class="border-bottom">
+	<span class="danger">
+		<?php foreach ($badAnswers as $postedAnswer) echo ' '.$postedAnswer->value ?>
+	</span>
+</p>
+
+<?php endif; ?>
 
 <p>
 	Задание идет <?php echo Timing::intervalToStr($taskState->getTaskSpentTimeCurrent()) ?>.

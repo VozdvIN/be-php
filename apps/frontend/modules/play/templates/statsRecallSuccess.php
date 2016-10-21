@@ -1,18 +1,15 @@
 <?php include_partial('menu', array('_activeItem' => 'История', '_teamState' => $taskState->TeamState)) ?>
 
-<h1>Задание <?php echo $taskState->Task->public_name ?></h1>
-
-<h2>Результат</h2>
-
 <table>
+	<thead>
+		<tr><th colspan="2"><?php echo $taskState->Task->public_name ?></th></tr>
+	</thead>
 	<tbody>
 		<tr><th>Старт:</th><td><?php echo Timing::timeToStr($taskState->started_at) ?></td></tr>
 		<tr><th>Длилось:</th><td><?php echo Timing::intervalToStr($taskState->getTaskSpentTimeCurrent()) ?></td></tr>
 		<tr><th>Итог:</th><td><span class="<?php echo $taskState->getHighlightClass() ?>"><?php echo $taskState->describeStatus() ?></span></td></tr>
 	</tbody>
 </table>
-
-<h2>Подсказки</h2>
 
 <?php foreach ($taskState->usedTips as $usedTip): ?>
 <?php	if ($usedTip->status == UsedTip::TIP_USED): ?>
@@ -25,37 +22,32 @@
 <?php	endif; ?>
 <?php endforeach; ?>
 
-<h2>Ответы</h2>
+<?php if ($taskState->status >= TaskState::TASK_ACCEPTED): ?>
 
-<?php if ($restAnswers->count() > 0): ?>
-<p>
-<?php foreach ($restAnswers as $answer): ?>
-	<span><?php echo $answer->info ?> </span>
-<?php endforeach ?>
+<p class="note-bg" style="width: 100%">
+	Ответы
 </p>
-<?php endif ?>
 
-<?php if ($goodAnswers->count() > 0): ?>
-<p>
-<?php foreach ($goodAnswers as $postedAnswer): ?>
-	<span class="info"><?php echo $postedAnswer->value ?> </span>
-<?php endforeach ?>
+<p class="border-bottom">
+	<?php foreach ($restAnswers as $answer) echo ' '.$answer->info ?>
 </p>
-<?php endif ?>
 
-<?php if ($beingVerifiedAnswers->count() > 0): ?>
-<p>
-<?php foreach ($beingVerifiedAnswers as $postedAnswer): ?>
-	<span class="warn"><?php echo $postedAnswer->value ?> </span>
-<?php endforeach ?>
+<p class="border-bottom">
+	<span class="info">
+	<?php foreach ($goodAnswers as $postedAnswer) echo ' '.$postedAnswer->value ?>
+	</span>
 </p>
-<?php endif ?>
 
-<?php if ($badAnswers->count() > 0): ?>
-<p>
-<?php foreach ($badAnswers as $postedAnswer): ?>
-	<span class="danger"><?php echo $postedAnswer->value ?> </span>
-<?php endforeach ?>
+<p class="border-bottom">
+	<span class="warn">
+	<?php foreach ($beingVerifiedAnswers as $postedAnswer) echo ' '.$postedAnswer->value ?>
+	</span>
 </p>
-<?php endif ?>
+>
+<p class="border-bottom">
+	<span class="danger">
+	<?php foreach ($badAnswers as $postedAnswer) echo ' '.$postedAnswer->value ?>
+	</span>
+</p>
 
+<?php endif ?>

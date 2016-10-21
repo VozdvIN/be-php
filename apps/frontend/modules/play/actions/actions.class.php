@@ -124,11 +124,12 @@ class playActions extends MyActions
 		$this->errorRedirectUnless($this->teamState->canBeObserved($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'просматривать текущее задание команды'));
 		$this->updateIfTeamCan($this->teamState);
 		
-		$taskStates = Doctrine::getTable('TaskState')
+		$this->_taskStates = Doctrine::getTable('TaskState')
 			->createQuery('ts')
+			->innerJoin('ts.Task')
 			->select()
-				->innerJoin('ts.Task')
-			->whereIn('team_state_id', $this->teamState->id)
+			->where('ts.team_state_id = ?', $this->teamState->id)
+			->andWhere('ts.status >= ?', TaskState::TASK_ACCEPTED)
 			->execute();
 	}
 	
@@ -136,12 +137,14 @@ class playActions extends MyActions
 	{
 		$this->forward404Unless($this->taskState = TaskState::byId($request->getParameter('id')), 'Состояние задания не найдено.');
 		$this->errorRedirectUnless($this->taskState->TeamState->canBeObserved($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'просматривать текущее задание команды'));
-		$this->updateIfTeamCan($this->taskState->TeamState);		
+		$this->errorRedirectUnless($this->taskState->status >= TaskState::TASK_ACCEPTED, Utils::cannotMessage($this->sessionWebUser->login, 'просматривать еще не прочитанное задание'));
+		$this->updateIfTeamCan($this->taskState->TeamState);
 		$this->confirmTaskDisplayIfRequired($this->taskState);
+
 		$this->restAnswers = $this->taskState->getRestAnswers();
 		$this->goodAnswers = $this->taskState->getGoodPostedAnswers();
 		$this->beingVerifiedAnswers = $this->taskState->getBeingVerifiedPostedAnswers();
-		$this->badAnswers = $this->taskState->getBadPostedAnswers();		
+		$this->badAnswers = $this->taskState->getBadPostedAnswers();
 	}	
 	
 	protected function updateIfTeamCan(TeamState $teamState)
