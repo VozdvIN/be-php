@@ -60,6 +60,25 @@ class teamStateActions extends myActions
 		);
 	}
 
+	public function executeForceCloseTask(sfWebRequest $request)
+	{
+		$this->forward404Unless($teamState = TeamState::byId($request->getParameter('id')), 'Состояние команды не найдено.');
+		$this->errorRedirectUnless($teamState->canBeManaged($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'управлять состоянием команды'));
+		if (is_string($res = $teamState->closeTask($this->sessionWebUser)))
+		{
+			$this->errorRedirect(
+				'Закрыть задание команды '.$teamState->Team->name.' не удалось: '.$res,
+				'gameControl/tasks?id='.$teamState->game_id
+			);
+		}
+
+		$teamState->save();
+		$this->successRedirect(
+			'Задание команды '.$teamState->Team->name.' успешно закрыто.',
+			'gameControl/tasks?id='.$teamState->game_id
+		);
+	}
+
 	public function executeForceFinish(sfWebRequest $request)
 	{
 		$this->forward404Unless($teamState = TeamState::byId($request->getParameter('id')), 'Состояние команды не найдено.');

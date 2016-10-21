@@ -59,20 +59,23 @@
 									'start' => link_to('Старт', 'taskState/start?id='.$currentTaskState->id, array('method' => 'post', 'confirm' => 'Дать старт заданию '.$task->name.' для команды '.$teamState->Team->name.' ?')),
 									'cancel' => link_to('Отменить','teamState/abandonTask?id='.$teamState->id, array('method' => 'post', 'confirm' => 'Отменить выдачу задания '.$task->name.' командe '.$teamState->Team->name.' ?')),
 									'accept' => link_to('Прочесть','taskState/forceAccept?id='.$currentTaskState->id, array('method' => 'post', 'confirm' => 'Подтвердить прочтение задания '.$task->name.' командой '.$teamState->Team->name.' ?')),
-									'abort' => link_to('Прекратить','teamState/abandonTask?id='.$teamState->id, array('method' => 'post', 'confirm' => 'Прекратить выполнение задания '.$task->name.' командой '.$teamState->Team->name.' ?'))
+									'abort' => link_to('Прекратить','teamState/abandonTask?id='.$teamState->id, array('method' => 'post', 'confirm' => 'Прекратить выполнение задания '.$task->name.' командой '.$teamState->Team->name.' ?')),
+									'close' => link_to('Закрыть','teamState/forceCloseTask?id='.$teamState->id, array('method' => 'post', 'confirm' => 'Закрыть задание '.$task->name.' команды '.$teamState->Team->name.' ?')),
 								),
 								'css' => array(
 									'start' => 'warn',
 									'cancel' => 'info',
 									'accept' => 'warn',
-									'abort' => 'danger'
+									'abort' => 'danger',
+									'close' => 'warn'
 								),
 								'conditions' => array(
 									'start' => $currentTaskState->status == TaskState::TASK_GIVEN,
 									'cancel' => $currentTaskState->status == TaskState::TASK_GIVEN
 												|| $currentTaskState->status == TaskState::TASK_STARTED,
 									'accept' => $currentTaskState->status == TaskState::TASK_STARTED,
-									'abort' => $currentTaskState->status == TaskState::TASK_ACCEPTED
+									'abort' => $currentTaskState->status == TaskState::TASK_ACCEPTED,
+									'close' => $currentTaskState->status >= TaskState::TASK_DONE
 								)
 							)
 						);

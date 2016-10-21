@@ -547,6 +547,7 @@ class TaskState extends BaseTaskState implements IStored, IAuth
     $this->task_last_update = time();
   }
 
+  //TODO: Реально используется?
   /**
    * Отменяет старт задания, но только до того, как его увидят!
    * ВНИМАНИЕ: Не сохраняет данные в БД, save() выполняет вызывающий.

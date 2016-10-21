@@ -110,6 +110,9 @@ class taskStateActions extends MyActions
 		);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public function executeSkip(sfWebRequest $request)
 	{
 		$this->decodeArgs($request);
