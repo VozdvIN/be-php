@@ -13,3 +13,5 @@
 	<span class="button"><?php echo link_to('Результаты игры', 'game/showResults?id='.$teamState->game_id) ?></span>
 </p>
 <?php endif ?>
+
+<?php include_partial('teamFooter', array('_teamState' => $teamState)); ?>

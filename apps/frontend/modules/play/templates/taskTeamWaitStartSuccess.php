@@ -9,3 +9,5 @@
 <p>
 	Обновите страницу после наступления момента старта вашей команды.
 </p>
+
+<?php include_partial('teamFooter', array('_teamState' => $teamState)); ?>

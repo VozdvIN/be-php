@@ -23,3 +23,5 @@
 <p>
 	Завершится в <?php echo Timing::timeToStr($taskState->getTaskStopTime()) ?>.
 </p>
+
+<?php include_partial('teamFooter', array('_teamState' => $teamState)); ?>

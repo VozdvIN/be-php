@@ -12,3 +12,5 @@
 <p>
 	Обновляйте страницу время от времени.
 </p>
+
+<?php include_partial('teamFooter', array('_teamState' => $teamState)); ?>

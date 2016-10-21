@@ -13,3 +13,5 @@
 <p>
 	Обновляйте страницу время от времени. Время ожидания не влияет на доступное игровое время.
 </p>
+
+<?php include_partial('teamFooter', array('_teamState' => $teamState)); ?>

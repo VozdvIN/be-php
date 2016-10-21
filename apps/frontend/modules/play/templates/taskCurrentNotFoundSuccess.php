@@ -9,3 +9,5 @@
 <p>
 	Обновляйте страницу время от времени.
 </p>
+
+<?php include_partial('taskFooter', array('_teamState' => $teamState)); ?>

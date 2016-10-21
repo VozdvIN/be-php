@@ -28,26 +28,28 @@
 	Ответы
 </p>
 
-<p class="border-bottom">
+<p>
 	<?php foreach ($restAnswers as $answer) echo ' '.$answer->info ?>
 </p>
 
-<p class="border-bottom">
+<p class="border-top">
 	<span class="info">
 	<?php foreach ($goodAnswers as $postedAnswer) echo ' '.$postedAnswer->value ?>
 	</span>
 </p>
 
-<p class="border-bottom">
+<p class="border-top">
 	<span class="warn">
 	<?php foreach ($beingVerifiedAnswers as $postedAnswer) echo ' '.$postedAnswer->value ?>
 	</span>
 </p>
->
-<p class="border-bottom">
+
+<p class="border-top">
 	<span class="danger">
 	<?php foreach ($badAnswers as $postedAnswer) echo ' '.$postedAnswer->value ?>
 	</span>
 </p>
 
 <?php endif ?>
+
+<?php include_partial('teamFooter', array('_teamState' => $taskState->TeamState)); ?>

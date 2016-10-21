@@ -16,3 +16,4 @@
 	</tbody>
 </table>
 
+<?php include_partial('teamFooter', array('_teamState' => $teamState)); ?>

@@ -6,3 +6,5 @@
 <p>
 	После наступления момента начала игры обновите страницу.
 </p>
+
+<?php include_partial('teamFooter', array('_teamState' => $teamState)); ?>
