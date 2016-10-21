@@ -391,7 +391,7 @@ public function executeSetNext(sfWebRequest $request)
 			{
 				$this->errorRedirect(
 					'Назначить команде '.$this->_teamState->Team->name.' следующее задание не удалось: '.$res,
-					'gameControl/routes?id='.$this->_teamState->Game>id
+					'gameControl/routes?id='.$this->_teamState->Game->id
 				);
 			}
 			$this->_teamState->save();

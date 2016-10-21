@@ -6,18 +6,18 @@
 
 class playActions extends MyActions
 {
-	
+
 	public function preExecute()
 	{
 		parent::preExecute();
 	}
-	
+
 	public function executeTask(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->teamState = TeamState::byId($request->getParameter('id')), 'Состояние команды не найдено.');
 		$this->errorRedirectUnless($this->teamState->canBeObserved($this->sessionWebUser), Utils::cannotMessage($this->sessionWebUser->login, 'просматривать текущее задание команды'));
 		$this->updateIfTeamCan($this->teamState);
-		
+
 		switch ($this->teamState->status)
 		{
 			case TeamState::TEAM_WAIT_GAME: $this->setTemplate('taskTeamWaitGame'); break;
@@ -145,8 +145,26 @@ class playActions extends MyActions
 		$this->goodAnswers = $this->taskState->getGoodPostedAnswers();
 		$this->beingVerifiedAnswers = $this->taskState->getBeingVerifiedPostedAnswers();
 		$this->badAnswers = $this->taskState->getBadPostedAnswers();
-	}	
-	
+	}
+
+	public function executeSetNext(sfWebRequest $request)
+	{
+		$this->forward404Unless($teamState = TeamState::byId($request->getParameter('id')), 'Состояние команды не найдено.');
+		$this->forward404Unless($task = Task::byId($request->getParameter('taskId')), 'Задание не найдено.');
+		if (is_string($res = $teamState->setNextTask($task, $this->sessionWebUser)))
+		{
+			$this->errorRedirect(
+				'Назначить команде '.$teamState->Team->name.' следующее задание не удалось: '.$res,
+				'play/task?id='.$teamState->id
+			);
+		}
+		$teamState->save();
+		$this->successRedirect(
+			'Команде '.$teamState->Team->name.' успешно назначено следующее задание.',
+			'play/task?id='.$teamState->id
+		);
+	}
+
 	protected function updateIfTeamCan(TeamState $teamState)
 	{
 		if ($teamState->Game->teams_can_update)
@@ -161,7 +179,7 @@ class playActions extends MyActions
 			}
 		}
 	}
-	
+
 	protected function confirmTaskDisplayIfRequired(TaskState $taskState)
 	{
 		// Если это задание еще не было просмотрено,
@@ -181,5 +199,5 @@ class playActions extends MyActions
 			}
 		}
 	}
-	
+
 }

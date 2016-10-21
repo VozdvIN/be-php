@@ -1,7 +1,7 @@
 <?php include_partial('menu', array('_activeItem' => 'Задание', '_teamState' => $teamState)) ?>
 
 <p>
-	Для вас выбрано следующее задание.
+	Вам назначено следующее задание, оно начнется в ближайшее время.
 </p>
 
 <?php if ($taskState->Task->manual_start): ?>
