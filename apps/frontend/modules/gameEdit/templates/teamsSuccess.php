@@ -7,6 +7,9 @@
 <?php else: ?>
 <table class="no-border">
 	<thead>
+		<?php if ($_isModerator): ?>
+		<tr><td colspan="4"><span class="button-info"><?php echo link_to('Зарегистрировать команду', 'game/addTeamManual?id='.$_game->id, array('method' => 'post')); ?></span></td></tr>
+		<?php endif; ?>
 		<tr><th>Команда</th><th>Стартует</th><th>ИИ</th><th>&nbsp;</th></tr>
 	</thead>
 	<tbody>
@@ -46,10 +49,5 @@
 		</tr>
 		<?php endforeach; ?>
 	</tbody>
-	<?php if ($_isModerator): ?>
-	<tfoot>
-		<tr><td colspan="4"><span class="button-info"><?php echo link_to('Зарегистрировать команду', 'game/addTeamManual?id='.$_game->id, array('method' => 'post')); ?></span></td></tr>
-	</tfoot>
-	<?php endif; ?>
 </table>
 <?php endif; ?>

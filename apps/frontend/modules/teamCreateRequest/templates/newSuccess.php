@@ -1,6 +1,4 @@
-<?php
-	$settings = SystemSettings::getInstance();
-?>
+<?php $settings = SystemSettings::getInstance(); ?>
 
 <h2>Подача заявки на создание команды</h2>
 

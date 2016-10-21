@@ -2,11 +2,10 @@
 
 <table class="no-border">
 	<thead>
-		<tr>
-			<th>Задание</th>
-			<th>Приоритет</th>
-			<th>&nbsp;</th>
-		</tr>
+		<?php if ($_isManager || $_isModerator): ?>
+		<tr><td colspan="3"><span class="button-info"><?php echo link_to('Добавить', 'taskConstraint/new?taskId='.$_task->id); ?></span></td></tr>
+		<?php endif; ?>
+		<tr><th>Задание</th><th>Приоритет</th><th>&nbsp;</th></tr>
 	</thead>
 	<tbody>
 		<?php foreach ($_taskConstraints as $taskConstraint): ?>
@@ -27,34 +26,33 @@
 			</td>
 			<?php endif; ?>
 			<td>
-				<?php if ($_isManager || $_isModerator): ?>
-				<span class="button-info">
-					<?php echo link_to('Править', 'taskConstraint/edit?id='.$taskConstraint->id); ?>
-				</span>
-				<span class="button-danger">
-					<?php
-						echo link_to(
-							'Удалить',
-							'taskConstraint/delete?id='.$taskConstraint->id,
-							array(
-								'method' => 'delete',
-								'confirm' => 'Вы действительно хотите удалить правило перехода с задания '.$_task->name.' на задание '.( $targetTask ? $targetTask->name : '(отсутствует)').'?'
+				<?php
+				if ($_isManager || $_isModerator)
+				{
+					include_partial(
+						'global/actionsMenu',
+						array(
+							'items' => array(
+								'edit' => link_to('Править', 'taskConstraint/edit?id='.$taskConstraint->id),
+								'delete' => link_to(
+												'Удалить',
+												'taskConstraint/delete?id='.$taskConstraint->id,
+												array(
+													'method' => 'delete',
+													'confirm' => 'Вы действительно хотите удалить правило перехода с задания '.$_task->name.' на задание '.( $targetTask ? $targetTask->name : '(отсутствует)').'?'
+												)
+											)
+							),
+							'css' => array(
+								'edit' => 'info',
+								'delete' => 'danger'
 							)
-						);
-					?>
-				</span>
-				<?php endif; ?>
+						)
+					)
+				}
+				?>
 			</td>
 		</tr>
 		<?php endforeach ?>
 	</tbody>
-	<tfoot>
-		<?php if ($_isManager || $_isModerator): ?>
-		<tr>
-			<td colspan="3">
-				<span class="button-info"><?php echo link_to('Добавить', 'taskConstraint/new?taskId='.$_task->id); ?></span>
-			</td>
-		</tr>
-		<?php endif; ?>
-	</tfoot>
-</table>		
+</table>

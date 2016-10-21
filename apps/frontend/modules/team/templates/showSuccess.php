@@ -1,20 +1,11 @@
 <?php include_partial('menu', array('_team' => $_team, '_activeItem' => $_team->name)) ?>
 
 <table class="no-border">
-	<tbody>
-		<tr><th>Название:</th><td><?php echo $_team->name; ?></td></tr>
-		<tr><th>Полностью:</th><td><?php echo $_team->full_name; ?></td></tr>
-		<tr><th>Проект:</th><td><?php echo $_team->getRegionSafe()->name; ?></td></tr>
-		<?php if ($_sessionIsModerator): ?>
-		<tr><th>Id:</th><td><?php echo $_team->id; ?></td></tr>
-		<?php endif; ?>
-	</tbody>
-	<tfoot>
+	<thead>
 		<tr>
 			<td colspan="2">
 				<?php
-					include_partial(
-						'global/actionsMenu',
+					include_partial('global/actionsMenu',
 						array(
 							'items' => array(
 								'Edit' => link_to('Редактировать', 'team/edit?id='.$_team->id),
@@ -33,5 +24,14 @@
 				?>
 			</td>
 		</tr>
-	</tfoot>
+	</thead>
+	<tbody>
+		<tr><th>Название:</th><td><?php echo $_team->name; ?></td></tr>
+		<tr><th>Полностью:</th><td><?php echo $_team->full_name; ?></td></tr>
+		<tr><th>Проект:</th><td><?php echo $_team->getRegionSafe()->name; ?></td></tr>
+		<?php if ($_sessionIsModerator): ?>
+		<tr><th>Id:</th><td><?php echo $_team->id; ?></td></tr>
+		<?php endif; ?>
+	</tbody>
+	<tfoot>
 </table>

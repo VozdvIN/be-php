@@ -17,7 +17,7 @@
 		<span class="safeAction"><?php echo link_to($task->public_name, 'gameControl/setNext?teamState='.$teamState->id.'&taskId='.$task->id, array('method' => 'post', 'confirm' => 'Вы уверены, что хотите приступить к выполнению задания "'.$task->public_name.'"?')) ?></span>
 		<?php else: ?>
 		<?php echo $task->public_name ?>
-	<?php endif ?>
+		<?php endif ?>
 	</li>
 	<?php endforeach ?>
 </ul>

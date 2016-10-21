@@ -1,6 +1,11 @@
 <?php include_partial('menu', array('_webUser' => $_webUser, '_activeItem' => 'Права', '_isSelf' => $_isSelf)) ?>
 
 <table class="no-border">
+	<?php if ($_isPermissionModerator): ?>
+	<thead>
+		<tr><td colspan="2"><span class="button-info"><?php echo link_to('Добавить', 'grantedPermission/new?webUserId='.$_webUser->id); ?></span></td></tr>
+	</thead>
+	<?php endif; ?>
 	<?php if ($_webUser->grantedPermissions->count() == 0): ?>
 	<tbody>
 		<tr>
@@ -32,13 +37,5 @@
 		</tr>
 		<?php endforeach; ?>
 	</tbody>
-	<?php endif; ?>
-
-	<?php if ($_isPermissionModerator): ?>
-	<tfoot>
-		<tr>
-			<td colspan="2"><span class="button-info"><?php echo link_to('Добавить', 'grantedPermission/new?webUserId='.$_webUser->id); ?></span></td>
-		</tr>
-	</tfoot>
 	<?php endif; ?>
 </table>

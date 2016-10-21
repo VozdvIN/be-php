@@ -21,7 +21,7 @@
 				</ul>
 			</td>
 		</tr>
-		<?php endforeach; ?>		
+		<?php endforeach; ?>
 	</tbody>
 </table>
 <?php endif; ?>

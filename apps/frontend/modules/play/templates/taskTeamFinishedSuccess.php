@@ -10,6 +10,6 @@
 </p>
 <?php else: ?>
 <p>
-	<span class="button"><?php echo link_to('Результаты игры', 'gameControl/report?id='.$teamState->game_id) ?></span>
+	<span class="button"><?php echo link_to('Результаты игры', 'game/showResults?id='.$teamState->game_id) ?></span>
 </p>
 <?php endif ?>

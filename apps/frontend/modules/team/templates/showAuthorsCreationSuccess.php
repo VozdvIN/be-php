@@ -3,13 +3,15 @@
 <?php include_partial('authorsMenu', array('_team' => $_team, '_activeItem' => 'Заявки')) ?>
 
 <table class="no-border">
-	<?php if ($_gameCreateRequests->count() == 0): ?>
 	<thead>
+		<?php if ($_sessionCanManage): ?>
+		<tr><td colspan="3"><span class="button-info"><?php echo link_to('Создать игру', 'gameCreateRequest/new?teamId='.$_team->id); ?></span></td></tr>
+		<?php endif; ?>
+		<?php if ($_gameCreateRequests->count() == 0): ?>
 		<tr><td colspan="3">Команда не подавала заявок на создание игр.</td></tr>
-	</thead>
-	<?php else: ?>
-	<thead>
+		<?php else: ?>
 		<tr><th>Название</th><th>Сообщение</th><th>&nbsp;</th></tr>
+		<?php endif; ?>
 	</thead>
 	<tbody>
 		<?php foreach ($_gameCreateRequests as $gameCreateRequest): ?>
@@ -26,13 +28,4 @@
 		</tr>
 		<?php endforeach; ?>
 	</tbody>
-	<?php endif; ?>
-
-	<?php if ($_sessionCanManage): ?>
-	<tfoot>
-		<tr>
-			<td colspan="3"><span class="button-info"><?php echo link_to('Создать игру', 'gameCreateRequest/new?teamId='.$_team->id); ?></span></td>
-		</tr>
-	</tfoot>
-	<?php endif; ?>
 </table>

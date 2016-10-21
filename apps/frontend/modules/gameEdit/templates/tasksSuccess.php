@@ -4,6 +4,9 @@
 
 <table class="no-border">
 	<thead>
+		<?php if ($_canManage || $_isModerator): ?>
+		<tr><td colspan="11"><span class="button-info"><?php echo link_to('Создать задание', 'task/new?gameId='.$_game->id); ?></span></td></tr>
+		<?php endif; ?>
 		<tr><th rowspan="2">Название</th><th rowspan="2">Времени</th><th colspan="2">Ответов</th><th rowspan="2">Ошибок</th><th rowspan="2">Пауза</th><th rowspan="2">Команд</th></tr>
 		<tr><th>Всего</th><th>Min</th></tr>
 	</thead>
@@ -22,8 +25,5 @@
 	</tbody>
 	<tfoot>
 		<tr><td colspan="11"><span class="info">Примечание:</span> <span class="danger">цветом</span> выделены блокированные задания.</td></tr>
-		<?php if ($_canManage || $_isModerator): ?>
-		<tr><td colspan="11"><span class="button-info"><?php echo link_to('Создать задание', 'task/new?gameId='.$_game->id); ?></span></td></tr>
-		<?php endif; ?>
 	</tfoot>
 </table>

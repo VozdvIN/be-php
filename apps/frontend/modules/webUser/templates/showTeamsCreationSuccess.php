@@ -3,10 +3,15 @@
 <?php include_partial('teamsMenu', array('_webUser' => $_webUser, '_activeItem' => 'Создание')) ?>
 
 <table class="no-border">
-	<?php if ($_teamCreateRequests->count() == 0): ?>
+	<?php if ($_isSelf): ?>
 	<thead>
-		<tr><td colspan="3">Пользователь не подавал заявок на создание команд.</td></tr>
+		<tr><td colspan="3"><span class="button-info"><?php echo link_to('Создать команду', 'teamCreateRequest/new'); ?></span></td></tr>
 	</thead>
+	<?php endif; ?>
+	<?php if ($_teamCreateRequests->count() == 0): ?>
+	<tbody>
+		<tr><td colspan="3">Пользователь не подавал заявок на создание команд.</td></tr>
+	</tbody>
 	<?php else: ?>
 	<thead>
 		<tr><th>Название</th><th>Сообщение</th><th>&nbsp;</th></tr>
@@ -26,11 +31,6 @@
 		</tr>
 		<?php endforeach; ?>
 	</tbody>
-	<?php endif; ?>
-	<?php if ($_isSelf): ?>
-	<tfoot>
-		<tr><td colspan="3"><span class="button-info"><?php echo link_to('Создать команду', 'teamCreateRequest/new'); ?></span></td></tr>
-	</tfoot>
 	<?php endif; ?>
 </table>
 

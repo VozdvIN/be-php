@@ -2,12 +2,7 @@
 
 <table>
 	<thead>
-		<tr>
-			<th>Задание</th>
-			<th>Старт</th>
-			<th>Длилось</th>
-			<th>Итог</th>
-		</tr>
+		<tr><th>Задание</th><th>Старт</th><th>Длилось</th><th>Итог</th></tr>
 	</thead>
 	<tbody>
 		<?php foreach ($teamState->taskStates as $taskState): ?>

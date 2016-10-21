@@ -19,13 +19,16 @@ include_partial(
 	'global/actionsMenu',
 	array(
 		'items' => array(
-			'item' => link_to('', ''),
+			'edit' => link_to('', ''),
+			'delete' => link_to('', '')
 		),
 		'css' => array(
-			'item' => ''
+			'edit' => 'info',
+			'delete' => 'danger'
 		),
 		'conditions' => array(
-			'item' => ''
+			'edit' => 'info',
+			'delete' => 'danger'
 		)
 	)
 );

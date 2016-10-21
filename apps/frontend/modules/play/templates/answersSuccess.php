@@ -32,35 +32,35 @@ $form = new SimpleAnswerForm();
 </p>
 
 <?php if ($restAnswers->count() > 0): ?>
-	<p class="border-bottom">
-	<?php foreach ($restAnswers as $answer): ?>
-		<span><?php echo $answer->info ?> </span>
-	<?php endforeach ?>
-	</p>
+<p class="border-bottom">
+<?php foreach ($restAnswers as $answer): ?>
+	<span><?php echo $answer->info ?> </span>
+<?php endforeach ?>
+</p>
 <?php endif ?>
 
 <?php if ($goodAnswers->count() > 0): ?>
-	<p class="border-bottom">
-	<?php foreach ($goodAnswers as $postedAnswer): ?>
-		<span class="info"><?php echo $postedAnswer->value ?> </span>
-	<?php endforeach ?>
-	</p>
+<p class="border-bottom">
+<?php foreach ($goodAnswers as $postedAnswer): ?>
+	<span class="info"><?php echo $postedAnswer->value ?> </span>
+<?php endforeach ?>
+</p>
 <?php endif ?>
 
 <?php if ($beingVerifiedAnswers->count() > 0): ?>
-	<p class="border-bottom">
-	<?php foreach ($beingVerifiedAnswers as $postedAnswer): ?>
-		<span class="warn"><?php echo $postedAnswer->value ?> </span>
-	<?php endforeach ?>
-	</p>
+<p class="border-bottom">
+<?php foreach ($beingVerifiedAnswers as $postedAnswer): ?>
+	<span class="warn"><?php echo $postedAnswer->value ?> </span>
+<?php endforeach ?>
+</p>
 <?php endif ?>
 
 <?php if ($badAnswers->count() > 0): ?>
-	<p class="border-bottom">
-	<?php foreach ($badAnswers as $postedAnswer): ?>
-		<span class="danger"><?php echo $postedAnswer->value ?> </span>
-	<?php endforeach ?>
-	</p>
+<p class="border-bottom">
+<?php foreach ($badAnswers as $postedAnswer): ?>
+	<span class="danger"><?php echo $postedAnswer->value ?> </span>
+<?php endforeach ?>
+</p>
 <?php endif ?>
 
 <p>

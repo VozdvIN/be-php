@@ -4,16 +4,8 @@
  * - $_teamState - состояние команды
  */
 $viewName = 'task';
-
-if ($_activeItem == 'Ответы')
-{
-	$viewName = 'answers';
-}
-
-if ($_activeItem == 'История')
-{
-	$viewName = 'stats';
-}
+$viewName = $_activeItem == 'Ответы') ? 'answers' : $viewName;
+$viewName = $_activeItem == 'История') ? 'stats' : $viewName;
 ?>
 <div style="display: inline-block">
 	<span class="button-info"><?php echo link_to('Обновить', 'play/'.$viewName.'?id='.$_teamState->id); ?></span>

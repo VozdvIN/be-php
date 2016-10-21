@@ -9,7 +9,7 @@ $region = $game->getRegionSafe();
 <div>
 	<h4>
 		<?php
-			echo ($_isAuth ? link_to($game->name, 'game/info?id='.$game->id) : $game->name)
+			echo ($_isAuth ? link_to($game->name, 'game/show?id='.$game->id) : $game->name)
 				.(($region->id != Region::DEFAULT_REGION) ? ('&nbsp;('.$game->getRegionSafe()->name.')') : '');
 		?>
 	</h4>

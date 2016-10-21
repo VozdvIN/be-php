@@ -15,8 +15,6 @@
 </p>
 <ul>
 	<?php foreach ($webUsers as $webUser): ?>
-	<li>
-		<?php echo link_to($webUser->login, 'team/setPlayer'.'?id='.$team->id.'&userId='.$webUser->id, array('method' => 'post')); ?>
-	</li>
-	<?php endforeach; ?>  
+	<li><?php echo link_to($webUser->login, 'team/setPlayer'.'?id='.$team->id.'&userId='.$webUser->id, array('method' => 'post')); ?></li>
+	<?php endforeach; ?>
 </ul>

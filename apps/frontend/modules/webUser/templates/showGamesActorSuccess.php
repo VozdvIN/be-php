@@ -3,6 +3,9 @@
 <?php include_partial('gamesMenu', array('_webUser' => $_webUser, '_activeItem' => 'Организатор')) ?>
 
 <table class="no-border">
+	<thead>
+		<tr><td colspan="7"><span class="button-info"><?php echo link_to('Создать игру', 'gameCreateRequest/newManual'); ?></span></td></tr>
+	</thead>
 	<tbody>
 		<?php if ($_games->count() == 0): ?>
 		<tr>
@@ -19,11 +22,6 @@
 		<?php endforeach; ?>
 		<?php endif; ?>
 	</tbody>
-	<tfoot>
-		<tr>
-			<td colspan="7"><span class="button-info"><?php echo link_to('Создать игру', 'gameCreateRequest/newManual'); ?></span></td>
-		</tr>
-	</tfoot>
 </table>
 
 <p class="info">
