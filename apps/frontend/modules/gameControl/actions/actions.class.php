@@ -70,15 +70,41 @@ class gameControlActions extends MyActions
 
 		$this->_teamStates = Doctrine::getTable('TeamState')
 			->createQuery('ts')
-			->select()
 			->innerJoin('ts.Team')
 			->leftJoin('ts.Task')
 			->leftJoin('ts.taskStates')
+			->select()
 			->where('ts.game_id = ?', $this->_game->id)
 			->orderBy('ts.Team.name, ts.taskStates.given_at')
 			->execute();
 
 		$this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
+	}
+
+	public function executeAnswers(sfRequest $request)
+	{
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
+
+		$this->errorRedirectUnless(
+			$this->_game->canBeObserved($this->sessionWebUser),
+			Utils::cannotMessage(
+				$this->sessionWebUser->login,
+				'просматривать игру'
+			)
+		);
+
+		$this->_teamStates = Doctrine::getTable('TeamState')
+			->createQuery('ts')
+			->innerJoin('ts.Team')
+			->leftJoin('ts.Task')
+			->leftJoin('ts.taskStates')
+			->select()
+			->where('ts.game_id = ?', $this->_game->id)
+			->orderBy('ts.Team.name, ts.taskStates.given_at')
+			->execute();
 	}
 
   /**
