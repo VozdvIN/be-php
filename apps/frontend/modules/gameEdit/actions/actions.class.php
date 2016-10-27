@@ -191,7 +191,7 @@ class gameEditActions extends MyActions
 			->orderBy('t.name')->execute();
 	}
 
-	//TODO: Заменить форму
+	//TODO: Заменить форму, UPD: на какую именно?
 	public function executeNew(sfWebRequest $request)
 	{
 		$this->errorRedirectUnless(

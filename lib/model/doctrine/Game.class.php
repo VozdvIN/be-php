@@ -284,31 +284,6 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
     return Timing::strToDate($this->stop_datetime);
   }
 
-  /**
-   * Возвращает текущие результаты команд в виде массива:
-   * - ключ - сурроганый, порядок отражает порядок команд от первого до последнего места.
-   * - данные - массив:
-   *    - 'id' - БД-ключ команды
-   *    - 'points' - набранные очки
-   *    - 'time' - потраченное время
-   * Массив отсортирован по убыванию занимаемых командами мест.
-   *
-   * @return array
-   * 
-   * @deprecated
-   */
-  public function getGameResults()
-  {
-    $res = array();
-    foreach ($this->teamStates as $teamState)
-    {
-      array_push($res, $teamState->getTeamResults());
-    }
-    usort($res, 'compareTeamPlaces');
-    return $res;
-  }
-
-
 	/**
 	 * Возвращает массив с результатами команд, отсортированными в порядке увеличения занимаемого места.
 	 * Для каждой команды дается ассоциативная запись со следующми полями:

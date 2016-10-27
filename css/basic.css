@@ -133,9 +133,6 @@ table.no-bg, table.no-bg tr, table.no-bg th, table.no-bg td {
 
 /* === Highlights === */
 
-/* TODO: deprecated, remove usages */
-.note, .note > a { color: inherit; }
-
 .info, .info > a { color: lime; }
 
 .warn, .warn > a { color: yellow; }

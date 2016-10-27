@@ -547,41 +547,6 @@ class TaskState extends BaseTaskState implements IStored, IAuth
     $this->task_last_update = time();
   }
 
-  //TODO: Реально используется?
-  /**
-   * Отменяет старт задания, но только до того, как его увидят!
-   * ВНИМАНИЕ: Не сохраняет данные в БД, save() выполняет вызывающий.
-   *
-   * @param   WebUser   $actor  Исполнитель
-   * @return  mixed             True при успехе, иначе строка с ошибкой.
-   */
-  public function restart(WebUser $actor)
-  {
-    if (!$this->canBeManaged($actor))
-    {
-      return Utils::cannotMessage($actor->login, Permission::byId(Permission::GAME_MODER)->description);
-    }
-    if ($this->status >= TaskState::TASK_ACCEPTED)
-    {
-      return 'Команда '.$this->TeamState->Team->name.' уже ознакомилась с заданием '.$this->Task->name;
-    }
-
-    //Уберем все подсказки, чтобы не маячили
-    $query = Doctrine::getTable('UsedTip')
-        ->createQuery('ttu')
-        ->delete()
-        ->where('task_state_id = ?', array($this->id))
-        ->execute();
-
-    $this->status = TaskState::TASK_GIVEN;
-    $this->started_at = 0;
-    $this->accepted_at = 0;
-    $this->done_at = 0;
-    $this->task_time_spent = 0;
-
-    $this->task_last_update = time();
-  }
-
   /**
    * Подтверждает факт отображения задания.
    * ВНИМАНИЕ: Не сохраняет данные в БД, save() выполняет вызывающий.

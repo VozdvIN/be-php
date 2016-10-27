@@ -75,23 +75,6 @@ class taskStateActions extends MyActions
 		);
 	}
 
-	public function executeRestart(sfWebRequest $request)
-	{
-		$this->decodeArgs($request);
-		if (is_string($res = $this->taskState->restart($this->sessionWebUser)))
-		{
-			$this->errorRedirect(
-				'Не удалось перезапустить задание '.$this->taskState->Task->name.' команды '.$this->teamName.' : '.$res,
-				'gameControl/tasks?id='.$this->game->id
-			);
-		}
-		$this->taskState->save();
-		$this->successRedirect(
-			'Задание '.$this->taskState->Task->name.' команды '.$this->teamName.' успешно перезапущено.',
-			'gameControl/tasks?id='.$this->game->id
-		);
-	}
-
 	public function executeForceAccept(sfWebRequest $request)
 	{
 		$this->decodeArgs($request);

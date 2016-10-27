@@ -130,26 +130,6 @@ class gameCreateRequestActions extends MyActions
 		}
 	}
 
-	/**
-	 * @deprecated Подача заявки на создание игры выполняется из профиля подающей заявку команды
-	 */
-	public function executeNewManual(sfWebRequest $request)
-	{
-		throw new Exception("gameCreateRequest::executeNewManual: DEPRECATED");
-/*
-		$this->_teams = new Doctrine_Collection('Team');
-		foreach (Doctrine::getTable('Team')->findAll() as $team)
-		{
-			if ($team->canBeManaged($this->sessionWebUser))
-			{
-				$this->_teams->add($team);
-			}
-		}
-
-		$this->errorRedirectIf($this->_teams->count() <= 0, 'Нет команд, от лица которых вы можете подать заявку на создание игры.');
-*/
-	}
-
 	public function executeAcceptManual(sfWebRequest $request)
 	{
 		$request->checkCSRFProtection();
