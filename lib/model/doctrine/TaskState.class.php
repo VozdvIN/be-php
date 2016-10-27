@@ -843,24 +843,23 @@ class TaskState extends BaseTaskState implements IStored, IAuth
 
   //// Self ////
 
-  /**
-   * Проверяет, не было ли обработано такое значение ответа ранее.
-   * 
-   * @param   string  $answerValue
-   * @return  boolean
-   */
-  protected function isKnownAnswerValue($answerValue)
-  {
-    $cleanValue = trim($answerValue);
-    foreach ($this->postedAnswers as $postedAnswer)
-    {
-      if (strcasecmp($postedAnswer->value, $cleanValue) == 0)
-      {
-        return true;
-      }
-    }
-    return false;
-  }
+	/**
+	 * Проверяет, не было ли обработано такое значение ответа ранее.
+	 * 
+	 * @param   string  $answerValue
+	 * @return  boolean
+	 */
+	protected function isKnownAnswerValue($answerValue)
+	{
+		foreach ($this->postedAnswers as $postedAnswer)
+		{
+			if (Utils::mb_strcasecmp(trim($postedAnswer->value), trim($answerValue)))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
   /**
    * Ищет указанный ответ среди проверенных.
@@ -918,28 +917,7 @@ class TaskState extends BaseTaskState implements IStored, IAuth
     $newPostedAnswer->post_time = $timestamp;
     $newPostedAnswer->web_user_id = $poster->id;
     $newPostedAnswer->status = PostedAnswer::ANSWER_POSTED;
-    try
-    {
-      $newPostedAnswer->save();
-    }
-    catch (Exception $e)
-    {
-      /* Ошибка как правило такая: нарушение ограничения уникальности ответов.
-       * Причина: strcasecmp в PHP не понимает русских букв (в отличие от MySQL),
-       * поэтому isKnownAnswerValue пропускает значения, отличающиеся только регистром
-       * русских букв.
-       * Решение: при возникновении этой ситуации надо переписать старое значение новым,
-       * т.е. выполнить не вставку, а замену.
-       */
-      //TODO: Принудительное вписывание кавычек работает в mySQL, но может глючить в других БД
-      $query = Doctrine::getTable('PostedAnswer')
-          ->createQuery('pa')
-          ->update()
-          ->set('pa.value', '"'.$cleanValue.'"') 
-          ->set('pa.status', '"'.PostedAnswer::ANSWER_POSTED.'"') 
-          ->where('value = ?', array($cleanValue))
-          ->execute();
-    }
+	$newPostedAnswer->save();
   }
 
   /**

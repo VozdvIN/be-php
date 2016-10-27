@@ -312,26 +312,25 @@ class Task extends BaseTask implements IStored, IAuth
     return $result;
   }
   
-  /**
-   * Ищет в указанном списке ответ с заданным значением.
-   * 
-   * @param   string                  $answerValue      значение для поиска
-   * @param   Doctrine_Collection     $correctAnswers   список корректных ответов
-   * 
-   * @return  Doctrine_Record<Answer>                   Найденный ответ, или False если не найден.
-   */
-  public static function answerForValue($answerValue, Doctrine_Collection $correctAnswers)
-  {
-    $clearValue = trim($answerValue);
-    foreach ($correctAnswers as $correctAnswer)
-    {
-      if (strcasecmp($clearValue, $correctAnswer->value) == 0)
-      {
-        return $correctAnswer;
-      }
-    }
-    return false;
-  }
+	/**
+	 * Ищет в указанном списке ответ с заданным значением.
+	 * 
+	 * @param   string                  $answerValue      значение для поиска
+	 * @param   Doctrine_Collection     $correctAnswers   список корректных ответов
+	 * 
+	 * @return  Doctrine_Record<Answer>                  Найденный ответ, или False если не найден.
+	 */
+	public static function answerForValue($answerValue, Doctrine_Collection $correctAnswers)
+	{
+		foreach ($correctAnswers as $correctAnswer)
+		{
+			if (Utils::mb_strcasecmp(trim($answerValue), trim($correctAnswer->value)))
+			{
+				return $correctAnswer;
+			}
+		}
+		return false;
+	}
   
   /**
    * Убирает из исходного списка заданий все задания, встречающиеся во втором списке.

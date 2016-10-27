@@ -293,6 +293,23 @@ class Utils
 	const LOAD_TEST_MODE = false; // True - включить режим нагрузочного тестирования
 
 	/**
+	 * Сравнение двух многобайтовых строк без учета регистра.
+	 * 
+	 * @param type string
+	 * @param type string
+	 * @param type string
+	 * @return bool
+	 */
+	public static function mb_strcasecmp($str1, $str2, $encoding = null)
+    {
+        if (null === $encoding)
+		{
+			$encoding = mb_internal_encoding();
+		}
+		return strcmp(mb_strtoupper($str1, $encoding), mb_strtoupper($str2, $encoding));
+	}
+
+	/**
 	 * Возвращает хэш пароля с учетом "соления".
 	 *
 	 * @param   string  $password нешифрованный пароль
