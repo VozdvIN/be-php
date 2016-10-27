@@ -107,64 +107,38 @@ class gameControlActions extends MyActions
 			->execute();
 	}
 
-  /**
-   * @deprecated
-   */
-  public function executePilot(sfRequest $request)
-  {
-		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+	public function executeOverview(sfRequest $request)
+	{
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
 
-    $this->errorRedirectUnless(
-        ($this->_game->canBeObserved($this->sessionWebUser)),
-        Utils::cannotMessage($this->sessionWebUser->login, 'просматривать игру')
-    );
-    $this->prefetchAll($request);
-    $this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
-  }
+		$this->errorRedirectUnless(
+			$this->_game->canBeObserved($this->sessionWebUser),
+			Utils::cannotMessage(
+				$this->sessionWebUser->login,
+				'просматривать игру'
+			)
+		);
 
-  /**
-   * @deprecated
-   */
-  public function executeSturman(sfRequest $request)
-  {
-		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-
-    $this->errorRedirectUnless(
-        ($this->_game->canBeObserved($this->sessionWebUser)),
-        Utils::cannotMessage($this->sessionWebUser->login, 'просматривать игру')
-    );
-    $this->prefetchAll($request);
-    $this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
-  }
-
-  /**
-   * @deprecated
-   */
-  public function executeEngineer(sfRequest $request)
-  {
-		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-
-    $this->errorRedirectUnless(
-        ($this->_game->canBeObserved($this->sessionWebUser)),
-        Utils::cannotMessage($this->sessionWebUser->login, 'просматривать игру')
-    );
-    $this->prefetchAll($request);
-    $this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
-  }
-
-  /**
-   * @deprecated
-   */
-  public function executeStuart(sfRequest $request)
-  {
-		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-
-    $this->errorRedirectUnless(
-        ($this->_game->canBeObserved($this->sessionWebUser)),
-        Utils::cannotMessage($this->sessionWebUser->login, 'просматривать игру')
-    );
-    $this->_isManager = $this->_game->canBeManaged($this->sessionWebUser);
-  }
+		$this->_teamStates = Doctrine::getTable('TeamState')
+			->createQuery('ts')
+			->innerJoin('ts.Team')
+			->leftJoin('ts.taskStates')
+			->select()
+			->where('ts.game_id = ?', $this->_game->id)
+			->orderBy('ts.Team.name, ts.taskStates.given_at')
+			->execute();
+		
+		$this->_tasks = Doctrine::getTable('Task')
+			->createQuery('t')
+			->leftJoin('t.taskStates')
+			->select()
+			->where('t.game_id = ?', $this->_game->id)
+			->orderBy('t.name')
+			->execute();
+	}
 
 	public function executeVerify(sfWebRequest $request)
 	{
@@ -441,82 +415,5 @@ class gameControlActions extends MyActions
 		}
 	}
 
-	/**
-	 * @deprecated
-	 */
-	protected function prefetchAll(sfRequest $request)
-	{
-		$game = $this->_game;
-
-		$teamStates = Doctrine::getTable('TeamState')
-			->createQuery('ts')
-			->select()
-				->innerJoin('ts.Game')
-				->innerJoin('ts.Team')
-				->leftJoin('ts.taskStates')
-			->where('game_id = ?', $game->id)
-			->orderBy('ts.Team.name, ts.taskStates.given_at')
-			->execute();
-
-		$teamStatesIds = DCTools::idsToArray($teamStates);
-		$taskStates = Doctrine::getTable('TaskState')
-			->createQuery('ts')
-			->select()
-				->innerJoin('ts.TeamState')
-				->innerJoin('ts.Task')
-				->leftJoin('ts.usedTips')
-				->leftJoin('ts.postedAnswers')
-			->whereIn('team_state_id', $teamStatesIds)
-			->orderBy('ts.given_at')
-			->execute();
-
-		$taskStatesIds = DCTools::idsToArray($taskStates);
-		$usedTips = Doctrine::getTable('UsedTip')
-			->createQuery('ut')
-			->select()
-				->innerJoin('ut.TaskState')
-				->innerJoin('ut.Tip')
-			->whereIn('task_state_id', $taskStatesIds)
-			->orderBy('ut.used_since')
-			->execute();
-
-		$tasks = Doctrine::getTable('Task')
-			->createQuery('t')
-			->select()
-				->innerJoin('t.Game')
-				->leftJoin('t.taskStates')
-			->where('game_id = ?', $game->id)
-			->orderBy('t.name')
-			->execute();
-
-		$postedAnswers = Doctrine::getTable('PostedAnswer')
-			->createQuery('pa')
-			->select()
-				->innerJoin('pa.WebUser')
-			->whereIn('task_state_id', $taskStatesIds)
-			->execute();
-
-		/* Формат $currentTaskStatesIndex:
-		 * ключ - id состояния команды
-		 * значение - текущее состояние задания
-		 */
-		$currentTaskStatesIndex = array();
-		foreach ($teamStates as $teamState)
-		{
-			$currentTaskState = $teamState->getCurrentTaskState();
-			$currentTaskStatesIndex[$teamState->id] = $currentTaskState
-				? DCTools::recordById($taskStates, $currentTaskState->id)
-				: false;
-		}
-
-		$this->_teamStates = $teamStates;
-		$this->_taskStates = $taskStates;
-		$this->_usedTips = $usedTips;
-		$this->_tasks = $tasks;
-		$this->_postedAnswers = $postedAnswers;
-
-		$this->_currentTaskStatesIndex = $currentTaskStatesIndex;
-	}
 }
-
 ?>
