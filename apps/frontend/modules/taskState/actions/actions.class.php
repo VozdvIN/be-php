@@ -13,7 +13,6 @@ class taskStateActions extends MyActions
 
 	public function executePostAnswers(sfWebRequest $request)
 	{
-		//TODO: Возврат на страницу задания, вкладка "ответы"
 		$this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
 		$this->forward404Unless($taskState = TaskState::byId($request->getParameter('id')), 'Состояние задания не найдено.');
 		$redirectUrl = 'play/answers?id='.$taskState->team_state_id;
@@ -106,26 +105,6 @@ class taskStateActions extends MyActions
 		$this->taskState->save();
 		$this->successRedirect(
 			'Просмотр задания '.$this->taskName.' командой '.$this->teamName.' успешно подтвержден.',
-			'gameControl/tasks?id='.$this->game->id
-		);
-	}
-
-	/**
-	 * @deprecated
-	 */
-	public function executeSkip(sfWebRequest $request)
-	{
-		$this->decodeArgs($request);
-		if (is_string($res = $this->taskState->doneSkip($this->sessionWebUser)))
-		{
-			$this->errorRedirect(
-				'Команде '.$this->teamName.' не удалось пропустить задание '.$this->taskName.': '.$res,
-				'gameControl/tasks?id='.$this->game->id
-			);
-		}
-		$this->taskState->save();
-		$this->successRedirect(
-			'Задание '.$this->taskName.' команды '.$this->teamName.' успешно пропущено.',
 			'gameControl/tasks?id='.$this->game->id
 		);
 	}

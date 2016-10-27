@@ -11,12 +11,6 @@
 <?php   endif; ?>
 <?php endforeach; ?>
 
-<?php if ($isLeader && $taskState->canBeSkipped()): ?>
-<p class="border-top">
-	<span class="button-danger"><?php echo link_to('Пропустить задание', 'taskState/skip?id='.$taskState->id, array('method' => 'post', 'confirm' => 'Вы точно хотите пропустить задание?')); ?></span>
-</p>
-<?php endif ?>
-
 <p class="border-top">
 	Задание идет <?php echo Timing::intervalToStr($taskState->getTaskSpentTimeCurrent()) ?>.
 </p>
