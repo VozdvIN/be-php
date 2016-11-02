@@ -5,16 +5,13 @@
 	В текущем игровом проекте нет анонсированных игр.
 </p>
 <?php else: ?>
-<table class="no-border">
-	<tbody>
-		<?php foreach ($_games as $game): ?>
-		<tr>
-			<td><?php echo link_to($game->name, 'game/show?id='.$game->id); ?></td>
-			<td><?php echo $game->describeNearestEvent(); ?></td>
-		</tr>
-		<?php endforeach; ?>
-	</tbody>
-</table>
+	<?php foreach ($_games as $game): ?>
+<div class="border-bottom">
+	<h3><?php echo link_to($game->name, 'game/show?id='.$game->id); ?></h3>
+	<p><?php echo $game->describeNearestEvent(); ?></p>
+	<article><?php echo Utils::decodeBB($game->short_info); ?></article>
+</div>
+	<?php endforeach; ?>
 <?php endif; ?>
 
 <p class="info">
