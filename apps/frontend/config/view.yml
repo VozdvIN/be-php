@@ -10,6 +10,7 @@ default:
     description:  Beaver's Engine for interactive online games
     language:     en
     robots:       index, follow
+    viewport:     width=device-width,initial-scale=1
 
   stylesheets:    [common.css, highlights.css, special.css]
 
