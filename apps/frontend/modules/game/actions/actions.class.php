@@ -9,7 +9,9 @@ class gameActions extends MyActions
 	public function executeIndex(sfWebRequest $request)
 	{
 		$this->checkIndexAccess();
-		$this->_games = Game::queryByRegion(Region::byIdSafe($this->session->getAttribute('region_id')))->execute();
+		$this->_games = Game::queryByRegion(Region::byIdSafe($this->session->getAttribute('region_id')))
+				->andWhere('short_info_enabled = ?', true)
+				->execute();
 	}
 
 	public function executeIndexActive(sfWebRequest $request)
@@ -32,20 +34,15 @@ class gameActions extends MyActions
 
 	public function executeShow(sfWebRequest $request)
 	{
-		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		$this->_canManage = $this->_game->isManager($this->sessionWebUser)
-				|| $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
+		$this->prepareGame($request);
 	}
 
 	public function executeShowTeams(sfWebRequest $request)
 	{
-		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->prepareGame($request);
 
 		$this->teamList = $this->_game->getTeamsAvailableToPostJoinBy($this->sessionWebUser);
 		$this->_canPostJoin = $this->teamList->count() > 0;
-
-		$this->_canManage = $this->_game->isManager($this->sessionWebUser)
-				|| $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
 
 		$this->_teamStates = $this->_game->teamStates;
 		$this->_gameCandidates = $this->_game->gameCandidates;
@@ -53,21 +50,13 @@ class gameActions extends MyActions
 
 	public function executeShowResults(sfWebRequest $request)
 	{
-		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-
-		$this->_canManage = $this->_game->isManager($this->sessionWebUser)
-				|| $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
-
+		$this->prepareGame($request);
 		$this->_results = $this->_game->getResults();
 	}
 
 	public function executeShowResultsDetails(sfWebRequest $request)
 	{
-		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-
-		$this->_canManage = $this->_game->isManager($this->sessionWebUser)
-				|| $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
-
+		$this->prepareGame($request);
 		$this->_teamStates = $this->_game->teamStates;
 	}
 
@@ -84,43 +73,42 @@ class gameActions extends MyActions
 
 	public function executePostJoin(sfWebRequest $request)
 	{
-		$this->forward404Unless($this->game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
 		$this->forward404Unless($this->team = Team::byId($request->getParameter('teamId')), 'Команда не найдена.');
 
-		if (is_string($res = $this->game->postJoin($this->team, $this->sessionWebUser)))
+		if (is_string($res = $this->_game->postJoin($this->team, $this->sessionWebUser)))
 		{
 			$this->errorRedirect(
-				'Не удалось подать заявку команды '.$this->team->name.' на игру '.$this->game->name.': '.$res,
-				'game/showTeams?id='.$this->game->id
+				'Не удалось подать заявку команды '.$this->team->name.' на игру '.$this->_game->name.': '.$res,
+				'game/showTeams?id='.$this->_game->id
 			);
 		}
 		else
 		{
-			if ($this->game->team_id > 0)
+			if ($this->_game->team_id > 0)
 			{
 				Utils::sendNotifyGroup(
-					'Заявка '.$this->team->name.' на игру '.$this->game->name,
-					'Команда "'.$this->team->name.'" подала заявку на вашу игру "'.$this->game->name.'".'."\n"
-					.'Утвердить или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/game/teams?id='.$this->game->id,
-					$this->game->Team->getLeadersRaw()
+					'Заявка '.$this->team->name.' на игру '.$this->_game->name,
+					'Команда "'.$this->team->name.'" подала заявку на вашу игру "'.$this->_game->name.'".'."\n"
+					.'Утвердить или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/game/teams?id='.$this->_game->id,
+					$this->_game->Team->getLeadersRaw()
 				);
 			}
 			else
 			{
 				Utils::sendNotifyAdmin(
-					'Заявка '.$this->team->name.' на игру '.$this->game->name,
-					'Команда "'.$this->team->name.'" подала заявку на игру "'.$this->game->name.'", которой не назначена команда-организатор.'."\n"
-					.'Утвердить или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/game/teams?id='.$this->game->id
+					'Заявка '.$this->team->name.' на игру '.$this->_game->name,
+					'Команда "'.$this->team->name.'" подала заявку на игру "'.$this->_game->name.'", которой не назначена команда-организатор.'."\n"
+					.'Утвердить или отклонить: http://'.SiteSettings::SITE_DOMAIN.'/game/teams?id='.$this->_game->id
 				);
 			}
 
 			$this->successRedirect(
-				'Заявка команды '.$this->team->name.' на игру '.$this->game->name.' принята.',
-				'game/showTeams?id='.$this->game->id
+				'Заявка команды '.$this->team->name.' на игру '.$this->_game->name.' принята.',
+				'game/showTeams?id='.$this->_game->id
 			);
 		}
 	}
-
 
 	public function executeCancelJoin(sfWebRequest $request)
 	{
@@ -174,6 +162,19 @@ class gameActions extends MyActions
 			$this->sessionWebUser->cannot(Permission::GAME_INDEX, 0),
 			Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список игр'),
 			'home/index'
+		);
+	}
+
+	private function prepareGame($request)
+	{
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+
+		$this->_canManage = $this->_game->isActor($this->sessionWebUser)
+								|| $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
+
+		$this->errorRedirectUnless(
+			$this->_game->short_info_enabled || $this->_canManage,
+			Utils::cannotMessage($this->sessionWebUser->login, 'просматривать анонс игры')
 		);
 	}
 }

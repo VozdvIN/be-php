@@ -39,7 +39,7 @@
 								'remove' => $_game->status >= Game::GAME_STEADY ? 'danger' : 'warn'
 							),
 							'conditions' => array(
-								'settings' => true,
+								'settings' => $_canManage,
 								'remove' => $_canManage || $_isModerator
 							)
 						)

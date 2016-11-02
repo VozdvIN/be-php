@@ -10,7 +10,7 @@ class gameEditActions extends MyActions
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
 		$this->errorRedirectUnless(
-			$this->_game->canBeManaged($this->sessionWebUser),
+			$this->_game->canBeManaged($this->sessionWebUser) || $this->_game->isActor($this->sessionWebUser),
 			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
 		);
 
@@ -47,7 +47,7 @@ class gameEditActions extends MyActions
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
 		$this->errorRedirectUnless(
-			$this->_game->canBeManaged($this->sessionWebUser),
+			$this->_game->canBeManaged($this->sessionWebUser) || $this->_game->isActor($this->sessionWebUser),
 			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
 		);
 
@@ -63,7 +63,7 @@ class gameEditActions extends MyActions
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
 		$this->errorRedirectUnless(
-			$this->_game->canBeManaged($this->sessionWebUser),
+			$this->_game->canBeManaged($this->sessionWebUser) || $this->_game->isActor($this->sessionWebUser),
 			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
 		);
 
@@ -100,7 +100,7 @@ class gameEditActions extends MyActions
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
 		$this->errorRedirectUnless(
-			$this->_game->canBeManaged($this->sessionWebUser),
+			$this->_game->canBeManaged($this->sessionWebUser) || $this->_game->isActor($this->sessionWebUser),
 			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
 		);
 
@@ -137,7 +137,7 @@ class gameEditActions extends MyActions
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
 		$this->errorRedirectUnless(
-			$this->_game->canBeManaged($this->sessionWebUser),
+			$this->_game->canBeManaged($this->sessionWebUser) || $this->_game->isActor($this->sessionWebUser),
 			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
 		);
 
@@ -153,7 +153,7 @@ class gameEditActions extends MyActions
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
 		$this->errorRedirectUnless(
-			$this->_game->canBeManaged($this->sessionWebUser),
+			$this->_game->canBeManaged($this->sessionWebUser) || $this->_game->isActor($this->sessionWebUser),
 			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
 		);
 
@@ -167,7 +167,7 @@ class gameEditActions extends MyActions
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
 		$this->errorRedirectUnless(
-			$this->_game->canBeManaged($this->sessionWebUser),
+			$this->_game->canBeManaged($this->sessionWebUser) || $this->_game->isActor($this->sessionWebUser),
 			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
 		);
 
@@ -181,7 +181,7 @@ class gameEditActions extends MyActions
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
 		$this->errorRedirectUnless(
-			$this->_game->canBeManaged($this->sessionWebUser),
+			$this->_game->canBeManaged($this->sessionWebUser) || $this->_game->isActor($this->sessionWebUser),
 			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
 		);
 
@@ -257,15 +257,6 @@ class gameEditActions extends MyActions
 		{
 			$this->errorMessage('Сохранить игру не удалось. Исправьте ошибки и попробуйте снова.');
 		}
-	}
-
-	public function executeInfo(sfWebRequest $request)
-	{
-		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
-		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
-		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
-		$teamList = $this->_game->getTeamsAvailableToPostJoinBy($this->sessionWebUser);
-		$this->_canPostJoin = $teamList->count() > 0;
 	}
 
 	public function executeCancelJoin(sfWebRequest $request)

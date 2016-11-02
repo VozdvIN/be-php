@@ -15,7 +15,7 @@
 			setTimeout(function() { window.location.reload(true); }, Math.round(30000 + 60000 * Math.random()));
 		</script>
 		<?php endif; ?>
-	</head>	
+	</head>
 	<body onload="startTime()">
 		<?php include_partial('global/flashes'); ?>
 		<?php echo $sf_content; ?>
