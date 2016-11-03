@@ -542,8 +542,6 @@ class TaskState extends BaseTaskState implements IStored, IAuth
     $this->done_at = 0;
     $this->task_time_spent = 0;
 
-    $this->updateTips();
-
     $this->task_last_update = time();
   }
 
