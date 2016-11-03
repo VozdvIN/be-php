@@ -8,7 +8,7 @@
 		<?php foreach ($_taskStates as $taskState): ?>
 		<tr>
 			<td><?php echo link_to($taskState->Task->public_name, 'play/statsRecall?id='.$taskState->id) ?></td>
-			<td><?php echo Timing::timeToStr($taskState->started_at) ?></td>
+			<td><?php echo Timing::timeToStr($taskState->accepted_at) ?></td>
 			<td><?php echo Timing::intervalToStr($taskState->getTaskSpentTimeCurrent()) ?></td>
 			<td><span class="<?php echo $taskState->getHighlightClass() ?>"><?php echo $taskState->describeStatus() ?></span></td>
 		</tr>

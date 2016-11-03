@@ -87,7 +87,7 @@ class playActions extends MyActions
 				throw new Exception('NowActions::executeTask: Неизвестное состояние команды - #'.$this->teamState->status);
 		}
 	}
-	
+
 	public function executeAnswers(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->teamState = TeamState::byId($request->getParameter('id')), 'Состояние команды не найдено.');
@@ -117,7 +117,7 @@ class playActions extends MyActions
 			$this->setTemplate('answersNoTask');
 		}
 	}
-	
+
 	public function executeStats(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->teamState = TeamState::byId($request->getParameter('id')), 'Состояние команды не найдено.');
@@ -130,9 +130,10 @@ class playActions extends MyActions
 			->select()
 			->where('ts.team_state_id = ?', $this->teamState->id)
 			->andWhere('ts.status >= ?', TaskState::TASK_ACCEPTED)
+			->orderBy('ts.accepted_at')
 			->execute();
 	}
-	
+
 	public function executeStatsRecall(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->taskState = TaskState::byId($request->getParameter('id')), 'Состояние задания не найдено.');

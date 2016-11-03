@@ -47,9 +47,9 @@
 --></div>
 
 <div class="border-top">
-	<div style="display: inline-block; width: 30%"><!--
-	 --><p>
-			Время сервера: <span id="serverTime">--:--:--</span>.
+	<div style="display: inline-block; width: 30%">
+		<p>
+			Время сервера: <?php include_partial('global/clock') ?>.
 		</p>
 		<p>
 			Powered by <a href="http://beavengine.ru" target="_blank">Beaver's Engine</a>.

@@ -7,9 +7,6 @@
 		<link rel="stylesheet" type="text/css" href="/css/basic.css" />
 		<link rel='shortcut icon' href='/images/favicon.png' />
 		<?php include_title() ?>
-		<script type="text/javascript">
-			<?php render_timer_script(); ?>
-		</script>
 	</head>
 	<body onload="startTime()"><!--
 	 --><section>
