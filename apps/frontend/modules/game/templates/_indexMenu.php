@@ -10,7 +10,7 @@
 		'activeItem' => $_activeItem,
 		'headerItem' => 'Игры',
 		'items' => array(
-			Utils::MENU_BACK_BUTTON_TITLE => '/home/index',
+			Utils::MENU_BACK_BUTTON_TITLE => (($_activeItem == 'Игры') ? '/home/index' : 'game/index'),
 			'Игры' => 'game/index',
 			'Анонсы' => 'game/indexAnnounced',
 			'Активные' => 'game/indexActive',

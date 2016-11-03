@@ -11,7 +11,7 @@
 		'activeItem' => $_activeItem,
 		'headerItem' => $_game->name,
 		'items' => array(
-			Utils::MENU_BACK_BUTTON_TITLE => 'game/index',
+			Utils::MENU_BACK_BUTTON_TITLE => (($_activeItem == $_game->name) ? 'game/index' : 'game/show?id='.$_game->id),
 			$_game->name => 'game/show?id='.$_game->id,
 			'Команды' => 'game/showTeams?id='.$_game->id,
 			'Итоги' => 'game/showResults?id='.$_game->id,

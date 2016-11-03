@@ -175,7 +175,12 @@ table.no-bg, table.no-bg tr, table.no-bg th, table.no-bg td {
 
 /* === Form === */
 
-input[type="text"], input[type="checkbox"], input[type="password"], select, textarea, input[type="submit"] {
+input[type="text"],
+input[type="checkbox"],
+input[type="password"],
+select,
+textarea,
+input[type="submit"] {
 /*	border: solid 1px royalblue;
 	background-color: ;*/
 	/* Фон должен быть светлым, так как старые Java MIDP версии OperaMini учитывают фон, но шрифт всегда используют черный. */
@@ -213,13 +218,10 @@ nav.menu ul li a {
 
 nav.menu ul li a:hover { background-color: deepskyblue; }
 
-nav.menu ul li a.header {
-	font-weight: bold;
-	background-color: #002a4c;
-}
+nav.menu ul li a.header { font-weight: bold; }
 
-nav.menu ul li a.active, nav.menu ul li a.active:hover, nav.menu ul li a.header:hover {
-	background-color: black;
-}
+nav.menu ul li a.active,
+nav.menu ul li a.active:hover,
+nav.menu ul li a.header:hover { background-color: black; }
 
 nav.menu ul li a.active:hover { background-color: deepskyblue; }
