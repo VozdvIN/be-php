@@ -51,8 +51,8 @@ class gameEditActions extends MyActions
 			Utils::cannotMessage($this->sessionWebUser->login, 'редактировать игру')
 		);
 
-		$this->_canManage = $this->_game->isManager($this->sessionWebUser);
 		$this->_isModerator = $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
+		$this->_canManage = $this->_game->isManager($this->sessionWebUser) || $this->_isModerator;
 		$this->_teamStates = Doctrine::getTable('TeamState')
 			->createQuery('ts')->innerJoin('ts.Team')
 			->select()->where('game_id = ?', $this->_game->id)
