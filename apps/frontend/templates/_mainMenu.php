@@ -13,10 +13,8 @@ $showModeration = $sessionWebUser && $sessionWebUser->hasSomeToModerate();
     <?php if ($showModeration): ?>
     <li><?php echo link_to('Модерирование', 'moderation/show') ?></li>
     <?php endif; ?>
-    <li><?php echo link_to_article_name('Инструкции') ?></li>
     <li><?php echo link_to('Статьи', 'article/by?name=Разделы') ?></li>
-    <li><?php echo link_to_article_name('Инструкции') ?></li>        
-    <li><?php echo link_to('Выход', 'auth/logout') ?></li>    
+    <li><?php echo link_to('Выход', 'auth/logout') ?></li>
     
     <?php else: ?>
 

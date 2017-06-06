@@ -25,10 +25,9 @@ INSERT INTO permissions (id, description) VALUES (15, 'модерировать 
 
 INSERT INTO granted_permissions(web_user_id, permission_id) VALUES (1, 1);
 
-INSERT INTO articles (name, path, text, web_user_id) VALUES ('Разделы', '', "[_]\r\n[url=/article/index]Все статьи[/url] в алфавитном порядке\r\n\r\n[[Новости]]\r\n\r\n[[Инструкции]]\r\n[_]", 1);
+INSERT INTO articles (name, path, text, web_user_id) VALUES ('Разделы', '', "[_]\r\n[url=/article/index]Все статьи[/url] в алфавитном порядке\r\n\r\n[[Новости]]\r\n\r\n[_]", 1);
 INSERT INTO articles (name, path, text, web_user_id) VALUES ('Новости', 'Разделы', "[_]\r\n[[Новости-(Общие)]]\r\n[_]", 1);
 INSERT INTO articles (name, path, text, web_user_id) VALUES ('Новости-(Общие)', 'Разделы\\Новости', 'Здесь будут общие новости.', 1);
-INSERT INTO articles (name, path, text, web_user_id) VALUES ('Инструкции', 'Разделы', "[_]\r\n[url=http://beavengine.ru/manual]Инструкции по использованию Beaver's Engine[/url]\r\n[_]", 1);
 INSERT INTO articles (name, path, text, web_user_id) VALUES ('Шаблонные-Главная', 'Разделы', "Заполните статью [[Шаблонные-Главная]]", 1);
 INSERT INTO articles (name, path, text, web_user_id) VALUES ('Шаблонные-Шапка', 'Разделы', "Заполните статью [[Шаблонные-Шапка]]", 1);
 INSERT INTO articles (name, path, text, web_user_id) VALUES ('Шаблонные-Подвал', 'Разделы', "Заполните статью [[Шаблонные-Подвал]]", 1);
