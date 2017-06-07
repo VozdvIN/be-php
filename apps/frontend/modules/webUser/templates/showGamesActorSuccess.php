@@ -1,6 +1,6 @@
-<?php include_partial('menu', array('_webUser' => $_webUser, '_activeItem' => 'Игры', '_isSelf' => $_isSelf)) ?>
-
-<?php include_partial('gamesMenu', array('_webUser' => $_webUser, '_activeItem' => 'Организатор')) ?>
+<?php include_partial('breadcrumbs', array('_webUser' => $_webUser)) ?>
+<?php include_partial('menu', array('_activeItem' => 'Игры', '_webUser' => $_webUser, '_isSelf' => $_isSelf)) ?>
+<?php include_partial('gamesMenu', array('_activeItem' => 'Организатор', '_webUser' => $_webUser)) ?>
 
 <table class="no-border">
 	<thead>

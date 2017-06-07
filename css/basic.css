@@ -25,7 +25,7 @@ body {
 	min-width: 320px;
 	min-height: 200px;
 	background-color: black;
-	/* width: 480px; /* DEBUG */
+	/**/ width: 480px; /* DEBUG */
 }
 
 span, p, article, form,
@@ -194,6 +194,39 @@ input[type="submit"] {
 
 nav.menu ul {
 	display: block;
+	margin: 0 0 3px 0;
+	padding: 0 0 0 0;
+	list-style: none;
+	background-color: steelblue;
+	border-top: solid 2px steelblue;
+}
+
+nav.menu ul li {
+	display: inline-block;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	background-color: inherit;
+	vertical-align: bottom;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+}
+
+nav.menu ul li:first-child { border-left: none; }
+nav.menu ul li:last-child { border-right: none; }
+
+nav.menu ul li a {
+	display: inline-block;
+	padding: 3px 6px 5px 6px;
+}
+
+nav.menu ul li a:hover,
+nav.menu ul li a.active:hover { background-color: #002a4c; }
+
+nav.menu ul li a.active { background-color: black; }
+
+/*
+nav.menu ul {
+	display: block;
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
 	list-style: none;
@@ -225,3 +258,4 @@ nav.menu ul li a.active:hover,
 nav.menu ul li a.header:hover { background-color: black; }
 
 nav.menu ul li a.active:hover { background-color: deepskyblue; }
+*/

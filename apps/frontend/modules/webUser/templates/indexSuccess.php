@@ -1,4 +1,4 @@
-<?php include_partial('indexMenu', array('_activeItem' => 'Участники')) ?>
+<?php include_partial('breadcrumbs') ?>
 
 <?php if ($_webUsers->count() == 0): ?>
 <p>

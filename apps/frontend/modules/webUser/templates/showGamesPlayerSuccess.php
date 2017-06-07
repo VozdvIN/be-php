@@ -1,6 +1,6 @@
-<?php include_partial('menu', array('_webUser' => $_webUser, '_activeItem' => 'Игры', '_isSelf' => $_isSelf)) ?>
-
-<?php include_partial('gamesMenu', array('_webUser' => $_webUser, '_activeItem' => 'Игрок')) ?>
+<?php include_partial('breadcrumbs', array('_webUser' => $_webUser)) ?>
+<?php include_partial('menu', array('_activeItem' => 'Игры', '_webUser' => $_webUser, '_isSelf' => $_isSelf)) ?>
+<?php include_partial('gamesMenu', array('_activeItem' => 'Игрок', '_webUser' => $_webUser)) ?>
 
 <?php if ($_games->count() == 0): ?>
 <p>

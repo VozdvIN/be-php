@@ -1,22 +1,15 @@
 <?php
-/* Входные данные:
- * - $_webUser - анкета пользователя
- * - $_activeItem - название активной вкладки
- * - $_isSelf - признак собственной анкеты текущего пользователя
- */
-?>
+/* $_activeItem - название активной вкладки
+   $_webUser - пользователь
+   $_isSelf - признак собственной анкеты */
 
-<?php
 	include_partial('global/menu', array(
 		'activeItem' => $_activeItem,
-		'headerItem' => $_webUser->login,
 		'items' => array(
-			Utils::MENU_BACK_BUTTON_TITLE => (($_activeItem == $_webUser->login) ? 'webUser/index' : 'webUser/show?id='.$_webUser->id),
-			$_webUser->login => 'webUser/show?id='.$_webUser->id,
+			'Анкета' => 'webUser/show?id='.$_webUser->id,
 			'Команды' => 'webUser/showTeamsPlayer?id='.$_webUser->id,
 			'Игры' => 'webUser/showGamesPlayer?id='.$_webUser->id,
-			'Права' => 'webUser/showPermissions?id='.$_webUser->id,
-			'Выход'.Utils::CROSS_PAGE_LINK_MARKER => 'auth/logout'
+			'Права' => 'webUser/showPermissions?id='.$_webUser->id
 		)
 	));
 ?>

@@ -1,6 +1,6 @@
-<?php include_partial('menu', array('_webUser' => $_webUser, '_activeItem' => 'Команды', '_isSelf' => $_isSelf)) ?>
-
-<?php include_partial('teamsMenu', array('_webUser' => $_webUser, '_activeItem' => 'Заявки')) ?>
+<?php include_partial('breadcrumbs', array('_webUser' => $_webUser)) ?>
+<?php include_partial('menu', array('_activeItem' => 'Команды', '_webUser' => $_webUser, '_isSelf' => $_isSelf)) ?>
+<?php include_partial('teamsMenu', array('_activeItem' => 'Заявки', '_webUser' => $_webUser)) ?>
 
 <?php if ($_teamsCandidateTo->count() == 0): ?>
 <p>

@@ -1,4 +1,5 @@
-<?php include_partial('menu', array('_webUser' => $_webUser, '_activeItem' => 'Права', '_isSelf' => $_isSelf)) ?>
+<?php include_partial('breadcrumbs', array('_webUser' => $_webUser)) ?>
+<?php include_partial('menu', array('_activeItem' => 'Права', '_webUser' => $_webUser, '_isSelf' => $_isSelf)) ?>
 
 <table class="no-border">
 	<?php if ($_isPermissionModerator): ?>
