@@ -1,4 +1,5 @@
-<?php include_partial('menu', array('_team' => $_team, '_activeItem' => $_team->name)) ?>
+<?php include_partial('breadcrumbs', array('_team' => $_team)) ?>
+<?php include_partial('menu', array('_activeItem' => 'Данные', '_team' => $_team)) ?>
 
 <table class="no-border">
 	<thead>

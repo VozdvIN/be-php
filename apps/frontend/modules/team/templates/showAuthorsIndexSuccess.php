@@ -1,6 +1,6 @@
-<?php include_partial('menu', array('_team' => $_team, '_activeItem' => 'Организация')) ?>
-
-<?php include_partial('authorsMenu', array('_team' => $_team, '_activeItem' => 'Игры')) ?>
+<?php include_partial('breadcrumbs', array('_team' => $_team)) ?>
+<?php include_partial('menu', array('_activeItem' => 'Организация', '_team' => $_team)) ?>
+<?php include_partial('authorsMenu', array('_activeItem' => 'Игры', '_team' => $_team,)) ?>
 
 <?php if ($_games->count() == 0): ?>
 <p>

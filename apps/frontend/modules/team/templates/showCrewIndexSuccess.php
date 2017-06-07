@@ -1,6 +1,6 @@
-<?php include_partial('menu', array('_team' => $_team, '_activeItem' => 'Состав')) ?>
-
-<?php include_partial('crewMenu', array('_team' => $_team, '_activeItem' => 'Экипаж')) ?>
+<?php include_partial('breadcrumbs', array('_team' => $_team)) ?>
+<?php include_partial('menu', array('_activeItem' => 'Состав', '_team' => $_team)) ?>
+<?php include_partial('crewMenu', array('_activeItem' => 'Экипаж', '_team' => $_team)) ?>
 
 <?php if ($_team->teamPlayers->count() == 0): ?>
 <p class="warn">

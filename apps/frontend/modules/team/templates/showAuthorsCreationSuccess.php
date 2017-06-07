@@ -1,6 +1,6 @@
-<?php include_partial('menu', array('_team' => $_team, '_activeItem' => 'Организация')) ?>
-
-<?php include_partial('authorsMenu', array('_team' => $_team, '_activeItem' => 'Заявки')) ?>
+<?php include_partial('breadcrumbs', array('_team' => $_team)) ?>
+<?php include_partial('menu', array('_activeItem' => 'Организация', '_team' => $_team, )) ?>
+<?php include_partial('authorsMenu', array('_activeItem' => 'Заявки', '_team' => $_team)) ?>
 
 <table class="no-border">
 	<thead>

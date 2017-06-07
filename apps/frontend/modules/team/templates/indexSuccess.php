@@ -1,4 +1,4 @@
-<?php include_partial('indexMenu', array('_activeItem' => 'Команды')) ?>
+<?php include_partial('breadcrumbs') ?>
 
 <?php if ($_teams->count() == 0): ?>
 <p class="info">

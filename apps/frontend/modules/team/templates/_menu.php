@@ -8,10 +8,8 @@
 <?php
 	include_partial('global/menu', array(
 		'activeItem' => $_activeItem,
-		'headerItem' => $_team->name,
 		'items' => array(
-			Utils::MENU_BACK_BUTTON_TITLE => (($_activeItem == $_team->name) ? 'team/index' : 'team/show?id='.$_team->id),
-			$_team->name => 'team/show?id='.$_team->id,
+			'Данные' => 'team/show?id='.$_team->id,
 			'Состав' => 'team/showCrewIndex?id='.$_team->id,
 			'Игры' => 'team/showGames?id='.$_team->id,
 			'Организация' => 'team/showAuthorsIndex?id='.$_team->id

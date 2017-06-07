@@ -1,4 +1,5 @@
-<?php include_partial('menu', array('_team' => $_team, '_activeItem' => 'Игры')) ?>
+<?php include_partial('breadcrumbs', array('_team' => $_team)) ?>
+<?php include_partial('menu', array('_activeItem' => 'Игры', '_team' => $_team)) ?>
 
 <?php if ($_teamStates->count() == 0): ?>
 <p>
