@@ -19,7 +19,7 @@ class SiteSettings
 	/**
 	 * Название сайта, отображается в заголовке и указывается в письмах-уведомлениях.
 	 */
-	const SITE_NAME = "Beaver's Engine v0.16.3b";
+	const SITE_NAME = "Beaver's Engine Plus v0.1.1b";
 
 	/**
 	 * Домен сайта, требуется для формирования ссылок в письмах-уведомлениях
@@ -514,12 +514,12 @@ class Utils
 	public static function getReadyMailer()
 	{
 		$transport = Swift_SmtpTransport::newInstance(SiteSettings::NOTIFY_SMTP_HOST, SiteSettings::NOTIFY_SMTP_PORT, SiteSettings::NOTIFY_SMTP_SECURITY);
-		
+
 		if ((SiteSettings::NOTIFY_SMTP_LOGIN !== null) && (SiteSettings::NOTIFY_SMTP_PASSWORD !== ''))
 		{
-			$transport->setUsername($settings->smtp_login)->setPassword($settings->smtp_password);
+			$transport->setUsername(SiteSettings::NOTIFY_SMTP_LOGIN)->setPassword(SiteSettings::NOTIFY_SMTP_PASSWORD);
 		}
-		
+
 		try
 		{
 			$transport->start();
@@ -528,7 +528,7 @@ class Utils
 		{
 			return false;
 		}
-		
+
 		return Swift_Mailer::newInstance($transport);
 	}
 
@@ -546,9 +546,9 @@ class Utils
 		{
 			return false;
 		}
-		
+
 		$isSent = false;
-		
+
 		try
 		{
 			$mailer = Utils::getReadyMailer();
@@ -561,7 +561,7 @@ class Utils
 		{
 			$isSent = false;
 		}
-		
+
 		return $isSent;
 	}
 
