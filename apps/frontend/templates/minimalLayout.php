@@ -7,10 +7,6 @@
 		<link rel="stylesheet" type="text/css" href="/css/basic.css" />
 		<link rel='shortcut icon' href='/images/favicon.png' />
 		<?php include_title() ?>
-		<?php if (Utils::LOAD_TEST_MODE): ?>
-		<script type="text/javascript">
-			setTimeout(function() { window.location.reload(true); }, Math.round(30000 + 60000 * Math.random()));
-		</script>
 		<?php endif; ?>
 	</head>
 	<body onload="startTime()">

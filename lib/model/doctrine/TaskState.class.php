@@ -365,12 +365,6 @@ class TaskState extends BaseTaskState implements IStored, IAuth
 
       // Заданию дан старт, но команда его еще не увидела.
       case TaskState::TASK_STARTED:
-        // В режиме нагрузочного тестирования задание считается прочитанным сразу после старта
-        if (Utils::LOAD_TEST_MODE)
-        {
-          $this->accept($actor);
-        }
-        break;
 
       // Команда уже ознакомилась с заданием и выполняет его.
       case TaskState::TASK_ACCEPTED:

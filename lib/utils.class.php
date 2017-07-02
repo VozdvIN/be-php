@@ -290,8 +290,6 @@ class Utils
 	const CROSS_PAGE_LINK_MARKER = '...';
 	const EXTERNAL_LINK_MARKER = '&#094;';
 
-	const LOAD_TEST_MODE = false; // True - включить режим нагрузочного тестирования
-
 	/**
 	 * Сравнение двух многобайтовых строк без учета регистра.
 	 * 
