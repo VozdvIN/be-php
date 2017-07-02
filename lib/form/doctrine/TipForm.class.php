@@ -27,8 +27,8 @@ class TipForm extends BaseTipForm
 
     //Русифицируем:
     $this->getWidgetSchema()->setLabels(array(
-        'name' => '*&nbsp;Название:',
-        'define' => '*&nbsp;Формулировка:',
+        'name' => 'Название:',
+        'define' => 'Формулировка:',
         'delay' => 'Задержка выдачи:',
         'answer_id' => 'Выдавать после ответа:'
     ));

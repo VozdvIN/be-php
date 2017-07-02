@@ -27,9 +27,9 @@ class AuthChangePwdForm extends BaseForm
     //Configure
     $this->getWidgetSchema()->setNameFormat('changepassword[%s]');
     $this->getWidgetSchema()->setLabels(array(
-        'current' => '*&nbsp;Текущий пароль:',
-        'new' => '*&nbsp;Новый пароль (от '.WebUser::MIN_PWD_LENGTH.' до 30 символов):',
-        'newrepeat' => '*&nbsp;Повторите пароль:'
+        'current' => 'Текущий пароль:',
+        'new' => 'Новый пароль (от '.WebUser::MIN_PWD_LENGTH.' до 30 символов):',
+        'newrepeat' => 'Повторите пароль:'
     ));
   }
 

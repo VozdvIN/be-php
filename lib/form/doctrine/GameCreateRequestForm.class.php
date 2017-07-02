@@ -21,8 +21,8 @@ class GameCreateRequestForm extends BaseGameCreateRequestForm
     //Русифицируем:
     $this->getWidgetSchema()->setLabels(
         array(
-          'name' => '*&nbsp;Название:',
-          'description' => '*&nbsp;Сообщение модератору:'
+          'name' => 'Название:',
+          'description' => 'Сообщение модератору:'
         )
     );
     $this->getWidgetSchema()->setHelps(
@@ -30,6 +30,6 @@ class GameCreateRequestForm extends BaseGameCreateRequestForm
           'name' => '',
           'description' => ''
         )
-    );    
+    );
   }
 }

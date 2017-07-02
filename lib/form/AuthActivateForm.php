@@ -24,8 +24,8 @@ class AuthActivateForm extends BaseForm
     //Configure
     $this->getWidgetSchema()->setNameFormat('authactivate[%s]');
     $this->getWidgetSchema()->setLabels(array(
-        'login' => '*&nbsp;Имя:',
-        'key' => '*&nbsp;Ключ активации:'
+        'login' => 'Имя:',
+        'key' => 'Ключ активации:'
     ));
   }
 

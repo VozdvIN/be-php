@@ -32,17 +32,17 @@ class AuthRegisterForm extends BaseForm
     //Configure
     $this->getWidgetSchema()->setNameFormat('register[%s]');
     $this->getWidgetSchema()->setLabels(array(
-        'login' => '*&nbsp;Имя:',
-        'full_name' => '*&nbsp;Ф.И.(О.)',
-        'password' => '*&nbsp;Пароль:',
-        'passwordRepeat' => '*&nbsp;Повторите пароль:',
-        'email' => '* Адрес e-mail:'));
+        'login' => 'Имя:',
+        'full_name' => 'Ф.И.(О.)',
+        'password' => 'Пароль:',
+        'passwordRepeat' => 'Повторите пароль:',
+        'email' => 'Адрес e-mail:'));
     $this->getWidgetSchema()->setHelps(array(
         'login' => 'Одно слово, от '.WebUser::MIN_NAME_LENGTH.' до 32 букв.',
         'full_name' => '2 или 3 слова, всего до 255 букв.',
         'password' => 'От '.WebUser::MIN_PWD_LENGTH.' до 32 символов.',
         'passwordRepeat' => 'Лучше снова набрать вручную, а не копировать.',
-        'email' => 'Желательно действующий.'
+        'email' => 'Действующий, иначе не удастся самому активировать учетную запись.'
     ));
   }
 

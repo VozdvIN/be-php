@@ -30,17 +30,17 @@ class GameFormPromo extends BaseGameForm
 		unset($this['game_last_update']);
 
 		$this->getWidgetSchema()->setLabels(array(
-			'name' => '*&nbsp;Название:',
-			'short_info' => '*&nbsp;Анонс:',
+			'name' => 'Название:',
+			'short_info' => 'Анонс:',
 			'short_info_enabled' => 'Анонсирована:',
-			'description' => '*&nbsp;Описание:',
+			'description' => 'Описание:',
 			'team_id' => 'Организаторы:',
 			'region_id' => 'Проект:',
 			'start_briefing_datetime' => 'Брифинг:',
-			'start_datetime' => '*&nbsp;Старт:',
-			'stop_datetime' => '*&nbsp;Остановка:',
+			'start_datetime' => 'Старт:',
+			'stop_datetime' => 'Остановка:',
 			'finish_briefing_datetime' => 'Подведение итогов:',
-			'time_per_game' => '*&nbsp;Длительность:',
+			'time_per_game' => 'Длительность:',
 		));
 		
 		$this->getWidgetSchema()->setHelps(array(
