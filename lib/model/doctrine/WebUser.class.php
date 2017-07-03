@@ -98,6 +98,25 @@ INSERT INTO granted_permissions(web_user_id, permission_id) VALUES ('1', '666');
   
   //// Public ////
 
+	public static function allSorted()
+	{
+		return Doctrine_Core::getTable('WebUser')
+			->createQuery('wu')
+			->select()
+			->orderBy('wu.login')
+			->execute();
+	}
+
+	public static function allBlockedSorted()
+	{
+		return Doctrine_Core::getTable('WebUser')
+			->createQuery('wu')
+			->where('wu.is_enabled <> 1')
+			->select()
+			->orderBy('wu.login')
+			->execute();
+	}
+
   /**
    * Проверяет, разрешено ли пользователю указанное действие вообще или с указанным объектом.
    * Также возвращает положительный результат, если пользователь обладает правом супер-админа.

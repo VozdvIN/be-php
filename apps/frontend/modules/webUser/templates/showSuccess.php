@@ -1,5 +1,5 @@
 <?php include_partial('breadcrumbs', array('_webUser' => $_webUser)) ?>
-<?php include_partial('menu', array('_activeItem' => 'Анкета', '_webUser' => $_webUser)) ?>
+<?php include_partial('menu', array('_activeItem' => 'Анкета', '_webUser' => $_webUser, '_isSelf' => $_isSelf)) ?>
 
 <?php if ( ! $_webUser->is_enabled): ?>
 <p class="warn">

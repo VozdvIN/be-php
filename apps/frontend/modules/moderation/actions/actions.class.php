@@ -17,14 +17,6 @@ class moderationActions extends myActions
 		$this->setModerationFlags();
 	}
 
-	public function setModerationFlags()
-	{
-		$this->_isAdmin = $this->sessionWebUser->canExact(Permission::ROOT, 0);
-		$this->_isWebUserModer = $this->sessionWebUser->can(Permission::WEB_USER_MODER, 0);
-		$this->_isFullTeamModer = $this->sessionWebUser->can(Permission::TEAM_MODER, 0);
-		$this->_isFullGameModer = $this->sessionWebUser->can(Permission::GAME_MODER, 0);
-	}
-
 	public function executeSettingsEdit(sfWebRequest $request)
 	{
 		$this->errorRedirectIf( ! $this->sessionWebUser->canExact(Permission::ROOT, 0), Utils::cannotMessage($this->sessionWebUser->login, 'редактировать системные настройки'));
@@ -125,5 +117,29 @@ class moderationActions extends myActions
 		}
 	}
 
-	/* Teams */
+	/* WebUsers */
+
+	public function executeUsers()
+	{
+		$this->setModerationFlags();
+		$this->errorRedirectIf( ! $this->_isWebUserModer, Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список пользователей'));
+		$this->_webUsers = WebUser::allSorted();
+	}
+
+	public function executeUsersBlocked()
+	{
+		$this->setModerationFlags();
+		$this->errorRedirectIf( ! $this->_isWebUserModer, Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список пользователей'));
+		$this->_webUsers = WebUser::allBlockedSorted();
+	}
+
+	/* Self */
+
+	protected function setModerationFlags()
+	{
+		$this->_isAdmin = $this->sessionWebUser->canExact(Permission::ROOT, 0);
+		$this->_isWebUserModer = $this->sessionWebUser->can(Permission::WEB_USER_MODER, 0);
+		$this->_isFullTeamModer = $this->sessionWebUser->can(Permission::TEAM_MODER, 0);
+		$this->_isFullGameModer = $this->sessionWebUser->can(Permission::GAME_MODER, 0);
+	}
 }
