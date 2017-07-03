@@ -25,7 +25,8 @@ body {
 	min-width: 320px;
 	min-height: 200px;
 	background-color: black;
-	/**/ width: 480px; /* DEBUG */
+	/**/ width: 940px; /* DEBUG */
+	/* width: 480px; /* DEBUG */
 }
 
 span, p, article, form,
