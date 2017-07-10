@@ -60,6 +60,33 @@ class moderationActions extends myActions
 			->execute();
 	}
 
+	public function executeSmtpTest()
+	{
+		$this->errorRedirectIf( ! $this->sessionWebUser->canExact(Permission::ROOT, 0), Utils::cannotMessage($this->sessionWebUser->login, 'тестировать отправку писем'));
+
+		$mailer = Utils::getReadyMailer();
+		if ( ! $mailer)
+		{
+			$this->errorRedirect('Не удается соединиться с SMTP-сервером. Проверьте настройки имени SMTP-сервера, номера порта и способа шифрования.', 'moderation/show');
+		}
+		else
+		{
+			$message = Swift_Message::newInstance('Тестирование почты '.SiteSettings::SITE_NAME)
+				->setFrom(array(SiteSettings::NOTIFY_EMAIL_ADDR => SiteSettings::SITE_NAME))
+				->setTo(SiteSettings::ADMIN_EMAIL_ADDR)
+				->setBody('Тестирование отправки уведомлений');
+
+			if (Utils::sendEmailSafe($message, $mailer))
+			{
+				$this->successRedirect('Тестовое уведомление успешно отправлено на '.SiteSettings::ADMIN_EMAIL_ADDR.'.', 'moderation/settings');
+			}
+			else
+			{
+				$this->errorRedirect('Соединение с SMTP-сервером установлено, но отправка тестового письма не удалась. Проверьте корректность обратого адреса, аккаунта и логина SMTP-сервера.', 'moderation/settings');
+			}
+		}
+	}
+
 	/* Regions */
 
 	public function executeRegionNew(sfWebRequest $request)

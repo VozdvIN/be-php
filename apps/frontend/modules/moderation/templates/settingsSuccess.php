@@ -49,5 +49,5 @@
 	Редактирование выполняется через файл конфигурации сайта.
 </p>
 <p>
-	<span class="button-info"><?php echo link_to('Тестовое уведомление на почту для связи', 'moderation/SMTPTest'); ?>
+	<span class="button-info"><?php echo link_to('Тестовое уведомление на почту для связи', 'moderation/smtpTest'); ?>
 </p>
