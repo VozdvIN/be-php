@@ -45,4 +45,5 @@ all:
     class: sfSessionStorage
     param:
       session_name: be-php
-      timeout: 2400
+      timeout: 86200
+      session_cookie_lifetime: 86300
