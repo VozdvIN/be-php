@@ -119,6 +119,7 @@ class teamCreateRequestActions extends MyActions
 		}
 	}
 
+	/* TODO: Проверить, похоже не используется */
 	public function executeAcceptManual(sfWebRequest $request)
 	{
 		$request->checkCSRFProtection();

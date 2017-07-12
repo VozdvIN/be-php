@@ -8,7 +8,7 @@
 	include_partial(
 		'global/menu',
 		array(
-			'activeItem' => '',
+			'activeItem' => $_currentRegion->name,
 			'items' => array(
 				$_currentRegion->name => '/region/setCurrent',
 				'Вход' => 'auth/login',

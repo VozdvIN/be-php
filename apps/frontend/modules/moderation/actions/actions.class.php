@@ -160,6 +160,72 @@ class moderationActions extends myActions
 		$this->_webUsers = WebUser::allBlockedSorted();
 	}
 
+	/* Teams */
+
+	public function executeTeams()
+	{
+		$this->setModerationFlags();
+		$this->errorRedirectIf( ! $this->_isFullTeamModer, Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список команд'));
+		$this->_teams = Team::allSortedWithRegion();
+	}
+
+	public function executeTeamsCreateRequests()
+	{
+		$this->setModerationFlags();
+		$this->errorRedirectIf( ! $this->_isFullTeamModer, Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список заявок на создание команд'));
+		$this->_teamCreateRequests = TeamCreateRequest::getAllWithRelations();
+	}
+
+	public function executeTeamsCreateAccept($request)
+	{
+		$this->setModerationFlags();
+		$this->errorRedirectIf( ! $this->_isFullTeamModer, Utils::cannotMessage($this->sessionWebUser->login, 'управлять заявками на создание команд'));
+		$request->checkCSRFProtection();
+		$this->forward404Unless(
+			$teamCreateRequest = TeamCreateRequest::byId($request->getParameter('id')),
+			'Заявка на создание команды не найдена'
+		);
+
+		$this->errorRedirectUnless(
+			Utils::byField('Team', 'name', $teamCreateRequest->name) === false,
+			'Не удалось создать команду: команда '.$teamCreateRequest->name.' уже существует.',
+			'moderation/teamsCreateRequests'
+		);
+
+		$webUser = $teamCreateRequest->WebUser;
+		$team = TeamCreateRequest::doCreate($teamCreateRequest);
+		Utils::sendNotifyUser(
+			'Команда создана - '.$team->name,
+			'Ваша заявка на создание команды "'.$team->name.'" утверждена, команда создана.'."\n"
+			.'Страница команды: http://'.SiteSettings::SITE_DOMAIN.'/team/show?id='.$team->id,
+			$webUser
+		);
+
+		$this->successRedirect('Команда '.$team->name.' успешно создана.', 'team/show?id='.$team->id);
+	}
+
+	public function executeTeamsCreateDecline(sfWebRequest $request)
+	{
+		$this->setModerationFlags();
+		$this->errorRedirectIf( ! $this->_isFullTeamModer, Utils::cannotMessage($this->sessionWebUser->login, 'управлять заявками на создание команд'));
+		$request->checkCSRFProtection();
+		$this->forward404Unless(
+			$teamCreateRequest = TeamCreateRequest::byId($request->getParameter('id')),
+			'Заявка на создание команды не найдена'
+		);
+
+		$teamName = $teamCreateRequest->name;
+		$webUser = $teamCreateRequest->WebUser;
+		$teamCreateRequest->delete();
+		Utils::sendNotifyUser(
+			'Заявка отклонена - '.$teamName,
+			'Ваша заявка на создание команды "'.$teamName.'" отклонена.',
+			$webUser
+		);
+
+		$this->successRedirect('Заявка на создание команды отклонена', 'moderation/teamsCreateRequests');
+	}
+
 	/* Self */
 
 	protected function setModerationFlags()

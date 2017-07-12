@@ -69,6 +69,16 @@ class Team extends BaseTeam implements IStored, IAuth, IRegion
 
 	//// Public ////
 
+	public static function allSortedWithRegion()
+	{
+		return Doctrine_Core::getTable('Team')
+			->createQuery('t')
+			->leftJoin('t.Region')
+			->select()
+			->orderBy('t.name')
+			->execute();
+	}
+
 	public function getNormalName()
 	{
 		return ($this->full_name !== '') ? $this->full_name : $this->name;

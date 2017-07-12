@@ -29,6 +29,22 @@ class TeamCreateRequest extends BaseTeamCreateRequest implements IStored
   //// Public ////
 
 	/**
+	 * Возвращает список всех заявок на создание команды, с данными о пользователе
+	 * 
+	 * @return Doctrine_Colleсtion<TeamCreateRequest>
+	 */
+	public static function getAllWithRelations()
+	{
+		$query = Doctrine::getTable('TeamCreateRequest')
+			->createQuery('tcr')
+			->innerJoin('tcr.WebUser')
+			->select()
+			->execute();
+
+		return $query;
+	}
+
+	/**
 	 * Возвращает список заявок на создание команды, поданные пользователем
 	 * 
 	 * @param  WebUser  $user 

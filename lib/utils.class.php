@@ -30,17 +30,17 @@ class SiteSettings
 	/**
 	 * Адрес для связи с администрацией сайта.
 	 */
-	const ADMIN_EMAIL_ADDR = 'admin_login@host.zone';
+	const ADMIN_EMAIL_ADDR = 'vozdvin@mail.ru';
 
 	/**
 	 * Обратный адрес для уведомлений, не предполагает прием ответов.
 	 */
-	const NOTIFY_EMAIL_ADDR = 'do_not_reply@host.zone';
+	const NOTIFY_EMAIL_ADDR = 'do_not_reply_vin@mail.ru';
 
 	/** 
 	 * Имя сервера SMTP, используемого для отправки уведомлений.
 	 */
-	const NOTIFY_SMTP_HOST = 'smtp.host.zone';
+	const NOTIFY_SMTP_HOST = 'smtp.mail.ru';
 
 	/** 
 	 * Порт сервера SMTP, используемого для отправки уведомлений:
@@ -49,7 +49,7 @@ class SiteSettings
 	 * - tls: уточните у google или почтового провайдера.
 	 * - ssl: 465
 	 */
-	const NOTIFY_SMTP_PORT = 25;
+	const NOTIFY_SMTP_PORT = 465;
 
 	/**
 	 * Тип шифрования при отправке уведомлений:
@@ -58,17 +58,17 @@ class SiteSettings
 	 * - tls
 	 * - ssl
 	 */
-	const NOTIFY_SMTP_SECURITY = '';
+	const NOTIFY_SMTP_SECURITY = 'ssl';
 
 	/**
 	 * Имя пользователя для авторизации на SMTP-сервере.
 	 */
-	const NOTIFY_SMTP_LOGIN = 'do_not_reply';
+	const NOTIFY_SMTP_LOGIN = 'do_not_reply_vin';
 
 	/**
 	 * Пароль пользователя для авторизации на SMTP-сервере.
 	 */
-	const NOTIFY_SMTP_PASSWORD = 'password';
+	const NOTIFY_SMTP_PASSWORD = '1qaZSE$';
 }
 
 /**
