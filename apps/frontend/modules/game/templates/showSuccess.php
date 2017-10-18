@@ -1,8 +1,16 @@
 <?php include_partial('menu', array('_game' => $_game, '_activeItem' => $_game->name, '_editable' => $_canManage)) ?>
 
-<?php if (($_game->status <= Game::GAME_VERIFICATION) && $_canPostJoin): ?>
+<?php if ($_game->short_info_enabled == 0): ?>
+
+<p class="warn">
+	Эта игра еще не анонсирована.
+</p>
+
+<?php else: ?>
+
+	<?php if (($_game->status <= Game::GAME_VERIFICATION) && $_canPostJoin): ?>
 	<span class="button-info"><?php echo link_to('Подать заявку на участие', 'game/postJoinManual?id='.$_game->id, array('method' => 'post')); ?></span>
-<?php endif ?>
+	<?php endif ?>
 
 <h1><?php echo $_game->name ?></h1>
 
@@ -31,3 +39,5 @@
 		<tr><th>Итоги:</th><td><?php echo $_game->finish_briefing_datetime ?></td></tr>
 	</tbody>
 </table>
+
+<?php endif; ?>

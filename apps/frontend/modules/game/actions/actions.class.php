@@ -41,6 +41,11 @@ class gameActions extends MyActions
 	{
 		$this->prepareGame($request);
 
+		if ($this->_game->short_info_enabled == 0)
+		{
+			$this->warningRedirect('Игра еще не анонсирована', 'game/show?id='.$this->_game->id);
+		}
+
 		$this->teamList = $this->_game->getTeamsAvailableToPostJoinBy($this->sessionWebUser);
 		$this->_canPostJoin = $this->teamList->count() > 0;
 
@@ -51,18 +56,36 @@ class gameActions extends MyActions
 	public function executeShowResults(sfWebRequest $request)
 	{
 		$this->prepareGame($request);
+
+		if ($this->_game->short_info_enabled == 0)
+		{
+			$this->warningRedirect('Игра еще не анонсирована', 'game/show?id='.$this->_game->id);
+		}
+
 		$this->_results = $this->_game->getResults();
 	}
 
 	public function executeShowResultsDetails(sfWebRequest $request)
 	{
 		$this->prepareGame($request);
+
+		if ($this->_game->short_info_enabled == 0)
+		{
+			$this->successRedirect('Игра еще не анонсирована', 'game/show?id='.$this->_game->id);
+		}
+
 		$this->_teamStates = $this->_game->teamStates;
 	}
 
 	public function executePostJoinManual(sfWebRequest $request)
 	{
 		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+		$this->errorRedirectIf(
+			$this->_game->short_info_enabled == 0,
+			'Игра еще не анонсирована, регистрация закрыта.',
+			'game/show?id='.$this->_game->id
+		);
+
 		$this->_teamList = $this->_game->getTeamsAvailableToPostJoinBy($this->sessionWebUser);
 		$this->errorRedirectIf(
 			$this->_teamList->count() == 0,
@@ -171,10 +194,5 @@ class gameActions extends MyActions
 
 		$this->_canManage = $this->_game->isActor($this->sessionWebUser)
 								|| $this->sessionWebUser->can(Permission::GAME_MODER, $this->_game->id);
-
-		$this->errorRedirectUnless(
-			$this->_game->short_info_enabled || $this->_canManage,
-			Utils::cannotMessage($this->sessionWebUser->login, 'просматривать анонс игры')
-		);
 	}
 }

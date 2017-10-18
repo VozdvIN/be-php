@@ -492,47 +492,48 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
 
 	// Action
 
-  /**
-   * Регистрирует заявку на игру от команды.
-   * Если заявка уже подана, то ничего не делает.
-   * Если команда уже зарегистрирована - ошибка.
-   *
-   * @param   Team      $team   Команда, подающая заявку
-   * @param   WebUser   $actor  Учетная запись, выполняющая операцию
-   * @return  string            True если все в порядке, иначе строковое описание ошибки
-   */
-  public function postJoin(Team $team, WebUser $actor)
-  {
-    if (!$team->canBeManaged($actor) && !$this->canBeManaged($actor))
-    {
-      return 'Подать заявку от команды может только ее капитан.';
-    }
-    if (($this->status >= Game::GAME_READY) && !$this->canBeManaged($actor))
-    {
-      return 'Свободная регистрация на игру '.$this->name.' закрыта, так как игра скоро начнется. Обратитесь к организаторам игры.';
-    }
-    if ($this->isTeamCandidate($team))
-    {
-      return true;
-    }
-    if ($this->isTeamRegistered($team))
-    {
-      return 'Команда '.$team->name.' уже зарегистрирована на игру '.$this->name.'.';
-    }
-    if ($this->team_id > 0)
-    {
-      if ($this->team_id == $team->id)
-      {
-        return 'Команда '.$team->name.' не может принимать участие в игре '.$this->name.' так как сама организует ее.';
-      }
-    }
+	/**
+	 * Регистрирует заявку на игру от команды.
+	 * Если заявка уже подана, то ничего не делает.
+	 * Если команда уже зарегистрирована - ошибка.
+	 *
+	 * @param   Team      $team   Команда, подающая заявку
+	 * @param   WebUser   $actor  Учетная запись, выполняющая операцию
+	 * @return  string            True если все в порядке, иначе строковое описание ошибки
+	 */
+	public function postJoin(Team $team, WebUser $actor)
+	{
+		if ($this->short_info_enabled == 0)
+		{
+			return 'Игра не анонсирована.';
+		}
+		if (!$team->canBeManaged($actor) && !$this->canBeManaged($actor))
+		{
+			return 'Подать заявку от команды может только ее капитан.';
+		}
+		if (($this->status >= Game::GAME_READY) && !$this->canBeManaged($actor))
+		{
+			return 'Свободная регистрация на игру '.$this->name.' закрыта, так как игра скоро начнется. Обратитесь к организаторам игры.';
+		}
+		if ($this->isTeamCandidate($team))
+		{
+			return true;
+		}
+		if ($this->isTeamRegistered($team))
+		{
+			return 'Команда '.$team->name.' уже зарегистрирована на игру '.$this->name.'.';
+		}
+		if ($this->team_id == $team->id)
+		{
+			return 'Команда '.$team->name.' не может принимать участие в игре '.$this->name.' так как сама организует ее.';
+		}
 
-    $newCandidate = new GameCandidate;
-    $newCandidate->team_id = $team->id;
-    $newCandidate->game_id = $this->id;
-    $newCandidate->save();
-    return true;
-  }
+		$newCandidate = new GameCandidate;
+		$newCandidate->team_id = $team->id;
+		$newCandidate->game_id = $this->id;
+		$newCandidate->save();
+		return true;
+	}
 
   /**
    * Отменяет поданную заявку на игру.

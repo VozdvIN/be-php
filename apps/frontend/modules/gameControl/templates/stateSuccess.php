@@ -42,6 +42,7 @@ if ($_isManager)
 		'global/actionsMenu',
 		array(
 			'items' => array(
+				'publish' => link_to('Анонсировать', 'gameControl/publish?id='.$_game->id, array('method' => 'post', 'confirm' => 'Анонсировать игру '.$_game->name.'?')),
 				'init' => link_to('Подготовить', 'gameControl/verify?id='.$_game->id, array('method' => 'post', 'confirm' => 'Подготовить игру '.$_game->name.' к запуску?')),
 				'start' => link_to('Запустить', 'gameControl/start?id='.$_game->id, array('method' => 'post', 'confirm' => 'Запустить игру '.$_game->name.'?')),
 				'stop' => link_to('Завершить', 'gameControl/stop?id='.$_game->id, array('method' => 'post', 'confirm' => 'Остановить игру '.$_game->name.'?')),
@@ -49,6 +50,7 @@ if ($_isManager)
 				'reset' => link_to('Сбросить', 'gameControl/reset?id='.$_game->id, array('method' => 'post', 'confirm' => 'Перезапустить игру '.$_game->name.'?'))
 			),
 			'css' => array(
+				'publish' => 'info',
 				'init' => 'info',
 				'start' => 'warn',
 				'stop' => 'danger',
@@ -56,6 +58,8 @@ if ($_isManager)
 				'reset' => 'danger'
 			),
 			'conditions' => array(
+				'publish' => ($_game->short_info_enabled == 0)
+							&& ($_game->status <= Game::GAME_PLANNED),
 				'init' => ($_game->status == Game::GAME_PLANNED)
 							|| ($_game->status == Game::GAME_VERIFICATION)
 							|| ($_game->status == Game::GAME_READY),

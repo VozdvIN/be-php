@@ -138,6 +138,34 @@ class gameControlActions extends MyActions
 			->execute();
 	}
 
+	public function executePublish(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->isMethod(sfRequest::POST));
+		$request->checkCSRFProtection();
+		$this->forward404Unless(
+			$this->_game = Game::byId($request->getParameter('id')),
+			'Игра не найдена.'
+		);
+
+		try
+		{
+			$this->_game->short_info_enabled = 1;
+			$this->_game->save();
+		}
+		catch (Exception $e)
+		{
+			$this->errorRedirect(
+				'Анонсировать игру '.$this->_game->name.' не удалось: ошибка базы данных.',
+				'gameControl/state?id='.$this->_game->id
+			);
+		}
+
+		$this->successRedirect(
+			'Игра '.$this->_game->name.' анонсирована.',
+			'gameControl/state?id='.$this->_game->id
+		);
+	}
+
 	public function executeVerify(sfWebRequest $request)
 	{
 		$this->forward404Unless($request->isMethod(sfRequest::POST));
