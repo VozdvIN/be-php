@@ -15,7 +15,7 @@
 			<td>
 				<?php echo $targetTask->name; ?>
 			</td>
-			<td>
+			<td style="text-align: center">
 				<?php if ($taskTransition->allow_on_success && $taskTransition->allow_on_fail): ?>
 				Всегда
 				<?php elseif ($taskTransition->allow_on_success): ?>
@@ -24,7 +24,7 @@
 				<span class="warn">При&nbsp;неудаче</span>
 				<?php endif; ?>
 			</td>
-			<td>
+			<td style="text-align: center">
 				<?php echo $taskTransition->manual_selection ? 'Да' : ''; ?>
 			</td>
 			<?php else: ?>

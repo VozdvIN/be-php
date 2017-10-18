@@ -25,7 +25,7 @@ body {
 	min-width: 320px;
 	min-height: 200px;
 	background-color: black;
-	/**/ width: 940px; /* DEBUG */
+	/**/ max-width: 800px; /* DEBUG */
 	/* width: 480px; /* DEBUG */
 }
 
@@ -170,7 +170,7 @@ table.no-bg, table.no-bg tr, table.no-bg th, table.no-bg td {
 }
 
 .button-danger, .button-danger > a {
-	color: orangered;
+	color: pink;
 	background-color: darkred;
 }
 
