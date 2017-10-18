@@ -281,10 +281,23 @@ class gameEditActions extends MyActions
 		}
 	}
 
-	public function executeAddTeam(sfWebRequest $request)
+	public function executeRegister(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->_game = Game::byId($request->getParameter('id')), 'Игра не найдена.');
+
+		$this->_teams = Team::all();
+
+		$this->errorRedirectIf(
+			$this->_teams->count() == 0,
+			'Нет команд, которые вы можете зарегистрировать.',
+			'gameEdit/showTeams?id='.$this->_game->id
+		);
+	}
+
+	public function executeRegisterDo(sfWebRequest $request)
 	{
 		$this->decodeArgs($request);
-		
+
 		if (is_string($res = $this->game->registerTeam($this->team, $this->sessionWebUser)))
 		{
 			$this->errorRedirect('Не удалось зарегистрировать команду '.$this->team->name.' на игру '.$this->game->name.': '.$res);
@@ -292,9 +305,8 @@ class gameEditActions extends MyActions
 		else
 		{
 			Utils::sendNotifyGroup(
-				'Регистрация '.$this->team->name.' на игру '.$this->game->name,
-				'Ваша команда "'.$this->team->name.'" принята к участию в игре "'.$this->game->name.'"'."\n"
-				.'Афиша игры: http://'.SiteSettings::SITE_DOMAIN.'/game/info?id='.$this->game->id,
+				'Команда '.$this->team->name.' зарегистрирована на игру '.$this->game->name,
+				'Ваша команда "'.$this->team->name.'" зарегистрирована на игру "'.$this->game->name.'".',
 				$this->team->getLeadersRaw()
 			);
 

@@ -8,7 +8,7 @@
 <table class="no-border">
 	<thead>
 		<?php if ($_isModerator): ?>
-		<tr><td colspan="4"><span class="button-info"><?php echo link_to('Зарегистрировать команду', 'game/addTeamManual?id='.$_game->id, array('method' => 'post')); ?></span></td></tr>
+		<tr><td colspan="4"><span class="button-info"><?php echo link_to('Зарегистрировать команду', 'gameEdit/register?id='.$_game->id, array('method' => 'post')); ?></span></td></tr>
 		<?php endif; ?>
 		<tr><th>Команда</th><th>Стартует</th><th>ИИ</th><th>&nbsp;</th></tr>
 	</thead>
@@ -27,7 +27,7 @@
 								'settings' => link_to('Настройки', 'teamState/edit?id='.$teamState->id),
 								'remove' => link_to(
 									'Снять&nbsp;с&nbsp;игры',
-									'game/removeTeam?id='.$_game->id.'&teamId='.$teamState->team_id,
+									'gameEdit/removeTeam?id='.$_game->id.'&teamId='.$teamState->team_id,
 									array(
 										'method' => 'post',
 										'confirm' => 'Вы точно хотите снять команду '.$teamState->Team->name.' с игры '.$_game->name.'?'
