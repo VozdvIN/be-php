@@ -1,4 +1,4 @@
-<?php include_partial('taskMenu', array('_task' => $_task, '_activeItem' => $_task->name)); ?>
+<?php include_partial('taskMenu', array('_task' => $_task, '_activeItem' => $_task->name.' (Редактор)')); ?>
 
 <table class="no-border">
 	<thead>

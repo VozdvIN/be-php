@@ -11,7 +11,7 @@
 		'headerItem' => $_task->name,
 		'items' => array(
 			Utils::MENU_BACK_BUTTON_TITLE => 'gameEdit/tasks?id='.$_task->game_id,
-			$_task->name => 'task/params?id='.$_task->id,
+			$_task->name.' (Редактор)' => 'task/params?id='.$_task->id,
 			'Подсказки' => 'task/tips?id='.$_task->id,
 			'Ответы' => 'task/answers?id='.$_task->id,
 			'Переходы' => 'task/constraints?id='.$_task->id,

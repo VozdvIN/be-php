@@ -11,11 +11,12 @@ $_isFullGameModer -
 		array(
 			'activeItem' => $_activeItem,
 			'items' => array(
+				Utils::MENU_BACK_BUTTON_TITLE => '/home/index', 'Модерация' => '/moderation/show',
 				'Настройки' => '/moderation/settings',
 				'Проекты' => '/moderation/regions',
 				'Участники' => '/moderation/users',
 				'Команды' => '/moderation/teams',
-				'Игры' => '/moderation/games'
+				'Игры' => '/moderation/gamesAll'
 			),
 			'itemsVisible' => array(
 				'Настройки' => $_isAdmin,

@@ -1,5 +1,3 @@
-<?php include_partial('breadcrumbs') ?>
-
 <?php include_partial('menu', array(
 	'_activeItem' => 'Настройки',
 	'_isAdmin' => $_isAdmin,

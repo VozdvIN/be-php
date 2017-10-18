@@ -226,6 +226,22 @@ class moderationActions extends myActions
 		$this->successRedirect('Заявка на создание команды отклонена', 'moderation/teamsCreateRequests');
 	}
 
+	/* Games */
+
+	public function executeGamesAll()
+	{
+		$this->setModerationFlags();
+		$this->errorRedirectIf( ! $this->_isFullTeamModer, Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список игр'));
+		$this->_games = Game::all();
+	}
+
+	public function executeGamesDesign()
+	{
+		$this->setModerationFlags();
+		$this->errorRedirectIf( ! $this->_isFullTeamModer, Utils::cannotMessage($this->sessionWebUser->login, 'просматривать список игр'));
+		$this->_games = Game::allBeingDesigned();
+	}
+
 	/* Self */
 
 	protected function setModerationFlags()

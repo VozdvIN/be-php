@@ -1,4 +1,4 @@
 all:
   metas:
-    title: "Модерирование"
+    title: "Модерация"
   has_layout: true

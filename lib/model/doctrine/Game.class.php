@@ -76,6 +76,20 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
   //// Public ////
 
 	/**
+	 * Возвращает все игры всех регионов, которые не опубликованы.
+	 * @return @return Doctrine_Collection<Game>
+	 */
+	public static function allBeingDesigned()
+	{
+		return Doctrine::getTable('Game')
+			->createQuery('g')
+			->select()
+			->where('g.short_info_enabled = 0')
+			->orderBy('g.start_datetime DESC')
+			->execute();
+	}
+
+	/**
 	 * Возвращает запрос всех игр указанного региона. Допускает расширение только по andWhere.
 	 * @param  Region $region
 	 * @return Doctrine::Query
@@ -998,28 +1012,35 @@ class Game extends BaseGame implements IStored, IAuth, IRegion
    * @param   WebUser   $actor  Исполнитель
    * @return  mixed             True при успехе, иначе строка с ошибкой.
    */
-  public function start(WebUser $actor)
-  {
-    if (!$this->canBeManaged($actor))
-    {
-      return Utils::cannotMessage($actor->login, Permission::byId(Permission::GAME_MODER)->description);
-    }
-    if ($this->status < Game::GAME_READY)
-    {
-      return 'Игра '.$this->name.' еще не прошла предстартовую проверку.';
-    }
-    if ($this->status > Game::GAME_STEADY)
-    {
-      return 'Игра '.$this->name.' уже стартовала или завершена.';
-    }
+	public function start(WebUser $actor)
+	{
+		if (!$this->canBeManaged($actor))
+		{
+			return Utils::cannotMessage($actor->login, Permission::byId(Permission::GAME_MODER)->description);
+		}
 
-    $this->status = Game::GAME_STEADY;
-    $this->started_at = 0; //Реальное время старта будет сюда записано при пересчете состояния, когда будет отслежен момент старта.
-    $this->finished_at = 0;
-    $this->game_last_update = time();
+		if ($this->short_info_enabled != 1)
+		{
+			return 'Игра '.$this->name.' еще не анонсирована.';
+		}
 
-    return true;
-  }
+		if ($this->status < Game::GAME_READY)
+		{
+			return 'Игра '.$this->name.' еще не прошла предстартовую проверку.';
+		}
+
+		if ($this->status > Game::GAME_STEADY)
+		{
+			return 'Игра '.$this->name.' уже стартовала или завершена.';
+		}
+
+		$this->status = Game::GAME_STEADY;
+		$this->started_at = 0; //Реальное время старта будет сюда записано при пересчете состояния, когда будет отслежен момент старта.
+		$this->finished_at = 0;
+		$this->game_last_update = time();
+
+		return true;
+	}
 
   /**
    * Останавливает игру.
